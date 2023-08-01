@@ -14,6 +14,7 @@ bl_info = {
 import bpy
 import os
 import csv
+import mysql.connector
 
 from bpy.types import (Panel,
                        Menu,
@@ -107,6 +108,15 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operator23c()
     )
     
+    my_enum_candlestick : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPcandle7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPcandle8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandlestick()
+    )
+    
     my_enum23P : bpy.props.EnumProperty(
         name= "",
         description= "Change Frame rate of the scene",
@@ -181,6 +191,78 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operator3()
     )
     
+    my_stringhost : bpy.props.StringProperty(
+    name= "",
+    default="localhost",)
+    
+    my_stringuser : bpy.props.StringProperty(
+    name= "",
+    default="root",)
+    
+    my_stringpassword : bpy.props.StringProperty(
+    name= "",
+    subtype='PASSWORD',)
+    
+    my_stringcirclegraph : bpy.props.StringProperty(
+    name= "",
+    default="circle_graph",)
+    
+    my_stringpiegraph : bpy.props.StringProperty(
+    name= "",
+    default="pie_graph",)
+    
+    my_stringcircle23_graph : bpy.props.StringProperty(
+    name= "",
+    default="circle23_graph",)
+    
+    my_stringcandlestick_graph : bpy.props.StringProperty(
+    name= "",
+    default="candlestick_graph",)
+    
+    my_stringpie23_graph : bpy.props.StringProperty(
+    name= "",
+    default="pie23_graph",)
+    
+    my_stringhorizontal_bar_graph : bpy.props.StringProperty(
+    name= "",
+    default="horizontal_bar_graph",)
+    
+    my_stringhorizontal_bar_graph_comparison : bpy.props.StringProperty(
+    name= "",
+    default="horizontal_bar_graph_comparison",)
+    
+    my_stringvertical_bar_graph : bpy.props.StringProperty(
+    name= "",
+    default="vertical_bar_graph",)
+    
+    my_stringvertical_bar_graph_comparison : bpy.props.StringProperty(
+    name= "",
+    default="vertical_bar_graph_comparison",)
+    
+    my_stringline_graph : bpy.props.StringProperty(
+    name= "",
+    default="line_graph",)
+    
+    my_stringline_graph_comparison : bpy.props.StringProperty(
+    name= "",
+    default="line_graph_comparison",)    
+
+    my_stringmountain_graph : bpy.props.StringProperty(
+    name= "",
+    default="mountain_graph",)
+    
+    my_stringmountain_graph_comparison : bpy.props.StringProperty(
+    name= "",
+    default="mountain_graph_comparison",)
+    
+    my_stringmultiple_circle_graph : bpy.props.StringProperty(
+    name= "",
+    default="multiple_circle_graph",)
+    
+    my_stringmultiple_pie_graph : bpy.props.StringProperty(
+    name= "",
+    default="multiple_pie_graph",)        
+    
     my_float: bpy.props.FloatProperty(
         name = "In seconds",
         description = "A float property",
@@ -207,7 +289,583 @@ class MyProperties(bpy.types.PropertyGroup):
         max = 300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operator23cal()
         )
-        
+
+    my_floatcandlea1: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle1()
+        )
+
+    my_floatcandlea2: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle2()
+        )
+
+    my_floatcandlea3: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle3()
+    )
+
+    my_floatcandlea4: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle4()
+    )
+
+    my_floatcandlea5: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle5()
+    )
+
+    my_floatcandlea6: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle6()
+    )
+
+    my_floatcandlea7: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle7()
+    )
+
+    my_floatcandlea8: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle8()
+    )
+
+    my_floatcandlea9: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle9()
+    )
+
+    my_floatcandlea10: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle10()
+    )
+
+    my_floatcandlea11: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle11()
+    )
+
+    my_floatcandlea12: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle12()
+    )
+
+    my_floatcandlea13: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle13()
+    )
+
+    my_floatcandlea14: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle14()
+    )
+
+    my_floatcandlea15: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle15()
+    )
+
+    my_floatcandlea16: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle16()
+    )
+
+    my_floatcandlea17: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle17()
+    )
+
+    my_floatcandlea18: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle18()
+    )
+
+    my_floatcandlea19: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle19()
+    )
+
+    my_floatcandlea20: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle20()
+    )
+
+    my_floatcandlea21: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle21()
+    )
+
+    my_floatcandlea22: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle22()
+    )
+
+    my_floatcandlea23: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle23()
+    )
+
+    my_floatcandlea24: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle24()
+    )
+
+    my_floatcandlea25: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle25()
+    )
+
+    my_floatcandlea26: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle26()
+    )
+
+    my_floatcandlea27: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle27()
+    )
+
+    my_floatcandlea28: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle28()
+    )
+
+    my_floatcandlea29: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle29()
+    )
+
+    my_floatcandlea30: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle30()
+    )
+
+    my_floatcandlea31: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle31()
+    )
+
+    my_floatcandlea32: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle32()
+    )
+
+    my_floatcandleb1: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle1()
+        )
+
+    my_floatcandleb2: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle2()
+        )
+
+    my_floatcandleb3: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle3()
+    )
+
+    my_floatcandleb4: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle4()
+    )
+
+    my_floatcandleb5: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle5()
+    )
+
+    my_floatcandleb6: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle6()
+    )
+
+    my_floatcandleb7: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle7()
+    )
+
+    my_floatcandleb8: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle8()
+    )
+
+    my_floatcandleb9: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle9()
+    )
+
+    my_floatcandleb10: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle10()
+    )
+
+    my_floatcandleb11: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle11()
+    )
+
+    my_floatcandleb12: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle12()
+    )
+
+    my_floatcandleb13: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle13()
+    )
+
+    my_floatcandleb14: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle14()
+    )
+
+    my_floatcandleb15: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle15()
+    )
+
+    my_floatcandleb16: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle16()
+    )
+
+    my_floatcandleb17: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle17()
+    )
+
+    my_floatcandleb18: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle18()
+    )
+
+    my_floatcandleb19: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle19()
+    )
+
+    my_floatcandleb20: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle20()
+    )
+
+    my_floatcandleb21: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle21()
+    )
+
+    my_floatcandleb22: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle22()
+    )
+
+    my_floatcandleb23: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle23()
+    )
+
+    my_floatcandleb24: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle24()
+    )
+
+    my_floatcandleb25: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle25()
+    )
+
+    my_floatcandleb26: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle26()
+    )
+
+    my_floatcandleb27: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle27()
+    )
+
+    my_floatcandleb28: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle28()
+    )
+
+    my_floatcandleb29: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle29()
+    )
+
+    my_floatcandleb30: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle30()
+    )
+
+    my_floatcandleb31: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle31()
+    )
+
+    my_floatcandleb32: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcandle32()
+    )
+
     my_float23CB: bpy.props.FloatProperty(
         name = "In seconds",
         description = "A float property",
@@ -2101,6 +2759,14 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         )
         
+    my_pathcandle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/candlestick_graph.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
     my_path23p: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
@@ -2149,15 +2815,649 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         update=lambda self, context: bpy.ops.addonname.myop_operatorffg()
         )
+        
+    my_pathfontcg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcg_value: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcg_description: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontpg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontpg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontpg_value: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontpg_description: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23cg_title: bpy.props.StringProperty(
+        name="",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23cg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23cg_value: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23cg_description: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfont23cg_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23pg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23pg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23pg_value: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfont23pg_description: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfont23pg_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbg_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbg_texttotal: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbg_valuetotal: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgc_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgc_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgc_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgc_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbgc_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontlg_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlgc_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlgc_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlgc_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontlgc_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontlgc_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontlgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontmg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontmg_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmgc_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmgc_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmgc_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmgc_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontmgc_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontmgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmcg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmcg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmcg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmcg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontmpg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmpg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmpg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontmpg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbg_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbg_texttotal: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbg_valuetotal: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+ 
+    my_pathfontvbgc_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbgc_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbgc_barvaluea: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgc_barvalueb: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+             
+    my_pathfontvbgc_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgc_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH', 
+        )
+        
+    my_pathfontcandleg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcandleg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcandleg_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontcandleg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
 
 
-class TestPanel(bpy.types.Panel):
-    bl_label = "Quick Render Presets"
-    bl_idname = "PT_TestPanel"  
+class NG_PT_QuickRenderPresets(bpy.types.Panel):
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'Renaissance'
     bl_options = {"DEFAULT_CLOSED"} 
+    
+class NG_PT_QuickRenderPresets_1(NG_PT_QuickRenderPresets, bpy.types.Panel):    
+    bl_label = "Quick Render Presets"
+    bl_idname = "NG_PT_QuickRenderPresets_1"  
    
     def draw(self, context):
         layout = self.layout
@@ -2192,36 +3492,82 @@ class TestPanel(bpy.types.Panel):
         rowFFG.label(text= "Path:")
         layout.prop(mytool, "my_path2")
         
-
-class TestPanel2:
-    bl_label = "CG"
-    bl_idname = "PT_TestPanel2"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class NG_PT_QuickRenderPresets_2(NG_PT_QuickRenderPresets, bpy.types.Panel):
+    bl_parent_id = "NG_PT_QuickRenderPresets_1"
+    bl_label = "MySQL Login Details"
     bl_options = {"DEFAULT_CLOSED"}
     
-class TestPanel2_panel_1(TestPanel2, bpy.types.Panel):
-    bl_idname = "TestPanel2_panel_1"
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool 
+        
+        rowSH = layout.row()
+        rowSH.label(text= "Hostname:")
+        layout.prop(mytool, "my_stringhost")
+        
+        rowSU = layout.row()
+        rowSU.label(text= "User:")
+        layout.prop(mytool, "my_stringuser")
+        
+        rowSPW = layout.row()
+        rowSPW.label(text= "Password:")
+        layout.prop(mytool, "my_stringpassword")
+        
+        
+class CIRCLE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class CIRCLE_GRAPH_PT_panel_1(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Circle Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
-        
-        row23CGcsv = layout.row()
-        row23CGcsv.label(text= "Link to csv file")
+
+        rowFPS = layout.row()
+        rowFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enum2")
+
+class CIRCLE_GRAPH_PT_panel_2(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowCGcsv = layout.row()
+        rowCGcsv.label(text= "Link to csv file")
         layout.prop(mytool, "my_path")
         layout.operator("mesh.mycubeoperatorcgcsv")
+        
+class CIRCLE_GRAPH_PT_panel_3(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
 
-        row23FPS = layout.row()
-        row23FPS.label(text= "Frames per second:")
-        layout.prop(mytool, "my_enum2")
-       
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringcirclegraph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorcgsql")
 
-class TestPanel2_panel_2(TestPanel2, bpy.types.Panel):
-    bl_parent_id = "TestPanel2_panel_1"
+class CIRCLE_GRAPH_PT_panel_4(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2238,36 +3584,91 @@ class TestPanel2_panel_2(TestPanel2, bpy.types.Panel):
         rowE.label(text= "Length of Animation:")
         layout.prop(mytool, "my_float")
         
-        
-class TestPanel2C:
-    bl_label = "2-3CG"
-    bl_idname = "PT_TestPanel2c"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class CIRCLE_GRAPH_PT_panel_5(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel2C_panel_1(TestPanel2C, bpy.types.Panel):
-    bl_idname = "TestPanel2C_panel_1"
-    bl_label = "2-3 Circle Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        row23CGcsv = layout.row()
-        row23CGcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_path23c")
-        layout.operator("mesh.mycubeoperatorcgccsv")
+        rowtitlecg = layout.row()
+        rowtitlecg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontcg_title")
+
+        rowsubtitlecg = layout.row()
+        rowsubtitlecg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontcg_subtitle")
+        
+        rowvaluecg = layout.row()
+        rowvaluecg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfontcg_value")
+
+        rowvaluecg = layout.row()
+        rowvaluecg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfontcg_description")
+        layout.operator("addonname.myop_operatorf")
+        
+        rowresetcg = layout.row()
+        rowresetcg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorres")
+        
+                
+class CIRCLE_GRAPH_23_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class CIRCLE_GRAPH_23_PT_panel_1(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_idname = "CIRCLE_GRAPH_23_PT_panel_1"
+    bl_label = "2-3 Circle Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         row23FPS = layout.row()
         row23FPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enum23C")
-        
 
-class TestPanel2C_panel_2(TestPanel2C, bpy.types.Panel):
-    bl_parent_id = "TestPanel2C_panel_1"
+class CIRCLE_GRAPH_23_PT_panel_2(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        row23CGcsv = layout.row()
+        row23CGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_path23c")
+        layout.operator("mesh.mycubeoperatorcgccsv")
+        
+class CIRCLE_GRAPH_23_PT_panel_3(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringcircle23_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorcg23sql")
+
+class CIRCLE_GRAPH_23_PT_panel_4(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2300,36 +3701,207 @@ class TestPanel2C_panel_2(TestPanel2C, bpy.types.Panel):
         row23CLC.label(text= "Length of Animation C:")
         layout.prop(mytool, "my_float23CLC")
         
-        
-class TestPanel3:
-    bl_label = "PG"
-    bl_idname = "PT_TestPanel3"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class CIRCLE_GRAPH_23_PT_panel_5(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel3_panel_1(TestPanel3, bpy.types.Panel):
-    bl_idname = "TestPanel3_panel_1"
-    bl_label = "Pie Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        row23CGcsv = layout.row()
-        row23CGcsv.label(text= "Link to csv file")
+        rowtitle23cg = layout.row()
+        rowtitle23cg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfont23cg_title")
+
+        rowsubtitle23cg = layout.row()
+        rowsubtitle23cg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfont23cg_subtitle")
+        
+        rowvalue23cg = layout.row()
+        rowvalue23cg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfont23cg_value")
+
+        rowdescription23cg = layout.row()
+        rowdescription23cg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfont23cg_description")
+        
+        rowlegend23cg = layout.row()
+        rowlegend23cg.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfont23cg_legend")                
+        layout.operator("addonname.myop_operator23cgfont")
+        
+        rowreset23cg = layout.row()
+        rowreset23cg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operator23cgresfont")
+
+class CANDLESTICK_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class CANDLESTICK_GRAPH_PT_panel_1(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Candlestick Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowFPS = layout.row()
+        rowFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enum_candlestick")
+
+class CANDLESTICK_GRAPH_PT_panel_2(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowCGcsv = layout.row()
+        rowCGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathcandle")
+        layout.operator("mesh.mycubeoperatorcandlecsv")
+        
+class CANDLESTICK_GRAPH_PT_panel_3(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringcandlestick_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorcandlesql")
+
+class CANDLESTICK_GRAPH_PT_panel_4(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Note"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowcandlea1 = layout.row()
+        rowcandlea1.label(text= "Duration Control is not applied")
+        
+        rowcandlea2 = layout.row()
+        rowcandlea2.label(text= "for this graph,")
+        
+        rowcandlea3 = layout.row()
+        rowcandlea3.label(text= "as its tedious to control")
+        
+        rowcandlea4 = layout.row()
+        rowcandlea4.label(text= "32 data points individually.")
+
+        rowcandlea5 = layout.row()
+        rowcandlea5.label(text= "There is a tutorial in the help")
+        
+        rowcandlea6 = layout.row()
+        rowcandlea6.label(text= "folder on how to increase duration")
+        
+        rowcandlea7 = layout.row()
+        rowcandlea7.label(text= "in an easy way.")
+        
+class CANDLESTICK_GRAPH_PT_panel_5(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlecandleg = layout.row()
+        rowtitlecandleg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontcandleg_title")
+
+        rowsubtitlecandleg = layout.row()
+        rowsubtitlecandleg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontcandleg_subtitle")
+        
+        rowrangenumberscandleg = layout.row()
+        rowrangenumberscandleg.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontcandleg_rangenumbers")
+
+        rowbartextcandleg = layout.row()
+        rowbartextcandleg.label(text= "Point Name Font:")
+        layout.prop(mytool, "my_pathfontcandleg_bartext")
+        layout.operator("addonname.myop_operatorcandlegfont")
+        
+        rowresetcandleg = layout.row()
+        rowresetcandleg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorcandlegresfont")
+        
+class PIE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class PIE_GRAPH_PT_panel_1(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "PIE_GRAPH_PT_panel_1"
+    bl_label = "Pie Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowPFPS = layout.row()
+        rowPFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enum2pie")
+
+class PIE_GRAPH_PT_panel_2(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowPGcsv = layout.row()
+        rowPGcsv.label(text= "Link to csv file")
         layout.prop(mytool, "my_pathpie")
         layout.operator("mesh.mycubeoperatorpgcsv")
+        
+class PIE_GRAPH_PT_panel_3(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
 
-        row23FPS = layout.row()
-        row23FPS.label(text= "Frames per second:")
-        layout.prop(mytool, "my_enum2pie")
-       
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringpiegraph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorpgsql")
 
-class TestPanel3_panel_2(TestPanel3, bpy.types.Panel):
-    bl_parent_id = "TestPanel3_panel_1"
+class PIE_GRAPH_PT_panel_4(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2338,44 +3910,99 @@ class TestPanel3_panel_2(TestPanel3, bpy.types.Panel):
         scene = context.scene
         mytool = scene.my_tool
         
-        rowG = layout.row()
-        rowG.label(text= "Start Animation:")
+        rowPG = layout.row()
+        rowPG.label(text= "Start Animation:")
         layout.prop(mytool, "my_float2pie")
 
-        rowE = layout.row()
-        rowE.label(text= "Length of Animation:")
+        rowPE = layout.row()
+        rowPE.label(text= "Length of Animation:")
         layout.prop(mytool, "my_floatpie")
+        
+class PIE_GRAPH_PT_panel_5(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+            
+        rowtitlepg = layout.row()
+        rowtitlepg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontpg_title")
+
+        rowsubtitlepg = layout.row()
+        rowsubtitlepg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontpg_subtitle")
+        
+        rowvaluepg = layout.row()
+        rowvaluepg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfontpg_value")
+
+        rowvaluepg = layout.row()
+        rowvaluepg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfontpg_description")
+        layout.operator("addonname.myop_operatorfpie")
+        
+        rowresetpg = layout.row()
+        rowresetpg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorrespie")
 
         
-class TestPanel3P:
-    bl_label = "2-3PG"
-    bl_idname = "PT_TestPanel3p"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
+class PIE_GRAPH_23_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
     bl_category = 'Renaissance'
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel3P_panel_1(TestPanel3P, bpy.types.Panel):
-    bl_idname = "TestPanel3P_panel_1"
+
+class PIE_GRAPH_23_PT_panel_1(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_idname = "PIE_GRAPH_23_PT_panel_1"
     bl_label = "2-3 Pie Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
-        
-        row23PGcsv = layout.row()
-        row23PGcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_path23p")
-        layout.operator("mesh.mycubeoperatorpgccsv")
 
         row23PFPS = layout.row()
         row23PFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enum23P")
-        
 
-class TestPanel3P_panel_2(TestPanel3P, bpy.types.Panel):
-    bl_parent_id = "TestPanel3P_panel_1"
+class PIE_GRAPH_23_PT_panel_2(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        row23PGcsv = layout.row()
+        row23PGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_path23p")
+        layout.operator("mesh.mycubeoperatorpgccsv")
+        
+class PIE_GRAPH_23_PT_panel_3(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringpie23_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorpg23sql")
+
+class PIE_GRAPH_23_PT_panel_4(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2408,35 +4035,94 @@ class TestPanel3P_panel_2(TestPanel3P, bpy.types.Panel):
         row23PLC.label(text= "Length of Animation C:")
         layout.prop(mytool, "my_float23PLC")
         
-class TestPanel4:
-    bl_label = "LG"
-    bl_idname = "PT_TestPanel4"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class PIE_GRAPH_23_PT_panel_5(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel4_panel_1(TestPanel4, bpy.types.Panel):
-    bl_idname = "TestPanel4_panel_1"
-    bl_label = "Line Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowLGcsv = layout.row()
-        rowLGcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathline")
-        layout.operator("mesh.mycubeoperatorlgcsv")
+        rowtitle23pg = layout.row()
+        rowtitle23pg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfont23pg_title")
+
+        rowsubtitle23pg = layout.row()
+        rowsubtitle23pg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfont23pg_subtitle")
+        
+        rowvalue23pg = layout.row()
+        rowvalue23pg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfont23pg_value")
+
+        rowvalue23pg = layout.row()
+        rowvalue23pg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfont23pg_description")
+        
+        rowlegend23pg = layout.row()
+        rowlegend23pg.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfont23pg_legend")                
+        layout.operator("addonname.myop_operator23pgfont")
+        
+        rowreset23pg = layout.row()
+        rowreset23pg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operator23pgresfont")
+        
+class LINE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class LINE_GRAPH_PT_panel_1(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "LINE_GRAPH_PT_panel_1"
+    bl_label = "Line Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowLG = layout.row()
         rowLG.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumLGpie")
-       
 
-class TestPanel4_panel_2(TestPanel4, bpy.types.Panel):
-    bl_parent_id = "TestPanel4_panel_1"
+class LINE_GRAPH_PT_panel_2(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "LINE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowLGcsv = layout.row()
+        rowLGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathline")
+        layout.operator("mesh.mycubeoperatorlgcsv")
+        
+class LINE_GRAPH_PT_panel_3(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "LINE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringline_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorlgsql")
+
+class LINE_GRAPH_PT_panel_4(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "LINE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2508,37 +4194,96 @@ class TestPanel4_panel_2(TestPanel4, bpy.types.Panel):
         rowLGLH = layout.row()
         rowLGLH.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatLGLH")
-
         
-class TestPanel4LGC:
-    bl_label = "LGC"
-    bl_idname = "PT_TestPanel4lgc"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class LINE_GRAPH_PT_panel_5(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "LINE_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel4LGC_panel_1(TestPanel4LGC, bpy.types.Panel):
-    bl_idname = "TestPanel4LGC_panel_1"
-    bl_label = "Line Graph Comparison"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowLGCcsv = layout.row()
-        rowLGCcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathlinec")
-        layout.operator("mesh.mycubeoperatorlgccsv")
+        rowtitlelg = layout.row()
+        rowtitlelg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontlg_title")
+
+        rowsubtitlelg = layout.row()
+        rowsubtitlelg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontlg_subtitle")
+        
+        rowvaluelg = layout.row()
+        rowvaluelg.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontlg_barvalue")
+
+        rowlinetextlg = layout.row()
+        rowlinetextlg.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontlg_bartext")
+        
+        rowlegendlg = layout.row()
+        rowlegendlg.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontlg_rangenumbers")                
+        layout.operator("addonname.myop_operatorlinegfont")
+        
+        rowresetlg = layout.row()
+        rowresetlg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorlinegresfont")
+
+        
+class COMPARISON_LINE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class COMPARISON_LINE_GRAPH_PT_panel_1(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "COMPARISON_LINE_GRAPH_PT_panel_1"
+    bl_label = "Line Graph Comparison"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowLGCFPS = layout.row()
         rowLGCFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumLGC")
-       
 
-class TestPanel4LGC_panel_2(TestPanel4LGC, bpy.types.Panel):
-    bl_parent_id = "TestPanel4LGC_panel_1"
+class COMPARISON_LINE_GRAPH_PT_panel_2(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowLGCcsv = layout.row()
+        rowLGCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathlinec")
+        layout.operator("mesh.mycubeoperatorlgccsv")
+        
+class COMPARISON_LINE_GRAPH_PT_panel_3(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringline_graph_comparison")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorlgcsql")
+
+class COMPARISON_LINE_GRAPH_PT_panel_4(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2675,36 +4420,99 @@ class TestPanel4LGC_panel_2(TestPanel4LGC, bpy.types.Panel):
         rowCOMPARISONBLINELH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBLINELH")
 
-
-class TestPanel5:
-    bl_label = "HBG"
-    bl_idname = "PT_TestPanel5"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class COMPARISON_LINE_GRAPH_PT_panel_5(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel5_panel_1(TestPanel5, bpy.types.Panel):
-    bl_idname = "TestPanel5_panel_1"
-    bl_label = "Horizontal Bar Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
+        rowtitlelgc = layout.row()
+        rowtitlelgc.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontlgc_title")
+
+        rowsubtitlelgc = layout.row()
+        rowsubtitlelgc.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontlgc_subtitle")
+        
+        rowvaluelgc = layout.row()
+        rowvaluelgc.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontlgc_barvalue")
+
+        rowvaluelgc = layout.row()
+        rowvaluelgc.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontlgc_bartext")
+        
+        rowlegendlgc = layout.row()
+        rowlegendlgc.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontlgc_rangenumbers")
+        
+        rowlegendlgc = layout.row()
+        rowlegendlgc.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontlgc_legend")                 
+        layout.operator("addonname.myop_operatorlinegcfont")
+        
+        rowresetlgc = layout.row()
+        rowresetlgc.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorlinegcresfont")
+
+
+class HORIZONTAL_BAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class HORIZONTAL_BAR_GRAPH_PT_panel_1(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Horizontal Bar Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowHB = layout.row()
+        rowHB.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enumHBpie")
+
+class HORIZONTAL_BAR_GRAPH_PT_panel_2(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
         rowHBcsv = layout.row()
         rowHBcsv.label(text= "Link to csv file")
         layout.prop(mytool, "my_pathhbar")
         layout.operator("mesh.mycubeoperatorhbcsv")
         
-        rowHB = layout.row()
-        rowHB.label(text= "Frames per second:")
-        layout.prop(mytool, "my_enumHBpie")
-        
+class HORIZONTAL_BAR_GRAPH_PT_panel_3(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
 
-class TestPanel5_panel_2(TestPanel5, bpy.types.Panel):
-    bl_parent_id = "TestPanel5_panel_1"
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringhorizontal_bar_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorhbgsql")
+
+class HORIZONTAL_BAR_GRAPH_PT_panel_4(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2745,34 +4553,102 @@ class TestPanel5_panel_2(TestPanel5, bpy.types.Panel):
         rowHBGLD.label(text= "Length of Animation D:")
         layout.prop(mytool, "my_floatHBGLD")
         
-class TestPanel5C:
-    bl_label = "HBGC"
-    bl_idname = "PT_TestPanel5c"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class HORIZONTAL_BAR_GRAPH_PT_panel_5(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel5c_panel_1(TestPanel5C, bpy.types.Panel):
-    bl_idname = "TestPanel5C_panel_1"
-    bl_label = "Horizontal Bar Graph Comparison"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowHBCcsv = layout.row()
-        rowHBCcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathhbarc")
-        layout.operator("mesh.mycubeoperatorhbccsv")
+        rowtitlebg = layout.row()
+        rowtitlebg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontbg_title")
+
+        rowsubtitlebg = layout.row()
+        rowsubtitlebg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontbg_subtitle")
+        
+        rowvaluebg = layout.row()
+        rowvaluebg.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontbg_barvalue")
+
+        rowvaluebg = layout.row()
+        rowvaluebg.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontbg_bartext")
+        
+        rowlegendbg = layout.row()
+        rowlegendbg.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontbg_rangenumbers")
+        
+        rowlegendbg = layout.row()
+        rowlegendbg.label(text= "Text Total Font:")
+        layout.prop(mytool, "my_pathfontbg_texttotal")
+
+        rowlegendbg = layout.row()
+        rowlegendbg.label(text= "Value Total Font:")
+        layout.prop(mytool, "my_pathfontbg_valuetotal")                  
+        layout.operator("addonname.myop_operatorbgfont")
+        
+        rowresetbg = layout.row()
+        rowresetbg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorbgresfont")
+        
+class COMPARISON_HORIZONTAL_BAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Horizontal Bar Graph Comparison"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowHBCFPS = layout.row()
         rowHBCFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumHBC")
+
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowHBCcsv = layout.row()
+        rowHBCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathhbarc")
+        layout.operator("mesh.mycubeoperatorhbccsv")
         
-class TestPanel5c_panel_2(TestPanel5C, bpy.types.Panel):
-    bl_parent_id = "TestPanel5C_panel_1"
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringhorizontal_bar_graph_comparison")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorhbgcsql")
+
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2845,36 +4721,98 @@ class TestPanel5c_panel_2(TestPanel5C, bpy.types.Panel):
         rowCOMPARISONBHBARLD.label(text= "Length of Animation B4:")
         layout.prop(mytool, "my_floatCOMPARISONBHBARDL")
 
-
-class TestPanel6:
-    bl_label = "MCG"
-    bl_idname = "PT_TestPanel6"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel6_panel_1(TestPanel6, bpy.types.Panel):
-    bl_idname = "TestPanel6_panel_1"
-    bl_label = "Multiple Circle Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
+        rowtitlebgc = layout.row()
+        rowtitlebgc.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontbgc_title")
+
+        rowsubtitlebgc = layout.row()
+        rowsubtitlebgc.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontbgc_subtitle")
+        
+        rowvaluebgc = layout.row()
+        rowvaluebgc.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontbgc_barvalue")
+
+        rowvaluebgc = layout.row()
+        rowvaluebgc.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontbgc_bartext")
+        
+        rowlegendbgc = layout.row()
+        rowlegendbgc.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontbgc_rangenumbers")
+        
+        rowlegendbgc = layout.row()
+        rowlegendbgc.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontbgc_legend")                 
+        layout.operator("addonname.myop_operatorbgcfont")
+        
+        rowresetbgc = layout.row()
+        rowresetbgc.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorbgcresfont")
+
+class MULTIPLE_CIRCLE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_1(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Multiple Circle Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowMC = layout.row()
+        rowMC.label(text= "Frames per second:")       
+        layout.prop(mytool, "my_enumMCpie")
+
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_2(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
         rowMCcsv = layout.row()
         rowMCcsv.label(text= "Link to csv file")
         layout.prop(mytool, "my_pathmcircle")
         layout.operator("mesh.mycubeoperatormccsv")
-
-        rowMC = layout.row()
-        rowMC.label(text= "Frames per second:")
-       
-        layout.prop(mytool, "my_enumMCpie")
         
-class TestPanel6_panel_2(TestPanel6, bpy.types.Panel):
-    bl_parent_id = "TestPanel6_panel_1"
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_3(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringmultiple_circle_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatormcgsql")
+
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_4(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -2923,35 +4861,91 @@ class TestPanel6_panel_2(TestPanel6, bpy.types.Panel):
         rowMCGLE.label(text= "Length of Animation E:")
         layout.prop(mytool, "my_floatMCGLE")
 
-        
-class TestPanel7:
-    bl_label = "MPG"
-    bl_idname = "PT_TestPanel7"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_5(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel7_panel_1(TestPanel7, bpy.types.Panel):
-    bl_idname = "TestPanel7_panel_1"
-    bl_label = "Multiple Pie Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowMPcsv = layout.row()
-        rowMPcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathmpie")
-        layout.operator("mesh.mycubeoperatormpcsv")
+        rowtitlemcg = layout.row()
+        rowtitlemcg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontmcg_title")
+
+        rowsubtitlemcg = layout.row()
+        rowsubtitlemcg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontmcg_subtitle")
+        
+        rowvaluemcg = layout.row()
+        rowvaluemcg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfontmcg_barvalue")
+
+        rowvaluemcg = layout.row()
+        rowvaluemcg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfontmcg_bartext")
+        layout.operator("addonname.myop_operatormcgfont")
+        
+        rowresetmcg = layout.row()
+        rowresetmcg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatormcgresfont")
+
+        
+class MULTIPLE_PIE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class MULTIPLE_PIE_GRAPH_PT_panel_1(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "MULTIPLE_PIE_GRAPH_PT_panel_1"
+    bl_label = "Multiple Pie Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowMP = layout.row()
         rowMP.label(text= "Frames per second:")       
         layout.prop(mytool, "my_enumMPpie")
+
+class MULTIPLE_PIE_GRAPH_PT_panel_2(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowMPcsv = layout.row()
+        rowMPcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathmpie")
+        layout.operator("mesh.mycubeoperatormpcsv")
         
-class TestPanel7_panel_2(TestPanel7, bpy.types.Panel):
-    bl_parent_id = "TestPanel7_panel_1"
+class MULTIPLE_PIE_GRAPH_PT_panel_3(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringmultiple_pie_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatormpgsql")
+
+class MULTIPLE_PIE_GRAPH_PT_panel_4(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -3000,35 +4994,91 @@ class TestPanel7_panel_2(TestPanel7, bpy.types.Panel):
         rowMPLE.label(text="Length of Animation E:")
         layout.prop(mytool, "my_floatMPGLE")
 
-        
-class TestPanel8:
-    bl_label = "MG"
-    bl_idname = "PT_TestPanel8"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class MULTIPLE_PIE_GRAPH_PT_panel_5(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel8_panel_1(TestPanel8, bpy.types.Panel):
-    bl_idname = "TestPanel8_panel_1"
-    bl_label = "Mountain Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowMGcsv = layout.row()
-        rowMGcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathmg")
-        layout.operator("mesh.mycubeoperatormgcsv")
+        rowtitlempg = layout.row()
+        rowtitlempg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontmpg_title")
+
+        rowsubtitlempg = layout.row()
+        rowsubtitlempg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontmpg_subtitle")
+        
+        rowvaluempg = layout.row()
+        rowvaluempg.label(text= "Value Font:")
+        layout.prop(mytool, "my_pathfontmpg_barvalue")
+
+        rowvaluempg = layout.row()
+        rowvaluempg.label(text= "Description Font:")
+        layout.prop(mytool, "my_pathfontmpg_bartext")
+        layout.operator("addonname.myop_operatormpgfont")
+        
+        rowresetmpg = layout.row()
+        rowresetmpg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatormpgresfont")
+
+        
+class MOUNTAIN_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class MOUNTAIN_GRAPH_PT_panel_1(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Mountain Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowMGFPS = layout.row()
         rowMGFPS.label(text= "Frames per second:")  
         layout.prop(mytool, "my_enumMG") 
+
+class MOUNTAIN_GRAPH_PT_panel_2(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowMGcsv = layout.row()
+        rowMGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathmg")
+        layout.operator("mesh.mycubeoperatormgcsv")
         
-class TestPanel8_panel_2(TestPanel8, bpy.types.Panel):
-    bl_parent_id = "TestPanel8_panel_1"
+class MOUNTAIN_GRAPH_PT_panel_3(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringmountain_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatormgsql")
+
+class MOUNTAIN_GRAPH_PT_panel_4(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -3101,42 +5151,101 @@ class TestPanel8_panel_2(TestPanel8, bpy.types.Panel):
         rowMGLH.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatMGLH")
         
-        
-class TestPanel8C:
-    bl_label = "MGC"
-    bl_idname = "PT_TestPanel8c"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class MOUNTAIN_GRAPH_PT_panel_5(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel8C_panel_1(TestPanel8C, bpy.types.Panel):
-    bl_idname = "TestPanel8c_panel_1"
-    bl_label = "Mountain Graph Comparison"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowMGCcsv = layout.row()
-        rowMGCcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathmgc")
-        layout.operator("mesh.mycubeoperatormgccsv")
+        rowtitlemg = layout.row()
+        rowtitlemg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontmg_title")
+
+        rowsubtitlemg = layout.row()
+        rowsubtitlemg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontmg_subtitle")
+        
+        rowvaluemg = layout.row()
+        rowvaluemg.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontmg_barvalue")
+
+        rowvaluemg = layout.row()
+        rowvaluemg.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontmg_bartext")
+        
+        rowlegendmg = layout.row()
+        rowlegendmg.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontmg_rangenumbers")                
+        layout.operator("addonname.myop_operatormgfont")
+        
+        rowresetmg = layout.row()
+        rowresetmg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatormgresfont")
+        
+class COMPARISON_MOUNTAIN_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_1(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Mountain Graph Comparison"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowMGCFPS = layout.row()
         rowMGCFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumMGC")  
+
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_2(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowMGCcsv = layout.row()
+        rowMGCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathmgc")
+        layout.operator("mesh.mycubeoperatormgccsv")
         
-class TestPanel8C_panel_2(TestPanel8C, bpy.types.Panel):
-    bl_parent_id = "TestPanel8c_panel_1"
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_3(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringmountain_graph_comparison")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatormgcsql")
+
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_4(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        mytool = scene.my_tool 
+        mytool = scene.my_tool
         
         rowCOMPARISONAMOUNTA = layout.row()
         rowCOMPARISONAMOUNTA.label(text= "Start A1:")
@@ -3265,36 +5374,99 @@ class TestPanel8C_panel_2(TestPanel8C, bpy.types.Panel):
         rowCOMPARISONBMOUNTLH = layout.row()
         rowCOMPARISONBMOUNTLH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBMOUNTLH")
-
         
-class TestPanel9:
-    bl_label = "VBG"
-    bl_idname = "PT_TestPanel9"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_5(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel9_panel_1(TestPanel9, bpy.types.Panel):
-    bl_idname = "TestPanel9_panel_1"
-    bl_label = "Vertical Bar Graph"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowVBcsv = layout.row()
-        rowVBcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathvb")
-        layout.operator("mesh.mycubeoperatorvbcsv")
+        rowtitlemgc = layout.row()
+        rowtitlemgc.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontmgc_title")
+
+        rowsubtitlemgc = layout.row()
+        rowsubtitlemgc.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontmgc_subtitle")
+        
+        rowvaluemgc = layout.row()
+        rowvaluemgc.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontmgc_barvalue")
+
+        rowvaluemgc = layout.row()
+        rowvaluemgc.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontmgc_bartext")
+        
+        rowlegendmgc = layout.row()
+        rowlegendmgc.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontmgc_rangenumbers")
+        
+        rowlegendmgc = layout.row()
+        rowlegendmgc.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontmgc_legend")                 
+        layout.operator("addonname.myop_operatormgcfont")
+        
+        rowresetmgc = layout.row()
+        rowresetmgc.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatormgcresfont")
+        
+class VERTICAL_BAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class VERTICAL_BAR_GRAPH_PT_panel_1(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Vertical Bar Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowVBFPS = layout.row()
         rowVBFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumVB") 
+
+class VERTICAL_BAR_GRAPH_PT_panel_2(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowVBcsv = layout.row()
+        rowVBcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathvb")
+        layout.operator("mesh.mycubeoperatorvbcsv")
         
-class TestPanel9_panel_2(TestPanel9, bpy.types.Panel):
-    bl_parent_id = "TestPanel9_panel_1"
+class VERTICAL_BAR_GRAPH_PT_panel_3(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringvertical_bar_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorvbgsql")
+
+class VERTICAL_BAR_GRAPH_PT_panel_4(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -3367,35 +5539,103 @@ class TestPanel9_panel_2(TestPanel9, bpy.types.Panel):
         rowVBGLH.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatVBGLH") 
  
-        
-class TestPanel9VB:
-    bl_label = "VBGC"
-    bl_idname = "PT_TestPanel9vb"  
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Renaissance'
+class VERTICAL_BAR_GRAPH_PT_panel_5(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
-    
-class TestPanel9vb_panel_1(TestPanel9VB, bpy.types.Panel):
-    bl_idname = "TestPanel9vb_panel_1"
-    bl_label = "Vertical Bar Graph Comparison"
 
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
         
-        rowVBCcsv = layout.row()
-        rowVBCcsv.label(text= "Link to csv file")
-        layout.prop(mytool, "my_pathvbc")
-        layout.operator("mesh.mycubeoperatorvbccsv")
+        rowtitlevbg = layout.row()
+        rowtitlevbg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontvbg_title")
+
+        rowsubtitlevbg = layout.row()
+        rowsubtitlevbg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontvbg_subtitle")
+        
+        rowvaluevbg = layout.row()
+        rowvaluevbg.label(text= "Bar Value Font:")
+        layout.prop(mytool, "my_pathfontvbg_barvalue")
+
+        rowvaluevbg = layout.row()
+        rowvaluevbg.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontvbg_bartext")
+        
+        rowlegendvbg = layout.row()
+        rowlegendvbg.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontvbg_rangenumbers")
+        
+        rowlegendvbg = layout.row()
+        rowlegendvbg.label(text= "Text Total Font:")
+        layout.prop(mytool, "my_pathfontvbg_texttotal")
+
+        rowlegendvbg = layout.row()
+        rowlegendvbg.label(text= "Value Total Font:")
+        layout.prop(mytool, "my_pathfontvbg_valuetotal")                  
+        layout.operator("addonname.myop_operatorvbgfont")
+        
+        rowresetvbg = layout.row()
+        rowresetvbg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorvbgresfont")
+
+        
+class COMPARISON_VERTICAL_BAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Vertical Bar Graph Comparison"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
 
         rowVBCFPS = layout.row()
         rowVBCFPS.label(text= "Frames per second:")
         layout.prop(mytool, "my_enumVBC") 
+
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowVBCcsv = layout.row()
+        rowVBCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathvbc")
+        layout.operator("mesh.mycubeoperatorvbccsv")
         
-class TestPanel9vb_panel_2(TestPanel9VB, bpy.types.Panel):
-    bl_parent_id = "TestPanel9vb_panel_1"
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringvertical_bar_graph_comparison")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorvbgcsql")
+
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
 
@@ -3531,8 +5771,1758 @@ class TestPanel9vb_panel_2(TestPanel9VB, bpy.types.Panel):
         rowCOMPARISONBBARVLH = layout.row()
         rowCOMPARISONBBARVLH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBBARVLH")
+        
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlevbgc = layout.row()
+        rowtitlevbgc.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontvbgc_title")
+
+        rowsubtitlevbgc = layout.row()
+        rowsubtitlevbgc.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontvbgc_subtitle")
+        
+        rowvalueavbgc = layout.row()
+        rowvalueavbgc.label(text= "Bar Value A Font:")
+        layout.prop(mytool, "my_pathfontvbgc_barvaluea")
+        
+        rowvaluebvbgc = layout.row()
+        rowvaluebvbgc.label(text= "Bar Value B Font:")
+        layout.prop(mytool, "my_pathfontvbgc_barvalueb")
+
+        rowvaluevbgc = layout.row()
+        rowvaluevbgc.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontvbgc_bartext")
+        
+        rowlegendvbgc = layout.row()
+        rowlegendvbgc.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontvbgc_rangenumbers")
+        
+        rowlegendvbgc = layout.row()
+        rowlegendvbgc.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontvbgc_legend")                 
+        layout.operator("addonname.myop_operatorvbgcfont")
+        
+        rowresetvbgc = layout.row()
+        rowresetvbgc.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorvbgcresfont")
+        
+class MyoperatorCGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorcgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringcirclegraph
+        )
+            
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT `Max Value` FROM circlegtable")
+        maxvalue = mycursor.fetchone()
+        my_float_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Min Value` FROM circlegtable")
+        minvalue = mycursor.fetchone()
+        my_float_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Value` FROM circlegtable")
+        value = mycursor.fetchone()
+        my_float_value = float(value[0])
+        my_float_percentage = my_float_value/my_float_maxvalue
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM circlegtable")
+        my_string_title = mycursor.fetchone()
+        my_string_title = str(my_string_title)
+        my_string_title = my_string_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM circlegtable")
+        my_string_subtitle = mycursor.fetchone()
+        my_string_subtitle = str(my_string_subtitle)
+        my_string_subtitle = my_string_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Text description` FROM circlegtable")
+        my_string_description = mycursor.fetchone()
+        my_string_description = str(my_string_description)
+        my_string_description = my_string_description.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_11"] = my_float_maxvalue
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_10"] = my_float_minvalue
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_2"] = my_float_percentage
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_22"] = str(my_string_title)
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_23"] = str(my_string_subtitle)
+        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_16"] = str(my_string_description)
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+
+class MyoperatorPGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorpgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringpiegraph
+        )
+            
+        mycursor = mydb.cursor()
+
+        mycursor.execute("SELECT `Max Value` FROM piegtable")
+        maxvalue = mycursor.fetchone()
+        my_floatpie_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Min Value` FROM piegtable")
+        minvalue = mycursor.fetchone()
+        my_floatpie_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Value` FROM piegtable")
+        value = mycursor.fetchone()
+        my_floatpie_value = float(value[0])
+        my_floatpie_percentage = my_floatpie_value/my_floatpie_maxvalue
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM piegtable")
+        my_stringpie_title = mycursor.fetchone()
+        my_stringpie_title = str(my_stringpie_title)
+        my_stringpie_title = my_stringpie_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM piegtable")
+        my_stringpie_subtitle = mycursor.fetchone()
+        my_stringpie_subtitle = str(my_stringpie_subtitle)
+        my_stringpie_subtitle = my_stringpie_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Text description` FROM piegtable")
+        my_stringpie_description = mycursor.fetchone()
+        my_stringpie_description = str(my_stringpie_description)
+        my_stringpie_description = my_stringpie_description.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_11"] = my_floatpie_maxvalue
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_10"] = my_floatpie_minvalue
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_2"] = my_floatpie_percentage
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_15"] = str(my_stringpie_title)
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_17"] = str(my_stringpie_subtitle)
+        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_19"] = str(my_stringpie_description)
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class Myoperator23CGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorcg23sql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringcircle23_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
 
         
+        mycursor.execute("SELECT `Number of Graphs` FROM circle23gtable")
+        numberofgraphs23cg = mycursor.fetchone()
+        my_float23cg_numberofgraphs = int(numberofgraphs23cg[0])
+        
+        mycursor.execute("SELECT `Wheel Text` FROM circle23gtable")
+        my_string23cg_wheeltext = mycursor.fetchall()
+        my_string23cg_wheeltext1 = str(my_string23cg_wheeltext[0])
+        my_string23cg_wheeltext2 = str(my_string23cg_wheeltext[1])
+        my_string23cg_wheeltext3 = str(my_string23cg_wheeltext[2])
+        my_string23cg_wheeltext1 = my_string23cg_wheeltext1.strip("(").strip(")").strip(",").strip("'")
+        my_string23cg_wheeltext2 = my_string23cg_wheeltext2.strip("(").strip(")").strip(",").strip("'")
+        my_string23cg_wheeltext3 = my_string23cg_wheeltext3.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM circle23gtable")
+        maxvalue = mycursor.fetchone()
+        my_float23cg_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Value` FROM circle23gtable")
+        value23cg = mycursor.fetchall()
+        value23cg1, value23cg2, value23cg3 = value23cg
+        value23cg1 = str(value23cg1)
+        value23cg2 = str(value23cg2)
+        value23cg3 = str(value23cg3)        
+        value23cg1 = value23cg1.strip("(").strip(")").strip(",").strip("'")
+        value23cg1 = float(value23cg1)
+        value23cg2 = value23cg2.strip("(").strip(")").strip(",").strip("'")
+        value23cg2 = float(value23cg2)
+        value23cg3 = value23cg3.strip("(").strip(")").strip(",").strip("'")
+        value23cg3 = float(value23cg3)
+        my_float23cg_value1 = value23cg1/my_float23cg_maxvalue
+        my_float23cg_value2 = value23cg2/my_float23cg_maxvalue
+        my_float23cg_value3 = value23cg3/my_float23cg_maxvalue
+
+        mycursor.execute("SELECT `Min Value` FROM circle23gtable")
+        minvalue = mycursor.fetchone()
+        my_float23cg_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM circle23gtable")
+        my_string23cg_title = mycursor.fetchone()
+        my_string23cg_title = str(my_string23cg_title)
+        my_string23cg_title = my_string23cg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM circle23gtable")
+        my_string23cg_subtitle = mycursor.fetchone()
+        my_string23cg_subtitle = str(my_string23cg_subtitle)
+        my_string23cg_subtitle = my_string23cg_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Text description` FROM circle23gtable")
+        my_string23cg_textdescription = mycursor.fetchone()
+        my_string23cg_textdescription = str(my_string23cg_textdescription)
+        my_string23cg_textdescription = my_string23cg_textdescription.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_31"] = my_float23cg_numberofgraphs
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_39"] = my_string23cg_wheeltext1
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_40"] = my_string23cg_wheeltext2
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_38"] = my_string23cg_wheeltext3
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_2"] = my_float23cg_value1
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_41"] = my_float23cg_value2
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_42"] = my_float23cg_value3
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_10"] = my_float23cg_minvalue
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_11"] = my_float23cg_maxvalue
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_22"] = my_string23cg_title
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_23"] = my_string23cg_subtitle
+        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_16"] = my_string23cg_textdescription
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class Myoperatorcandlesql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorcandlesql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringcandlestick_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+        
+        mycursor.execute("SELECT `Number of Points` FROM candlestickgtable")
+        numberofpointscandleg = mycursor.fetchone()
+        my_floatcandleg_numberofpoints = int(numberofpointscandleg[0])
+
+        mycursor.execute("SELECT `Point High` FROM candlestickgtable")
+        pointhighvaluecandleg = mycursor.fetchall()
+        # Convert the fetched data to a list of floats in one line
+        pointhighvaluecandleg = [float(str(point).strip("(), '")) for point in pointhighvaluecandleg]
+
+        mycursor.execute("SELECT `Point Open` FROM candlestickgtable")
+        pointopenvaluecandleg = mycursor.fetchall()
+        # Convert the fetched data to a list of floats in one line
+        pointopenvaluecandleg = [float(str(point).strip("(), '")) for point in pointopenvaluecandleg]
+
+        mycursor.execute("SELECT `Point Close` FROM candlestickgtable")
+        pointclosevaluecandleg = mycursor.fetchall()
+        # Convert the fetched data to a list of floats in one line
+        pointclosevaluecandleg = [float(str(point).strip("(), '")) for point in pointclosevaluecandleg]
+
+        mycursor.execute("SELECT `Point Low` FROM candlestickgtable")
+        pointlowvaluecandleg = mycursor.fetchall()
+        # Convert the fetched data to a list of floats in one line
+        pointlowvaluecandleg = [float(str(point).strip("(), '")) for point in pointlowvaluecandleg]
+
+        mycursor.execute("SELECT `Point Text` FROM candlestickgtable")
+        my_stringcandleg_pointtext = mycursor.fetchall()
+        pointtext_list = [str(item).strip("(").strip(")").strip(",").strip("'") for item in my_stringcandleg_pointtext]
+
+        mycursor.execute("SELECT `Min Value` FROM candlestickgtable")
+        minpointvalue = mycursor.fetchone()
+        my_floatcandleg_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM candlestickgtable")
+        maxpointvalue = mycursor.fetchone()
+        my_floatcandleg_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM candlestickgtable")
+        decvalue = mycursor.fetchone()
+        my_floatcandleg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM candlestickgtable")
+        rangenumber = mycursor.fetchone()
+        my_floatcandleg_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM candlestickgtable")
+        my_stringcandleg_title = mycursor.fetchone()
+        my_stringcandleg_title = str(my_stringcandleg_title)
+        my_stringcandleg_title = my_stringcandleg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM candlestickgtable")
+        my_stringcandleg_subtitle = mycursor.fetchone()
+        my_stringcandleg_subtitle = str(my_stringcandleg_subtitle)
+        my_stringcandleg_subtitle = my_stringcandleg_subtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_3"] = my_floatcandleg_numberofpoints
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_12"] = my_floatcandleg_minpointvalue
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_13"] = my_floatcandleg_maxpointvalue
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_14"] = my_floatcandleg_decvalue
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_15"] = my_floatcandleg_rangenumber
+
+
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_4"] = pointtext_list[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_5"] = pointtext_list[1]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_6"] = pointtext_list[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_7"] = pointtext_list[3]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_8"] = pointtext_list[4]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_9"] = pointtext_list[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_10"] = pointtext_list[6]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_11"] = pointtext_list[7]
+        
+        cube_objecttextcandle = bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]
+        for i in range(8, 32):
+            input_index = i - 8 + 71
+            input_name = f"Input_{input_index:02d}"
+            cube_objecttextcandle[input_name] = pointtext_list[i]
+        
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_38"] = pointhighvaluecandleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_103"] = pointhighvaluecandleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_107"] = pointhighvaluecandleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_168"] = pointhighvaluecandleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_172"] = pointhighvaluecandleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_176"] = pointhighvaluecandleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_99"] = pointhighvaluecandleg[6]
+        for i in range(7, 32):
+            input_numpointhighvaluecandleg = 180 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointhighvaluecandleg)] = pointhighvaluecandleg[i]  
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_97"] = pointopenvaluecandleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_104"] = pointopenvaluecandleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_108"] = pointopenvaluecandleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_169"] = pointopenvaluecandleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_173"] = pointopenvaluecandleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_177"] = pointopenvaluecandleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_100"] = pointopenvaluecandleg[6]
+        for i in range(7, 32):
+            input_numpointopenvaluecandleg = 181 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointopenvaluecandleg)] = pointopenvaluecandleg[i]
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_98"] = pointclosevaluecandleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_105"] = pointclosevaluecandleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_109"] = pointclosevaluecandleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_170"] = pointclosevaluecandleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_174"] = pointclosevaluecandleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_178"] = pointclosevaluecandleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_101"] = pointclosevaluecandleg[6]
+        for i in range(7, 32):
+            input_numpointclosevaluecandleg = 182 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointclosevaluecandleg)] = pointclosevaluecandleg[i]
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_96"] = pointlowvaluecandleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_106"] = pointlowvaluecandleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_110"] = pointlowvaluecandleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_171"] = pointlowvaluecandleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_175"] = pointlowvaluecandleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_179"] = pointlowvaluecandleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_102"] = pointlowvaluecandleg[6]
+        for i in range(7, 32):
+            input_numpointlowvaluecandleg = 183 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointlowvaluecandleg)] = pointlowvaluecandleg[i]    
+
+
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_23"] = my_stringcandleg_title
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_22"] = my_stringcandleg_subtitle
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class Myoperator23PGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorpg23sql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringpie23_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of Graphs` FROM pie23gtable")
+        numberofgraphs23pg = mycursor.fetchone()
+        my_float23pg_numberofgraphs = int(numberofgraphs23pg[0])
+        
+        mycursor.execute("SELECT `Wheel Text` FROM pie23gtable")
+        my_string23pg_wheeltext = mycursor.fetchall()
+        my_string23pg_wheeltext1 = str(my_string23pg_wheeltext[0])
+        my_string23pg_wheeltext2 = str(my_string23pg_wheeltext[1])
+        my_string23pg_wheeltext3 = str(my_string23pg_wheeltext[2])
+        my_string23pg_wheeltext1 = my_string23pg_wheeltext1.strip("(").strip(")").strip(",").strip("'")
+        my_string23pg_wheeltext2 = my_string23pg_wheeltext2.strip("(").strip(")").strip(",").strip("'")
+        my_string23pg_wheeltext3 = my_string23pg_wheeltext3.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM pie23gtable")
+        maxvalue = mycursor.fetchone()
+        my_float23pg_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Value` FROM pie23gtable")
+        value23pg = mycursor.fetchall()
+        value23pg1, value23pg2, value23pg3 = value23pg
+        value23pg1 = str(value23pg1)
+        value23pg2 = str(value23pg2)
+        value23pg3 = str(value23pg3)        
+        value23pg1 = value23pg1.strip("(").strip(")").strip(",").strip("'")
+        value23pg1 = float(value23pg1)
+        value23pg2 = value23pg2.strip("(").strip(")").strip(",").strip("'")
+        value23pg2 = float(value23pg2)
+        value23pg3 = value23pg3.strip("(").strip(")").strip(",").strip("'")
+        value23pg3 = float(value23pg3)
+        my_float23pg_value1 = value23pg1/my_float23pg_maxvalue
+        my_float23pg_value2 = value23pg2/my_float23pg_maxvalue
+        my_float23pg_value3 = value23pg3/my_float23pg_maxvalue
+
+        mycursor.execute("SELECT `Min Value` FROM pie23gtable")
+        minvalue = mycursor.fetchone()
+        my_float23pg_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM pie23gtable")
+        my_string23pg_title = mycursor.fetchone()
+        my_string23pg_title = str(my_string23pg_title)
+        my_string23pg_title = my_string23pg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM pie23gtable")
+        my_string23pg_subtitle = mycursor.fetchone()
+        my_string23pg_subtitle = str(my_string23pg_subtitle)
+        my_string23pg_subtitle = my_string23pg_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Text description` FROM pie23gtable")
+        my_string23pg_textdescription = mycursor.fetchone()
+        my_string23pg_textdescription = str(my_string23pg_textdescription)
+        my_string23pg_textdescription = my_string23pg_textdescription.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_26"] = my_float23pg_numberofgraphs
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_31"] = my_string23pg_wheeltext1
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_32"] = my_string23pg_wheeltext2
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_33"] = my_string23pg_wheeltext3
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_2"] = my_float23pg_value1
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_27"] = my_float23pg_value2
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_28"] = my_float23pg_value3
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_10"] = my_float23pg_minvalue
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_11"] = my_float23pg_maxvalue
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_15"] = my_string23pg_title
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_17"] = my_string23pg_subtitle
+        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_19"] = my_string23pg_textdescription
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorHBGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhbgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringhorizontal_bar_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of bars (1-4)` FROM horizontal_bargtable")
+        numberofbarshbg = mycursor.fetchone()
+        my_floathbg_numberofbars = int(numberofbarshbg[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM horizontal_bargtable")
+        my_stringhbg_bartext = mycursor.fetchall()
+        my_stringhbg_bartext1 = str(my_stringhbg_bartext[0])
+        my_stringhbg_bartext2 = str(my_stringhbg_bartext[1])
+        my_stringhbg_bartext3 = str(my_stringhbg_bartext[2])
+        my_stringhbg_bartext4 = str(my_stringhbg_bartext[3])
+        my_stringhbg_bartext1 = my_stringhbg_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext2 = my_stringhbg_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext3 = my_stringhbg_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext4 = my_stringhbg_bartext4.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM horizontal_bargtable")
+        maxvalue = mycursor.fetchone()
+        my_floathbg_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Bar Value` FROM horizontal_bargtable")
+        valuehbg = mycursor.fetchall()
+        valuehbg1, valuehbg2, valuehbg3, valuehbg4 = valuehbg
+        valuehbg1 = str(valuehbg1)
+        valuehbg2 = str(valuehbg2)
+        valuehbg3 = str(valuehbg3)
+        valuehbg4 = str(valuehbg4)          
+        valuehbg1 = valuehbg1.strip("(").strip(")").strip(",").strip("'")
+        valuehbg1 = float(valuehbg1)
+        valuehbg2 = valuehbg2.strip("(").strip(")").strip(",").strip("'")
+        valuehbg2 = float(valuehbg2)
+        valuehbg3 = valuehbg3.strip("(").strip(")").strip(",").strip("'")
+        valuehbg3 = float(valuehbg3)
+        valuehbg4 = valuehbg4.strip("(").strip(")").strip(",").strip("'")
+        valuehbg4 = float(valuehbg4)
+
+
+        mycursor.execute("SELECT `Min Value` FROM horizontal_bargtable")
+        minvalue = mycursor.fetchone()
+        my_floathbg_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM horizontal_bargtable")
+        decvalue = mycursor.fetchone()
+        my_floathbg_decvalue = float(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM horizontal_bargtable")
+        my_stringhbg_title = mycursor.fetchone()
+        my_stringhbg_title = str(my_stringhbg_title)
+        my_stringhbg_title = my_stringhbg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM horizontal_bargtable")
+        my_stringhbg_subtitle = mycursor.fetchone()
+        my_stringhbg_subtitle = str(my_stringhbg_subtitle)
+        my_stringhbg_subtitle = my_stringhbg_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Text for total` FROM horizontal_bargtable")
+        my_stringhbg_textfortotal = mycursor.fetchone()
+        my_stringhbg_textfortotal = str(my_stringhbg_textfortotal)
+        my_stringhbg_textfortotal = my_stringhbg_textfortotal.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_36"] = my_floathbg_numberofbars
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_2"] = my_stringhbg_bartext1
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_3"] = my_stringhbg_bartext2
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_4"] = my_stringhbg_bartext3
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_5"] = my_stringhbg_bartext4
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_14"] = valuehbg1
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_15"] = valuehbg2
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_16"] = valuehbg3
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_17"] = valuehbg4
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_10"] = my_floathbg_minvalue
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_11"] = my_floathbg_maxvalue
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_7"] = my_stringhbg_title
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_8"] = my_stringhbg_subtitle
+        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_6"] = my_stringhbg_textfortotal
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorHBGCsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhbgcsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringhorizontal_bar_graph_comparison
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of bars (1-4)` FROM horizontal_bar_comparison_gtable")
+        numberofbarshbgc = mycursor.fetchone()
+        my_floathbgc_numberofbars = int(numberofbarshbgc[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM horizontal_bar_comparison_gtable")
+        my_stringhbgc_bartext = mycursor.fetchall()
+        my_stringhbgc_bartext1 = str(my_stringhbgc_bartext[0])
+        my_stringhbgc_bartext2 = str(my_stringhbgc_bartext[1])
+        my_stringhbgc_bartext3 = str(my_stringhbgc_bartext[2])
+        my_stringhbgc_bartext4 = str(my_stringhbgc_bartext[3])
+        my_stringhbgc_bartext1 = my_stringhbgc_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext2 = my_stringhbgc_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext3 = my_stringhbgc_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext4 = my_stringhbgc_bartext4.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM horizontal_bar_comparison_gtable")
+        maxvalue = mycursor.fetchone()
+        my_floathbgc_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Bar Value A` FROM horizontal_bar_comparison_gtable")
+        valueahbgc = mycursor.fetchall()
+        valueahbgc1, valueahbgc2, valueahbgc3, valueahbgc4 = valueahbgc
+        valueahbgc1 = str(valueahbgc1)
+        valueahbgc2 = str(valueahbgc2)
+        valueahbgc3 = str(valueahbgc3)
+        valueahbgc4 = str(valueahbgc4)          
+        valueahbgc1 = valueahbgc1.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc1 = float(valueahbgc1)
+        valueahbgc2 = valueahbgc2.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc2 = float(valueahbgc2)
+        valueahbgc3 = valueahbgc3.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc3 = float(valueahbgc3)
+        valueahbgc4 = valueahbgc4.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc4 = float(valueahbgc4)
+
+        mycursor.execute("SELECT `Bar Value B` FROM horizontal_bar_comparison_gtable")
+        valuebhbgc = mycursor.fetchall()
+        valuebhbgc1, valuebhbgc2, valuebhbgc3, valuebhbgc4 = valuebhbgc
+        valuebhbgc1 = str(valuebhbgc1)
+        valuebhbgc2 = str(valuebhbgc2)
+        valuebhbgc3 = str(valuebhbgc3)
+        valuebhbgc4 = str(valuebhbgc4)          
+        valuebhbgc1 = valuebhbgc1.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc1 = float(valuebhbgc1)
+        valuebhbgc2 = valuebhbgc2.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc2 = float(valuebhbgc2)
+        valuebhbgc3 = valuebhbgc3.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc3 = float(valuebhbgc3)
+        valuebhbgc4 = valuebhbgc4.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc4 = float(valuebhbgc4)
+
+        mycursor.execute("SELECT `Min Value` FROM horizontal_bar_comparison_gtable")
+        minvalue = mycursor.fetchone()
+        my_floathbgc_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM horizontal_bar_comparison_gtable")
+        decvalue = mycursor.fetchone()
+        my_floathbgc_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM horizontal_bar_comparison_gtable")
+        my_stringhbgc_title = mycursor.fetchone()
+        my_stringhbgc_title = str(my_stringhbgc_title)
+        my_stringhbgc_title = my_stringhbgc_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM horizontal_bar_comparison_gtable")
+        my_stringhbgc_subtitle = mycursor.fetchone()
+        my_stringhbgc_subtitle = str(my_stringhbgc_subtitle)
+        my_stringhbgc_subtitle = my_stringhbgc_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Legend Text` FROM horizontal_bar_comparison_gtable")
+        my_stringhbgc_legendtext = mycursor.fetchall()
+        my_stringhbgc_legendtext1 = str(my_stringhbgc_legendtext[0])
+        my_stringhbgc_legendtext2 = str(my_stringhbgc_legendtext[1])
+        my_stringhbgc_legendtext1 = my_stringhbgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_legendtext2 = my_stringhbgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_45"] = my_floathbgc_numberofbars
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_2"] = my_stringhbgc_bartext1
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_3"] = my_stringhbgc_bartext2
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_4"] = my_stringhbgc_bartext3
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_5"] = my_stringhbgc_bartext4
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_14"] = valueahbgc1
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_15"] = valueahbgc2
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_16"] = valueahbgc3
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_17"] = valueahbgc4
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_36"] = valuebhbgc1
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_37"] = valuebhbgc2
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_38"] = valuebhbgc3
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_39"] = valuebhbgc4
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_10"] = my_floathbgc_minvalue
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_11"] = my_floathbgc_maxvalue
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_12"] = my_floathbgc_decvalue
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_7"] = my_stringhbgc_title
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_8"] = my_stringhbgc_subtitle
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_6"] = my_stringhbgc_legendtext1
+        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_40"] = my_stringhbgc_legendtext2
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+
+class MyoperatorMCGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormcgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringmultiple_circle_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of sliders (1-5)` FROM multiple_circlegtable")
+        numberofslidersmcg = mycursor.fetchone()
+        my_floatmcg_numberofsliders = int(numberofslidersmcg[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM multiple_circlegtable")
+        my_stringmcg_bartext = mycursor.fetchall()
+        my_stringmcg_bartext1 = str(my_stringmcg_bartext[0])
+        my_stringmcg_bartext2 = str(my_stringmcg_bartext[1])
+        my_stringmcg_bartext3 = str(my_stringmcg_bartext[2])
+        my_stringmcg_bartext4 = str(my_stringmcg_bartext[3])
+        my_stringmcg_bartext5 = str(my_stringmcg_bartext[4])
+        my_stringmcg_bartext1 = my_stringmcg_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext2 = my_stringmcg_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext3 = my_stringmcg_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext4 = my_stringmcg_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext5 = my_stringmcg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM multiple_circlegtable")
+        maxbarvalue = mycursor.fetchone()
+        my_floatmcg_maxbarvalue = float(maxbarvalue[0])
+
+        mycursor.execute("SELECT `Bar Value` FROM multiple_circlegtable")
+        barvaluemcg = mycursor.fetchall()
+        barvaluemcg1, barvaluemcg2, barvaluemcg3, barvaluemcg4, barvaluemcg5 = barvaluemcg
+        barvaluemcg1 = str(barvaluemcg1)
+        barvaluemcg2 = str(barvaluemcg2)
+        barvaluemcg3 = str(barvaluemcg3)
+        barvaluemcg4 = str(barvaluemcg4)
+        barvaluemcg5 = str(barvaluemcg5)         
+        barvaluemcg1 = barvaluemcg1.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg1 = float(barvaluemcg1)
+        barvaluemcg2 = barvaluemcg2.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg2 = float(barvaluemcg2)
+        barvaluemcg3 = barvaluemcg3.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg3 = float(barvaluemcg3)
+        barvaluemcg4 = barvaluemcg4.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg4 = float(barvaluemcg4)
+        barvaluemcg5 = barvaluemcg5.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg5 = float(barvaluemcg5)
+        my_floatmcg_barvalue1 = barvaluemcg1/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue2 = barvaluemcg2/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue3 = barvaluemcg3/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue4 = barvaluemcg4/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue5 = barvaluemcg5/my_floatmcg_maxbarvalue
+
+        mycursor.execute("SELECT `Min Value` FROM multiple_circlegtable")
+        minbarvalue = mycursor.fetchone()
+        my_floatmcg_minbarvalue = float(minbarvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM multiple_circlegtable")
+        decvalue = mycursor.fetchone()
+        my_floatmcg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM multiple_circlegtable")
+        my_stringmcg_title = mycursor.fetchone()
+        my_stringmcg_title = str(my_stringmcg_title)
+        my_stringmcg_title = my_stringmcg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM multiple_circlegtable")
+        my_stringmcg_subtitle = mycursor.fetchone()
+        my_stringmcg_subtitle = str(my_stringmcg_subtitle)
+        my_stringmcg_subtitle = my_stringmcg_subtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_55"] = my_floatmcg_numberofsliders
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_42"] = my_stringmcg_bartext1
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_43"] = my_stringmcg_bartext2
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_44"] = my_stringmcg_bartext3
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_46"] = my_stringmcg_bartext4
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_45"] = my_stringmcg_bartext5
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_2"] = my_floatmcg_barvalue1
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_12"] = my_floatmcg_barvalue2
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_14"] = my_floatmcg_barvalue3
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_15"] = my_floatmcg_barvalue4
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_16"] = my_floatmcg_barvalue5
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_10"] = my_floatmcg_minbarvalue
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_11"] = my_floatmcg_maxbarvalue
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_18"] = my_floatmcg_decvalue
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_40"] = my_stringmcg_title
+        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_41"] = my_stringmcg_subtitle
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+       
+class MyoperatorMPGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormpgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringmultiple_pie_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of sliders (1-5)` FROM multiple_piegtable")
+        numberofslidersmpg = mycursor.fetchone()
+        my_floatmpg_numberofsliders = int(numberofslidersmpg[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM multiple_piegtable")
+        my_stringmpg_bartext = mycursor.fetchall()
+        my_stringmpg_bartext1 = str(my_stringmpg_bartext[0])
+        my_stringmpg_bartext2 = str(my_stringmpg_bartext[1])
+        my_stringmpg_bartext3 = str(my_stringmpg_bartext[2])
+        my_stringmpg_bartext4 = str(my_stringmpg_bartext[3])
+        my_stringmpg_bartext5 = str(my_stringmpg_bartext[4])
+        my_stringmpg_bartext1 = my_stringmpg_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext2 = my_stringmpg_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext3 = my_stringmpg_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext4 = my_stringmpg_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext5 = my_stringmpg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM multiple_piegtable")
+        maxbarvalue = mycursor.fetchone()
+        my_floatmpg_maxbarvalue = float(maxbarvalue[0])
+
+        mycursor.execute("SELECT `Bar Value` FROM multiple_piegtable")
+        barvaluempg = mycursor.fetchall()
+        barvaluempg1, barvaluempg2, barvaluempg3, barvaluempg4, barvaluempg5 = barvaluempg
+        barvaluempg1 = str(barvaluempg1)
+        barvaluempg2 = str(barvaluempg2)
+        barvaluempg3 = str(barvaluempg3)
+        barvaluempg4 = str(barvaluempg4)
+        barvaluempg5 = str(barvaluempg5)         
+        barvaluempg1 = barvaluempg1.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg1 = float(barvaluempg1)
+        barvaluempg2 = barvaluempg2.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg2 = float(barvaluempg2)
+        barvaluempg3 = barvaluempg3.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg3 = float(barvaluempg3)
+        barvaluempg4 = barvaluempg4.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg4 = float(barvaluempg4)
+        barvaluempg5 = barvaluempg5.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg5 = float(barvaluempg5)
+        my_floatmpg_barvalue1 = barvaluempg1/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue2 = barvaluempg2/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue3 = barvaluempg3/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue4 = barvaluempg4/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue5 = barvaluempg5/my_floatmpg_maxbarvalue
+
+        mycursor.execute("SELECT `Min Value` FROM multiple_piegtable")
+        minbarvalue = mycursor.fetchone()
+        my_floatmpg_minbarvalue = float(minbarvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM multiple_piegtable")
+        decvalue = mycursor.fetchone()
+        my_floatmpg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM multiple_piegtable")
+        my_stringmpg_title = mycursor.fetchone()
+        my_stringmpg_title = str(my_stringmpg_title)
+        my_stringmpg_title = my_stringmpg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM multiple_piegtable")
+        my_stringmpg_subtitle = mycursor.fetchone()
+        my_stringmpg_subtitle = str(my_stringmpg_subtitle)
+        my_stringmpg_subtitle = my_stringmpg_subtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_54"] = my_floatmpg_numberofsliders
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_42"] = my_stringmpg_bartext1
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_43"] = my_stringmpg_bartext2
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_44"] = my_stringmpg_bartext3
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_46"] = my_stringmpg_bartext4
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_45"] = my_stringmpg_bartext5
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_2"] = my_floatmpg_barvalue1
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_12"] = my_floatmpg_barvalue2
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_14"] = my_floatmpg_barvalue3
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_15"] = my_floatmpg_barvalue4
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_16"] = my_floatmpg_barvalue5
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_10"] = my_floatmpg_minbarvalue
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_11"] = my_floatmpg_maxbarvalue
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_18"] = my_floatmpg_decvalue
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_40"] = my_stringmpg_title
+        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_41"] = my_stringmpg_subtitle
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorLGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorlgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringline_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (1-8)` FROM linegtable")
+        numberofpointslg = mycursor.fetchone()
+        my_floatlg_numberofpoints = int(numberofpointslg[0])
+
+        mycursor.execute("SELECT `Value` FROM linegtable")
+        pointvaluelg = mycursor.fetchall()
+        pointvaluelg1, pointvaluelg2, pointvaluelg3, pointvaluelg4, pointvaluelg5, pointvaluelg6, pointvaluelg7, pointvaluelg8 = pointvaluelg
+        pointvaluelg1 = str(pointvaluelg1)
+        pointvaluelg2 = str(pointvaluelg2)
+        pointvaluelg3 = str(pointvaluelg3)
+        pointvaluelg4 = str(pointvaluelg4)
+        pointvaluelg5 = str(pointvaluelg5)
+        pointvaluelg6 = str(pointvaluelg6)
+        pointvaluelg7 = str(pointvaluelg7)
+        pointvaluelg8 = str(pointvaluelg8)          
+        pointvaluelg1 = pointvaluelg1.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg1 = float(pointvaluelg1)
+        pointvaluelg2 = pointvaluelg2.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg2 = float(pointvaluelg2)
+        pointvaluelg3 = pointvaluelg3.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg3 = float(pointvaluelg3)
+        pointvaluelg4 = pointvaluelg4.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg4 = float(pointvaluelg4)
+        pointvaluelg5 = pointvaluelg5.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg5 = float(pointvaluelg5)
+        pointvaluelg6 = pointvaluelg6.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg6 = float(pointvaluelg6)
+        pointvaluelg7 = pointvaluelg7.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg7 = float(pointvaluelg7)
+        pointvaluelg8 = pointvaluelg8.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg8 = float(pointvaluelg8)
+
+        mycursor.execute("SELECT `Point Text` FROM linegtable")
+        my_stringlg_pointtext = mycursor.fetchall()
+        my_stringlg_pointtext1 = str(my_stringlg_pointtext[0])
+        my_stringlg_pointtext2 = str(my_stringlg_pointtext[1])
+        my_stringlg_pointtext3 = str(my_stringlg_pointtext[2])
+        my_stringlg_pointtext4 = str(my_stringlg_pointtext[3])
+        my_stringlg_pointtext5 = str(my_stringlg_pointtext[4])
+        my_stringlg_pointtext6 = str(my_stringlg_pointtext[5])
+        my_stringlg_pointtext7 = str(my_stringlg_pointtext[6])
+        my_stringlg_pointtext8 = str(my_stringlg_pointtext[7])
+        my_stringlg_pointtext1 = my_stringlg_pointtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext2 = my_stringlg_pointtext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext3 = my_stringlg_pointtext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext4 = my_stringlg_pointtext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext5 = my_stringlg_pointtext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext6 = my_stringlg_pointtext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext7 = my_stringlg_pointtext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext8 = my_stringlg_pointtext8.strip("(").strip(")").strip(",").strip("'")
+
+
+        mycursor.execute("SELECT `Min Value` FROM linegtable")
+        minpointvalue = mycursor.fetchone()
+        my_floatlg_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM linegtable")
+        maxpointvalue = mycursor.fetchone()
+        my_floatlg_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM linegtable")
+        decvalue = mycursor.fetchone()
+        my_floatlg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM linegtable")
+        rangenumber = mycursor.fetchone()
+        my_floatlg_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM linegtable")
+        my_stringlg_title = mycursor.fetchone()
+        my_stringlg_title = str(my_stringlg_title)
+        my_stringlg_title = my_stringlg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM linegtable")
+        my_stringlg_subtitle = mycursor.fetchone()
+        my_stringlg_subtitle = str(my_stringlg_subtitle)
+        my_stringlg_subtitle = my_stringlg_subtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_2"] = my_floatlg_numberofpoints
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_13"] = my_floatlg_minpointvalue
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_14"] = my_floatlg_maxpointvalue
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_15"] = my_floatlg_decvalue
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_18"] = my_floatlg_rangenumber
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_4"] = pointvaluelg1
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_5"] = pointvaluelg2
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_6"] = pointvaluelg3
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_7"] = pointvaluelg4
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_8"] = pointvaluelg5
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_9"] = pointvaluelg6
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_10"] = pointvaluelg7
+        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_11"] = pointvaluelg8
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_4"] = my_stringlg_pointtext1
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_5"] = my_stringlg_pointtext2
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_6"] = my_stringlg_pointtext3
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_7"] = my_stringlg_pointtext4
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_8"] = my_stringlg_pointtext5
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_9"] = my_stringlg_pointtext6
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_10"] = my_stringlg_pointtext7
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_11"] = my_stringlg_pointtext8
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_23"] = my_stringlg_title
+        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_22"] = my_stringlg_subtitle
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorLGCsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorlgcsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringline_graph_comparison
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (1-8)` FROM linegcomparison_table")
+        numberofpointslgc = mycursor.fetchone()
+        my_floatlgc_numberofpoints = int(numberofpointslgc[0])
+
+        mycursor.execute("SELECT `Point Text` FROM linegcomparison_table")
+        my_stringlgc_pointtext = mycursor.fetchall()
+        my_stringlgc_pointtext1 = str(my_stringlgc_pointtext[0])
+        my_stringlgc_pointtext2 = str(my_stringlgc_pointtext[1])
+        my_stringlgc_pointtext3 = str(my_stringlgc_pointtext[2])
+        my_stringlgc_pointtext4 = str(my_stringlgc_pointtext[3])
+        my_stringlgc_pointtext5 = str(my_stringlgc_pointtext[4])
+        my_stringlgc_pointtext6 = str(my_stringlgc_pointtext[5])
+        my_stringlgc_pointtext7 = str(my_stringlgc_pointtext[6])
+        my_stringlgc_pointtext8 = str(my_stringlgc_pointtext[7])
+        my_stringlgc_pointtext1 = my_stringlgc_pointtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext2 = my_stringlgc_pointtext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext3 = my_stringlgc_pointtext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext4 = my_stringlgc_pointtext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext5 = my_stringlgc_pointtext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext6 = my_stringlgc_pointtext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext7 = my_stringlgc_pointtext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_pointtext8 = my_stringlgc_pointtext8.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Value A` FROM linegcomparison_table")
+        pointvaluealgc = mycursor.fetchall()
+        pointvaluealgc1, pointvaluealgc2, pointvaluealgc3, pointvaluealgc4, pointvaluealgc5, pointvaluealgc6, pointvaluealgc7, pointvaluealgc8 = pointvaluealgc
+        pointvaluealgc1 = str(pointvaluealgc1)
+        pointvaluealgc2 = str(pointvaluealgc2)
+        pointvaluealgc3 = str(pointvaluealgc3)
+        pointvaluealgc4 = str(pointvaluealgc4)
+        pointvaluealgc5 = str(pointvaluealgc5)
+        pointvaluealgc6 = str(pointvaluealgc6)
+        pointvaluealgc7 = str(pointvaluealgc7)
+        pointvaluealgc8 = str(pointvaluealgc8)          
+        pointvaluealgc1 = pointvaluealgc1.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc1 = float(pointvaluealgc1)
+        pointvaluealgc2 = pointvaluealgc2.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc2 = float(pointvaluealgc2)
+        pointvaluealgc3 = pointvaluealgc3.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc3 = float(pointvaluealgc3)
+        pointvaluealgc4 = pointvaluealgc4.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc4 = float(pointvaluealgc4)
+        pointvaluealgc5 = pointvaluealgc5.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc5 = float(pointvaluealgc5)
+        pointvaluealgc6 = pointvaluealgc6.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc6 = float(pointvaluealgc6)
+        pointvaluealgc7 = pointvaluealgc7.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc7 = float(pointvaluealgc7)
+        pointvaluealgc8 = pointvaluealgc8.strip("(").strip(")").strip(",").strip("'")
+        pointvaluealgc8 = float(pointvaluealgc8)
+
+        mycursor.execute("SELECT `Value B` FROM linegcomparison_table")
+        pointvalueblgc = mycursor.fetchall()
+        pointvalueblgc1, pointvalueblgc2, pointvalueblgc3, pointvalueblgc4, pointvalueblgc5, pointvalueblgc6, pointvalueblgc7, pointvalueblgc8 = pointvalueblgc
+        pointvalueblgc1 = str(pointvalueblgc1)
+        pointvalueblgc2 = str(pointvalueblgc2)
+        pointvalueblgc3 = str(pointvalueblgc3)
+        pointvalueblgc4 = str(pointvalueblgc4)
+        pointvalueblgc5 = str(pointvalueblgc5)
+        pointvalueblgc6 = str(pointvalueblgc6)
+        pointvalueblgc7 = str(pointvalueblgc7)
+        pointvalueblgc8 = str(pointvalueblgc8)          
+        pointvalueblgc1 = pointvalueblgc1.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc1 = float(pointvalueblgc1)
+        pointvalueblgc2 = pointvalueblgc2.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc2 = float(pointvalueblgc2)
+        pointvalueblgc3 = pointvalueblgc3.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc3 = float(pointvalueblgc3)
+        pointvalueblgc4 = pointvalueblgc4.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc4 = float(pointvalueblgc4)
+        pointvalueblgc5 = pointvalueblgc5.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc5 = float(pointvalueblgc5)
+        pointvalueblgc6 = pointvalueblgc6.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc6 = float(pointvalueblgc6)
+        pointvalueblgc7 = pointvalueblgc7.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc7 = float(pointvalueblgc7)
+        pointvalueblgc8 = pointvalueblgc8.strip("(").strip(")").strip(",").strip("'")
+        pointvalueblgc8 = float(pointvalueblgc8)
+
+
+        mycursor.execute("SELECT `Min Value` FROM linegcomparison_table")
+        minpointvalue = mycursor.fetchone()
+        my_floatlgc_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM linegcomparison_table")
+        maxpointvalue = mycursor.fetchone()
+        my_floatlgc_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM linegcomparison_table")
+        decvalue = mycursor.fetchone()
+        my_floatlgc_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM linegcomparison_table")
+        rangenumber = mycursor.fetchone()
+        my_floatlgc_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM linegcomparison_table")
+        my_stringlgc_title = mycursor.fetchone()
+        my_stringlgc_title = str(my_stringlgc_title)
+        my_stringlgc_title = my_stringlgc_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM linegcomparison_table")
+        my_stringlgc_subtitle = mycursor.fetchone()
+        my_stringlgc_subtitle = str(my_stringlgc_subtitle)
+        my_stringlgc_subtitle = my_stringlgc_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Legend` FROM linegcomparison_table")
+        my_stringlgc_legendtext = mycursor.fetchall()
+        my_stringlgc_legendtext1 = str(my_stringlgc_legendtext[0])
+        my_stringlgc_legendtext2 = str(my_stringlgc_legendtext[1])
+        my_stringlgc_legendtext1 = my_stringlgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringlgc_legendtext2 = my_stringlgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_2"] = my_floatlgc_numberofpoints
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_13"] = my_floatlgc_minpointvalue
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_14"] = my_floatlgc_maxpointvalue
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_15"] = my_floatlgc_decvalue
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_18"] = my_floatlgc_rangenumber
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_4"] = pointvaluealgc1
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_5"] = pointvaluealgc2
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_6"] = pointvaluealgc3
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_7"] = pointvaluealgc4
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_8"] = pointvaluealgc5
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_9"] = pointvaluealgc6
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_10"] = pointvaluealgc7
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_11"] = pointvaluealgc8
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_34"] = pointvalueblgc1
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_35"] = pointvalueblgc2
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_36"] = pointvalueblgc3
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_37"] = pointvalueblgc4
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_38"] = pointvalueblgc5
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_39"] = pointvalueblgc6
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_40"] = pointvalueblgc7
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_41"] = pointvalueblgc8
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_4"] = my_stringlgc_pointtext1
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_5"] = my_stringlgc_pointtext2
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_6"] = my_stringlgc_pointtext3
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_7"] = my_stringlgc_pointtext4
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_8"] = my_stringlgc_pointtext5
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_9"] = my_stringlgc_pointtext6
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_10"] = my_stringlgc_pointtext7
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_11"] = my_stringlgc_pointtext8
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_23"] = my_stringlgc_title
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_22"] = my_stringlgc_subtitle
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_29"] = my_stringlgc_legendtext1
+        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_30"] = my_stringlgc_legendtext2
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorMGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringmountain_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (1-8)` FROM mountaingtable")
+        numberofpointsmg = mycursor.fetchone()
+        my_floatmg_numberofpoints = int(numberofpointsmg[0])
+
+        mycursor.execute("SELECT `Value` FROM mountaingtable")
+        pointvaluemg = mycursor.fetchall()
+        pointvaluemg1, pointvaluemg2, pointvaluemg3, pointvaluemg4, pointvaluemg5, pointvaluemg6, pointvaluemg7, pointvaluemg8 = pointvaluemg
+        pointvaluemg1 = str(pointvaluemg1)
+        pointvaluemg2 = str(pointvaluemg2)
+        pointvaluemg3 = str(pointvaluemg3)
+        pointvaluemg4 = str(pointvaluemg4)
+        pointvaluemg5 = str(pointvaluemg5)
+        pointvaluemg6 = str(pointvaluemg6)
+        pointvaluemg7 = str(pointvaluemg7)
+        pointvaluemg8 = str(pointvaluemg8)          
+        pointvaluemg1 = pointvaluemg1.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg1 = float(pointvaluemg1)
+        pointvaluemg2 = pointvaluemg2.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg2 = float(pointvaluemg2)
+        pointvaluemg3 = pointvaluemg3.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg3 = float(pointvaluemg3)
+        pointvaluemg4 = pointvaluemg4.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg4 = float(pointvaluemg4)
+        pointvaluemg5 = pointvaluemg5.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg5 = float(pointvaluemg5)
+        pointvaluemg6 = pointvaluemg6.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg6 = float(pointvaluemg6)
+        pointvaluemg7 = pointvaluemg7.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg7 = float(pointvaluemg7)
+        pointvaluemg8 = pointvaluemg8.strip("(").strip(")").strip(",").strip("'")
+        pointvaluemg8 = float(pointvaluemg8)
+
+        mycursor.execute("SELECT `Point Text` FROM mountaingtable")
+        my_stringmg_pointtext = mycursor.fetchall()
+        my_stringmg_pointtext1 = str(my_stringmg_pointtext[0])
+        my_stringmg_pointtext2 = str(my_stringmg_pointtext[1])
+        my_stringmg_pointtext3 = str(my_stringmg_pointtext[2])
+        my_stringmg_pointtext4 = str(my_stringmg_pointtext[3])
+        my_stringmg_pointtext5 = str(my_stringmg_pointtext[4])
+        my_stringmg_pointtext6 = str(my_stringmg_pointtext[5])
+        my_stringmg_pointtext7 = str(my_stringmg_pointtext[6])
+        my_stringmg_pointtext8 = str(my_stringmg_pointtext[7])
+        my_stringmg_pointtext1 = my_stringmg_pointtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext2 = my_stringmg_pointtext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext3 = my_stringmg_pointtext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext4 = my_stringmg_pointtext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext5 = my_stringmg_pointtext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext6 = my_stringmg_pointtext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext7 = my_stringmg_pointtext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringmg_pointtext8 = my_stringmg_pointtext8.strip("(").strip(")").strip(",").strip("'")
+
+
+        mycursor.execute("SELECT `Min Value` FROM mountaingtable")
+        minpointvalue = mycursor.fetchone()
+        my_floatmg_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM mountaingtable")
+        maxpointvalue = mycursor.fetchone()
+        my_floatmg_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM mountaingtable")
+        decvalue = mycursor.fetchone()
+        my_floatmg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM mountaingtable")
+        rangenumber = mycursor.fetchone()
+        my_floatmg_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM mountaingtable")
+        my_stringmg_title = mycursor.fetchone()
+        my_stringmg_title = str(my_stringmg_title)
+        my_stringmg_title = my_stringmg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM mountaingtable")
+        my_stringmg_subtitle = mycursor.fetchone()
+        my_stringmg_subtitle = str(my_stringmg_subtitle)
+        my_stringmg_subtitle = my_stringmg_subtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_2"] = my_floatmg_numberofpoints
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_22"] = my_floatmg_minpointvalue
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_24"] = my_floatmg_maxpointvalue
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_23"] = my_floatmg_decvalue
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_21"] = my_floatmg_rangenumber
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_3"] = pointvaluemg1
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_4"] = pointvaluemg2
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_5"] = pointvaluemg3
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_6"] = pointvaluemg4
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_7"] = pointvaluemg5
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_8"] = pointvaluemg6
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_9"] = pointvaluemg7
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_10"] = pointvaluemg8
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_13"] = my_stringmg_pointtext1
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_14"] = my_stringmg_pointtext2
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_15"] = my_stringmg_pointtext3
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_16"] = my_stringmg_pointtext4
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_17"] = my_stringmg_pointtext5
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_18"] = my_stringmg_pointtext6
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_19"] = my_stringmg_pointtext7
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_20"] = my_stringmg_pointtext8
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_38"] = my_stringmg_title
+        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_39"] = my_stringmg_subtitle
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorMGCsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormgcsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringmountain_graph_comparison
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (1-8)` FROM mountaingcomparison_table")
+        numberofpointsmgc = mycursor.fetchone()
+        my_floatmgc_numberofpoints = int(numberofpointsmgc[0])
+
+        mycursor.execute("SELECT `Point Text` FROM mountaingcomparison_table")
+        my_stringmgc_pointtext = mycursor.fetchall()
+        my_stringmgc_pointtext1 = str(my_stringmgc_pointtext[0])
+        my_stringmgc_pointtext2 = str(my_stringmgc_pointtext[1])
+        my_stringmgc_pointtext3 = str(my_stringmgc_pointtext[2])
+        my_stringmgc_pointtext4 = str(my_stringmgc_pointtext[3])
+        my_stringmgc_pointtext5 = str(my_stringmgc_pointtext[4])
+        my_stringmgc_pointtext6 = str(my_stringmgc_pointtext[5])
+        my_stringmgc_pointtext7 = str(my_stringmgc_pointtext[6])
+        my_stringmgc_pointtext8 = str(my_stringmgc_pointtext[7])
+        my_stringmgc_pointtext1 = my_stringmgc_pointtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext2 = my_stringmgc_pointtext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext3 = my_stringmgc_pointtext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext4 = my_stringmgc_pointtext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext5 = my_stringmgc_pointtext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext6 = my_stringmgc_pointtext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext7 = my_stringmgc_pointtext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_pointtext8 = my_stringmgc_pointtext8.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Value A` FROM mountaingcomparison_table")
+        pointvalueamgc = mycursor.fetchall()
+        pointvalueamgc1, pointvalueamgc2, pointvalueamgc3, pointvalueamgc4, pointvalueamgc5, pointvalueamgc6, pointvalueamgc7, pointvalueamgc8 = pointvalueamgc
+        pointvalueamgc1 = str(pointvalueamgc1)
+        pointvalueamgc2 = str(pointvalueamgc2)
+        pointvalueamgc3 = str(pointvalueamgc3)
+        pointvalueamgc4 = str(pointvalueamgc4)
+        pointvalueamgc5 = str(pointvalueamgc5)
+        pointvalueamgc6 = str(pointvalueamgc6)
+        pointvalueamgc7 = str(pointvalueamgc7)
+        pointvalueamgc8 = str(pointvalueamgc8)          
+        pointvalueamgc1 = pointvalueamgc1.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc1 = float(pointvalueamgc1)
+        pointvalueamgc2 = pointvalueamgc2.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc2 = float(pointvalueamgc2)
+        pointvalueamgc3 = pointvalueamgc3.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc3 = float(pointvalueamgc3)
+        pointvalueamgc4 = pointvalueamgc4.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc4 = float(pointvalueamgc4)
+        pointvalueamgc5 = pointvalueamgc5.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc5 = float(pointvalueamgc5)
+        pointvalueamgc6 = pointvalueamgc6.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc6 = float(pointvalueamgc6)
+        pointvalueamgc7 = pointvalueamgc7.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc7 = float(pointvalueamgc7)
+        pointvalueamgc8 = pointvalueamgc8.strip("(").strip(")").strip(",").strip("'")
+        pointvalueamgc8 = float(pointvalueamgc8)
+
+        mycursor.execute("SELECT `Value B` FROM mountaingcomparison_table")
+        pointvaluebmgc = mycursor.fetchall()
+        pointvaluebmgc1, pointvaluebmgc2, pointvaluebmgc3, pointvaluebmgc4, pointvaluebmgc5, pointvaluebmgc6, pointvaluebmgc7, pointvaluebmgc8 = pointvaluebmgc
+        pointvaluebmgc1 = str(pointvaluebmgc1)
+        pointvaluebmgc2 = str(pointvaluebmgc2)
+        pointvaluebmgc3 = str(pointvaluebmgc3)
+        pointvaluebmgc4 = str(pointvaluebmgc4)
+        pointvaluebmgc5 = str(pointvaluebmgc5)
+        pointvaluebmgc6 = str(pointvaluebmgc6)
+        pointvaluebmgc7 = str(pointvaluebmgc7)
+        pointvaluebmgc8 = str(pointvaluebmgc8)          
+        pointvaluebmgc1 = pointvaluebmgc1.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc1 = float(pointvaluebmgc1)
+        pointvaluebmgc2 = pointvaluebmgc2.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc2 = float(pointvaluebmgc2)
+        pointvaluebmgc3 = pointvaluebmgc3.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc3 = float(pointvaluebmgc3)
+        pointvaluebmgc4 = pointvaluebmgc4.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc4 = float(pointvaluebmgc4)
+        pointvaluebmgc5 = pointvaluebmgc5.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc5 = float(pointvaluebmgc5)
+        pointvaluebmgc6 = pointvaluebmgc6.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc6 = float(pointvaluebmgc6)
+        pointvaluebmgc7 = pointvaluebmgc7.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc7 = float(pointvaluebmgc7)
+        pointvaluebmgc8 = pointvaluebmgc8.strip("(").strip(")").strip(",").strip("'")
+        pointvaluebmgc8 = float(pointvaluebmgc8)
+
+
+        mycursor.execute("SELECT `Min Value` FROM mountaingcomparison_table")
+        minpointvalue = mycursor.fetchone()
+        my_floatmgc_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM mountaingcomparison_table")
+        maxpointvalue = mycursor.fetchone()
+        my_floatmgc_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM mountaingcomparison_table")
+        decvalue = mycursor.fetchone()
+        my_floatmgc_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM mountaingcomparison_table")
+        rangenumber = mycursor.fetchone()
+        my_floatmgc_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM mountaingcomparison_table")
+        my_stringmgc_title = mycursor.fetchone()
+        my_stringmgc_title = str(my_stringmgc_title)
+        my_stringmgc_title = my_stringmgc_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM mountaingcomparison_table")
+        my_stringmgc_subtitle = mycursor.fetchone()
+        my_stringmgc_subtitle = str(my_stringmgc_subtitle)
+        my_stringmgc_subtitle = my_stringmgc_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Legend` FROM mountaingcomparison_table")
+        my_stringmgc_legendtext = mycursor.fetchall()
+        my_stringmgc_legendtext1 = str(my_stringmgc_legendtext[0])
+        my_stringmgc_legendtext2 = str(my_stringmgc_legendtext[1])
+        my_stringmgc_legendtext1 = my_stringmgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringmgc_legendtext2 = my_stringmgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_2"] = my_floatmgc_numberofpoints
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_22"] = my_floatmgc_minpointvalue
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_24"] = my_floatmgc_maxpointvalue
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_23"] = my_floatmgc_decvalue
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_21"] = my_floatmgc_rangenumber
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_3"] = pointvalueamgc1
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_4"] = pointvalueamgc2
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_67"] = pointvalueamgc3
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_6"] = pointvalueamgc4
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_7"] = pointvalueamgc5
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_8"] = pointvalueamgc6
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_9"] = pointvalueamgc7
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_10"] = pointvalueamgc8
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_30"] = pointvaluebmgc1
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_39"] = pointvaluebmgc2
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_40"] = pointvaluebmgc3
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_41"] = pointvaluebmgc4
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_42"] = pointvaluebmgc5
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_43"] = pointvaluebmgc6
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_44"] = pointvaluebmgc7
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_45"] = pointvaluebmgc8
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_13"] = my_stringmgc_pointtext1
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_14"] = my_stringmgc_pointtext2
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_15"] = my_stringmgc_pointtext3
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_16"] = my_stringmgc_pointtext4
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_17"] = my_stringmgc_pointtext5
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_18"] = my_stringmgc_pointtext6
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_19"] = my_stringmgc_pointtext7
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_20"] = my_stringmgc_pointtext8
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_54"] = my_stringmgc_title
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_55"] = my_stringmgc_subtitle
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_57"] = my_stringmgc_legendtext1
+        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_56"] = my_stringmgc_legendtext2
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorVBGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringvertical_bar_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of bars (1-8)` FROM vertical_bargtable")
+        numberofbarsvbg = mycursor.fetchone()
+        my_floatvbg_numberofbars = int(numberofbarsvbg[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM vertical_bargtable")
+        my_stringvbg_bartext = mycursor.fetchall()
+        my_stringvbg_bartext1 = str(my_stringvbg_bartext[0])
+        my_stringvbg_bartext2 = str(my_stringvbg_bartext[1])
+        my_stringvbg_bartext3 = str(my_stringvbg_bartext[2])
+        my_stringvbg_bartext4 = str(my_stringvbg_bartext[3])
+        my_stringvbg_bartext5 = str(my_stringvbg_bartext[4])
+        my_stringvbg_bartext6 = str(my_stringvbg_bartext[5])
+        my_stringvbg_bartext7 = str(my_stringvbg_bartext[6])
+        my_stringvbg_bartext8 = str(my_stringvbg_bartext[7])
+        my_stringvbg_bartext1 = my_stringvbg_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext2 = my_stringvbg_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext3 = my_stringvbg_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext4 = my_stringvbg_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext5 = my_stringvbg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext6 = my_stringvbg_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext7 = my_stringvbg_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbg_bartext8 = my_stringvbg_bartext8.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM vertical_bargtable")
+        maxvalue = mycursor.fetchone()
+        my_floatvbg_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Bar Value` FROM vertical_bargtable")
+        valuevbg = mycursor.fetchall()
+        valuevbg1, valuevbg2, valuevbg3, valuevbg4, valuevbg5, valuevbg6, valuevbg7, valuevbg8 = valuevbg
+        valuevbg1 = str(valuevbg1)
+        valuevbg2 = str(valuevbg2)
+        valuevbg3 = str(valuevbg3)
+        valuevbg4 = str(valuevbg4)  
+        valuevbg5 = str(valuevbg5)
+        valuevbg6 = str(valuevbg6)
+        valuevbg7 = str(valuevbg7)
+        valuevbg8 = str(valuevbg8)        
+        valuevbg1 = valuevbg1.strip("(").strip(")").strip(",").strip("'")
+        valuevbg1 = float(valuevbg1)
+        valuevbg2 = valuevbg2.strip("(").strip(")").strip(",").strip("'")
+        valuevbg2 = float(valuevbg2)
+        valuevbg3 = valuevbg3.strip("(").strip(")").strip(",").strip("'")
+        valuevbg3 = float(valuevbg3)
+        valuevbg4 = valuevbg4.strip("(").strip(")").strip(",").strip("'")
+        valuevbg4 = float(valuevbg4)
+        valuevbg5 = valuevbg5.strip("(").strip(")").strip(",").strip("'")
+        valuevbg5 = float(valuevbg5)
+        valuevbg6 = valuevbg6.strip("(").strip(")").strip(",").strip("'")
+        valuevbg6 = float(valuevbg6)
+        valuevbg7 = valuevbg7.strip("(").strip(")").strip(",").strip("'")
+        valuevbg7 = float(valuevbg7)
+        valuevbg8 = valuevbg8.strip("(").strip(")").strip(",").strip("'")
+        valuevbg8 = float(valuevbg8)
+
+        mycursor.execute("SELECT `Min Value` FROM vertical_bargtable")
+        minvalue = mycursor.fetchone()
+        my_floatvbg_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM vertical_bargtable")
+        decvalue = mycursor.fetchone()
+        my_floatvbg_decvalue = float(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM vertical_bargtable")
+        my_stringvbg_title = mycursor.fetchone()
+        my_stringvbg_title = str(my_stringvbg_title)
+        my_stringvbg_title = my_stringvbg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM vertical_bargtable")
+        my_stringvbg_subtitle = mycursor.fetchone()
+        my_stringvbg_subtitle = str(my_stringvbg_subtitle)
+        my_stringvbg_subtitle = my_stringvbg_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Text for total` FROM vertical_bargtable")
+        my_stringvbg_textfortotal = mycursor.fetchone()
+        my_stringvbg_textfortotal = str(my_stringvbg_textfortotal)
+        my_stringvbg_textfortotal = my_stringvbg_textfortotal.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_57"] = my_floatvbg_numberofbars
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_14"] = valuevbg1
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_41"] = valuevbg2
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_15"] = valuevbg3
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_44"] = valuevbg4
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_16"] = valuevbg5
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_48"] = valuevbg6
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_17"] = valuevbg7
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_50"] = valuevbg8
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_10"] = my_floatvbg_minvalue
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_11"] = my_floatvbg_maxvalue
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_12"] = my_floatvbg_decvalue
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_2"] = my_stringvbg_bartext1
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_42"] = my_stringvbg_bartext2
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_3"] = my_stringvbg_bartext3
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_45"] = my_stringvbg_bartext4
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_4"] = my_stringvbg_bartext5
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_47"] = my_stringvbg_bartext6
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_5"] = my_stringvbg_bartext7
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_49"] = my_stringvbg_bartext8
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_7"] = my_stringvbg_title
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_8"] = my_stringvbg_subtitle
+        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_6"] = my_stringvbg_textfortotal
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorVBGCsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbgcsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringvertical_bar_graph_comparison
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of bars (1-8)` FROM vertical_bar_comparison_gtable")
+        numberofbarsvbgc = mycursor.fetchone()
+        my_floatvbgc_numberofbars = int(numberofbarsvbgc[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM vertical_bar_comparison_gtable")
+        my_stringvbgc_bartext = mycursor.fetchall()
+        my_stringvbgc_bartext1 = str(my_stringvbgc_bartext[0])
+        my_stringvbgc_bartext2 = str(my_stringvbgc_bartext[1])
+        my_stringvbgc_bartext3 = str(my_stringvbgc_bartext[2])
+        my_stringvbgc_bartext4 = str(my_stringvbgc_bartext[3])
+        my_stringvbgc_bartext5 = str(my_stringvbgc_bartext[4])
+        my_stringvbgc_bartext6 = str(my_stringvbgc_bartext[5])
+        my_stringvbgc_bartext7 = str(my_stringvbgc_bartext[6])
+        my_stringvbgc_bartext8 = str(my_stringvbgc_bartext[7])
+        my_stringvbgc_bartext1 = my_stringvbgc_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext2 = my_stringvbgc_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext3 = my_stringvbgc_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext4 = my_stringvbgc_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext5 = my_stringvbgc_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext6 = my_stringvbgc_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext7 = my_stringvbgc_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_bartext8 = my_stringvbgc_bartext8.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM vertical_bar_comparison_gtable")
+        maxvalue = mycursor.fetchone()
+        my_floatvbgc_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Bar Value A` FROM vertical_bar_comparison_gtable")
+        valueavbgc = mycursor.fetchall()
+        valueavbgc1, valueavbgc2, valueavbgc3, valueavbgc4, valueavbgc5, valueavbgc6, valueavbgc7, valueavbgc8 = valueavbgc
+        valueavbgc1 = str(valueavbgc1)
+        valueavbgc2 = str(valueavbgc2)
+        valueavbgc3 = str(valueavbgc3)
+        valueavbgc4 = str(valueavbgc4)  
+        valueavbgc5 = str(valueavbgc5)
+        valueavbgc6 = str(valueavbgc6)
+        valueavbgc7 = str(valueavbgc7)
+        valueavbgc8 = str(valueavbgc8)        
+        valueavbgc1 = valueavbgc1.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc1 = float(valueavbgc1)
+        valueavbgc2 = valueavbgc2.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc2 = float(valueavbgc2)
+        valueavbgc3 = valueavbgc3.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc3 = float(valueavbgc3)
+        valueavbgc4 = valueavbgc4.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc4 = float(valueavbgc4)
+        valueavbgc5 = valueavbgc5.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc5 = float(valueavbgc5)
+        valueavbgc6 = valueavbgc6.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc6 = float(valueavbgc6)
+        valueavbgc7 = valueavbgc7.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc7 = float(valueavbgc7)
+        valueavbgc8 = valueavbgc8.strip("(").strip(")").strip(",").strip("'")
+        valueavbgc8 = float(valueavbgc8)
+
+        mycursor.execute("SELECT `Bar Value B` FROM vertical_bar_comparison_gtable")
+        valuebvbgc = mycursor.fetchall()
+        valuebvbgc1, valuebvbgc2, valuebvbgc3, valuebvbgc4, valuebvbgc5, valuebvbgc6, valuebvbgc7, valuebvbgc8 = valuebvbgc
+        valuebvbgc1 = str(valuebvbgc1)
+        valuebvbgc2 = str(valuebvbgc2)
+        valuebvbgc3 = str(valuebvbgc3)
+        valuebvbgc4 = str(valuebvbgc4)  
+        valuebvbgc5 = str(valuebvbgc5)
+        valuebvbgc6 = str(valuebvbgc6)
+        valuebvbgc7 = str(valuebvbgc7)
+        valuebvbgc8 = str(valuebvbgc8)        
+        valuebvbgc1 = valuebvbgc1.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc1 = float(valuebvbgc1)
+        valuebvbgc2 = valuebvbgc2.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc2 = float(valuebvbgc2)
+        valuebvbgc3 = valuebvbgc3.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc3 = float(valuebvbgc3)
+        valuebvbgc4 = valuebvbgc4.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc4 = float(valuebvbgc4)
+        valuebvbgc5 = valuebvbgc5.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc5 = float(valuebvbgc5)
+        valuebvbgc6 = valuebvbgc6.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc6 = float(valuebvbgc6)
+        valuebvbgc7 = valuebvbgc7.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc7 = float(valuebvbgc7)
+        valuebvbgc8 = valuebvbgc8.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgc8 = float(valuebvbgc8)
+
+        mycursor.execute("SELECT `Min Value` FROM vertical_bar_comparison_gtable")
+        minvalue = mycursor.fetchone()
+        my_floatvbgc_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM vertical_bar_comparison_gtable")
+        decvalue = mycursor.fetchone()
+        my_floatvbgc_decvalue = float(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM vertical_bar_comparison_gtable")
+        my_stringvbgc_title = mycursor.fetchone()
+        my_stringvbgc_title = str(my_stringvbgc_title)
+        my_stringvbgc_title = my_stringvbgc_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM vertical_bar_comparison_gtable")
+        my_stringvbgc_subtitle = mycursor.fetchone()
+        my_stringvbgc_subtitle = str(my_stringvbgc_subtitle)
+        my_stringvbgc_subtitle = my_stringvbgc_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Legend Text` FROM vertical_bar_comparison_gtable")
+        my_stringvbgc_legendtext = mycursor.fetchall()
+        my_stringvbgc_legendtext1 = str(my_stringvbgc_legendtext[0])
+        my_stringvbgc_legendtext2 = str(my_stringvbgc_legendtext[1])
+        my_stringvbgc_legendtext1 = my_stringvbgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgc_legendtext2 = my_stringvbgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_71"] = my_floatvbgc_numberofbars
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_2"] = my_stringvbgc_bartext1
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_42"] = my_stringvbgc_bartext2
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_3"] = my_stringvbgc_bartext3
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_45"] = my_stringvbgc_bartext4
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_4"] = my_stringvbgc_bartext5
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_47"] = my_stringvbgc_bartext6
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_5"] = my_stringvbgc_bartext7
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_49"] = my_stringvbgc_bartext8
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_10"] = my_floatvbgc_minvalue
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_11"] = my_floatvbgc_maxvalue
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_12"] = my_floatvbgc_decvalue
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_14"] = valueavbgc1
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_41"] = valueavbgc2
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_15"] = valueavbgc3
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_44"] = valueavbgc4
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_16"] = valueavbgc5
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_48"] = valueavbgc6
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_17"] = valueavbgc7
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_50"] = valueavbgc8
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_57"] = valuebvbgc1
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_58"] = valuebvbgc2
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_59"] = valuebvbgc3
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_64"] = valuebvbgc4
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_60"] = valuebvbgc5
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_61"] = valuebvbgc6
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_62"] = valuebvbgc7
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_63"] = valuebvbgc8
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_7"] = my_stringvbgc_title
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_8"] = my_stringvbgc_subtitle
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_70"] = my_stringvbgc_legendtext1
+        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_69"] = my_stringvbgc_legendtext2
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+
 class MyoperatorCGcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorcgcsv"
     bl_label = "Import csv"
@@ -3598,6 +7588,121 @@ class MyoperatorCGCcsv(bpy.types.Operator):
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_22"] = title23c
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_23"] = subtitle23c
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_16"] = desc23c
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorCANDLEcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorcandlecsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_fullcandle = bpy.path.abspath(mytool.my_pathcandle)
+        with open(filepath_fullcandle) as f:
+            readout = list(csv.reader(f))
+            npcandleg = int(readout[1][0])
+            minvcandleg = float(readout[1][6])
+            maxvcandleg = float(readout[1][7])
+            decimalcandleg = int(readout[1][8])
+            rncandleg = int(readout[1][9])
+
+            num_elementspointhigh = 32
+            pointhigh_candleg = []
+            for i in range(1, num_elementspointhigh + 1):
+                pointhigh_candleg.append(float(readout[i][1]))
+                
+            num_elementspointopen = 32
+            pointopen_candleg = []
+            for i in range(1, num_elementspointopen + 1):
+                pointopen_candleg.append(float(readout[i][2]))
+                
+            num_elementspointclose = 32
+            pointclose_candleg = []
+            for i in range(1, num_elementspointclose + 1):
+                pointclose_candleg.append(float(readout[i][3]))
+                
+            num_elementspointlow = 32
+            pointlow_candleg = []
+            for i in range(1, num_elementspointlow + 1):
+                pointlow_candleg.append(float(readout[i][4]))
+            
+            num_elementstexts = 32
+            texts_candleg = []
+            for i in range(1, num_elementstexts + 1):
+                texts_candleg.append(str(readout[i][5]))
+                
+            titlecandleg = str(readout[1][10])
+            subtitlecandleg = str(readout[1][11])
+
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_3"] = npcandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_12"] = minvcandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_13"] = maxvcandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_14"] = decimalcandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_15"] = rncandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_4"] = texts_candleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_5"] = texts_candleg[1]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_6"] = texts_candleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_7"] = texts_candleg[3]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_8"] = texts_candleg[4]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_9"] = texts_candleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_10"] = texts_candleg[6]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_11"] = texts_candleg[7]
+        
+        cube_objecttextcandle = bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]
+        for i in range(8, 32):
+            input_index = i - 8 + 71
+            input_name = f"Input_{input_index:02d}"
+            cube_objecttextcandle[input_name] = texts_candleg[i]
+        
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_38"] = pointhigh_candleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_103"] = pointhigh_candleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_107"] = pointhigh_candleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_168"] = pointhigh_candleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_172"] = pointhigh_candleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_176"] = pointhigh_candleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_99"] = pointhigh_candleg[6]
+        for i in range(7, 32):
+            input_numpointhigh_candleg = 180 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointhigh_candleg)] = pointhigh_candleg[i]  
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_97"] = pointopen_candleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_104"] = pointopen_candleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_108"] = pointopen_candleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_169"] = pointopen_candleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_173"] = pointopen_candleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_177"] = pointopen_candleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_100"] = pointopen_candleg[6]
+        for i in range(7, 32):
+            input_numpointopen_candleg = 181 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointopen_candleg)] = pointopen_candleg[i]
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_98"] = pointclose_candleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_105"] = pointclose_candleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_109"] = pointclose_candleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_170"] = pointclose_candleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_174"] = pointclose_candleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_178"] = pointclose_candleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_101"] = pointclose_candleg[6]
+        for i in range(7, 32):
+            input_numpointclose_candleg = 182 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointclose_candleg)] = pointclose_candleg[i]
+            
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_96"] = pointlow_candleg[0]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_106"] = pointlow_candleg[1] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_110"] = pointlow_candleg[2]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_171"] = pointlow_candleg[3] 
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_175"] = pointlow_candleg[4]          
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_179"] = pointlow_candleg[5]
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_102"] = pointlow_candleg[6]
+        for i in range(7, 32):
+            input_numpointlow_candleg = 183 + (i - 7) * 4
+            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointlow_candleg)] = pointlow_candleg[i]        
+    
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_23"] = titlecandleg
+        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_22"] = subtitlecandleg
+        
         bpy.context.object.data.update()
         return {'FINISHED'}  
     
@@ -11387,81 +15492,1205 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
 
         return {'FINISHED'}
     
-class Fontchange(bpy.types.Operator):
-    bl_label = "font Object"
+class FontchangeCG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorf"
         
     def execute(self, context):
-        scene = context.scene
+        scene = bpy.data.scenes["Circle Graph"]
         mytool = scene.my_tool
         
-        obj = bpy.context.active_object
+        obj = bpy.data.objects["Circle_Graph"]
         modifier = obj.modifiers["GeometryNodes"]
-        node_group = modifier.node_group
-        node = node_group.nodes['String to Curves']
-        data_font = bpy.data.fonts.load(mytool.my_path)
-        node.font = data_font
+        node_groupcg = modifier.node_group
+        
+        nodecgtitle = node_groupcg.nodes['String to Curves.005']
+        datacgtitle_font = bpy.data.fonts.load(mytool.my_pathfontcg_title)
+        nodecgtitle.font = datacgtitle_font
+        
+        nodecgsubtitle = node_groupcg.nodes['String to Curves.006']
+        datacgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontcg_subtitle)
+        nodecgsubtitle.font = datacgsubtitle_font
+        
+        nodecgvalue = node_groupcg.nodes['String to Curves']
+        datacgvalue_font = bpy.data.fonts.load(mytool.my_pathfontcg_value)
+        nodecgvalue.font = datacgvalue_font        
+        
+        nodecgdescription = node_groupcg.nodes['String to Curves.001']
+        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfontcg_description)
+        nodecgdescription.font = datacgdescription_font
         
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
     
-class Fontchangepie(bpy.types.Operator):
-    bl_label = "font Objectpie"
-    bl_idname = "addonname.myop_operatorfpie"
-        
-    def execute(self, context):
-        scene = context.scene
-        mytool = scene.my_tool
-        
-        obj = bpy.context.active_object
-        modifier = obj.modifiers["GeometryNodes"]
-        node_group = modifier.node_group
-        node = node_group.nodes['String to Curves']
-        data_font = bpy.data.fonts.load(mytool.my_pathpie)
-        node.font = data_font
-        
-        bpy.ops.file.pack_all()    
-        
-        return {'FINISHED'}
-    
-class Fontrestore(bpy.types.Operator):
+class FontrestoreCG(bpy.types.Operator):
     bl_label = "Restore OpenSans"
     bl_idname = "addonname.myop_operatorres"
         
     def execute(self, context):
-        scene = context.scene
+        scene = bpy.data.scenes["Circle Graph"]
         mytool = scene.my_tool
         
-        obj = bpy.context.active_object
+        obj = bpy.data.objects["Circle_Graph"]
         modifier = obj.modifiers["GeometryNodes"]
-        node_group = modifier.node_group
-        node = node_group.nodes['String to Curves']
-        data_font = bpy.data.fonts["Open Sans Regular"]
-        node.font = data_font
+        noderestorecg_group = modifier.node_group
+        
+        noderestorecgtitle = noderestorecg_group.nodes['String to Curves.005']
+        datarestorecgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorecgtitle.font = datarestorecgtitle_font
+        
+        noderestorecgsubtitle = noderestorecg_group.nodes['String to Curves.006']
+        datarestorecgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorecgsubtitle.font = datarestorecgsubtitle_font
+        
+        noderestorecgvalue = noderestorecg_group.nodes['String to Curves']
+        datarestorecgvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorecgvalue.font = datarestorecgvalue_font        
+        
+        noderestorecgdescription = noderestorecg_group.nodes['String to Curves.001']
+        datarestorecgdescription_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorecgdescription.font = datarestorecgdescription_font
         
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
     
-class Fontrestorepie(bpy.types.Operator):
-    bl_label = "Restore OpenSans"
-    bl_idname = "addonname.myop_operatorrespie"
+class Fontchange23CG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operator23cgfont"
         
     def execute(self, context):
-        scene = context.scene
+        scene = bpy.data.scenes["2-3 Circle Graph"]
         mytool = scene.my_tool
         
-        obj = bpy.context.active_object
+        obj = bpy.data.objects["Circle_Graph.001"]
         modifier = obj.modifiers["GeometryNodes"]
-        node_group = modifier.node_group
-        node = node_group.nodes['String to Curves']
-        data_font = bpy.data.fonts["Open Sans Regular"]
-        node.font = data_font
+        node23_group = modifier.node_group
+        nested23_node_group = bpy.data.node_groups["NodeGroup.014"]
+        nested23des_node_group = bpy.data.node_groups["NodeGroup.015"]
+        nested23leg_node_group = bpy.data.node_groups["NodeGroup.013"]
+        
+        node23cgtitle = node23_group.nodes['String to Curves.005']
+        data23cgtitle_font = bpy.data.fonts.load(mytool.my_pathfont23cg_title)
+        node23cgtitle.font = data23cgtitle_font
+        
+        node23cgsubtitle = node23_group.nodes['String to Curves.006']
+        data23cgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfont23cg_subtitle)
+        node23cgsubtitle.font = data23cgsubtitle_font
+        
+        node23cgvalue = nested23_node_group.nodes['String to Curves']
+        data23cgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23cg_value)
+        node23cgvalue.font = data23cgvalue_font 
+
+        nodecgdescription = nested23des_node_group.nodes['String to Curves.004']
+        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23cg_description)
+        nodecgdescription.font = datacgdescription_font       
+        
+        node23cglegend = nested23leg_node_group.nodes['String to Curves.035']
+        data23cglegend_font = bpy.data.fonts.load(mytool.my_pathfont23cg_legend)
+        node23cglegend.font = data23cglegend_font
         
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
+    
+class Fontrestore23CG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operator23cgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["2-3 Circle Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle_Graph.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestore23_group = modifier.node_group
+        nested23_node_group = bpy.data.node_groups["NodeGroup.014"]
+        nested23des_node_group = bpy.data.node_groups["NodeGroup.015"]
+        nested23leg_node_group = bpy.data.node_groups["NodeGroup.013"]
+        
+        noderestore23cgtitle = noderestore23_group.nodes['String to Curves.005']
+        datarestore23cgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestore23cgtitle.font = datarestore23cgtitle_font
+        
+        noderestore23cgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        datarestore23cgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestore23cgsubtitle.font = datarestore23cgsubtitle_font
+        
+        noderestore23cgvalue = nested23_node_group.nodes['String to Curves']
+        datarestore23cgvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestore23cgvalue.font = datarestore23cgvalue_font        
+        
+        noderestore23cgdescription = nested23des_node_group.nodes['String to Curves.004']
+        datarestore23cgdescription_font = bpy.data.fonts["Open Sans Regular"]
+        noderestore23cgdescription.font = datarestore23cgdescription_font
+
+        noderestore23cglegend = nested23leg_node_group.nodes['String to Curves.035']
+        datarestore23cglegend_font = bpy.data.fonts.load(mytool.my_pathfont23cg_legend)
+        noderestore23cglegend.font = datarestore23cglegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class Fontchange23PG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operator23pgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["2-3 Pie Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.002"]
+        modifier = obj.modifiers["GeometryNodes"]
+        node23pg_group = modifier.node_group
+        nested23pg_node_group = bpy.data.node_groups["NodeGroup.016"]
+        nested23pgdes_node_group = bpy.data.node_groups["NodeGroup.017"]
+        nested23pgleg_node_group = bpy.data.node_groups["NodeGroup.018"]
+        
+        node23pgtitle = node23pg_group.nodes['String to Curves.005']
+        data23pgtitle_font = bpy.data.fonts.load(mytool.my_pathfont23pg_title)
+        node23pgtitle.font = data23pgtitle_font
+        
+        node23pgsubtitle = node23pg_group.nodes['String to Curves.006']
+        data23pgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfont23pg_subtitle)
+        node23pgsubtitle.font = data23pgsubtitle_font
+        
+        node23pgvalue = nested23pg_node_group.nodes['String to Curves']
+        data23pgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23pg_value)
+        node23pgvalue.font = data23pgvalue_font 
+
+        nodepgdescription = nested23pgdes_node_group.nodes['String to Curves.007']
+        datapgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23pg_description)
+        nodepgdescription.font = datapgdescription_font       
+        
+        node23pglegend = nested23pgleg_node_group.nodes['String to Curves.035']
+        data23pglegend_font = bpy.data.fonts.load(mytool.my_pathfont23pg_legend)
+        node23pglegend.font = data23pglegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class Fontrestore23PG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operator23pgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["2-3 Pie Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.002"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestore23_group = modifier.node_group
+        nested23pg_node_group = bpy.data.node_groups["NodeGroup.016"]
+        nested23pgdes_node_group = bpy.data.node_groups["NodeGroup.017"]
+        nested23pgleg_node_group = bpy.data.node_groups["NodeGroup.018"]
+        
+        noderestore23pgtitle = noderestore23_group.nodes['String to Curves.005']
+        datarestore23pgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestore23pgtitle.font = datarestore23pgtitle_font
+        
+        noderestore23pgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        datarestore23pgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestore23pgsubtitle.font = datarestore23pgsubtitle_font
+        
+        noderestore23pgvalue = nested23pg_node_group.nodes['String to Curves']
+        datarestore23pgvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestore23pgvalue.font = datarestore23pgvalue_font        
+        
+        noderestore23pgdescription = nested23pgdes_node_group.nodes['String to Curves.007']
+        datarestore23pgdescription_font = bpy.data.fonts["Open Sans Regular"]
+        noderestore23pgdescription.font = datarestore23pgdescription_font
+
+        noderestore23pglegend = nested23pgleg_node_group.nodes['String to Curves.035']
+        datarestore23pglegend_font = bpy.data.fonts.load(mytool.my_pathfont23pg_legend)
+        noderestore23pglegend.font = datarestore23pglegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontchangePG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorfpie"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Pie Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graphp.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        node_grouppg = modifier.node_group
+        
+        nodepgtitle = node_grouppg.nodes['String to Curves.005']
+        datapgtitle_font = bpy.data.fonts.load(mytool.my_pathfontpg_title)
+        nodepgtitle.font = datapgtitle_font
+        
+        nodepgsubtitle = node_grouppg.nodes['String to Curves.006']
+        datapgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontpg_subtitle)
+        nodepgsubtitle.font = datapgsubtitle_font
+        
+        nodepgvalue = node_grouppg.nodes['String to Curves']
+        datapgvalue_font = bpy.data.fonts.load(mytool.my_pathfontpg_value)
+        nodepgvalue.font = datapgvalue_font        
+        
+        nodepgdescription = node_grouppg.nodes['String to Curves.001']
+        datapgdescription_font = bpy.data.fonts.load(mytool.my_pathfontpg_description)
+        nodepgdescription.font = datapgdescription_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestorePG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorrespie"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Pie Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graphp.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorepg_group = modifier.node_group
+        
+        noderestorepgtitle = noderestorepg_group.nodes['String to Curves.005']
+        datarestorepgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorepgtitle.font = datarestorepgtitle_font
+        
+        noderestorepgsubtitle = noderestorepg_group.nodes['String to Curves.006']
+        datarestorepgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorepgsubtitle.font = datarestorepgsubtitle_font
+        
+        noderestorepgvalue = noderestorepg_group.nodes['String to Curves']
+        datarestorepgvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorepgvalue.font = datarestorepgvalue_font        
+        
+        noderestorepgdescription = noderestorepg_group.nodes['String to Curves.001']
+        datarestorepgdescription_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorepgdescription.font = datarestorepgdescription_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+ 
+class FontchangeCANDLEG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorcandlegfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Candlestick Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodecandleg_group = modifier.node_group
+        nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
+        nestedcandlegpointtext_node_group = bpy.data.node_groups["NodeGroup.173"]
+        
+        nodecandlegtitle = nodecandleg_group.nodes['String to Curves.014']
+        datacandlegtitle_font = bpy.data.fonts.load(mytool.my_pathfontcandleg_title)
+        nodecandlegtitle.font = datacandlegtitle_font
+        
+        nodecandlegsubtitle = nodecandleg_group.nodes['String to Curves.015']
+        datacandlegsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontcandleg_subtitle)
+        nodecandlegsubtitle.font = datacandlegsubtitle_font
+        
+        nodecandlegrangenumbers = nestedcandlegrn_node_group.nodes['String to Curves.013']
+        datacandlegrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontcandleg_rangenumbers)
+        nodecandlegrangenumbers.font = datacandlegrangenumbers_font 
+
+        nodecandlegpointtext = nestedcandlegpointtext_node_group.nodes['String to Curves.005']
+        datacandlegpointtext_font = bpy.data.fonts.load(mytool.my_pathfontcandleg_bartext)
+        nodecandlegpointtext.font = datacandlegpointtext_font       
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreCANDLEG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorcandlegresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Candlestick Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestore23_group = modifier.node_group
+        nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
+        nestedcandlegpointtext_node_group = bpy.data.node_groups["NodeGroup.173"]
+        
+        noderestorecandlegtitle = noderestore23_group.nodes['String to Curves.014']
+        datarestorecandlegtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorecandlegtitle.font = datarestorecandlegtitle_font
+        
+        noderestorecandlegsubtitle = noderestore23_group.nodes['String to Curves.015']
+        datarestorecandlegsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorecandlegsubtitle.font = datarestorecandlegsubtitle_font
+        
+        noderestorecandlegrangenumbers = nestedcandlegrn_node_group.nodes['String to Curves.013']
+        datarestorecandlegrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorecandlegrangenumbers.font = datarestorecandlegrangenumbers_font        
+        
+        noderestorecandlegpointtext = nestedcandlegpointtext_node_group.nodes['String to Curves.005']
+        datarestorecandlegpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorecandlegpointtext.font = datarestorecandlegpointtext_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+
+class FontchangeLINEG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorlinegfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Line Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.005"]
+        modifier = obj.modifiers["GeometryNodes.001"]
+        nodelineg_group = modifier.node_group
+        nestedlinegvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
+        nestedlinegrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegpointtext_node_group = bpy.data.node_groups["NodeGroup.152"]
+        
+        nodelinegtitle = nodelineg_group.nodes['String to Curves.014']
+        datalinegtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_title)
+        nodelinegtitle.font = datalinegtitle_font
+        
+        nodelinegsubtitle = nodelineg_group.nodes['String to Curves.015']
+        datalinegsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_subtitle)
+        nodelinegsubtitle.font = datalinegsubtitle_font
+
+        nodelinegvalue = nestedlinegvalue_node_group.nodes['String to Curves.016']
+        datalinegvalue_font = bpy.data.fonts.load(mytool.my_pathfontlg_barvalue)
+        nodelinegvalue.font = datalinegvalue_font 
+        
+        nodelinegrangenumbers = nestedlinegrn_node_group.nodes['String to Curves.008']
+        datalinegrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
+        nodelinegrangenumbers.font = datalinegrangenumbers_font 
+
+        nodelinegpointtext = nestedlinegpointtext_node_group.nodes['String to Curves.003']
+        datalinegpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+        nodelinegpointtext.font = datalinegpointtext_font       
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreLINEG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorlinegresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Line Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.005"]
+        modifier = obj.modifiers["GeometryNodes.001"]
+        noderestoreline_group = modifier.node_group
+        nestedlinegvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
+        nestedlinegrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegpointtext_node_group = bpy.data.node_groups["NodeGroup.152"]
+        
+        noderestorelinegtitle = noderestoreline_group.nodes['String to Curves.014']
+        datarestorelinegtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorelinegtitle.font = datarestorelinegtitle_font
+        
+        noderestorelinegsubtitle = noderestoreline_group.nodes['String to Curves.015']
+        datarestorelinegsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorelinegsubtitle.font = datarestorelinegsubtitle_font
+
+        noderestorelinegvalue = nestedlinegvalue_node_group.nodes['String to Curves.016']
+        datarestorelinegvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorelinegvalue.font = datarestorelinegvalue_font 
+        
+        noderestorelinegrangenumbers = nestedlinegrn_node_group.nodes['String to Curves.008']
+        datarestorelinegrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorelinegrangenumbers.font = datarestorelinegrangenumbers_font        
+        
+        noderestorelinegpointtext = nestedlinegpointtext_node_group.nodes['String to Curves.003']
+        datarestorelinegpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorelinegpointtext.font = datarestorelinegpointtext_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeLINEGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorlinegcfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Line Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.002"]
+        modifier = obj.modifiers["GeometryNodes.001"]
+        nodelinegc_group = modifier.node_group
+        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
+        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
+        nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
+        
+        nodelinegctitle = nodelinegc_group.nodes['String to Curves.014']
+        datalinegctitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_title)
+        nodelinegctitle.font = datalinegctitle_font
+        
+        nodelinegcsubtitle = nodelinegc_group.nodes['String to Curves.015']
+        datalinegcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_subtitle)
+        nodelinegcsubtitle.font = datalinegcsubtitle_font
+
+        nodelinegcvalue = nestedlinegcvalue_node_group.nodes['String to Curves.016']
+        datalinegcvalue_font = bpy.data.fonts.load(mytool.my_pathfontlg_barvalue)
+        nodelinegcvalue.font = datalinegcvalue_font 
+        
+        nodelinegcrangenumbers = nestedlinegcrn_node_group.nodes['String to Curves.008']
+        datalinegcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
+        nodelinegcrangenumbers.font = datalinegcrangenumbers_font 
+
+        nodelinegcpointtext = nestedlinegcpointtext_node_group.nodes['String to Curves.005']
+        datalinegcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+        nodelinegcpointtext.font = datalinegcpointtext_font 
+
+        nodelinegclegend = nestedlinegclegend_node_group.nodes['String to Curves.0162']
+        datalinegclegend_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+        nodelinegclegend.font = datalinegclegend_font         
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreLINEGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorlinegcresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Line Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.002"]
+        modifier = obj.modifiers["GeometryNodes.001"]
+        noderestorelinec_group = modifier.node_group
+        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
+        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
+        nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
+        
+        noderestorelinegctitle = noderestorelinec_group.nodes['String to Curves.014']
+        datarestorelinegctitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorelinegctitle.font = datarestorelinegctitle_font
+        
+        noderestorelinegcsubtitle = noderestorelinec_group.nodes['String to Curves.015']
+        datarestorelinegcsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorelinegcsubtitle.font = datarestorelinegcsubtitle_font
+
+        noderestorelinegcvalue = nestedlinegcvalue_node_group.nodes['String to Curves.016']
+        datarestorelinegcvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorelinegcvalue.font = datarestorelinegcvalue_font 
+        
+        noderestorelinegcrangenumbers = nestedlinegcrn_node_group.nodes['String to Curves.008']
+        datarestorelinegcrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+        noderestorelinegcrangenumbers.font = datarestorelinegcrangenumbers_font        
+        
+        noderestorelinegcpointtext = nestedlinegcpointtext_node_group.nodes['String to Curves.005']
+        datarestorelinegcpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorelinegcpointtext.font = datarestorelinegcpointtext_font
+
+        noderestorelinegclegend = nestedlinegclegend_node_group.nodes['String to Curves.0162']
+        datarestorelinegclegend_font = bpy.data.fonts["Open Sans Light"]
+        noderestorelinegclegend.font = datarestorelinegclegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontchangeMOUNTAING(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatormgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Mountain Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodemountain_group = modifier.node_group
+        nestedmountainvalue_node_group = bpy.data.node_groups["NodeGroup.023"]
+        nestedmountainrn_node_group = bpy.data.node_groups["NodeGroup.158"]
+        nestedmountainpointtext_node_group = bpy.data.node_groups["NodeGroup.157"]
+        
+        nodemountaintitle = nodemountain_group.nodes['String to Curves.029']
+        datamountaintitle_font = bpy.data.fonts.load(mytool.my_pathfontmg_title)
+        nodemountaintitle.font = datamountaintitle_font
+        
+        nodemountainsubtitle = nodemountain_group.nodes['String to Curves.028']
+        datamountainsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmg_subtitle)
+        nodemountainsubtitle.font = datamountainsubtitle_font
+
+        nodemountainvalue = nestedmountainvalue_node_group.nodes['String to Curves.016']
+        datamountainvalue_font = bpy.data.fonts.load(mytool.my_pathfontmg_barvalue)
+        nodemountainvalue.font = datamountainvalue_font 
+        
+        nodemountainrangenumbers = nestedmountainrn_node_group.nodes['String to Curves.001']
+        datamountainrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmg_rangenumbers)
+        nodemountainrangenumbers.font = datamountainrangenumbers_font 
+
+        nodemountainpointtext = nestedmountainpointtext_node_group.nodes['String to Curves.005']
+        datamountainpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmg_bartext)
+        nodemountainpointtext.font = datamountainpointtext_font       
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreMOUNTAING(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatormgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Mountain Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestoreline_group = modifier.node_group
+        nestedmountainvalue_node_group = bpy.data.node_groups["NodeGroup.023"]
+        nestedmountainrn_node_group = bpy.data.node_groups["NodeGroup.158"]
+        nestedmountainpointtext_node_group = bpy.data.node_groups["NodeGroup.157"]
+        
+        noderestoremountaintitle = noderestoreline_group.nodes['String to Curves.029']
+        datarestoremountaintitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestoremountaintitle.font = datarestoremountaintitle_font
+        
+        noderestoremountainsubtitle = noderestoreline_group.nodes['String to Curves.028']
+        datarestoremountainsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestoremountainsubtitle.font = datarestoremountainsubtitle_font
+
+        noderestoremountainvalue = nestedmountainvalue_node_group.nodes['String to Curves.016']
+        datarestoremountainvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestoremountainvalue.font = datarestoremountainvalue_font 
+        
+        noderestoremountainrangenumbers = nestedmountainrn_node_group.nodes['String to Curves.001']
+        datarestoremountainrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+        noderestoremountainrangenumbers.font = datarestoremountainrangenumbers_font        
+        
+        noderestoremountainpointtext = nestedmountainpointtext_node_group.nodes['String to Curves.005']
+        datarestoremountainpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestoremountainpointtext.font = datarestoremountainpointtext_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeMOUNTAINGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatormgcfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Mountain Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.004"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodemountainc_group = modifier.node_group
+        nestedmountaincvalue_node_group = bpy.data.node_groups["NodeGroup.159"]
+        nestedmountaincrn_node_group = bpy.data.node_groups["NodeGroup.161"]
+        nestedmountaincpointtext_node_group = bpy.data.node_groups["NodeGroup.162"]
+        nestedmountainclegend_node_group = bpy.data.node_groups["NodeGroup.160"]
+        
+        nodemountainctitle = nodemountainc_group.nodes['String to Curves.029']
+        datamountainctitle_font = bpy.data.fonts.load(mytool.my_pathfontmgc_title)
+        nodemountainctitle.font = datamountainctitle_font
+        
+        nodemountaincsubtitle = nodemountainc_group.nodes['String to Curves.028']
+        datamountaincsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmgc_subtitle)
+        nodemountaincsubtitle.font = datamountaincsubtitle_font
+
+        nodemountaincvalue = nestedmountaincvalue_node_group.nodes['String to Curves.016']
+        datamountaincvalue_font = bpy.data.fonts.load(mytool.my_pathfontmgc_barvalue)
+        nodemountaincvalue.font = datamountaincvalue_font 
+        
+        nodemountaincrangenumbers = nestedmountaincrn_node_group.nodes['String to Curves']
+        datamountaincrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmgc_rangenumbers)
+        nodemountaincrangenumbers.font = datamountaincrangenumbers_font 
+
+        nodemountaincpointtext = nestedmountaincpointtext_node_group.nodes['String to Curves.022']
+        datamountaincpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmgc_bartext)
+        nodemountaincpointtext.font = datamountaincpointtext_font 
+
+        nodemountainclegend = nestedmountainclegend_node_group.nodes['String to Curves.024']
+        datamountainclegend_font = bpy.data.fonts.load(mytool.my_pathfontmgc_bartext)
+        nodemountainclegend.font = datamountainclegend_font         
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreMOUNTAINGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatormgcresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Mountain Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Cube.004"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorelinec_group = modifier.node_group
+        nestedmountaincvalue_node_group = bpy.data.node_groups["NodeGroup.159"]
+        nestedmountaincrn_node_group = bpy.data.node_groups["NodeGroup.161"]
+        nestedmountaincpointtext_node_group = bpy.data.node_groups["NodeGroup.162"]
+        nestedmountainclegend_node_group = bpy.data.node_groups["NodeGroup.160"]
+        
+        noderestoremountainctitle = noderestorelinec_group.nodes['String to Curves.029']
+        datarestoremountainctitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestoremountainctitle.font = datarestoremountainctitle_font
+        
+        noderestoremountaincsubtitle = noderestorelinec_group.nodes['String to Curves.028']
+        datarestoremountaincsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestoremountaincsubtitle.font = datarestoremountaincsubtitle_font
+
+        noderestoremountaincvalue = nestedmountaincvalue_node_group.nodes['String to Curves.016']
+        datarestoremountaincvalue_font = bpy.data.fonts["Open Sans Regular"]
+        noderestoremountaincvalue.font = datarestoremountaincvalue_font 
+        
+        noderestoremountaincrangenumbers = nestedmountaincrn_node_group.nodes['String to Curves']
+        datarestoremountaincrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+        noderestoremountaincrangenumbers.font = datarestoremountaincrangenumbers_font        
+        
+        noderestoremountaincpointtext = nestedmountaincpointtext_node_group.nodes['String to Curves.022']
+        datarestoremountaincpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestoremountaincpointtext.font = datarestoremountaincpointtext_font
+
+        noderestoremountainclegend = nestedmountainclegend_node_group.nodes['String to Curves.024']
+        datarestoremountainclegend_font = bpy.data.fonts["Open Sans Light"]
+        noderestoremountainclegend.font = datarestoremountainclegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeHBG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorbgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Horizontal Bar Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.005"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodehbg_group = modifier.node_group
+        nestedhbgvalue_node_group = bpy.data.node_groups["NodeGroup.019"]
+        nestedhbgrn_node_group = bpy.data.node_groups["NodeGroup.033"]
+        nestedhbgpointtext_node_group = bpy.data.node_groups["NodeGroup.030"]
+        
+        nodehbgtitle = nodehbg_group.nodes['String to Curves.005']
+        datahbgtitle_font = bpy.data.fonts.load(mytool.my_pathfontbg_title)
+        nodehbgtitle.font = datahbgtitle_font
+        
+        nodehbgsubtitle = nodehbg_group.nodes['String to Curves.006']
+        datahbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbg_subtitle)
+        nodehbgsubtitle.font = datahbgsubtitle_font
+
+        nodehbgvalue = nestedhbgvalue_node_group.nodes['String to Curves.016']
+        datahbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontbg_barvalue)
+        nodehbgvalue.font = datahbgvalue_font 
+        
+        nodehbgrangenumbers = nestedhbgrn_node_group.nodes['String to Curves.007']
+        datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbg_rangenumbers)
+        nodehbgrangenumbers.font = datahbgrangenumbers_font 
+
+        nodehbgpointtext = nestedhbgpointtext_node_group.nodes['String to Curves']
+        datahbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbg_bartext)
+        nodehbgpointtext.font = datahbgpointtext_font 
+
+        nodehbgtexttotal = nodehbg_group.nodes['String to Curves.004']
+        datahbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_texttotal)
+        nodehbgtexttotal.font = datahbgtexttotal_font  
+
+        nodehbgvaluetotal = nodehbg_group.nodes['String to Curves.012']
+        datahbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_valuetotal)
+        nodehbgvaluetotal.font = datahbgvaluetotal_font        
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreHBG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorbgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Horizontal Bar Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.005"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorehbg_group = modifier.node_group
+        nestedhbgvalue_node_group = bpy.data.node_groups["NodeGroup.019"]
+        nestedhbgrn_node_group = bpy.data.node_groups["NodeGroup.033"]
+        nestedhbgpointtext_node_group = bpy.data.node_groups["NodeGroup.030"]
+        
+        noderestorehbgtitle = noderestorehbg_group.nodes['String to Curves.005']
+        datarestorehbgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgtitle.font = datarestorehbgtitle_font
+        
+        noderestorehbgsubtitle = noderestorehbg_group.nodes['String to Curves.006']
+        datarestorehbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehbgsubtitle.font = datarestorehbgsubtitle_font
+
+        noderestorehbgvalue = nestedhbgvalue_node_group.nodes['String to Curves.016']
+        datarestorehbgvalue_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgvalue.font = datarestorehbgvalue_font 
+        
+        noderestorehbgrangenumbers = nestedhbgrn_node_group.nodes['String to Curves.007']
+        datarestorehbgrangenumbers_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehbgrangenumbers.font = datarestorehbgrangenumbers_font        
+        
+        noderestorehbgpointtext = nestedhbgpointtext_node_group.nodes['String to Curves']
+        datarestorehbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorehbgpointtext.font = datarestorehbgpointtext_font
+
+        noderestorehbgtexttotal = noderestorehbg_group.nodes['String to Curves.004']
+        datarestorehbgtexttotal_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgtexttotal.font = datarestorehbgtexttotal_font
+
+        noderestorehbgvaluetotal = noderestorehbg_group.nodes['String to Curves.012']
+        datarestorehbgvaluetotal_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgvaluetotal.font = datarestorehbgvaluetotal_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeHBGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorbgcfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Horizontal Bar Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodehbgc_group = modifier.node_group
+        nestedhbgcvalue_node_group = bpy.data.node_groups["NodeGroup.135"]
+        nestedhbgcrn_node_group = bpy.data.node_groups["NodeGroup.146"]
+        nestedhbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.144"]
+        nestedhbgclegend_node_group = bpy.data.node_groups["NodeGroup.145"]
+        
+        nodehbgctitle = nodehbgc_group.nodes['String to Curves.005']
+        datahbgctitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_title)
+        nodehbgctitle.font = datahbgctitle_font
+        
+        nodehbgcsubtitle = nodehbgc_group.nodes['String to Curves.006']
+        datahbgcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_subtitle)
+        nodehbgcsubtitle.font = datahbgcsubtitle_font
+
+        nodehbgcvalue = nestedhbgcvalue_node_group.nodes['String to Curves.016']
+        datahbgcvalue_font = bpy.data.fonts.load(mytool.my_pathfontbgc_barvalue)
+        nodehbgcvalue.font = datahbgcvalue_font 
+        
+        nodehbgcrangenumbers = nestedhbgcrn_node_group.nodes['String to Curves.007']
+        datahbgcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbgc_rangenumbers)
+        nodehbgcrangenumbers.font = datahbgcrangenumbers_font 
+
+        nodehbgcpointtext = nestedhbgcpointtext_node_group.nodes['String to Curves']
+        datahbgcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbgc_bartext)
+        nodehbgcpointtext.font = datahbgcpointtext_font 
+
+        nodehbgclegend = nestedhbgclegend_node_group.nodes['String to Curves.004']
+        datahbgclegend_font = bpy.data.fonts.load(mytool.my_pathfontbgc_legend)
+        nodehbgclegend.font = datahbgclegend_font  
+       
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreHBGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorbgcresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Horizontal Bar Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.001"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorehbgc_group = modifier.node_group
+        nestedhbgcvalue_node_group = bpy.data.node_groups["NodeGroup.135"]
+        nestedhbgcrn_node_group = bpy.data.node_groups["NodeGroup.146"]
+        nestedhbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.144"]
+        nestedhbgclegend_node_group = bpy.data.node_groups["NodeGroup.145"]
+        
+        noderestorehbgctitle = noderestorehbgc_group.nodes['String to Curves.005']
+        datarestorehbgctitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgctitle.font = datarestorehbgctitle_font
+        
+        noderestorehbgcsubtitle = noderestorehbgc_group.nodes['String to Curves.006']
+        datarestorehbgcsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehbgcsubtitle.font = datarestorehbgcsubtitle_font
+
+        noderestorehbgcvalue = nestedhbgcvalue_node_group.nodes['String to Curves.016']
+        datarestorehbgcvalue_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgcvalue.font = datarestorehbgcvalue_font 
+        
+        noderestorehbgcrangenumbers = nestedhbgcrn_node_group.nodes['String to Curves.007']
+        datarestorehbgcrangenumbers_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehbgcrangenumbers.font = datarestorehbgcrangenumbers_font        
+        
+        noderestorehbgcpointtext = nestedhbgcpointtext_node_group.nodes['String to Curves']
+        datarestorehbgcpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorehbgcpointtext.font = datarestorehbgcpointtext_font
+
+        noderestorehbgclegend = nestedhbgclegend_node_group.nodes['String to Curves.004']
+        datarestorehbgclegend_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorehbgclegend.font = datarestorehbgclegend_font
+
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeMCG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatormcgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Multiple_Circle_Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.004"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodemcg_group = modifier.node_group
+        nestedmcg_node_group = bpy.data.node_groups["NodeGroup.147"]
+        nestedmcgdes_node_group = bpy.data.node_groups["NodeGroup.148"]
+        
+        nodemcgtitle = nodemcg_group.nodes['String to Curves.005']
+        datamcgtitle_font = bpy.data.fonts.load(mytool.my_pathfontmcg_title)
+        nodemcgtitle.font = datamcgtitle_font
+        
+        nodemcgsubtitle = nodemcg_group.nodes['String to Curves.006']
+        datamcgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmcg_subtitle)
+        nodemcgsubtitle.font = datamcgsubtitle_font
+        
+        nodemcgvalue = nestedmcg_node_group.nodes['String to Curves']
+        datamcgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmcg_barvalue)
+        nodemcgvalue.font = datamcgvalue_font 
+
+        nodecgdescription = nestedmcgdes_node_group.nodes['String to Curves.011']
+        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmcg_bartext)
+        nodecgdescription.font = datacgdescription_font       
+       
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreMCG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatormcgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Multiple_Circle_Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.004"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestore23_group = modifier.node_group
+        nestedmcg_node_group = bpy.data.node_groups["NodeGroup.147"]
+        nestedmcgdes_node_group = bpy.data.node_groups["NodeGroup.148"]
+        
+        noderestoremcgtitle = noderestore23_group.nodes['String to Curves.005']
+        datarestoremcgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestoremcgtitle.font = datarestoremcgtitle_font
+        
+        noderestoremcgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        datarestoremcgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestoremcgsubtitle.font = datarestoremcgsubtitle_font
+        
+        noderestoremcgvalue = nestedmcg_node_group.nodes['String to Curves']
+        datarestoremcgvalue_font = bpy.data.fonts["Open Sans Semibold"]
+        noderestoremcgvalue.font = datarestoremcgvalue_font        
+        
+        noderestoremcgdescription = nestedmcgdes_node_group.nodes['String to Curves.011']
+        datarestoremcgdescription_font = bpy.data.fonts["Open Sans Light"]
+        noderestoremcgdescription.font = datarestoremcgdescription_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+         
+class FontchangeMPG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatormpgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Multiple_Pie_Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.005"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodempg_group = modifier.node_group
+        nestedmpg_node_group = bpy.data.node_groups["NodeGroup.149"]
+        nestedmpgdes_node_group = bpy.data.node_groups["NodeGroup.150"]
+        
+        nodempgtitle = nodempg_group.nodes['String to Curves.005']
+        datampgtitle_font = bpy.data.fonts.load(mytool.my_pathfontmpg_title)
+        nodempgtitle.font = datampgtitle_font
+        
+        nodempgsubtitle = nodempg_group.nodes['String to Curves.006']
+        datampgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmpg_subtitle)
+        nodempgsubtitle.font = datampgsubtitle_font
+        
+        nodempgvalue = nestedmpg_node_group.nodes['String to Curves']
+        datampgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmpg_barvalue)
+        nodempgvalue.font = datampgvalue_font 
+
+        nodecgdescription = nestedmpgdes_node_group.nodes['String to Curves.011']
+        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmpg_bartext)
+        nodecgdescription.font = datacgdescription_font       
+       
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreMPG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatormpgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Multiple_Pie_Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Circle Graph.005"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestore23_group = modifier.node_group
+        nestedmpg_node_group = bpy.data.node_groups["NodeGroup.149"]
+        nestedmpgdes_node_group = bpy.data.node_groups["NodeGroup.150"]
+        
+        noderestorempgtitle = noderestore23_group.nodes['String to Curves.005']
+        datarestorempgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorempgtitle.font = datarestorempgtitle_font
+        
+        noderestorempgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        datarestorempgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorempgsubtitle.font = datarestorempgsubtitle_font
+        
+        noderestorempgvalue = nestedmpg_node_group.nodes['String to Curves']
+        datarestorempgvalue_font = bpy.data.fonts["Open Sans Semibold"]
+        noderestorempgvalue.font = datarestorempgvalue_font        
+        
+        noderestorempgdescription = nestedmpgdes_node_group.nodes['String to Curves.011']
+        datarestorempgdescription_font = bpy.data.fonts["Open Sans Light"]
+        noderestorempgdescription.font = datarestorempgdescription_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+         
+class FontchangeVBG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorvbgfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Vertical Bar Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodevvbg_group = modifier.node_group
+        nestedvvbgvalue_node_group = bpy.data.node_groups["NodeGroup.165"]
+        nestedvvbgrn_node_group = bpy.data.node_groups["NodeGroup.167"]
+        nestedvvbgpointtext_node_group = bpy.data.node_groups["NodeGroup.166"]
+        
+        nodevvbgtitle = nodevvbg_group.nodes['String to Curves.005']
+        datavvbgtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbg_title)
+        nodevvbgtitle.font = datavvbgtitle_font
+        
+        nodevvbgsubtitle = nodevvbg_group.nodes['String to Curves.006']
+        datavvbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbg_subtitle)
+        nodevvbgsubtitle.font = datavvbgsubtitle_font
+
+        nodevvbgvalue = nestedvvbgvalue_node_group.nodes['String to Curves.013']
+        datavvbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontvbg_barvalue)
+        nodevvbgvalue.font = datavvbgvalue_font 
+        
+        nodevvbgrangenumbers = nestedvvbgrn_node_group.nodes['String to Curves.007']
+        datavvbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbg_rangenumbers)
+        nodevvbgrangenumbers.font = datavvbgrangenumbers_font 
+
+        nodevvbgpointtext = nestedvvbgpointtext_node_group.nodes['String to Curves']
+        datavvbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbg_bartext)
+        nodevvbgpointtext.font = datavvbgpointtext_font 
+
+        nodevvbgtexttotal = nodevvbg_group.nodes['String to Curves.004']
+        datavvbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_texttotal)
+        nodevvbgtexttotal.font = datavvbgtexttotal_font  
+
+        nodevvbgvaluetotal = nodevvbg_group.nodes['String to Curves.012']
+        datavvbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_valuetotal)
+        nodevvbgvaluetotal.font = datavvbgvaluetotal_font        
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreVBG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorvbgresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Vertical Bar Graph"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorevvbg_group = modifier.node_group
+        nestedvvbgvalue_node_group = bpy.data.node_groups["NodeGroup.165"]
+        nestedvvbgrn_node_group = bpy.data.node_groups["NodeGroup.167"]
+        nestedvvbgpointtext_node_group = bpy.data.node_groups["NodeGroup.166"]
+        
+        noderestorevvbgtitle = noderestorevvbg_group.nodes['String to Curves.005']
+        datarestorevvbgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgtitle.font = datarestorevvbgtitle_font
+        
+        noderestorevvbgsubtitle = noderestorevvbg_group.nodes['String to Curves.006']
+        datarestorevvbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorevvbgsubtitle.font = datarestorevvbgsubtitle_font
+
+        noderestorevvbgvalue = nestedvvbgvalue_node_group.nodes['String to Curves.013']
+        datarestorevvbgvalue_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgvalue.font = datarestorevvbgvalue_font 
+        
+        noderestorevvbgrangenumbers = nestedvvbgrn_node_group.nodes['String to Curves.007']
+        datarestorevvbgrangenumbers_font = bpy.data.fonts["Open Sans Light"]
+        noderestorevvbgrangenumbers.font = datarestorevvbgrangenumbers_font        
+        
+        noderestorevvbgpointtext = nestedvvbgpointtext_node_group.nodes['String to Curves']
+        datarestorevvbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorevvbgpointtext.font = datarestorevvbgpointtext_font
+
+        noderestorevvbgtexttotal = noderestorevvbg_group.nodes['String to Curves.004']
+        datarestorevvbgtexttotal_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgtexttotal.font = datarestorevvbgtexttotal_font
+
+        noderestorevvbgvaluetotal = noderestorevvbg_group.nodes['String to Curves.012']
+        datarestorevvbgvaluetotal_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgvaluetotal.font = datarestorevvbgvaluetotal_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
+class FontchangeVBGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorvbgcfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Vertical Bar Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        nodevvbgc_group = modifier.node_group
+        nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
+        nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
+        nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
+        nestedvvbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.172"]
+        nestedvvbgclegend_node_group = bpy.data.node_groups["NodeGroup.169"]
+        
+        nodevvbgctitle = nodevvbgc_group.nodes['String to Curves.005']
+        datavvbgctitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_title)
+        nodevvbgctitle.font = datavvbgctitle_font
+        
+        nodevvbgcsubtitle = nodevvbgc_group.nodes['String to Curves.006']
+        datavvbgcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_subtitle)
+        nodevvbgcsubtitle.font = datavvbgcsubtitle_font
+
+        nodevvbgcvaluea = nestedvvbgcvaluea_node_group.nodes['String to Curves.013']
+        datavvbgcvaluea_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvaluea)
+        nodevvbgcvaluea.font = datavvbgcvaluea_font 
+
+        nodevvbgcvalueb = nestedvvbgcvalueb_node_group.nodes['String to Curves.025']
+        datavvbgcvalueb_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvalueb)
+        nodevvbgcvalueb.font = datavvbgcvalueb_font 
+        
+        nodevvbgcrangenumbers = nestedvvbgcrn_node_group.nodes['String to Curves.007']
+        datavvbgcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_rangenumbers)
+        nodevvbgcrangenumbers.font = datavvbgcrangenumbers_font 
+
+        nodevvbgcpointtext = nestedvvbgcpointtext_node_group.nodes['String to Curves']
+        datavvbgcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_bartext)
+        nodevvbgcpointtext.font = datavvbgcpointtext_font 
+
+        nodevvbgclegend = nestedvvbgclegend_node_group.nodes['String to Curves.033']
+        datavvbgclegend_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_legend)
+        nodevvbgclegend.font = datavvbgclegend_font  
+       
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreVBGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorvbgcresfont"
+        
+    def execute(self, context):
+        scene = bpy.data.scenes["Vertical Bar Graph Comparison"]
+        mytool = scene.my_tool
+        
+        obj = bpy.data.objects["Plane.003"]
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorevvbgc_group = modifier.node_group
+        nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
+        nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
+        nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
+        nestedvvbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.172"]
+        nestedvvbgclegend_node_group = bpy.data.node_groups["NodeGroup.169"]
+        
+        noderestorevvbgctitle = noderestorevvbgc_group.nodes['String to Curves.005']
+        datarestorevvbgctitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgctitle.font = datarestorevvbgctitle_font
+        
+        noderestorevvbgcsubtitle = noderestorevvbgc_group.nodes['String to Curves.006']
+        datarestorevvbgcsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorevvbgcsubtitle.font = datarestorevvbgcsubtitle_font
+
+        noderestorevvbgcvaluea = nestedvvbgcvaluea_node_group.nodes['String to Curves.013']
+        datarestorevvbgcvaluea_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgcvaluea.font = datarestorevvbgcvaluea_font 
+
+        noderestorevvbgcvalueb = nestedvvbgcvalueb_node_group.nodes['String to Curves.025']
+        datarestorevvbgcvalueb_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgcvalueb.font = datarestorevvbgcvalueb_font 
+
+        noderestorevvbgcrangenumbers = nestedvvbgcrn_node_group.nodes['String to Curves.007']
+        datarestorevvbgcrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorevvbgcrangenumbers.font = datarestorevvbgcrangenumbers_font        
+        
+        noderestorevvbgcpointtext = nestedvvbgcpointtext_node_group.nodes['String to Curves']
+        datarestorevvbgcpointtext_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorevvbgcpointtext.font = datarestorevvbgcpointtext_font
+
+        noderestorevvbgclegend = nestedvvbgclegend_node_group.nodes['String to Curves.033']
+        datarestorevvbgclegend_font = bpy.data.fonts["Open Sans Regular"]
+        noderestorevvbgclegend.font = datarestorevvbgclegend_font
+
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+
     
 class ADDONNAME_OT_my_op3(bpy.types.Operator):
     bl_label = "Add Object3"
@@ -11525,7 +16754,7 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorLGcsv, MyoperatorLGCcsv, 
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorLGcsv, MyoperatorLGCcsv, 
 MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorVBcsv, 
 MyoperatorVBCcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
@@ -11533,11 +16762,11 @@ ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opVBGAL, ADDON
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL,  
 ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_VB, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, Fontchange, Fontchangepie, Fontrestore, Fontrestorepie, 
-TestPanel, TestPanel2_panel_1, TestPanel2_panel_2, TestPanel2C_panel_1, TestPanel2C_panel_2, TestPanel3_panel_1, TestPanel3_panel_2, TestPanel3P_panel_1, 
-TestPanel3P_panel_2,TestPanel4_panel_1, TestPanel4_panel_2, TestPanel4LGC_panel_1, TestPanel4LGC_panel_2, TestPanel5_panel_1, TestPanel5_panel_2 , 
-TestPanel5c_panel_1, TestPanel5c_panel_2, TestPanel6_panel_1, TestPanel6_panel_2, TestPanel7_panel_1, TestPanel7_panel_2, TestPanel8_panel_1, TestPanel8_panel_2, 
-TestPanel8C_panel_1, TestPanel8C_panel_2, Locationchange, TestPanel9_panel_1, TestPanel9_panel_2, TestPanel9vb_panel_1, TestPanel9vb_panel_2, ADDONNAME_OT_my_opLGAL, ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeMCG, FontchangeMPG, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_23_PT_panel_1, 
+PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5,
+COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5,
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, Locationchange, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
  
  
 def register():
