@@ -15627,7 +15627,7 @@ class Fontrestore23CG(bpy.types.Operator):
         noderestore23cgdescription.font = datarestore23cgdescription_font
 
         noderestore23cglegend = nested23leg_node_group.nodes['String to Curves.035']
-        datarestore23cglegend_font = bpy.data.fonts.load(mytool.my_pathfont23cg_legend)
+        datarestore23cglegend_font = bpy.data.fonts["Open Sans Regular"]
         noderestore23cglegend.font = datarestore23cglegend_font
         
         bpy.ops.file.pack_all()    
@@ -15705,7 +15705,7 @@ class Fontrestore23PG(bpy.types.Operator):
         noderestore23pgdescription.font = datarestore23pgdescription_font
 
         noderestore23pglegend = nested23pgleg_node_group.nodes['String to Curves.035']
-        datarestore23pglegend_font = bpy.data.fonts.load(mytool.my_pathfont23pg_legend)
+        datarestore23pglegend_font = bpy.data.fonts["Open Sans Regular"]
         noderestore23pglegend.font = datarestore23pglegend_font
         
         bpy.ops.file.pack_all()    
@@ -15934,33 +15934,33 @@ class FontchangeLINEGC(bpy.types.Operator):
         obj = bpy.data.objects["Cube.002"]
         modifier = obj.modifiers["GeometryNodes.001"]
         nodelinegc_group = modifier.node_group
-        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
-        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.022"]
+        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.155"]
         nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
         nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
         
         nodelinegctitle = nodelinegc_group.nodes['String to Curves.014']
-        datalinegctitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_title)
+        datalinegctitle_font = bpy.data.fonts.load(mytool.my_pathfontlgc_title)
         nodelinegctitle.font = datalinegctitle_font
         
         nodelinegcsubtitle = nodelinegc_group.nodes['String to Curves.015']
-        datalinegcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_subtitle)
+        datalinegcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlgc_subtitle)
         nodelinegcsubtitle.font = datalinegcsubtitle_font
 
         nodelinegcvalue = nestedlinegcvalue_node_group.nodes['String to Curves.016']
-        datalinegcvalue_font = bpy.data.fonts.load(mytool.my_pathfontlg_barvalue)
+        datalinegcvalue_font = bpy.data.fonts.load(mytool.my_pathfontlgc_barvalue)
         nodelinegcvalue.font = datalinegcvalue_font 
         
         nodelinegcrangenumbers = nestedlinegcrn_node_group.nodes['String to Curves.008']
-        datalinegcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
+        datalinegcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlgc_rangenumbers)
         nodelinegcrangenumbers.font = datalinegcrangenumbers_font 
 
         nodelinegcpointtext = nestedlinegcpointtext_node_group.nodes['String to Curves.005']
-        datalinegcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+        datalinegcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlgc_bartext)
         nodelinegcpointtext.font = datalinegcpointtext_font 
 
         nodelinegclegend = nestedlinegclegend_node_group.nodes['String to Curves.0162']
-        datalinegclegend_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+        datalinegclegend_font = bpy.data.fonts.load(mytool.my_pathfontlgc_bartext)
         nodelinegclegend.font = datalinegclegend_font         
         
         bpy.ops.file.pack_all()    
@@ -15978,8 +15978,8 @@ class FontrestoreLINEGC(bpy.types.Operator):
         obj = bpy.data.objects["Cube.002"]
         modifier = obj.modifiers["GeometryNodes.001"]
         noderestorelinec_group = modifier.node_group
-        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
-        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.153"]
+        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.022"]
+        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.155"]
         nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
         nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
         
@@ -16601,7 +16601,7 @@ class FontchangeVBGC(bpy.types.Operator):
         
         obj = bpy.data.objects["Plane.003"]
         modifier = obj.modifiers["GeometryNodes"]
-        nodevvbgc_group = modifier.node_group
+        nodevvbgc_group = bpy.data.node_groups["Geometry Nodes.011"]
         nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
         nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
         nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
@@ -16651,7 +16651,7 @@ class FontrestoreVBGC(bpy.types.Operator):
         
         obj = bpy.data.objects["Plane.003"]
         modifier = obj.modifiers["GeometryNodes"]
-        noderestorevvbgc_group = modifier.node_group
+        noderestorevvbgc_group = bpy.data.node_groups["Geometry Nodes.011"]
         nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
         nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
         nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
