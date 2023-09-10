@@ -2,7 +2,7 @@ bl_info = {
     "name": "Info_graphs_for_blender",
     "author": "Vikrant Jadhav, Blender Renaissance",
     "version": (1, 0),
-    "blender": (3, 4, 0),
+    "blender": (3, 6, 0),
     "location": "View3D > Sidebar > Renaissance tab",
     "description": "Quick Render Presets for Blender Renaissance Graphs.",
     "warning": "",
@@ -5861,12 +5861,34 @@ class MyoperatorCGsql(bpy.types.Operator):
         my_string_description = str(my_string_description)
         my_string_description = my_string_description.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_11"] = my_float_maxvalue
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_10"] = my_float_minvalue
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_2"] = my_float_percentage
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_22"] = str(my_string_title)
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_23"] = str(my_string_subtitle)
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_16"] = str(my_string_description)
+            # Ensure an object is selected
+        if bpy.context.selected_objects:
+            selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+            if selected_obj.type == 'MESH':
+                mesh_name = selected_obj.name
+
+                # Check if the selected object has modifiers
+                if selected_obj.modifiers:
+                    modifier_name = selected_obj.modifiers.active.name  # Get the name of the active modifier
+
+
+
+                    selected_obj.modifiers[modifier_name]["Input_11"] = my_float_maxvalue
+                    selected_obj.modifiers[modifier_name]["Input_10"] = my_float_minvalue
+                    selected_obj.modifiers[modifier_name]["Input_2"] = my_float_percentage
+                    selected_obj.modifiers[modifier_name]["Input_22"] = str(my_string_title)
+                    selected_obj.modifiers[modifier_name]["Input_23"] = str(my_string_subtitle)
+                    selected_obj.modifiers[modifier_name]["Input_16"] = str(my_string_description)
+        
+
+                    print(f"Set modifier input for object '{mesh_name}' and modifier '{modifier_name}'.")
+                else:
+                    print(f"Selected object '{mesh_name}' has no modifiers.")
+            else:
+                print("Selected object is not a mesh.")
+        else:
+            print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
 
@@ -5916,14 +5938,35 @@ class MyoperatorPGsql(bpy.types.Operator):
         my_stringpie_description = str(my_stringpie_description)
         my_stringpie_description = my_stringpie_description.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_11"] = my_floatpie_maxvalue
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_10"] = my_floatpie_minvalue
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_2"] = my_floatpie_percentage
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_15"] = str(my_stringpie_title)
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_17"] = str(my_stringpie_subtitle)
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_19"] = str(my_stringpie_description)
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_pg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_pg.type == 'MESH':
+                        mesh_name_pg = selected_obj_pg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_pg.modifiers:
+                                modifier_name_pg = selected_obj_pg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_11"] = my_floatpie_maxvalue
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_10"] = my_floatpie_minvalue
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_2"] = my_floatpie_percentage
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_15"] = str(my_stringpie_title)
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_17"] = str(my_stringpie_subtitle)
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_19"] = str(my_stringpie_description)
+
+                                print(f"Set modifier input for object '{mesh_name_pg}' and modifier '{modifier_name_pg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_pg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
+
+
     
 class Myoperator23CGsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorcg23sql"
@@ -5996,20 +6039,40 @@ class Myoperator23CGsql(bpy.types.Operator):
         my_string23cg_textdescription = str(my_string23cg_textdescription)
         my_string23cg_textdescription = my_string23cg_textdescription.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_31"] = my_float23cg_numberofgraphs
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_39"] = my_string23cg_wheeltext1
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_40"] = my_string23cg_wheeltext2
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_38"] = my_string23cg_wheeltext3
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_2"] = my_float23cg_value1
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_41"] = my_float23cg_value2
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_42"] = my_float23cg_value3
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_10"] = my_float23cg_minvalue
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_11"] = my_float23cg_maxvalue
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_22"] = my_string23cg_title
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_23"] = my_string23cg_subtitle
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_16"] = my_string23cg_textdescription
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_23cg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_23cg.type == 'MESH':
+                        mesh_name_23cg = selected_obj_23cg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_23cg.modifiers:
+                                modifier_name_23cg = selected_obj_23cg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_31"] = my_float23cg_numberofgraphs
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_39"] = my_string23cg_wheeltext1
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_40"] = my_string23cg_wheeltext2
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_38"] = my_string23cg_wheeltext3
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_2"] = my_float23cg_value1
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_41"] = my_float23cg_value2
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_42"] = my_float23cg_value3
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_10"] = my_float23cg_minvalue
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_11"] = my_float23cg_maxvalue
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_22"] = my_string23cg_title
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_23"] = my_string23cg_subtitle
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_16"] = my_string23cg_textdescription
+
+                                print(f"Set modifier input for object '{mesh_name_23cg}' and modifier '{modifier_name_23cg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_23cg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
+
     
 class Myoperatorcandlesql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorcandlesql"
@@ -6019,6 +6082,8 @@ class Myoperatorcandlesql(bpy.types.Operator):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
+        candle_object = bpy.context.view_layer.objects.active
+        candle_object_name = candle_object.name
         
         mydb = mysql.connector.connect(
         host= mytool.my_stringhost,
@@ -6083,75 +6148,75 @@ class Myoperatorcandlesql(bpy.types.Operator):
         my_stringcandleg_subtitle = str(my_stringcandleg_subtitle)
         my_stringcandleg_subtitle = my_stringcandleg_subtitle.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_3"] = my_floatcandleg_numberofpoints
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_12"] = my_floatcandleg_minpointvalue
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_13"] = my_floatcandleg_maxpointvalue
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_14"] = my_floatcandleg_decvalue
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_15"] = my_floatcandleg_rangenumber
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_3"] = my_floatcandleg_numberofpoints
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_12"] = my_floatcandleg_minpointvalue
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_13"] = my_floatcandleg_maxpointvalue
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_14"] = my_floatcandleg_decvalue
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_15"] = my_floatcandleg_rangenumber
 
 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_4"] = pointtext_list[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_5"] = pointtext_list[1]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_6"] = pointtext_list[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_7"] = pointtext_list[3]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_8"] = pointtext_list[4]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_9"] = pointtext_list[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_10"] = pointtext_list[6]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_11"] = pointtext_list[7]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_4"] = pointtext_list[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_5"] = pointtext_list[1]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_6"] = pointtext_list[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_7"] = pointtext_list[3]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_8"] = pointtext_list[4]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_9"] = pointtext_list[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_10"] = pointtext_list[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_11"] = pointtext_list[7]
         
-        cube_objecttextcandle = bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]
+        cube_objecttextcandle = bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]
         for i in range(8, 32):
             input_index = i - 8 + 71
             input_name = f"Input_{input_index:02d}"
             cube_objecttextcandle[input_name] = pointtext_list[i]
         
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_38"] = pointhighvaluecandleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_103"] = pointhighvaluecandleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_107"] = pointhighvaluecandleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_168"] = pointhighvaluecandleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_172"] = pointhighvaluecandleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_176"] = pointhighvaluecandleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_99"] = pointhighvaluecandleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_38"] = pointhighvaluecandleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_103"] = pointhighvaluecandleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_107"] = pointhighvaluecandleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_168"] = pointhighvaluecandleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_172"] = pointhighvaluecandleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_176"] = pointhighvaluecandleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_99"] = pointhighvaluecandleg[6]
         for i in range(7, 32):
             input_numpointhighvaluecandleg = 180 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointhighvaluecandleg)] = pointhighvaluecandleg[i]  
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointhighvaluecandleg)] = pointhighvaluecandleg[i]  
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_97"] = pointopenvaluecandleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_104"] = pointopenvaluecandleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_108"] = pointopenvaluecandleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_169"] = pointopenvaluecandleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_173"] = pointopenvaluecandleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_177"] = pointopenvaluecandleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_100"] = pointopenvaluecandleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_97"] = pointopenvaluecandleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_104"] = pointopenvaluecandleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_108"] = pointopenvaluecandleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_169"] = pointopenvaluecandleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_173"] = pointopenvaluecandleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_177"] = pointopenvaluecandleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_100"] = pointopenvaluecandleg[6]
         for i in range(7, 32):
             input_numpointopenvaluecandleg = 181 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointopenvaluecandleg)] = pointopenvaluecandleg[i]
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointopenvaluecandleg)] = pointopenvaluecandleg[i]
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_98"] = pointclosevaluecandleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_105"] = pointclosevaluecandleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_109"] = pointclosevaluecandleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_170"] = pointclosevaluecandleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_174"] = pointclosevaluecandleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_178"] = pointclosevaluecandleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_101"] = pointclosevaluecandleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_98"] = pointclosevaluecandleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_105"] = pointclosevaluecandleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_109"] = pointclosevaluecandleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_170"] = pointclosevaluecandleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_174"] = pointclosevaluecandleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_178"] = pointclosevaluecandleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_101"] = pointclosevaluecandleg[6]
         for i in range(7, 32):
             input_numpointclosevaluecandleg = 182 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointclosevaluecandleg)] = pointclosevaluecandleg[i]
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointclosevaluecandleg)] = pointclosevaluecandleg[i]
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_96"] = pointlowvaluecandleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_106"] = pointlowvaluecandleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_110"] = pointlowvaluecandleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_171"] = pointlowvaluecandleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_175"] = pointlowvaluecandleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_179"] = pointlowvaluecandleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_102"] = pointlowvaluecandleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_96"] = pointlowvaluecandleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_106"] = pointlowvaluecandleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_110"] = pointlowvaluecandleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_171"] = pointlowvaluecandleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_175"] = pointlowvaluecandleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_179"] = pointlowvaluecandleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_102"] = pointlowvaluecandleg[6]
         for i in range(7, 32):
             input_numpointlowvaluecandleg = 183 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointlowvaluecandleg)] = pointlowvaluecandleg[i]    
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointlowvaluecandleg)] = pointlowvaluecandleg[i]    
 
 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_23"] = my_stringcandleg_title
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_22"] = my_stringcandleg_subtitle
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_23"] = my_stringcandleg_title
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_22"] = my_stringcandleg_subtitle
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -6226,20 +6291,40 @@ class Myoperator23PGsql(bpy.types.Operator):
         my_string23pg_textdescription = str(my_string23pg_textdescription)
         my_string23pg_textdescription = my_string23pg_textdescription.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_26"] = my_float23pg_numberofgraphs
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_31"] = my_string23pg_wheeltext1
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_32"] = my_string23pg_wheeltext2
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_33"] = my_string23pg_wheeltext3
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_2"] = my_float23pg_value1
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_27"] = my_float23pg_value2
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_28"] = my_float23pg_value3
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_10"] = my_float23pg_minvalue
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_11"] = my_float23pg_maxvalue
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_15"] = my_string23pg_title
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_17"] = my_string23pg_subtitle
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_19"] = my_string23pg_textdescription
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_23pg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_23pg.type == 'MESH':
+                        mesh_name_23pg = selected_obj_23pg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_23pg.modifiers:
+                                modifier_name_23pg = selected_obj_23pg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_26"] = my_float23pg_numberofgraphs
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_31"] = my_string23pg_wheeltext1
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_32"] = my_string23pg_wheeltext2
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_33"] = my_string23pg_wheeltext3
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_2"] = my_float23pg_value1
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_27"] = my_float23pg_value2
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_28"] = my_float23pg_value3
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_10"] = my_float23pg_minvalue
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_11"] = my_float23pg_maxvalue
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_15"] = my_string23pg_title
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_17"] = my_string23pg_subtitle
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_19"] = my_string23pg_textdescription
+
+                                print(f"Set modifier input for object '{mesh_name_23pg}' and modifier '{modifier_name_23pg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_23pg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
+
     
 class MyoperatorHBGsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorhbgsql"
@@ -6319,22 +6404,42 @@ class MyoperatorHBGsql(bpy.types.Operator):
         my_stringhbg_textfortotal = str(my_stringhbg_textfortotal)
         my_stringhbg_textfortotal = my_stringhbg_textfortotal.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_36"] = my_floathbg_numberofbars
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_2"] = my_stringhbg_bartext1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_3"] = my_stringhbg_bartext2
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_4"] = my_stringhbg_bartext3
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_5"] = my_stringhbg_bartext4
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_14"] = valuehbg1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_15"] = valuehbg2
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_16"] = valuehbg3
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_17"] = valuehbg4
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_10"] = my_floathbg_minvalue
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_11"] = my_floathbg_maxvalue
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_7"] = my_stringhbg_title
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_8"] = my_stringhbg_subtitle
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_6"] = my_stringhbg_textfortotal
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hbg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_hbg.type == 'MESH':
+                        mesh_name_hbg = selected_obj_hbg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hbg.modifiers:
+                                modifier_name_hbg = selected_obj_hbg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_36"] = my_floathbg_numberofbars
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_2"] = my_stringhbg_bartext1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = my_stringhbg_bartext2
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = my_stringhbg_bartext3
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = my_stringhbg_bartext4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = valuehbg1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = valuehbg2
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = valuehbg3
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = valuehbg4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_10"] = my_floathbg_minvalue
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = my_floathbg_maxvalue
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = my_stringhbg_title
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_8"] = my_stringhbg_subtitle
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_6"] = my_stringhbg_textfortotal
+
+                                print(f"Set modifier input for object '{mesh_name_hbg}' and modifier '{modifier_name_hbg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hbg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
+
     
 class MyoperatorHBGCsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorhbgcsql"
@@ -6431,26 +6536,45 @@ class MyoperatorHBGCsql(bpy.types.Operator):
         my_stringhbgc_legendtext1 = my_stringhbgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
         my_stringhbgc_legendtext2 = my_stringhbgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_45"] = my_floathbgc_numberofbars
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_2"] = my_stringhbgc_bartext1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_3"] = my_stringhbgc_bartext2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_4"] = my_stringhbgc_bartext3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_5"] = my_stringhbgc_bartext4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_14"] = valueahbgc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_15"] = valueahbgc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_16"] = valueahbgc3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_17"] = valueahbgc4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_36"] = valuebhbgc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_37"] = valuebhbgc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_38"] = valuebhbgc3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_39"] = valuebhbgc4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_10"] = my_floathbgc_minvalue
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_11"] = my_floathbgc_maxvalue
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_12"] = my_floathbgc_decvalue
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_7"] = my_stringhbgc_title
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_8"] = my_stringhbgc_subtitle
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_6"] = my_stringhbgc_legendtext1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_40"] = my_stringhbgc_legendtext2
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hbgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_hbgc.type == 'MESH':
+                        mesh_name_hbgc = selected_obj_hbgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hbgc.modifiers:
+                                modifier_name_hbgc = selected_obj_hbgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_45"] = my_floathbgc_numberofbars
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_2"] = my_stringhbgc_bartext1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = my_stringhbgc_bartext2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = my_stringhbgc_bartext3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = my_stringhbgc_bartext4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = valueahbgc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = valueahbgc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = valueahbgc3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = valueahbgc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = valuebhbgc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = valuebhbgc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = valuebhbgc3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = valuebhbgc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_10"] = my_floathbgc_minvalue
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = my_floathbgc_maxvalue
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_12"] = my_floathbgc_decvalue
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_7"] = my_stringhbgc_title
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_8"] = my_stringhbgc_subtitle
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_6"] = my_stringhbgc_legendtext1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_40"] = my_stringhbgc_legendtext2
+
+                                print(f"Set modifier input for object '{mesh_name_hbgc}' and modifier '{modifier_name_hbgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hbgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
 
@@ -6536,22 +6660,41 @@ class MyoperatorMCGsql(bpy.types.Operator):
         my_stringmcg_subtitle = str(my_stringmcg_subtitle)
         my_stringmcg_subtitle = my_stringmcg_subtitle.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_55"] = my_floatmcg_numberofsliders
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_42"] = my_stringmcg_bartext1
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_43"] = my_stringmcg_bartext2
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_44"] = my_stringmcg_bartext3
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_46"] = my_stringmcg_bartext4
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_45"] = my_stringmcg_bartext5
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_2"] = my_floatmcg_barvalue1
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_12"] = my_floatmcg_barvalue2
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_14"] = my_floatmcg_barvalue3
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_15"] = my_floatmcg_barvalue4
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_16"] = my_floatmcg_barvalue5
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_10"] = my_floatmcg_minbarvalue
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_11"] = my_floatmcg_maxbarvalue
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_18"] = my_floatmcg_decvalue
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_40"] = my_stringmcg_title
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_41"] = my_stringmcg_subtitle
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mcg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mcg.type == 'MESH':
+                        mesh_name_mcg = selected_obj_mcg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mcg.modifiers:
+                                modifier_name_mcg = selected_obj_mcg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_55"] = my_floatmcg_numberofsliders
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_42"] = my_stringmcg_bartext1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_43"] = my_stringmcg_bartext2
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = my_stringmcg_bartext3
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = my_stringmcg_bartext4
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = my_stringmcg_bartext5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_2"] = my_floatmcg_barvalue1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_12"] = my_floatmcg_barvalue2
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_14"] = my_floatmcg_barvalue3
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_15"] = my_floatmcg_barvalue4
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = my_floatmcg_barvalue5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_10"] = my_floatmcg_minbarvalue
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_11"] = my_floatmcg_maxbarvalue
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_18"] = my_floatmcg_decvalue
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_40"] = my_stringmcg_title
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_41"] = my_stringmcg_subtitle
+
+                                print(f"Set modifier input for object '{mesh_name_mcg}' and modifier '{modifier_name_mcg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mcg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
        
@@ -6637,22 +6780,41 @@ class MyoperatorMPGsql(bpy.types.Operator):
         my_stringmpg_subtitle = str(my_stringmpg_subtitle)
         my_stringmpg_subtitle = my_stringmpg_subtitle.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_54"] = my_floatmpg_numberofsliders
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_42"] = my_stringmpg_bartext1
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_43"] = my_stringmpg_bartext2
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_44"] = my_stringmpg_bartext3
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_46"] = my_stringmpg_bartext4
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_45"] = my_stringmpg_bartext5
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_2"] = my_floatmpg_barvalue1
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_12"] = my_floatmpg_barvalue2
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_14"] = my_floatmpg_barvalue3
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_15"] = my_floatmpg_barvalue4
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_16"] = my_floatmpg_barvalue5
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_10"] = my_floatmpg_minbarvalue
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_11"] = my_floatmpg_maxbarvalue
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_18"] = my_floatmpg_decvalue
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_40"] = my_stringmpg_title
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_41"] = my_stringmpg_subtitle
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mpg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mpg.type == 'MESH':
+                        mesh_name_mpg = selected_obj_mpg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mpg.modifiers:
+                                modifier_name_mpg = selected_obj_mpg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_54"] = my_floatmpg_numberofsliders
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_42"] = my_stringmpg_bartext1
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_43"] = my_stringmpg_bartext2
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = my_stringmpg_bartext3
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = my_stringmpg_bartext4
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = my_stringmpg_bartext5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_2"] = my_floatmpg_barvalue1
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_12"] = my_floatmpg_barvalue2
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = my_floatmpg_barvalue3
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_15"] = my_floatmpg_barvalue4
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_16"] = my_floatmpg_barvalue5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_10"] = my_floatmpg_minbarvalue
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] = my_floatmpg_maxbarvalue
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_18"] = my_floatmpg_decvalue
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_40"] = my_stringmpg_title
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_41"] = my_stringmpg_subtitle
+
+                                print(f"Set modifier input for object '{mesh_name_mpg}' and modifier '{modifier_name_mpg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mpg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -6753,31 +6915,59 @@ class MyoperatorLGsql(bpy.types.Operator):
         my_stringlg_subtitle = str(my_stringlg_subtitle)
         my_stringlg_subtitle = my_stringlg_subtitle.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_2"] = my_floatlg_numberofpoints
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_13"] = my_floatlg_minpointvalue
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_14"] = my_floatlg_maxpointvalue
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_15"] = my_floatlg_decvalue
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_18"] = my_floatlg_rangenumber
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_4"] = pointvaluelg1
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_5"] = pointvaluelg2
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_6"] = pointvaluelg3
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_7"] = pointvaluelg4
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_8"] = pointvaluelg5
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_9"] = pointvaluelg6
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_10"] = pointvaluelg7
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_11"] = pointvaluelg8
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_4"] = my_stringlg_pointtext1
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_5"] = my_stringlg_pointtext2
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_6"] = my_stringlg_pointtext3
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_7"] = my_stringlg_pointtext4
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_8"] = my_stringlg_pointtext5
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_9"] = my_stringlg_pointtext6
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_10"] = my_stringlg_pointtext7
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_11"] = my_stringlg_pointtext8
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_23"] = my_stringlg_title
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_22"] = my_stringlg_subtitle
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj.type == 'MESH':
+                        mesh_name = selected_obj.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj.modifiers:
+                                if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                        modifier_0 = selected_obj.modifiers.get("GeometryNodes")
+                                        modifier_1 = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                if modifier_0 and modifier_1:
+                                        modifier_0["Input_2"] = my_floatlg_numberofpoints
+                                        modifier_0["Input_13"] = my_floatlg_minpointvalue
+                                        modifier_0["Input_14"] = my_floatlg_maxpointvalue
+                                        modifier_0["Input_15"] = my_floatlg_decvalue
+                                        modifier_0["Input_18"] = my_floatlg_rangenumber
+                                        modifier_0["Input_4"] = pointvaluelg1
+                                        modifier_0["Input_5"] = pointvaluelg2
+                                        modifier_0["Input_6"] = pointvaluelg3
+                                        modifier_0["Input_7"] = pointvaluelg4
+                                        modifier_0["Input_8"] = pointvaluelg5
+                                        modifier_0["Input_9"] = pointvaluelg6
+                                        modifier_0["Input_10"] = pointvaluelg7
+                                        modifier_0["Input_11"] = pointvaluelg8
+
+                                        modifier_1["Input_4"] = my_stringlg_pointtext1
+                                        modifier_1["Input_5"] = my_stringlg_pointtext2
+                                        modifier_1["Input_6"] = my_stringlg_pointtext3
+                                        modifier_1["Input_7"] = my_stringlg_pointtext4
+                                        modifier_1["Input_8"] = my_stringlg_pointtext5
+                                        modifier_1["Input_9"] = my_stringlg_pointtext6
+                                        modifier_1["Input_10"] = my_stringlg_pointtext7
+                                        modifier_1["Input_11"] = my_stringlg_pointtext8
+                                        modifier_1["Input_23"] = my_stringlg_title
+                                        modifier_1["Input_22"] = my_stringlg_subtitle
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                else:
+                                        print("Selected object does not have both modifiers.")
+                        else:
+                                print(f"Selected object '{mesh_name}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+
+        # Optionally, you can update the mesh data if needed.
         bpy.context.object.data.update()
         return {'FINISHED'}
+
     
 class MyoperatorLGCsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorlgcsql"
@@ -6911,39 +7101,66 @@ class MyoperatorLGCsql(bpy.types.Operator):
         my_stringlgc_legendtext1 = my_stringlgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
         my_stringlgc_legendtext2 = my_stringlgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_2"] = my_floatlgc_numberofpoints
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_13"] = my_floatlgc_minpointvalue
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_14"] = my_floatlgc_maxpointvalue
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_15"] = my_floatlgc_decvalue
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_18"] = my_floatlgc_rangenumber
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_4"] = pointvaluealgc1
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_5"] = pointvaluealgc2
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_6"] = pointvaluealgc3
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_7"] = pointvaluealgc4
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_8"] = pointvaluealgc5
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_9"] = pointvaluealgc6
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_10"] = pointvaluealgc7
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_11"] = pointvaluealgc8
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_34"] = pointvalueblgc1
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_35"] = pointvalueblgc2
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_36"] = pointvalueblgc3
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_37"] = pointvalueblgc4
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_38"] = pointvalueblgc5
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_39"] = pointvalueblgc6
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_40"] = pointvalueblgc7
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_41"] = pointvalueblgc8
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_4"] = my_stringlgc_pointtext1
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_5"] = my_stringlgc_pointtext2
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_6"] = my_stringlgc_pointtext3
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_7"] = my_stringlgc_pointtext4
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_8"] = my_stringlgc_pointtext5
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_9"] = my_stringlgc_pointtext6
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_10"] = my_stringlgc_pointtext7
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_11"] = my_stringlgc_pointtext8
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_23"] = my_stringlgc_title
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_22"] = my_stringlgc_subtitle
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_29"] = my_stringlgc_legendtext1
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_30"] = my_stringlgc_legendtext2
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj.type == 'MESH':
+                        mesh_name = selected_obj.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj.modifiers:
+                                if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                        modifier_0c = selected_obj.modifiers.get("GeometryNodes")
+                                        modifier_1c = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                if modifier_0c and modifier_1c:
+                                        modifier_0c["Input_2"] = my_floatlgc_numberofpoints
+                                        modifier_0c["Input_13"] = my_floatlgc_minpointvalue
+                                        modifier_0c["Input_14"] = my_floatlgc_maxpointvalue
+                                        modifier_0c["Input_15"] = my_floatlgc_decvalue
+                                        modifier_0c["Input_18"] = my_floatlgc_rangenumber
+                                        modifier_0c["Input_4"] = pointvaluealgc1
+                                        modifier_0c["Input_5"] = pointvaluealgc2
+                                        modifier_0c["Input_6"] = pointvaluealgc3
+                                        modifier_0c["Input_7"] = pointvaluealgc4
+                                        modifier_0c["Input_8"] = pointvaluealgc5
+                                        modifier_0c["Input_9"] = pointvaluealgc6
+                                        modifier_0c["Input_10"] = pointvaluealgc7
+                                        modifier_0c["Input_11"] = pointvaluealgc8
+                                        modifier_0c["Input_34"] = pointvalueblgc1
+                                        modifier_0c["Input_35"] = pointvalueblgc2
+                                        modifier_0c["Input_36"] = pointvalueblgc3
+                                        modifier_0c["Input_37"] = pointvalueblgc4
+                                        modifier_0c["Input_38"] = pointvalueblgc5
+                                        modifier_0c["Input_39"] = pointvalueblgc6
+                                        modifier_0c["Input_40"] = pointvalueblgc7
+                                        modifier_0c["Input_41"] = pointvalueblgc8
+
+                                        modifier_1c["Input_4"] = my_stringlgc_pointtext1
+                                        modifier_1c["Input_5"] = my_stringlgc_pointtext2
+                                        modifier_1c["Input_6"] = my_stringlgc_pointtext3
+                                        modifier_1c["Input_7"] = my_stringlgc_pointtext4
+                                        modifier_1c["Input_8"] = my_stringlgc_pointtext5
+                                        modifier_1c["Input_9"] = my_stringlgc_pointtext6
+                                        modifier_1c["Input_10"] = my_stringlgc_pointtext7
+                                        modifier_1c["Input_11"] = my_stringlgc_pointtext8
+                                        modifier_1c["Input_23"] = my_stringlgc_title
+                                        modifier_1c["Input_22"] = my_stringlgc_subtitle
+                                        modifier_1c["Input_29"] = my_stringlgc_legendtext1
+                                        modifier_1c["Input_30"] = my_stringlgc_legendtext2
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                else:
+                                        print("Selected object does not have both modifiers.")
+                        else:
+                                print(f"Selected object '{mesh_name}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+
+        # Optionally, you can update the mesh data if needed.
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7044,29 +7261,48 @@ class MyoperatorMGsql(bpy.types.Operator):
         my_stringmg_subtitle = str(my_stringmg_subtitle)
         my_stringmg_subtitle = my_stringmg_subtitle.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_2"] = my_floatmg_numberofpoints
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_22"] = my_floatmg_minpointvalue
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_24"] = my_floatmg_maxpointvalue
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_23"] = my_floatmg_decvalue
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_21"] = my_floatmg_rangenumber
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_3"] = pointvaluemg1
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_4"] = pointvaluemg2
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_5"] = pointvaluemg3
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_6"] = pointvaluemg4
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_7"] = pointvaluemg5
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_8"] = pointvaluemg6
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_9"] = pointvaluemg7
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_10"] = pointvaluemg8
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_13"] = my_stringmg_pointtext1
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_14"] = my_stringmg_pointtext2
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_15"] = my_stringmg_pointtext3
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_16"] = my_stringmg_pointtext4
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_17"] = my_stringmg_pointtext5
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_18"] = my_stringmg_pointtext6
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_19"] = my_stringmg_pointtext7
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_20"] = my_stringmg_pointtext8
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_38"] = my_stringmg_title
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_39"] = my_stringmg_subtitle
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mg.type == 'MESH':
+                        mesh_name_mg = selected_obj_mg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mg.modifiers:
+                                modifier_name_mg = selected_obj_mg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_2"] = my_floatmg_numberofpoints
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_22"] = my_floatmg_minpointvalue
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_24"] = my_floatmg_maxpointvalue
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_23"] = my_floatmg_decvalue
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_21"] = my_floatmg_rangenumber
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_3"] = pointvaluemg1
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_4"] = pointvaluemg2
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_5"] = pointvaluemg3
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_6"] = pointvaluemg4
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_7"] = pointvaluemg5
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_8"] = pointvaluemg6
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_9"] = pointvaluemg7
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_10"] = pointvaluemg8
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_13"] = my_stringmg_pointtext1
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_14"] = my_stringmg_pointtext2
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_15"] = my_stringmg_pointtext3
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_16"] = my_stringmg_pointtext4
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_17"] = my_stringmg_pointtext5
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_18"] = my_stringmg_pointtext6
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_19"] = my_stringmg_pointtext7
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_20"] = my_stringmg_pointtext8
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_38"] = my_stringmg_title
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_39"] = my_stringmg_subtitle
+
+                                print(f"Set modifier input for object '{mesh_name_mg}' and modifier '{modifier_name_mg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7202,39 +7438,58 @@ class MyoperatorMGCsql(bpy.types.Operator):
         my_stringmgc_legendtext1 = my_stringmgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
         my_stringmgc_legendtext2 = my_stringmgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_2"] = my_floatmgc_numberofpoints
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_22"] = my_floatmgc_minpointvalue
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_24"] = my_floatmgc_maxpointvalue
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_23"] = my_floatmgc_decvalue
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_21"] = my_floatmgc_rangenumber
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_3"] = pointvalueamgc1
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_4"] = pointvalueamgc2
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_67"] = pointvalueamgc3
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_6"] = pointvalueamgc4
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_7"] = pointvalueamgc5
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_8"] = pointvalueamgc6
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_9"] = pointvalueamgc7
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_10"] = pointvalueamgc8
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_30"] = pointvaluebmgc1
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_39"] = pointvaluebmgc2
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_40"] = pointvaluebmgc3
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_41"] = pointvaluebmgc4
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_42"] = pointvaluebmgc5
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_43"] = pointvaluebmgc6
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_44"] = pointvaluebmgc7
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_45"] = pointvaluebmgc8
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_13"] = my_stringmgc_pointtext1
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_14"] = my_stringmgc_pointtext2
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_15"] = my_stringmgc_pointtext3
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_16"] = my_stringmgc_pointtext4
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_17"] = my_stringmgc_pointtext5
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_18"] = my_stringmgc_pointtext6
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_19"] = my_stringmgc_pointtext7
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_20"] = my_stringmgc_pointtext8
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_54"] = my_stringmgc_title
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_55"] = my_stringmgc_subtitle
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_57"] = my_stringmgc_legendtext1
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_56"] = my_stringmgc_legendtext2
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mgc.type == 'MESH':
+                        mesh_name_mgc = selected_obj_mgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mgc.modifiers:
+                                modifier_name_mgc = selected_obj_mgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_2"] = my_floatmgc_numberofpoints
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_22"] = my_floatmgc_minpointvalue
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_24"] = my_floatmgc_maxpointvalue
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_23"] = my_floatmgc_decvalue
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_21"] = my_floatmgc_rangenumber
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_3"] = pointvalueamgc1
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_4"] = pointvalueamgc2
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_67"] = pointvalueamgc3
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_6"] = pointvalueamgc4
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_7"] = pointvalueamgc5
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_8"] = pointvalueamgc6
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_9"] = pointvalueamgc7
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_10"] = pointvalueamgc8
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_30"] = pointvaluebmgc1
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_39"] = pointvaluebmgc2
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_40"] = pointvaluebmgc3
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_41"] = pointvaluebmgc4
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_42"] = pointvaluebmgc5
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_43"] = pointvaluebmgc6
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_44"] = pointvaluebmgc7
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_45"] = pointvaluebmgc8
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_13"] = my_stringmgc_pointtext1
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_14"] = my_stringmgc_pointtext2
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_15"] = my_stringmgc_pointtext3
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_16"] = my_stringmgc_pointtext4
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_17"] = my_stringmgc_pointtext5
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_18"] = my_stringmgc_pointtext6
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_19"] = my_stringmgc_pointtext7
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_20"] = my_stringmgc_pointtext8
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_54"] = my_stringmgc_title
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_55"] = my_stringmgc_subtitle
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_57"] = my_stringmgc_legendtext1
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_56"] = my_stringmgc_legendtext2
+
+                                print(f"Set modifier input for object '{mesh_name_mgc}' and modifier '{modifier_name_mgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7335,29 +7590,48 @@ class MyoperatorVBGsql(bpy.types.Operator):
         my_stringvbg_textfortotal = str(my_stringvbg_textfortotal)
         my_stringvbg_textfortotal = my_stringvbg_textfortotal.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_57"] = my_floatvbg_numberofbars
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_14"] = valuevbg1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_41"] = valuevbg2
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_15"] = valuevbg3
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_44"] = valuevbg4
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_16"] = valuevbg5
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_48"] = valuevbg6
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_17"] = valuevbg7
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_50"] = valuevbg8
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_10"] = my_floatvbg_minvalue
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_11"] = my_floatvbg_maxvalue
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_12"] = my_floatvbg_decvalue
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_2"] = my_stringvbg_bartext1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_42"] = my_stringvbg_bartext2
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_3"] = my_stringvbg_bartext3
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_45"] = my_stringvbg_bartext4
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_4"] = my_stringvbg_bartext5
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_47"] = my_stringvbg_bartext6
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_5"] = my_stringvbg_bartext7
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_49"] = my_stringvbg_bartext8
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_7"] = my_stringvbg_title
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_8"] = my_stringvbg_subtitle
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_6"] = my_stringvbg_textfortotal
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_vbg.type == 'MESH':
+                        mesh_name_vbg = selected_obj_vbg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbg.modifiers:
+                                modifier_name_vbg = selected_obj_vbg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_57"] = my_floatvbg_numberofbars
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_14"] = valuevbg1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_41"] = valuevbg2
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_15"] = valuevbg3
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_44"] = valuevbg4
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_16"] = valuevbg5
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_48"] = valuevbg6
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_17"] = valuevbg7
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_50"] = valuevbg8
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_10"] = my_floatvbg_minvalue
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_11"] = my_floatvbg_maxvalue
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_12"] = my_floatvbg_decvalue
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_2"] = my_stringvbg_bartext1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_42"] = my_stringvbg_bartext2
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_3"] = my_stringvbg_bartext3
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_45"] = my_stringvbg_bartext4
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_4"] = my_stringvbg_bartext5
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_47"] = my_stringvbg_bartext6
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_5"] = my_stringvbg_bartext7
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_49"] = my_stringvbg_bartext8
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_7"] = my_stringvbg_title
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_8"] = my_stringvbg_subtitle
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_6"] = my_stringvbg_textfortotal
+
+                                print(f"Set modifier input for object '{mesh_name_vbg}' and modifier '{modifier_name_vbg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7488,38 +7762,58 @@ class MyoperatorVBGCsql(bpy.types.Operator):
         my_stringvbgc_legendtext1 = my_stringvbgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
         my_stringvbgc_legendtext2 = my_stringvbgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
             
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_71"] = my_floatvbgc_numberofbars
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_2"] = my_stringvbgc_bartext1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_42"] = my_stringvbgc_bartext2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_3"] = my_stringvbgc_bartext3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_45"] = my_stringvbgc_bartext4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_4"] = my_stringvbgc_bartext5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_47"] = my_stringvbgc_bartext6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_5"] = my_stringvbgc_bartext7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_49"] = my_stringvbgc_bartext8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_10"] = my_floatvbgc_minvalue
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_11"] = my_floatvbgc_maxvalue
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_12"] = my_floatvbgc_decvalue
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_14"] = valueavbgc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_41"] = valueavbgc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_15"] = valueavbgc3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_44"] = valueavbgc4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_16"] = valueavbgc5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_48"] = valueavbgc6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_17"] = valueavbgc7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_50"] = valueavbgc8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_57"] = valuebvbgc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_58"] = valuebvbgc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_59"] = valuebvbgc3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_64"] = valuebvbgc4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_60"] = valuebvbgc5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_61"] = valuebvbgc6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_62"] = valuebvbgc7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_63"] = valuebvbgc8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_7"] = my_stringvbgc_title
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_8"] = my_stringvbgc_subtitle
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_70"] = my_stringvbgc_legendtext1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_69"] = my_stringvbgc_legendtext2
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_vbgc.type == 'MESH':
+                        mesh_name_vbgc = selected_obj_vbgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbgc.modifiers:
+                                modifier_name_vbgc = selected_obj_vbgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_71"] = my_floatvbgc_numberofbars
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_2"] = my_stringvbgc_bartext1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_42"] = my_stringvbgc_bartext2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_3"] = my_stringvbgc_bartext3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = my_stringvbgc_bartext4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_4"] = my_stringvbgc_bartext5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_47"] = my_stringvbgc_bartext6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_5"] = my_stringvbgc_bartext7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_49"] = my_stringvbgc_bartext8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_10"] = my_floatvbgc_minvalue
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_11"] = my_floatvbgc_maxvalue
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_12"] = my_floatvbgc_decvalue
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_14"] = valueavbgc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_41"] = valueavbgc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_15"] = valueavbgc3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_44"] = valueavbgc4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_16"] = valueavbgc5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_48"] = valueavbgc6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_17"] = valueavbgc7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_50"] = valueavbgc8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_57"] = valuebvbgc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_58"] = valuebvbgc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_59"] = valuebvbgc3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_64"] = valuebvbgc4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_60"] = valuebvbgc5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_61"] = valuebvbgc6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_62"] = valuebvbgc7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_63"] = valuebvbgc8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_7"] = my_stringvbgc_title
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_8"] = my_stringvbgc_subtitle
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_70"] = my_stringvbgc_legendtext1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_69"] = my_stringvbgc_legendtext2
+
+
+                                print(f"Set modifier input for object '{mesh_name_vbgc}' and modifier '{modifier_name_vbgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
 
@@ -7541,12 +7835,34 @@ class MyoperatorCGcsv(bpy.types.Operator):
             descriptioncirclegraph = str(readout[1][5])
             gregorypercentage = float(gregory/olatunji)
             
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_2"] = gregorypercentage
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_10"] = mallory
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_11"] = olatunji
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_22"] = titlecirclegraph
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_23"] = subtitlecirclegraph
-        bpy.data.objects["Circle_Graph"].modifiers["GeometryNodes"]["Input_16"] = descriptioncirclegraph
+            # Ensure an object is selected
+        if bpy.context.selected_objects:
+            selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+            if selected_obj.type == 'MESH':
+                mesh_name = selected_obj.name
+
+                # Check if the selected object has modifiers
+                if selected_obj.modifiers:
+                    modifier_name = selected_obj.modifiers.active.name  # Get the name of the active modifier
+
+
+
+                    selected_obj.modifiers[modifier_name]["Input_11"] = olatunji
+                    selected_obj.modifiers[modifier_name]["Input_10"] = mallory
+                    selected_obj.modifiers[modifier_name]["Input_2"] = gregorypercentage
+                    selected_obj.modifiers[modifier_name]["Input_22"] = titlecirclegraph
+                    selected_obj.modifiers[modifier_name]["Input_23"] = subtitlecirclegraph
+                    selected_obj.modifiers[modifier_name]["Input_16"] = descriptioncirclegraph
+        
+
+                    print(f"Set modifier input for object '{mesh_name}' and modifier '{modifier_name}'.")
+                else:
+                    print(f"Selected object '{mesh_name}' has no modifiers.")
+            else:
+                print("Selected object is not a mesh.")
+        else:
+            print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7588,6 +7904,39 @@ class MyoperatorCGCcsv(bpy.types.Operator):
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_22"] = title23c
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_23"] = subtitle23c
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_16"] = desc23c
+
+
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_23cg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_23cg.type == 'MESH':
+                        mesh_name_23cg = selected_obj_23cg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_23cg.modifiers:
+                                modifier_name_23cg = selected_obj_23cg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_31"] = ncg23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_39"] = wta23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_40"] = wtb23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_38"] = wtc23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_2"] = wtpa23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_41"] = wtpb23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_42"] = wtpc23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_10"] = minv23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_11"] = maxv23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_22"] = title23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_23"] = subtitle23c
+                                selected_obj_23cg.modifiers[modifier_name_23cg]["Input_16"] = desc23c
+
+                                print(f"Set modifier input for object '{mesh_name_23cg}' and modifier '{modifier_name_23cg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_23cg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7598,6 +7947,8 @@ class MyoperatorCANDLEcsv(bpy.types.Operator):
     def execute(self, context):
         scene = context.scene
         mytool = scene.my_tool
+        candle_object = bpy.context.view_layer.objects.active
+        candle_object_name = candle_object.name
         filepath_fullcandle = bpy.path.abspath(mytool.my_pathcandle)
         with open(filepath_fullcandle) as f:
             readout = list(csv.reader(f))
@@ -7636,72 +7987,72 @@ class MyoperatorCANDLEcsv(bpy.types.Operator):
             subtitlecandleg = str(readout[1][11])
 
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_3"] = npcandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_12"] = minvcandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_13"] = maxvcandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_14"] = decimalcandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_15"] = rncandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_4"] = texts_candleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_5"] = texts_candleg[1]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_6"] = texts_candleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_7"] = texts_candleg[3]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_8"] = texts_candleg[4]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_9"] = texts_candleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_10"] = texts_candleg[6]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_11"] = texts_candleg[7]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_3"] = npcandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_12"] = minvcandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_13"] = maxvcandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_14"] = decimalcandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_15"] = rncandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_4"] = texts_candleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_5"] = texts_candleg[1]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_6"] = texts_candleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_7"] = texts_candleg[3]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_8"] = texts_candleg[4]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_9"] = texts_candleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_10"] = texts_candleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_11"] = texts_candleg[7]
         
-        cube_objecttextcandle = bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]
+        cube_objecttextcandle = bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]
         for i in range(8, 32):
             input_index = i - 8 + 71
             input_name = f"Input_{input_index:02d}"
             cube_objecttextcandle[input_name] = texts_candleg[i]
         
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_38"] = pointhigh_candleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_103"] = pointhigh_candleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_107"] = pointhigh_candleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_168"] = pointhigh_candleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_172"] = pointhigh_candleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_176"] = pointhigh_candleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_99"] = pointhigh_candleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_38"] = pointhigh_candleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_103"] = pointhigh_candleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_107"] = pointhigh_candleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_168"] = pointhigh_candleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_172"] = pointhigh_candleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_176"] = pointhigh_candleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_99"] = pointhigh_candleg[6]
         for i in range(7, 32):
             input_numpointhigh_candleg = 180 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointhigh_candleg)] = pointhigh_candleg[i]  
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointhigh_candleg)] = pointhigh_candleg[i]  
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_97"] = pointopen_candleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_104"] = pointopen_candleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_108"] = pointopen_candleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_169"] = pointopen_candleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_173"] = pointopen_candleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_177"] = pointopen_candleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_100"] = pointopen_candleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_97"] = pointopen_candleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_104"] = pointopen_candleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_108"] = pointopen_candleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_169"] = pointopen_candleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_173"] = pointopen_candleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_177"] = pointopen_candleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_100"] = pointopen_candleg[6]
         for i in range(7, 32):
             input_numpointopen_candleg = 181 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointopen_candleg)] = pointopen_candleg[i]
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointopen_candleg)] = pointopen_candleg[i]
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_98"] = pointclose_candleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_105"] = pointclose_candleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_109"] = pointclose_candleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_170"] = pointclose_candleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_174"] = pointclose_candleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_178"] = pointclose_candleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_101"] = pointclose_candleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_98"] = pointclose_candleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_105"] = pointclose_candleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_109"] = pointclose_candleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_170"] = pointclose_candleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_174"] = pointclose_candleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_178"] = pointclose_candleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_101"] = pointclose_candleg[6]
         for i in range(7, 32):
             input_numpointclose_candleg = 182 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointclose_candleg)] = pointclose_candleg[i]
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointclose_candleg)] = pointclose_candleg[i]
             
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_96"] = pointlow_candleg[0]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_106"] = pointlow_candleg[1] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_110"] = pointlow_candleg[2]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_171"] = pointlow_candleg[3] 
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_175"] = pointlow_candleg[4]          
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_179"] = pointlow_candleg[5]
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_102"] = pointlow_candleg[6]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_96"] = pointlow_candleg[0]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_106"] = pointlow_candleg[1] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_110"] = pointlow_candleg[2]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_171"] = pointlow_candleg[3] 
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_175"] = pointlow_candleg[4]          
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_179"] = pointlow_candleg[5]
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_102"] = pointlow_candleg[6]
         for i in range(7, 32):
             input_numpointlow_candleg = 183 + (i - 7) * 4
-            bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_" + str(input_numpointlow_candleg)] = pointlow_candleg[i]        
+            bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_" + str(input_numpointlow_candleg)] = pointlow_candleg[i]        
     
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_23"] = titlecandleg
-        bpy.data.objects["Cube.001"].modifiers["GeometryNodes"]["Input_22"] = subtitlecandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_23"] = titlecandleg
+        bpy.data.objects[candle_object_name].modifiers["GeometryNodes"]["Input_22"] = subtitlecandleg
         
         bpy.context.object.data.update()
         return {'FINISHED'}  
@@ -7732,20 +8083,39 @@ class MyoperatorPGCcsv(bpy.types.Operator):
             wtpb23p = float(psb23p/maxv23p)
             wtpc23p = float(psc23p/maxv23p)
             
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_26"] = ncg23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_31"] = wta23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_32"] = wtb23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_33"] = wtc23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_2"] = wtpa23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_27"] = wtpb23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_28"] = wtpc23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_10"] = minv23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_11"] = maxv23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_15"] = title23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_17"] = subtitle23p
-        bpy.data.objects["Circle Graph.002"].modifiers["GeometryNodes"]["Input_19"] = desc23p
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_23pg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_23pg.type == 'MESH':
+                        mesh_name_23pg = selected_obj_23pg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_23pg.modifiers:
+                                modifier_name_23pg = selected_obj_23pg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_26"] = ncg23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_31"] = wta23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_32"] = wtb23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_33"] = wtc23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_2"] = wtpa23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_27"] = wtpb23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_28"] = wtpc23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_10"] = minv23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_11"] = maxv23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_15"] = title23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_17"] = subtitle23p
+                                selected_obj_23pg.modifiers[modifier_name_23pg]["Input_19"] = desc23p
+
+                                print(f"Set modifier input for object '{mesh_name_23pg}' and modifier '{modifier_name_23pg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_23pg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class MyoperatorPGcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorpgcsv"
@@ -7765,15 +8135,33 @@ class MyoperatorPGcsv(bpy.types.Operator):
             percentpg = str(readout[1][5])
             gregorypercentagepg = float(gregorypg/olatunjipg)
             
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_2"] = gregorypercentagepg
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_10"] = mallorypg
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_11"] = olatunjipg
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_15"] = titlepg
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_17"] = subtitlepg
-        bpy.data.objects["Circle Graphp.001"].modifiers["GeometryNodes"]["Input_19"] = percentpg
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_pg = bpy.context.active_object  # Get the active (selected) object
 
+                if selected_obj_pg.type == 'MESH':
+                        mesh_name_pg = selected_obj_pg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_pg.modifiers:
+                                modifier_name_pg = selected_obj_pg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_2"] = gregorypercentagepg
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_10"] = mallorypg
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_11"] = olatunjipg
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_15"] = titlepg
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_17"] = subtitlepg
+                                selected_obj_pg.modifiers[modifier_name_pg]["Input_19"] = percentpg
+
+                                print(f"Set modifier input for object '{mesh_name_pg}' and modifier '{modifier_name_pg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_pg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class MyoperatorLGcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorlgcsv"
@@ -7809,29 +8197,54 @@ class MyoperatorLGcsv(bpy.types.Operator):
             titlelg = str(readout[1][7])
             subtitlelg = str(readout[1][8])
             
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_2"] = nplg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_13"] = minvlg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_14"] = maxvlg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_15"] = decimallg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_18"] = rnlg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_4"] = value1lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_5"] = value2lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_6"] = value3lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_7"] = value4lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_8"] = value5lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_9"] = value6lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_10"] = value7lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes"]["Input_11"] = value8lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_4"] = text1lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_5"] = text2lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_6"] = text3lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_7"] = text4lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_8"] = text5lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_9"] = text6lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_10"] = text7lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_11"] = text8lg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_23"] = titlelg
-        bpy.data.objects["Cube"].modifiers["GeometryNodes.001"]["Input_22"] = subtitlelg
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj.type == 'MESH':
+                        mesh_name = selected_obj.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj.modifiers:
+                                if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                        modifier_0 = selected_obj.modifiers.get("GeometryNodes")
+                                        modifier_1 = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                if modifier_0 and modifier_1:
+                                        modifier_0["Input_2"] = nplg
+                                        modifier_0["Input_13"] = minvlg
+                                        modifier_0["Input_14"] = maxvlg
+                                        modifier_0["Input_15"] = decimallg
+                                        modifier_0["Input_18"] = rnlg
+                                        modifier_0["Input_4"] = value1lg
+                                        modifier_0["Input_5"] = value2lg
+                                        modifier_0["Input_6"] = value3lg
+                                        modifier_0["Input_7"] = value4lg
+                                        modifier_0["Input_8"] = value5lg
+                                        modifier_0["Input_9"] = value6lg
+                                        modifier_0["Input_10"] = value7lg
+                                        modifier_0["Input_11"] = value8lg
+
+                                        modifier_1["Input_4"] = text1lg
+                                        modifier_1["Input_5"] = text2lg
+                                        modifier_1["Input_6"] = text3lg
+                                        modifier_1["Input_7"] = text4lg
+                                        modifier_1["Input_8"] = text5lg
+                                        modifier_1["Input_9"] = text6lg
+                                        modifier_1["Input_10"] = text7lg
+                                        modifier_1["Input_11"] = text8lg
+                                        modifier_1["Input_23"] = titlelg
+                                        modifier_1["Input_22"] = subtitlelg
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                else:
+                                        print("Selected object does not have both modifiers.")
+                        else:
+                                print(f"Selected object '{mesh_name}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         
         bpy.context.object.data.update()
         return {'FINISHED'}
@@ -7880,40 +8293,66 @@ class MyoperatorLGCcsv(bpy.types.Operator):
             legendalgc = str(readout[1][10])
             legendblgc = str(readout[2][10])
             
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_2"] = nplgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_13"] = minvlgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_14"] = maxvlgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_15"] = decimallgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_18"] = rnlgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_4"] = valuea1lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_5"] = valuea2lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_6"] = valuea3lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_7"] = valuea4lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_8"] = valuea5lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_9"] = valuea6lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_10"] = valuea7lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_11"] = valuea8lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_34"] = valueb1lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_35"] = valueb2lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_36"] = valueb3lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_37"] = valueb4lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_38"] = valueb5lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_39"] = valueb6lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_40"] = valueb7lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes"]["Input_41"] = valueb8lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_4"] = text1lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_5"] = text2lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_6"] = text3lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_7"] = text4lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_8"] = text5lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_9"] = text6lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_10"] = text7lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_11"] = text8lgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_23"] = titlelgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_22"] = subtitlelgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_29"] = legendalgc
-        bpy.data.objects["Cube.002"].modifiers["GeometryNodes.001"]["Input_30"] = legendblgc
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj.type == 'MESH':
+                        mesh_name = selected_obj.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj.modifiers:
+                                if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                        modifier_0c = selected_obj.modifiers.get("GeometryNodes")
+                                        modifier_1c = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                if modifier_0c and modifier_1c:
+                                        modifier_0c["Input_2"] = nplgc
+                                        modifier_0c["Input_13"] = minvlgc
+                                        modifier_0c["Input_14"] = maxvlgc
+                                        modifier_0c["Input_15"] = decimallgc
+                                        modifier_0c["Input_18"] = rnlgc
+                                        modifier_0c["Input_4"] = valuea1lgc
+                                        modifier_0c["Input_5"] = valuea2lgc
+                                        modifier_0c["Input_6"] = valuea3lgc
+                                        modifier_0c["Input_7"] = valuea4lgc
+                                        modifier_0c["Input_8"] = valuea5lgc
+                                        modifier_0c["Input_9"] = valuea6lgc
+                                        modifier_0c["Input_10"] = valuea7lgc
+                                        modifier_0c["Input_11"] = valuea8lgc
+                                        modifier_0c["Input_34"] = valueb1lgc
+                                        modifier_0c["Input_35"] = valueb2lgc
+                                        modifier_0c["Input_36"] = valueb3lgc
+                                        modifier_0c["Input_37"] = valueb4lgc
+                                        modifier_0c["Input_38"] = valueb5lgc
+                                        modifier_0c["Input_39"] = valueb6lgc
+                                        modifier_0c["Input_40"] = valueb7lgc
+                                        modifier_0c["Input_41"] = valueb8lgc
+
+                                        modifier_1c["Input_4"] = text1lgc
+                                        modifier_1c["Input_5"] = text2lgc
+                                        modifier_1c["Input_6"] = text3lgc
+                                        modifier_1c["Input_7"] = text4lgc
+                                        modifier_1c["Input_8"] = text5lgc
+                                        modifier_1c["Input_9"] = text6lgc
+                                        modifier_1c["Input_10"] = text7lgc
+                                        modifier_1c["Input_11"] = text8lgc
+                                        modifier_1c["Input_23"] = titlelgc
+                                        modifier_1c["Input_22"] = subtitlelgc
+                                        modifier_1c["Input_29"] = legendalgc
+                                        modifier_1c["Input_30"] = legendblgc
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                else:
+                                        print("Selected object does not have both modifiers.")
+                        else:
+                                print(f"Selected object '{mesh_name}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+
+        # Optionally, you can update the mesh data if needed.
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -7943,26 +8382,42 @@ class MyoperatorHBcsv(bpy.types.Operator):
             subtitlehbar1 = str(readout[1][7])
             totalhbar1 = str(readout[1][8])
             
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_36"] = gregoryhbar
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_14"] = malloryhbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_15"] = malloryhbar2
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_16"] = malloryhbar3
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_17"] = malloryhbar4
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_10"] = olatunjihbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_11"] = olatunjihbar2
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_12"] = jeopardyhbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_2"] = hogwashhbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_3"] = hogwashhbar2
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_4"] = hogwashhbar3
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_5"] = hogwashhbar4
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_7"] = titlehbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_8"] = subtitlehbar1
-        bpy.data.objects["Plane.002"].modifiers["GeometryNodes"]["Input_6"] = totalhbar1
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hbg = bpy.context.active_object  # Get the active (selected) object
 
-        
+                if selected_obj_hbg.type == 'MESH':
+                        mesh_name_hbg = selected_obj_hbg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hbg.modifiers:
+                                modifier_name_hbg = selected_obj_hbg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_36"] = gregoryhbar
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = malloryhbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = malloryhbar2
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = malloryhbar3
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = malloryhbar4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_10"] = olatunjihbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = olatunjihbar2
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_12"] = jeopardyhbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_2"] = hogwashhbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = hogwashhbar2
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = hogwashhbar3
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = hogwashhbar4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = titlehbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_8"] = subtitlehbar1
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_6"] = totalhbar1
+
+                                print(f"Set modifier input for object '{mesh_name_hbg}' and modifier '{modifier_name_hbg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hbg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'}  
+        return {'FINISHED'} 
     
 class MyoperatorHBCcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorhbccsv"
@@ -7995,31 +8450,47 @@ class MyoperatorHBCcsv(bpy.types.Operator):
             legendhbarc1 = str(readout[1][9])
             legendhbarc2 = str(readout[2][9])
             
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_45"] = nbhbarc
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_2"] = bthbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_3"] = bthbarc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_4"] = bthbarc3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_5"] = bthbarc4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_10"] = minvhbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_11"] = maxvhbarc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_12"] = decimalhbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_14"] = bvahbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_15"] = bvahbarc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_16"] = bvahbarc3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_17"] = bvahbarc4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_36"] = bvbhbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_37"] = bvbhbarc2
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_38"] = bvbhbarc3
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_39"] = bvbhbarc4
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_7"] = titlehbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_8"] = subtitlehbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_6"] = legendhbarc1
-        bpy.data.objects["Plane.001"].modifiers["GeometryNodes"]["Input_40"] = legendhbarc2
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hbgc = bpy.context.active_object  # Get the active (selected) object
 
-        
+                if selected_obj_hbgc.type == 'MESH':
+                        mesh_name_hbgc = selected_obj_hbgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hbgc.modifiers:
+                                modifier_name_hbgc = selected_obj_hbgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_45"] = nbhbarc
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_2"] = bthbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = bthbarc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = bthbarc3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = bthbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_10"] = minvhbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = maxvhbarc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_12"] = decimalhbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = bvahbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = bvahbarc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = bvahbarc3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = bvahbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = bvbhbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = bvbhbarc2
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = bvbhbarc3
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = bvbhbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_7"] = titlehbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_8"] = subtitlehbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_6"] = legendhbarc1
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_40"] = legendhbarc2
+
+                                print(f"Set modifier input for object '{mesh_name_hbgc}' and modifier '{modifier_name_hbgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hbgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'}  
+        return {'FINISHED'} 
     
 class MyoperatorMCcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatormccsv"
@@ -8055,26 +8526,41 @@ class MyoperatorMCcsv(bpy.types.Operator):
              
 
             
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_55"] = gregorymcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_2"] = mallorympercentage1
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_12"] = mallorympercentage2
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_14"] = mallorympercentage3
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_15"] = mallorympercentage4
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_16"] = mallorympercentage5
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_10"] = minvaluemcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_11"] = maxvaluemcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_18"] = decimalmcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_40"] = titlemcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_41"] = subtitlemcircle
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_42"] = hogwashmcircle1
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_43"] = hogwashmcircle2
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_44"] = hogwashmcircle3
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_46"] = hogwashmcircle4
-        bpy.data.objects["Circle Graph.004"].modifiers["GeometryNodes"]["Input_45"] = hogwashmcircle5
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mcg = bpy.context.active_object  # Get the active (selected) object
 
-        
-        
+                if selected_obj_mcg.type == 'MESH':
+                        mesh_name_mcg = selected_obj_mcg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mcg.modifiers:
+                                modifier_name_mcg = selected_obj_mcg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_55"] = gregorymcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_2"] = mallorympercentage1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_12"] = mallorympercentage2
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_14"] = mallorympercentage3
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_15"] = mallorympercentage4
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = mallorympercentage1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_10"] = minvaluemcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_11"] = maxvaluemcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_18"] = decimalmcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_40"] = titlemcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_41"] = subtitlemcircle
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_42"] = hogwashmcircle1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_43"] = hogwashmcircle2
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = hogwashmcircle3
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = hogwashmcircle4
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = hogwashmcircle5
+
+                                print(f"Set modifier input for object '{mesh_name_mcg}' and modifier '{modifier_name_mcg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mcg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -8110,26 +8596,43 @@ class MyoperatorMPcsv(bpy.types.Operator):
             mallorympiepercentage4 = float(mallorympie4/maxvaluempie)
             mallorympiepercentage5 = float(mallorympie5/maxvaluempie)           
             
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_54"] = gregorympie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_2"] = mallorympiepercentage1
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_12"] = mallorympiepercentage2
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_14"] = mallorympiepercentage3
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_15"] = mallorympiepercentage4
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_16"] = mallorympiepercentage5
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_10"] = minvaluempie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_11"] = maxvaluempie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_18"] = decimalmpie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_40"] = titlempie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_41"] = subtitlempie
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_42"] = hogwashmpie1
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_43"] = hogwashmpie2
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_44"] = hogwashmpie3
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_46"] = hogwashmpie4
-        bpy.data.objects["Circle Graph.005"].modifiers["GeometryNodes"]["Input_45"] = hogwashmpie5
-            
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mpg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mpg.type == 'MESH':
+                        mesh_name_mpg = selected_obj_mpg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mpg.modifiers:
+                                modifier_name_mpg = selected_obj_mpg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_54"] = gregorympie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_2"] = mallorympiepercentage1
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_12"] = mallorympiepercentage2
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = mallorympiepercentage3
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_15"] = mallorympiepercentage4
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_16"] = mallorympiepercentage5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_10"] = minvaluempie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] = maxvaluempie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_18"] = decimalmpie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_40"] = titlempie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_41"] = subtitlempie
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_42"] = hogwashmpie1
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_43"] = hogwashmpie2
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = hogwashmpie3
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = hogwashmpie4
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = hogwashmpie5
+
+                                print(f"Set modifier input for object '{mesh_name_mpg}' and modifier '{modifier_name_mpg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mpg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class MyoperatorMGcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatormgcsv"
@@ -8165,32 +8668,50 @@ class MyoperatorMGcsv(bpy.types.Operator):
             titlemg = str(readout[1][7])
             subtitlemg = str(readout[1][8])
             
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_2"] = npmg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_22"] = minvmg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_24"] = maxvmg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_23"] = decimalmg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_21"] = rnmg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_3"] = value1mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_4"] = value2mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_5"] = value3mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_6"] = value4mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_7"] = value5mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_8"] = value6mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_9"] = value7mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_10"] = value8mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_13"] = text1mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_14"] = text2mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_15"] = text3mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_16"] = text4mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_17"] = text5mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_18"] = text6mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_19"] = text7mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_20"] = text8mg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_38"] = titlemg
-        bpy.data.objects["Cube.003"].modifiers["GeometryNodes"]["Input_39"] = subtitlemg
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mg.type == 'MESH':
+                        mesh_name_mg = selected_obj_mg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mg.modifiers:
+                                modifier_name_mg = selected_obj_mg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_2"] = npmg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_22"] = minvmg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_24"] = maxvmg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_23"] = decimalmg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_21"] = rnmg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_3"] = value1mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_4"] = value2mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_5"] = value3mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_6"] = value4mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_7"] = value5mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_8"] = value6mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_9"] = value7mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_10"] = value8mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_13"] = text1mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_14"] = text2mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_15"] = text3mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_16"] = text4mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_17"] = text5mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_18"] = text6mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_19"] = text7mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_20"] = text8mg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_38"] = titlemg
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_39"] = subtitlemg
+
+                                print(f"Set modifier input for object '{mesh_name_mg}' and modifier '{modifier_name_mg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class MyoperatorMGCcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatormgccsv"
@@ -8236,42 +8757,60 @@ class MyoperatorMGCcsv(bpy.types.Operator):
             legendamgc = str(readout[1][10])
             legendbmgc = str(readout[2][10])
             
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_2"] = npmgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_22"] = minvmgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_24"] = maxvmgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_23"] = decimalmgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_21"] = rnmgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_3"] = valuea1mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_4"] = valuea2mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_67"] = valuea3mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_6"] = valuea4mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_7"] = valuea5mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_8"] = valuea6mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_9"] = valuea7mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_10"] = valuea8mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_30"] = valueb1mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_39"] = valueb2mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_40"] = valueb3mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_41"] = valueb4mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_42"] = valueb5mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_43"] = valueb6mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_44"] = valueb7mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_45"] = valueb8mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_13"] = text1mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_14"] = text2mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_15"] = text3mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_16"] = text4mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_17"] = text5mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_18"] = text6mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_19"] = text7mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_20"] = text8mgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_54"] = titlemgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_55"] = subtitlemgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_57"] = legendamgc
-        bpy.data.objects["Cube.004"].modifiers["GeometryNodes"]["Input_56"] = legendbmgc
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_mgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_mgc.type == 'MESH':
+                        mesh_name_mgc = selected_obj_mgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_mgc.modifiers:
+                                modifier_name_mgc = selected_obj_mgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_2"] = npmgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_22"] = minvmgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_24"] = maxvmgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_23"] = decimalmgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_21"] = rnmgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_3"] = valuea1mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_4"] = valuea2mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_67"] = valuea3mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_6"] = valuea4mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_7"] = valuea5mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_8"] = valuea6mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_9"] = valuea7mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_10"] = valuea8mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_30"] = valueb1mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_39"] = valueb2mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_40"] = valueb3mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_41"] = valueb4mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_42"] = valueb5mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_43"] = valueb6mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_44"] = valueb7mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_45"] = valueb8mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_13"] = text1mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_14"] = text2mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_15"] = text3mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_16"] = text4mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_17"] = text5mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_18"] = text6mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_19"] = text7mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_20"] = text8mgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_54"] = titlemgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_55"] = subtitlemgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_57"] = legendamgc
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_56"] = legendbmgc
+
+                                print(f"Set modifier input for object '{mesh_name_mgc}' and modifier '{modifier_name_mgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_mgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class MyoperatorVBcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorvbcsv"
@@ -8307,32 +8846,48 @@ class MyoperatorVBcsv(bpy.types.Operator):
             subtitlevb1 = str(readout[1][7])
             totalvb1 = str(readout[1][8])
             
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_57"] = gregoryvb
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_14"] = malloryvb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_41"] = malloryvb2
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_15"] = malloryvb3
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_44"] = malloryvb4
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_16"] = malloryvb5
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_48"] = malloryvb6
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_17"] = malloryvb7
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_50"] = malloryvb8
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_10"] = olatunjivb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_11"] = olatunjivb2
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_12"] = jeopardyvb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_2"] = hogwashvb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_42"] = hogwashvb2
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_3"] = hogwashvb3
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_45"] = hogwashvb4
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_4"] = hogwashvb5
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_47"] = hogwashvb6
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_5"] = hogwashvb7
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_49"] = hogwashvb8
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_7"] = titlevb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_8"] = subtitlevb1
-        bpy.data.objects["Plane.003"].modifiers["GeometryNodes"]["Input_6"] = totalvb1
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbg = bpy.context.active_object  # Get the active (selected) object
 
-        
+                if selected_obj_vbg.type == 'MESH':
+                        mesh_name_vbg = selected_obj_vbg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbg.modifiers:
+                                modifier_name_vbg = selected_obj_vbg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_57"] = gregoryvb
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_14"] = malloryvb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_41"] = malloryvb2
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_15"] = malloryvb3
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_44"] = malloryvb4
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_16"] = malloryvb5
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_48"] = malloryvb6
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_17"] = malloryvb7
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_50"] = malloryvb8
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_10"] = olatunjivb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_11"] = olatunjivb2
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_12"] = jeopardyvb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_2"] = hogwashvb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_42"] = hogwashvb2
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_3"] = hogwashvb3
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_45"] = hogwashvb4
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_4"] = hogwashvb5
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_47"] = hogwashvb6
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_5"] = hogwashvb7
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_49"] = hogwashvb8
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_7"] = titlevb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_8"] = subtitlevb1
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_6"] = totalvb1
+
+                                print(f"Set modifier input for object '{mesh_name_vbg}' and modifier '{modifier_name_vbg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
     
@@ -8379,43 +8934,60 @@ class MyoperatorVBCcsv(bpy.types.Operator):
             legendvbc1 = str(readout[1][9])
             legendvbc2 = str(readout[2][9])
             
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_71"] = nbvbc
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_2"] = btvbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_42"] = btvbc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_3"] = btvbc3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_45"] = btvbc4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_4"] = btvbc5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_47"] = btvbc6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_5"] = btvbc7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_49"] = btvbc8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_10"] = minvvbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_11"] = maxvvbc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_12"] = decimalvbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_14"] = bvavbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_41"] = bvavbc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_15"] = bvavbc3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_44"] = bvavbc4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_16"] = bvavbc5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_48"] = bvavbc6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_17"] = bvavbc7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_50"] = bvavbc8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_57"] = bvbvbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_58"] = bvbvbc2
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_59"] = bvbvbc3
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_64"] = bvbvbc4
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_60"] = bvbvbc5
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_61"] = bvbvbc6
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_62"] = bvbvbc7
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_63"] = bvbvbc8
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_7"] = titlevbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_8"] = subtitlevbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_70"] = legendvbc1
-        bpy.data.objects["Plane.004"].modifiers["GeometryNodes"]["Input_69"] = legendvbc2
-        
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbgc = bpy.context.active_object  # Get the active (selected) object
 
-        
+                if selected_obj_vbgc.type == 'MESH':
+                        mesh_name_vbgc = selected_obj_vbgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbgc.modifiers:
+                                modifier_name_vbgc = selected_obj_vbgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_71"] = nbvbc
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_2"] = btvbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_42"] = btvbc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_3"] = btvbc3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = btvbc4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_4"] = btvbc5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_47"] = btvbc6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_5"] = btvbc7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_49"] = btvbc8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_10"] = minvvbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_11"] = maxvvbc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_12"] = decimalvbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_14"] = bvavbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_41"] = bvavbc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_15"] = bvavbc3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_44"] = bvavbc4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_16"] = bvavbc5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_48"] = bvavbc6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_17"] = bvavbc7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_50"] = bvavbc8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_57"] = bvbvbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_58"] = bvbvbc2
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_59"] = bvbvbc3
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_64"] = bvbvbc4
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_60"] = bvbvbc5
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_61"] = bvbvbc6
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_62"] = bvbvbc7
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_63"] = bvbvbc8
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_7"] = titlevbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_8"] = subtitlevbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_70"] = legendvbc1
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_69"] = legendvbc2
+
+
+                                print(f"Set modifier input for object '{mesh_name_vbgc}' and modifier '{modifier_name_vbgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'}     
+        return {'FINISHED'}   
         
 class ADDONNAME_OT_my_opc(bpy.types.Operator):
     bl_label = "Add Objecggggggt"
@@ -8425,7 +8997,7 @@ class ADDONNAME_OT_my_opc(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle_GraphAction'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringc = mytool.my_float2
@@ -8474,7 +9046,7 @@ class ADDONNAME_OT_my_op23cAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle_GraphAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         string23CA = mytool.my_float23CA
@@ -8523,7 +9095,7 @@ class ADDONNAME_OT_my_op23cBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle_GraphAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_49"]'
         index = 0
         string23CB = mytool.my_float23CB
@@ -8572,7 +9144,7 @@ class ADDONNAME_OT_my_op23cCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle_GraphAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_50"]'
         index = 0
         string23CC = mytool.my_float23CC
@@ -8622,7 +9194,7 @@ class ADDONNAME_OT_my_op23pAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.001Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_25"]'
         index = 0
         string23PA = mytool.my_float23PA
@@ -8671,7 +9243,7 @@ class ADDONNAME_OT_my_op23pBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.001Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_44"]'
         index = 0
         string23PB = mytool.my_float23PB
@@ -8720,7 +9292,7 @@ class ADDONNAME_OT_my_op23pCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.001Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_45"]'
         index = 0
         string23PC = mytool.my_float23PC
@@ -8769,7 +9341,7 @@ class ADDONNAME_OT_my_opLGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_26"]'
         index = 0
         stringLGAC = mytool.my_floatLGA
@@ -8818,7 +9390,7 @@ class ADDONNAME_OT_my_opLGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_27"]'
         index = 0
         stringLGBC = mytool.my_floatLGB
@@ -8867,7 +9439,7 @@ class ADDONNAME_OT_my_opLGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringLGCC = mytool.my_floatLGC
@@ -8916,7 +9488,7 @@ class ADDONNAME_OT_my_opLGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringLGDC = mytool.my_floatLGD
@@ -8965,7 +9537,7 @@ class ADDONNAME_OT_my_opLGEL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringLGEC = mytool.my_floatLGE
@@ -9014,7 +9586,7 @@ class ADDONNAME_OT_my_opLGFL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringLGFC = mytool.my_floatLGF
@@ -9064,7 +9636,7 @@ class ADDONNAME_OT_my_opLGGL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_32"]'
         index = 0
         stringLGGC = mytool.my_floatLGG
@@ -9114,7 +9686,7 @@ class ADDONNAME_OT_my_opLGHL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_33"]'
         index = 0
         stringLGHC = mytool.my_floatLGH
@@ -9163,7 +9735,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_26"]'
         index = 0
         stringCALINEA = mytool.my_floatCOMPARISONALINEA
@@ -9209,7 +9781,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_27"]'
         index = 0
         stringCALINEB = mytool.my_floatCOMPARISONALINEB
@@ -9254,7 +9826,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringCALINEC = mytool.my_floatCOMPARISONALINEC
@@ -9299,7 +9871,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINED(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringCALINED = mytool.my_floatCOMPARISONALINED
@@ -9344,7 +9916,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringCALINEE = mytool.my_floatCOMPARISONALINEE
@@ -9389,7 +9961,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringCALINEF = mytool.my_floatCOMPARISONALINEF
@@ -9434,7 +10006,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_32"]'
         index = 0
         stringCALINEG = mytool.my_floatCOMPARISONALINEG
@@ -9480,7 +10052,7 @@ class ADDONNAME_OT_my_opCOMPARISONALINEH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_33"]'
         index = 0
         stringCALINEH = mytool.my_floatCOMPARISONALINEH
@@ -9525,7 +10097,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEA(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_46"]'
         index = 0
         stringCBLINEA = mytool.my_floatCOMPARISONBLINEA
@@ -9571,7 +10143,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_47"]'
         index = 0
         stringCBLINEB = mytool.my_floatCOMPARISONBLINEB
@@ -9617,7 +10189,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_48"]'
         index = 0
         stringCBLINEC = mytool.my_floatCOMPARISONBLINEC
@@ -9663,7 +10235,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINED(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_49"]'
         index = 0
         stringCBLINED = mytool.my_floatCOMPARISONBLINED
@@ -9708,7 +10280,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_50"]'
         index = 0
         stringCBLINEE = mytool.my_floatCOMPARISONBLINEE
@@ -9753,7 +10325,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_51"]'
         index = 0
         stringCBLINEF = mytool.my_floatCOMPARISONBLINEF
@@ -9798,7 +10370,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_52"]'
         index = 0
         stringCBLINEG = mytool.my_floatCOMPARISONBLINEG
@@ -9843,7 +10415,7 @@ class ADDONNAME_OT_my_opCOMPARISONBLINEH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'CubeAction.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringCBLINEH = mytool.my_floatCOMPARISONBLINEH
@@ -9890,7 +10462,7 @@ class ADDONNAME_OT_my_opMGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringMGAC = mytool.my_floatMGA
@@ -9940,7 +10512,7 @@ class ADDONNAME_OT_my_opMGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringMGBC = mytool.my_floatMGB
@@ -9989,7 +10561,7 @@ class ADDONNAME_OT_my_opMGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_32"]'
         index = 0
         stringMGCC = mytool.my_floatMGC
@@ -10038,7 +10610,7 @@ class ADDONNAME_OT_my_opMGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_33"]'
         index = 0
         stringMGDC = mytool.my_floatMGD
@@ -10087,7 +10659,7 @@ class ADDONNAME_OT_my_opMGEL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_34"]'
         index = 0
         stringMGEC = mytool.my_floatMGE
@@ -10137,7 +10709,7 @@ class ADDONNAME_OT_my_opMGFL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_35"]'
         index = 0
         stringMGFC = mytool.my_floatMGF
@@ -10187,7 +10759,7 @@ class ADDONNAME_OT_my_opMGGL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_36"]'
         index = 0
         stringMGGC = mytool.my_floatMGG
@@ -10237,7 +10809,7 @@ class ADDONNAME_OT_my_opMGHL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.003Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_37"]'
         index = 0
         stringMGHC = mytool.my_floatMGH
@@ -10286,7 +10858,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTA(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_46"]'
         index = 0
         stringCAMOUNTA = mytool.my_floatCOMPARISONAMOUNTA
@@ -10331,7 +10903,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_47"]'
         index = 0
         stringCAMOUNTB = mytool.my_floatCOMPARISONAMOUNTB
@@ -10376,7 +10948,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_48"]'
         index = 0
         stringCAMOUNTC = mytool.my_floatCOMPARISONAMOUNTC
@@ -10421,7 +10993,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_49"]'
         index = 0
         stringCAMOUNTD = mytool.my_floatCOMPARISONAMOUNTD
@@ -10466,7 +11038,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_50"]'
         index = 0
         stringCAMOUNTE = mytool.my_floatCOMPARISONAMOUNTE
@@ -10511,7 +11083,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_51"]'
         index = 0
         stringCAMOUNTF = mytool.my_floatCOMPARISONAMOUNTF
@@ -10556,7 +11128,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_52"]'
         index = 0
         stringCAMOUNTG = mytool.my_floatCOMPARISONAMOUNTG
@@ -10602,7 +11174,7 @@ class ADDONNAME_OT_my_opCOMPARISONAMOUNTH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringCAMOUNTH = mytool.my_floatCOMPARISONAMOUNTH
@@ -10647,7 +11219,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTA(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_77"]'
         index = 0
         stringCBMOUNTA = mytool.my_floatCOMPARISONBMOUNTA
@@ -10692,7 +11264,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_78"]'
         index = 0
         stringCBMOUNTB = mytool.my_floatCOMPARISONBMOUNTB
@@ -10737,7 +11309,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_79"]'
         index = 0
         stringCBMOUNTC = mytool.my_floatCOMPARISONBMOUNTC
@@ -10782,7 +11354,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_80"]'
         index = 0
         stringCBMOUNTD = mytool.my_floatCOMPARISONBMOUNTD
@@ -10827,7 +11399,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_81"]'
         index = 0
         stringCBMOUNTE = mytool.my_floatCOMPARISONBMOUNTE
@@ -10872,7 +11444,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_82"]'
         index = 0
         stringCBMOUNTF = mytool.my_floatCOMPARISONBMOUNTF
@@ -10917,7 +11489,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_83"]'
         index = 0
         stringCBMOUNTG = mytool.my_floatCOMPARISONBMOUNTG
@@ -10962,7 +11534,7 @@ class ADDONNAME_OT_my_opCOMPARISONBMOUNTH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Cube.004Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_84"]'
         index = 0
         stringCBMOUNTH = mytool.my_floatCOMPARISONBMOUNTH
@@ -11008,7 +11580,7 @@ class ADDONNAME_OT_my_opMCGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.002Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_50"]'
         index = 0
         stringMCGAC = mytool.my_floatMCGA
@@ -11057,7 +11629,7 @@ class ADDONNAME_OT_my_opMCGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.002Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_51"]'
         index = 0
         stringMCGBC = mytool.my_floatMCGB
@@ -11106,7 +11678,7 @@ class ADDONNAME_OT_my_opMCGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.002Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_52"]'
         index = 0
         stringMCGCC = mytool.my_floatMCGC
@@ -11155,7 +11727,7 @@ class ADDONNAME_OT_my_opMCGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.002Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringMCGDC = mytool.my_floatMCGD
@@ -11204,7 +11776,7 @@ class ADDONNAME_OT_my_opMCGEL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.002Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_54"]'
         index = 0
         stringMCGEC = mytool.my_floatMCGE
@@ -11253,7 +11825,7 @@ class ADDONNAME_OT_my_opMPGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.005Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_49"]'
         index = 0
         stringMPGAC = mytool.my_floatMPGA
@@ -11302,7 +11874,7 @@ class ADDONNAME_OT_my_opMPGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.005Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_50"]'
         index = 0
         stringMPGBC = mytool.my_floatMPGB
@@ -11351,7 +11923,7 @@ class ADDONNAME_OT_my_opMPGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.005Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_51"]'
         index = 0
         stringMPGCC = mytool.my_floatMPGC
@@ -11400,7 +11972,7 @@ class ADDONNAME_OT_my_opMPGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.005Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_52"]'
         index = 0
         stringMPGDC = mytool.my_floatMPGD
@@ -11449,7 +12021,7 @@ class ADDONNAME_OT_my_opMPGEL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.005Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringMPGEC = mytool.my_floatMPGE
@@ -11500,7 +12072,7 @@ class ADDONNAME_OT_my_opggpie(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Circle Graph.001Action'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_25"]'
         index = 0
         stringpie = mytool.my_float2pie
@@ -12081,7 +12653,7 @@ class ADDONNAME_OT_my_opHBGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.002'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringHBGA = mytool.my_floatHBGA
@@ -12130,7 +12702,7 @@ class ADDONNAME_OT_my_opHBGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.002'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringHBGB = mytool.my_floatHBGB
@@ -12179,7 +12751,7 @@ class ADDONNAME_OT_my_opHBGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.002'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringHBGC = mytool.my_floatHBGC
@@ -12228,7 +12800,7 @@ class ADDONNAME_OT_my_opHBGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.002'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringHBGD = mytool.my_floatHBGD
@@ -12278,7 +12850,7 @@ class ADDONNAME_OT_my_opCOMPARISONAHBARAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringCAHBARA = mytool.my_floatCOMPARISONAHBARA
@@ -12326,7 +12898,7 @@ class ADDONNAME_OT_my_opCOMPARISONAHBARBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringCAHBARB = mytool.my_floatCOMPARISONAHBARB
@@ -12371,7 +12943,7 @@ class ADDONNAME_OT_my_opCOMPARISONAHBARCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringCAHBARC = mytool.my_floatCOMPARISONAHBARC
@@ -12416,7 +12988,7 @@ class ADDONNAME_OT_my_opCOMPARISONAHBARD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringCAHBARD = mytool.my_floatCOMPARISONAHBARD
@@ -12461,7 +13033,7 @@ class ADDONNAME_OT_my_opCOMPARISONBHBARAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_55"]'
         index = 0
         stringCBHBARA = mytool.my_floatCOMPARISONBHBARA
@@ -12508,7 +13080,7 @@ class ADDONNAME_OT_my_opCOMPARISONBHBARBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_56"]'
         index = 0
         stringCBHBARB = mytool.my_floatCOMPARISONBHBARB
@@ -12553,7 +13125,7 @@ class ADDONNAME_OT_my_opCOMPARISONBHBARCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_57"]'
         index = 0
         stringCBHBARC = mytool.my_floatCOMPARISONBHBARC
@@ -12598,7 +13170,7 @@ class ADDONNAME_OT_my_opCOMPARISONBHBARD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.001'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_58"]'
         index = 0
         stringCBHBARD = mytool.my_floatCOMPARISONBHBARD
@@ -13678,7 +14250,7 @@ class ADDONNAME_OT_my_opVBGAL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringVBGA = mytool.my_floatVBGA
@@ -13727,7 +14299,7 @@ class ADDONNAME_OT_my_opVBGBL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringVBGB = mytool.my_floatVBGB
@@ -13776,7 +14348,7 @@ class ADDONNAME_OT_my_opVBGCL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringVBGC = mytool.my_floatVBGC
@@ -13825,7 +14397,7 @@ class ADDONNAME_OT_my_opVBGDL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringVBGD = mytool.my_floatVBGD
@@ -13874,7 +14446,7 @@ class ADDONNAME_OT_my_opVBGEL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringVBGE = mytool.my_floatVBGE
@@ -13923,7 +14495,7 @@ class ADDONNAME_OT_my_opVBGFL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_54"]'
         index = 0
         stringVBGF = mytool.my_floatVBGF
@@ -13972,7 +14544,7 @@ class ADDONNAME_OT_my_opVBGGL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_55"]'
         index = 0
         stringVBGG = mytool.my_floatVBGG
@@ -14021,7 +14593,7 @@ class ADDONNAME_OT_my_opVBGHL(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.003'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_56"]'
         index = 0
         stringVBGH = mytool.my_floatVBGH
@@ -14070,7 +14642,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVA(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_28"]'
         index = 0
         stringCOMPARISONABARVA = mytool.my_floatCOMPARISONABARVA
@@ -14115,7 +14687,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_29"]'
         index = 0
         stringCOMPARISONABARV = mytool.my_floatCOMPARISONABARVB
@@ -14160,7 +14732,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_30"]'
         index = 0
         stringCOMPARISONABARVC = mytool.my_floatCOMPARISONABARVC
@@ -14205,7 +14777,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_31"]'
         index = 0
         stringCOMPARISONABARVD = mytool.my_floatCOMPARISONABARVD
@@ -14250,7 +14822,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_53"]'
         index = 0
         stringCOMPARISONABARVE = mytool.my_floatCOMPARISONABARVE
@@ -14295,7 +14867,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_54"]'
         index = 0
         stringCOMPARISONAFARVF = mytool.my_floatCOMPARISONABARVF
@@ -14340,7 +14912,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_55"]'
         index = 0
         stringCOMPARISONABARVG = mytool.my_floatCOMPARISONABARVG
@@ -14386,7 +14958,7 @@ class ADDONNAME_OT_my_opCOMPARISONABARVH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_56"]'
         index = 0
         stringCOMPARISONABARVH = mytool.my_floatCOMPARISONABARVH
@@ -14431,7 +15003,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVA(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_82"]'
         index = 0
         stringCOMPARISONBBARVA = mytool.my_floatCOMPARISONBBARVA
@@ -14476,7 +15048,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVB(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_83"]'
         index = 0
         stringCOMPARISONBBARV = mytool.my_floatCOMPARISONBBARVB
@@ -14521,7 +15093,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVC(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_84"]'
         index = 0
         stringCOMPARISONBBARVC = mytool.my_floatCOMPARISONBBARVC
@@ -14566,7 +15138,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVD(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_85"]'
         index = 0
         stringCOMPARISONBBARVD = mytool.my_floatCOMPARISONBBARVD
@@ -14611,7 +15183,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVE(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_86"]'
         index = 0
         stringCOMPARISONBBARVE = mytool.my_floatCOMPARISONBBARVE
@@ -14656,7 +15228,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVF(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_87"]'
         index = 0
         stringCOMPARISONBFARVF = mytool.my_floatCOMPARISONBBARVF
@@ -14702,7 +15274,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVG(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_88"]'
         index = 0
         stringCOMPARISONBBARVG = mytool.my_floatCOMPARISONBBARVG
@@ -14748,7 +15320,7 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVH(bpy.types.Operator):
         scene = context.scene
         mytool = scene.my_tool
         
-        action_name = 'Plane.004Action.004'
+        action_name = bpy.context.active_object.animation_data.action.name
         data_path = 'modifiers["GeometryNodes"]["Input_89"]'
         index = 0
         stringCOMPARISONBBARVH = mytool.my_floatCOMPARISONBBARVH
@@ -15491,16 +16063,16 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
             print("end")
 
         return {'FINISHED'}
-    
+
 class FontchangeCG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorf"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Circle Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle_Graph"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         node_groupcg = modifier.node_group
         
@@ -15529,10 +16101,10 @@ class FontrestoreCG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorres"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Circle Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle_Graph"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         noderestorecg_group = modifier.node_group
         
@@ -15555,21 +16127,19 @@ class FontrestoreCG(bpy.types.Operator):
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
+
     
 class Fontchange23CG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operator23cgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["2-3 Circle Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle_Graph.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         node23_group = modifier.node_group
-        nested23_node_group = bpy.data.node_groups["NodeGroup.014"]
-        nested23des_node_group = bpy.data.node_groups["NodeGroup.015"]
-        nested23leg_node_group = bpy.data.node_groups["NodeGroup.013"]
         
         node23cgtitle = node23_group.nodes['String to Curves.005']
         data23cgtitle_font = bpy.data.fonts.load(mytool.my_pathfont23cg_title)
@@ -15579,17 +16149,26 @@ class Fontchange23CG(bpy.types.Operator):
         data23cgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfont23cg_subtitle)
         node23cgsubtitle.font = data23cgsubtitle_font
         
-        node23cgvalue = nested23_node_group.nodes['String to Curves']
-        data23cgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23cg_value)
-        node23cgvalue.font = data23cgvalue_font 
+        node23cgvalue_names = ['String to Curves', 'String to Curves.001', 'String to Curves.002']
+        for name in node23cgvalue_names:
+            node23cgvalue = node23_group.nodes.get(name)
+            if node23cgvalue:
+                data23cgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23cg_value)
+                node23cgvalue.font = data23cgvalue_font
 
-        nodecgdescription = nested23des_node_group.nodes['String to Curves.004']
-        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23cg_description)
-        nodecgdescription.font = datacgdescription_font       
+        node23cgdescription_names = ['String to Curves.004', 'String to Curves.007', 'String to Curves.008']
+        for name in node23cgdescription_names:
+            node23cgdescription = node23_group.nodes.get(name)
+            if node23cgdescription:
+                data23cgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23cg_description)
+                node23cgdescription.font = data23cgdescription_font    
         
-        node23cglegend = nested23leg_node_group.nodes['String to Curves.035']
-        data23cglegend_font = bpy.data.fonts.load(mytool.my_pathfont23cg_legend)
-        node23cglegend.font = data23cglegend_font
+        node23cglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in node23cglegend_names:
+            node23cglegend = node23_group.nodes.get(name)
+            if node23cglegend:
+                data23cglegend_font = bpy.data.fonts.load(mytool.my_pathfont23cg_legend)
+                node23cglegend.font = data23cglegend_font
         
         bpy.ops.file.pack_all()    
         
@@ -15600,35 +16179,41 @@ class Fontrestore23CG(bpy.types.Operator):
     bl_idname = "addonname.myop_operator23cgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["2-3 Circle Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle_Graph.001"]
-        modifier = obj.modifiers["GeometryNodes"]
-        noderestore23_group = modifier.node_group
-        nested23_node_group = bpy.data.node_groups["NodeGroup.014"]
-        nested23des_node_group = bpy.data.node_groups["NodeGroup.015"]
-        nested23leg_node_group = bpy.data.node_groups["NodeGroup.013"]
+        obj23cg = bpy.context.view_layer.objects.active
+        modifier23cg = obj23cg.modifiers.active 
+        noderestore23cg_group = modifier23cg.node_group
         
-        noderestore23cgtitle = noderestore23_group.nodes['String to Curves.005']
+        noderestore23cgtitle = noderestore23cg_group.nodes['String to Curves.005']
         datarestore23cgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestore23cgtitle.font = datarestore23cgtitle_font
         
-        noderestore23cgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        noderestore23cgsubtitle = noderestore23cg_group.nodes['String to Curves.006']
         datarestore23cgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestore23cgsubtitle.font = datarestore23cgsubtitle_font
         
-        noderestore23cgvalue = nested23_node_group.nodes['String to Curves']
-        datarestore23cgvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23cgvalue.font = datarestore23cgvalue_font        
+        node23cgvalue_names = ['String to Curves', 'String to Curves.001', 'String to Curves.002']
+        for name in node23cgvalue_names:
+            node23cgvalue = noderestore23cg_group.nodes.get(name)
+            if node23cgvalue:
+                data23cgvalue_font = bpy.data.fonts["Open Sans Regular"]
+                node23cgvalue.font = data23cgvalue_font     
         
-        noderestore23cgdescription = nested23des_node_group.nodes['String to Curves.004']
-        datarestore23cgdescription_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23cgdescription.font = datarestore23cgdescription_font
+        node23cgdescription_names = ['String to Curves.004', 'String to Curves.007', 'String to Curves.008']
+        for name in node23cgdescription_names:
+            node23cgdescription = noderestore23cg_group.nodes.get(name)
+            if node23cgdescription:
+                data23cgdescription_font = bpy.data.fonts["Open Sans Regular"]
+                node23cgdescription.font = data23cgdescription_font  
 
-        noderestore23cglegend = nested23leg_node_group.nodes['String to Curves.035']
-        datarestore23cglegend_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23cglegend.font = datarestore23cglegend_font
+        node23cglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in node23cglegend_names:
+            node23cglegend = noderestore23cg_group.nodes.get(name)
+            if node23cglegend:
+                data23cglegend_font = bpy.data.fonts["Open Sans Regular"]
+                node23cglegend.font = data23cglegend_font  
         
         bpy.ops.file.pack_all()    
         
@@ -15639,15 +16224,12 @@ class Fontchange23PG(bpy.types.Operator):
     bl_idname = "addonname.myop_operator23pgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["2-3 Pie Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.002"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         node23pg_group = modifier.node_group
-        nested23pg_node_group = bpy.data.node_groups["NodeGroup.016"]
-        nested23pgdes_node_group = bpy.data.node_groups["NodeGroup.017"]
-        nested23pgleg_node_group = bpy.data.node_groups["NodeGroup.018"]
         
         node23pgtitle = node23pg_group.nodes['String to Curves.005']
         data23pgtitle_font = bpy.data.fonts.load(mytool.my_pathfont23pg_title)
@@ -15657,17 +16239,26 @@ class Fontchange23PG(bpy.types.Operator):
         data23pgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfont23pg_subtitle)
         node23pgsubtitle.font = data23pgsubtitle_font
         
-        node23pgvalue = nested23pg_node_group.nodes['String to Curves']
-        data23pgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23pg_value)
-        node23pgvalue.font = data23pgvalue_font 
+        node23pgvalue_names = ['String to Curves', 'String to Curves.001', 'String to Curves.002']
+        for name in node23pgvalue_names:
+            node23pgvalue = node23pg_group.nodes.get(name)
+            if node23pgvalue:
+                data23pgvalue_font = bpy.data.fonts.load(mytool.my_pathfont23pg_value)
+                node23pgvalue.font = data23pgvalue_font
 
-        nodepgdescription = nested23pgdes_node_group.nodes['String to Curves.007']
-        datapgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23pg_description)
-        nodepgdescription.font = datapgdescription_font       
+        node23pgdescription_names = ['String to Curves.009', 'String to Curves.007', 'String to Curves.008']
+        for name in node23pgdescription_names:
+            node23pgdescription = node23pg_group.nodes.get(name)
+            if node23pgdescription:
+                data23pgdescription_font = bpy.data.fonts.load(mytool.my_pathfont23pg_description)
+                node23pgdescription.font = data23pgdescription_font    
         
-        node23pglegend = nested23pgleg_node_group.nodes['String to Curves.035']
-        data23pglegend_font = bpy.data.fonts.load(mytool.my_pathfont23pg_legend)
-        node23pglegend.font = data23pglegend_font
+        node23pglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in node23pglegend_names:
+            node23pglegend = node23pg_group.nodes.get(name)
+            if node23pglegend:
+                data23pglegend_font = bpy.data.fonts.load(mytool.my_pathfont23pg_legend)
+                node23pglegend.font = data23pglegend_font
         
         bpy.ops.file.pack_all()    
         
@@ -15678,35 +16269,41 @@ class Fontrestore23PG(bpy.types.Operator):
     bl_idname = "addonname.myop_operator23pgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["2-3 Pie Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.002"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestore23_group = modifier.node_group
-        nested23pg_node_group = bpy.data.node_groups["NodeGroup.016"]
-        nested23pgdes_node_group = bpy.data.node_groups["NodeGroup.017"]
-        nested23pgleg_node_group = bpy.data.node_groups["NodeGroup.018"]
+        noderestore23pg_group = modifier.node_group
         
-        noderestore23pgtitle = noderestore23_group.nodes['String to Curves.005']
+        noderestore23pgtitle = noderestore23pg_group.nodes['String to Curves.005']
         datarestore23pgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestore23pgtitle.font = datarestore23pgtitle_font
         
-        noderestore23pgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        noderestore23pgsubtitle = noderestore23pg_group.nodes['String to Curves.006']
         datarestore23pgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestore23pgsubtitle.font = datarestore23pgsubtitle_font
         
-        noderestore23pgvalue = nested23pg_node_group.nodes['String to Curves']
-        datarestore23pgvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23pgvalue.font = datarestore23pgvalue_font        
+        node23pgvalue_names = ['String to Curves', 'String to Curves.001', 'String to Curves.002']
+        for name in node23pgvalue_names:
+            node23pgvalue = noderestore23pg_group.nodes.get(name)
+            if node23pgvalue:
+                data23pgvalue_font = bpy.data.fonts["Open Sans Regular"]
+                node23pgvalue.font = data23pgvalue_font     
         
-        noderestore23pgdescription = nested23pgdes_node_group.nodes['String to Curves.007']
-        datarestore23pgdescription_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23pgdescription.font = datarestore23pgdescription_font
+        node23pgdescription_names = ['String to Curves.004', 'String to Curves.007', 'String to Curves.008']
+        for name in node23pgdescription_names:
+            node23pgdescription = noderestore23pg_group.nodes.get(name)
+            if node23pgdescription:
+                data23pgdescription_font = bpy.data.fonts["Open Sans Regular"]
+                node23pgdescription.font = data23pgdescription_font  
 
-        noderestore23pglegend = nested23pgleg_node_group.nodes['String to Curves.035']
-        datarestore23pglegend_font = bpy.data.fonts["Open Sans Regular"]
-        noderestore23pglegend.font = datarestore23pglegend_font
+        node23pglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in node23pglegend_names:
+            node23pglegend = noderestore23pg_group.nodes.get(name)
+            if node23pglegend:
+                data23pglegend_font = bpy.data.fonts["Open Sans Regular"]
+                node23pglegend.font = data23pglegend_font  
         
         bpy.ops.file.pack_all()    
         
@@ -15717,10 +16314,10 @@ class FontchangePG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorfpie"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Pie Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graphp.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         node_grouppg = modifier.node_group
         
@@ -15749,10 +16346,10 @@ class FontrestorePG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorrespie"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Pie Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graphp.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         noderestorepg_group = modifier.node_group
         
@@ -15781,10 +16378,10 @@ class FontchangeCANDLEG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorcandlegfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Candlestick Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodecandleg_group = modifier.node_group
         nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
@@ -15815,10 +16412,10 @@ class FontrestoreCANDLEG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorcandlegresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Candlestick Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         noderestore23_group = modifier.node_group
         nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
@@ -15850,15 +16447,12 @@ class FontchangeLINEG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorlinegfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Line Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes.001"]
         nodelineg_group = modifier.node_group
-        nestedlinegvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
-        nestedlinegrn_node_group = bpy.data.node_groups["NodeGroup.153"]
-        nestedlinegpointtext_node_group = bpy.data.node_groups["NodeGroup.152"]
         
         nodelinegtitle = nodelineg_group.nodes['String to Curves.014']
         datalinegtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_title)
@@ -15868,17 +16462,26 @@ class FontchangeLINEG(bpy.types.Operator):
         datalinegsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_subtitle)
         nodelinegsubtitle.font = datalinegsubtitle_font
 
-        nodelinegvalue = nestedlinegvalue_node_group.nodes['String to Curves.016']
-        datalinegvalue_font = bpy.data.fonts.load(mytool.my_pathfontlg_barvalue)
-        nodelinegvalue.font = datalinegvalue_font 
-        
-        nodelinegrangenumbers = nestedlinegrn_node_group.nodes['String to Curves.008']
-        datalinegrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
-        nodelinegrangenumbers.font = datalinegrangenumbers_font 
+        nodelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodelinegvalue:
+            nodelinegvalue = nodelineg_group.nodes.get(name)
+            if nodelinegvalue:
+                datalinegvalue_font = bpy.data.fonts.load(mytool.my_pathfontlg_barvalue)
+                nodelinegvalue.font = datalinegvalue_font
 
-        nodelinegpointtext = nestedlinegpointtext_node_group.nodes['String to Curves.003']
-        datalinegpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
-        nodelinegpointtext.font = datalinegpointtext_font       
+        nodelinegrangenumbers = ['String to Curves.009', 'String to Curves.010', 'String to Curves.008', 'String to Curves.011', 'String to Curves.012', 'String to Curves.013']
+        for name in nodelinegrangenumbers:
+            nodelinegrangenumbers = nodelineg_group.nodes.get(name)
+            if nodelinegrangenumbers:
+                datalinegrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
+                nodelinegrangenumbers.font = datalinegrangenumbers_font    
+        
+        nodelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002']
+        for name in nodelinegpointtext:
+            nodelinegpointtext = nodelineg_group.nodes.get(name)
+            if nodelinegpointtext:
+                datalinegpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlg_bartext)
+                nodelinegpointtext.font = datalinegpointtext_font     
         
         bpy.ops.file.pack_all()    
         
@@ -15889,15 +16492,12 @@ class FontrestoreLINEG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorlinegresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Line Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes.001"]
         noderestoreline_group = modifier.node_group
-        nestedlinegvalue_node_group = bpy.data.node_groups["NodeGroup.151"]
-        nestedlinegrn_node_group = bpy.data.node_groups["NodeGroup.153"]
-        nestedlinegpointtext_node_group = bpy.data.node_groups["NodeGroup.152"]
         
         noderestorelinegtitle = noderestoreline_group.nodes['String to Curves.014']
         datarestorelinegtitle_font = bpy.data.fonts["Open Sans Extrabold"]
@@ -15907,17 +16507,26 @@ class FontrestoreLINEG(bpy.types.Operator):
         datarestorelinegsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorelinegsubtitle.font = datarestorelinegsubtitle_font
 
-        noderestorelinegvalue = nestedlinegvalue_node_group.nodes['String to Curves.016']
-        datarestorelinegvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorelinegvalue.font = datarestorelinegvalue_font 
+        noderestorelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in noderestorelinegvalue:
+            noderestorelinegvalue = noderestoreline_group.nodes.get(name)
+            if noderestorelinegvalue:
+                datalinegvalue_font = bpy.data.fonts["Open Sans Regular"]
+                noderestorelinegvalue.font = datalinegvalue_font     
         
-        noderestorelinegrangenumbers = nestedlinegrn_node_group.nodes['String to Curves.008']
-        datarestorelinegrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorelinegrangenumbers.font = datarestorelinegrangenumbers_font        
-        
-        noderestorelinegpointtext = nestedlinegpointtext_node_group.nodes['String to Curves.003']
-        datarestorelinegpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorelinegpointtext.font = datarestorelinegpointtext_font
+        noderestorelinegrangenumbers = ['String to Curves.009', 'String to Curves.010', 'String to Curves.008', 'String to Curves.011', 'String to Curves.012', 'String to Curves.013']
+        for name in noderestorelinegrangenumbers:
+            noderestorelinegrangenumbers = noderestoreline_group.nodes.get(name)
+            if noderestorelinegrangenumbers:
+                datalinegrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+                noderestorelinegrangenumbers.font = datalinegrangenumbers_font  
+
+        noderestorelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002']
+        for name in noderestorelinegpointtext:
+            noderestorelinegpointtext = noderestoreline_group.nodes.get(name)
+            if noderestorelinegpointtext:
+                datalinegpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                noderestorelinegpointtext.font = datalinegpointtext_font  
         
         bpy.ops.file.pack_all()    
         
@@ -15928,16 +16537,12 @@ class FontchangeLINEGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorlinegcfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Line Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.002"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes.001"]
         nodelinegc_group = modifier.node_group
-        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.022"]
-        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.155"]
-        nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
-        nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
         
         nodelinegctitle = nodelinegc_group.nodes['String to Curves.014']
         datalinegctitle_font = bpy.data.fonts.load(mytool.my_pathfontlgc_title)
@@ -15947,21 +16552,33 @@ class FontchangeLINEGC(bpy.types.Operator):
         datalinegcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlgc_subtitle)
         nodelinegcsubtitle.font = datalinegcsubtitle_font
 
-        nodelinegcvalue = nestedlinegcvalue_node_group.nodes['String to Curves.016']
-        datalinegcvalue_font = bpy.data.fonts.load(mytool.my_pathfontlgc_barvalue)
-        nodelinegcvalue.font = datalinegcvalue_font 
+        nodelinegcvalue = ['String to Curves.021','String to Curves.022','String to Curves.023','String to Curves.024','String to Curves.025', 'String to Curves.026', 'String to Curves.027','String to Curves.028','String to Curves.029','String to Curves.030','String to Curves.031','String to Curves.032', 'String to Curves.033','String to Curves.034','String to Curves.035','String to Curves.036']
+        for name in nodelinegcvalue:
+            nodelinegcvalue = nodelinegc_group.nodes.get(name)
+            if nodelinegcvalue:
+                datalinegcvalue_font = bpy.data.fonts.load(mytool.my_pathfontlgc_barvalue)
+                nodelinegcvalue.font = datalinegcvalue_font
+
+        nodelinegcrangenumbers = ['String to Curves.013', 'String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020']
+        for name in nodelinegcrangenumbers:
+            nodelinegcrangenumbers = nodelinegc_group.nodes.get(name)
+            if nodelinegcrangenumbers:
+                datalinegcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlgc_rangenumbers)
+                nodelinegcrangenumbers.font = datalinegcrangenumbers_font    
         
-        nodelinegcrangenumbers = nestedlinegcrn_node_group.nodes['String to Curves.008']
-        datalinegcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlgc_rangenumbers)
-        nodelinegcrangenumbers.font = datalinegcrangenumbers_font 
+        nodelinegcpointtext = ['String to Curves.005', 'String to Curves.006', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011', 'String to Curves.012']
+        for name in nodelinegcpointtext:
+            nodelinegcpointtext = nodelinegc_group.nodes.get(name)
+            if nodelinegcpointtext:
+                datalinegcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlgc_bartext)
+                nodelinegcpointtext.font = datalinegcpointtext_font
 
-        nodelinegcpointtext = nestedlinegcpointtext_node_group.nodes['String to Curves.005']
-        datalinegcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontlgc_bartext)
-        nodelinegcpointtext.font = datalinegcpointtext_font 
-
-        nodelinegclegend = nestedlinegclegend_node_group.nodes['String to Curves.0162']
-        datalinegclegend_font = bpy.data.fonts.load(mytool.my_pathfontlgc_bartext)
-        nodelinegclegend.font = datalinegclegend_font         
+        nodelinegclegend = ['String to Curves.0162', 'String to Curves.163']
+        for name in nodelinegclegend:
+            nodelinegclegend = nodelinegc_group.nodes.get(name)
+            if nodelinegclegend:
+                datalinegclegend_font = bpy.data.fonts.load(mytool.my_pathfontlgc_legend)
+                nodelinegclegend.font = datalinegclegend_font    
         
         bpy.ops.file.pack_all()    
         
@@ -15972,16 +16589,12 @@ class FontrestoreLINEGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorlinegcresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Line Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.002"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes.001"]
         noderestorelinec_group = modifier.node_group
-        nestedlinegcvalue_node_group = bpy.data.node_groups["NodeGroup.022"]
-        nestedlinegcrn_node_group = bpy.data.node_groups["NodeGroup.155"]
-        nestedlinegcpointtext_node_group = bpy.data.node_groups["NodeGroup.154"]
-        nestedlinegclegend_node_group = bpy.data.node_groups["NodeGroup.156"]
         
         noderestorelinegctitle = noderestorelinec_group.nodes['String to Curves.014']
         datarestorelinegctitle_font = bpy.data.fonts["Open Sans Extrabold"]
@@ -15991,21 +16604,33 @@ class FontrestoreLINEGC(bpy.types.Operator):
         datarestorelinegcsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorelinegcsubtitle.font = datarestorelinegcsubtitle_font
 
-        noderestorelinegcvalue = nestedlinegcvalue_node_group.nodes['String to Curves.016']
-        datarestorelinegcvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorelinegcvalue.font = datarestorelinegcvalue_font 
+        nodelinegcvalue = ['String to Curves.021','String to Curves.022','String to Curves.023','String to Curves.024','String to Curves.025', 'String to Curves.026', 'String to Curves.027','String to Curves.028','String to Curves.029','String to Curves.030','String to Curves.031','String to Curves.032', 'String to Curves.033','String to Curves.034','String to Curves.035','String to Curves.036']
+        for name in nodelinegcvalue:
+            nodelinegcvalue = noderestorelinec_group.nodes.get(name)
+            if nodelinegcvalue:
+                datalinegcvalue_font = bpy.data.fonts["Open Sans Regular"]
+                nodelinegcvalue.font = datalinegcvalue_font     
         
-        noderestorelinegcrangenumbers = nestedlinegcrn_node_group.nodes['String to Curves.008']
-        datarestorelinegcrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
-        noderestorelinegcrangenumbers.font = datarestorelinegcrangenumbers_font        
-        
-        noderestorelinegcpointtext = nestedlinegcpointtext_node_group.nodes['String to Curves.005']
-        datarestorelinegcpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorelinegcpointtext.font = datarestorelinegcpointtext_font
+        nodelinegcrangenumbers = ['String to Curves.013', 'String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020']
+        for name in nodelinegcrangenumbers:
+            nodelinegcrangenumbers = noderestorelinec_group.nodes.get(name)
+            if nodelinegcrangenumbers:
+                datalinegcrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodelinegcrangenumbers.font = datalinegcrangenumbers_font  
 
-        noderestorelinegclegend = nestedlinegclegend_node_group.nodes['String to Curves.0162']
-        datarestorelinegclegend_font = bpy.data.fonts["Open Sans Light"]
-        noderestorelinegclegend.font = datarestorelinegclegend_font
+        nodelinegcpointtext = ['String to Curves.005', 'String to Curves.006', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011', 'String to Curves.012']
+        for name in nodelinegcpointtext:
+            nodelinegcpointtext = noderestorelinec_group.nodes.get(name)
+            if nodelinegcpointtext:
+                datalinegcpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodelinegcpointtext.font = datalinegcpointtext_font  
+
+        nodelinegclegend = ['String to Curves.0162', 'String to Curves.163']
+        for name in nodelinegclegend:
+            nodelinegclegend = noderestorelinec_group.nodes.get(name)
+            if nodelinegclegend:
+                datalinegclegend_font = bpy.data.fonts["Open Sans Light"]
+                nodelinegclegend.font = datalinegclegend_font  
         
         bpy.ops.file.pack_all()    
         
@@ -16016,15 +16641,12 @@ class FontchangeMOUNTAING(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Mountain Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodemountain_group = modifier.node_group
-        nestedmountainvalue_node_group = bpy.data.node_groups["NodeGroup.023"]
-        nestedmountainrn_node_group = bpy.data.node_groups["NodeGroup.158"]
-        nestedmountainpointtext_node_group = bpy.data.node_groups["NodeGroup.157"]
         
         nodemountaintitle = nodemountain_group.nodes['String to Curves.029']
         datamountaintitle_font = bpy.data.fonts.load(mytool.my_pathfontmg_title)
@@ -16034,17 +16656,26 @@ class FontchangeMOUNTAING(bpy.types.Operator):
         datamountainsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmg_subtitle)
         nodemountainsubtitle.font = datamountainsubtitle_font
 
-        nodemountainvalue = nestedmountainvalue_node_group.nodes['String to Curves.016']
-        datamountainvalue_font = bpy.data.fonts.load(mytool.my_pathfontmg_barvalue)
-        nodemountainvalue.font = datamountainvalue_font 
-        
-        nodemountainrangenumbers = nestedmountainrn_node_group.nodes['String to Curves.001']
-        datamountainrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmg_rangenumbers)
-        nodemountainrangenumbers.font = datamountainrangenumbers_font 
+        nodemountainvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodemountainvalue:
+            nodemountainvalue = nodemountain_group.nodes.get(name)
+            if nodemountainvalue:
+                datamountainvalue_font = bpy.data.fonts.load(mytool.my_pathfontmg_barvalue)
+                nodemountainvalue.font = datamountainvalue_font
 
-        nodemountainpointtext = nestedmountainpointtext_node_group.nodes['String to Curves.005']
-        datamountainpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmg_bartext)
-        nodemountainpointtext.font = datamountainpointtext_font       
+        nodemountainrangenumbers = ['String to Curves.001','String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.013', 'String to Curves.014' ]
+        for name in nodemountainrangenumbers:
+            nodemountainrangenumbers = nodemountain_group.nodes.get(name)
+            if nodemountainrangenumbers:
+                datamountainrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmg_rangenumbers)
+                nodemountainrangenumbers.font = datamountainrangenumbers_font    
+        
+        nodemountainpointtext = ['String to Curves.005', 'String to Curves.006', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011', 'String to Curves.012']
+        for name in nodemountainpointtext:
+            nodemountainpointtext = nodemountain_group.nodes.get(name)
+            if nodemountainpointtext:
+                datamountainpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmg_bartext)
+                nodemountainpointtext.font = datamountainpointtext_font     
         
         bpy.ops.file.pack_all()    
         
@@ -16055,35 +16686,41 @@ class FontrestoreMOUNTAING(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Mountain Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestoreline_group = modifier.node_group
-        nestedmountainvalue_node_group = bpy.data.node_groups["NodeGroup.023"]
-        nestedmountainrn_node_group = bpy.data.node_groups["NodeGroup.158"]
-        nestedmountainpointtext_node_group = bpy.data.node_groups["NodeGroup.157"]
+        noderestoremountain_group = modifier.node_group
         
-        noderestoremountaintitle = noderestoreline_group.nodes['String to Curves.029']
+        noderestoremountaintitle = noderestoremountain_group.nodes['String to Curves.029']
         datarestoremountaintitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestoremountaintitle.font = datarestoremountaintitle_font
         
-        noderestoremountainsubtitle = noderestoreline_group.nodes['String to Curves.028']
+        noderestoremountainsubtitle = noderestoremountain_group.nodes['String to Curves.028']
         datarestoremountainsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestoremountainsubtitle.font = datarestoremountainsubtitle_font
 
-        noderestoremountainvalue = nestedmountainvalue_node_group.nodes['String to Curves.016']
-        datarestoremountainvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestoremountainvalue.font = datarestoremountainvalue_font 
+        nodemountainvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodemountainvalue:
+            nodemountainvalue = noderestoremountain_group.nodes.get(name)
+            if nodemountainvalue:
+                datamountainvalue_font = bpy.data.fonts["Open Sans Regular"]
+                nodemountainvalue.font = datamountainvalue_font     
         
-        noderestoremountainrangenumbers = nestedmountainrn_node_group.nodes['String to Curves.001']
-        datarestoremountainrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
-        noderestoremountainrangenumbers.font = datarestoremountainrangenumbers_font        
-        
-        noderestoremountainpointtext = nestedmountainpointtext_node_group.nodes['String to Curves.005']
-        datarestoremountainpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestoremountainpointtext.font = datarestoremountainpointtext_font
+        nodemountainrangenumbers = ['String to Curves.001','String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.013', 'String to Curves.014' ]
+        for name in nodemountainrangenumbers:
+            nodemountainrangenumbers = noderestoremountain_group.nodes.get(name)
+            if nodemountainrangenumbers:
+                datamountainrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+                nodemountainrangenumbers.font = datamountainrangenumbers_font  
+
+        nodemountainpointtext = ['String to Curves.005', 'String to Curves.006', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011', 'String to Curves.012']
+        for name in nodemountainpointtext:
+            nodemountainpointtext = noderestoremountain_group.nodes.get(name)
+            if nodemountainpointtext:
+                datamountainpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodemountainpointtext.font = datamountainpointtext_font  
         
         bpy.ops.file.pack_all()    
         
@@ -16094,16 +16731,12 @@ class FontchangeMOUNTAINGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormgcfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Mountain Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.004"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodemountainc_group = modifier.node_group
-        nestedmountaincvalue_node_group = bpy.data.node_groups["NodeGroup.159"]
-        nestedmountaincrn_node_group = bpy.data.node_groups["NodeGroup.161"]
-        nestedmountaincpointtext_node_group = bpy.data.node_groups["NodeGroup.162"]
-        nestedmountainclegend_node_group = bpy.data.node_groups["NodeGroup.160"]
         
         nodemountainctitle = nodemountainc_group.nodes['String to Curves.029']
         datamountainctitle_font = bpy.data.fonts.load(mytool.my_pathfontmgc_title)
@@ -16113,21 +16746,33 @@ class FontchangeMOUNTAINGC(bpy.types.Operator):
         datamountaincsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmgc_subtitle)
         nodemountaincsubtitle.font = datamountaincsubtitle_font
 
-        nodemountaincvalue = nestedmountaincvalue_node_group.nodes['String to Curves.016']
-        datamountaincvalue_font = bpy.data.fonts.load(mytool.my_pathfontmgc_barvalue)
-        nodemountaincvalue.font = datamountaincvalue_font 
+        nodemountaincvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.034', 'String to Curves.035', 'String to Curves.036', 'String to Curves.037', 'String to Curves.038', 'String to Curves.039', 'String to Curves.040', 'String to Curves.041', 'String to Curves.042', 'String to Curves.043']
+        for name in nodemountaincvalue:
+            nodemountaincvalue = nodemountainc_group.nodes.get(name)
+            if nodemountaincvalue:
+                datamountaincvalue_font = bpy.data.fonts.load(mytool.my_pathfontmgc_barvalue)
+                nodemountaincvalue.font = datamountaincvalue_font
+
+        nodemountaincrangenumbers = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005']
+        for name in nodemountaincrangenumbers:
+            nodemountaincrangenumbers = nodemountainc_group.nodes.get(name)
+            if nodemountaincrangenumbers:
+                datamountaincrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmgc_rangenumbers)
+                nodemountaincrangenumbers.font = datamountaincrangenumbers_font    
         
-        nodemountaincrangenumbers = nestedmountaincrn_node_group.nodes['String to Curves']
-        datamountaincrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontmgc_rangenumbers)
-        nodemountaincrangenumbers.font = datamountaincrangenumbers_font 
+        nodemountaincpointtext = ['String to Curves.022', 'String to Curves.023', 'String to Curves.024', 'String to Curves.025', 'String to Curves.026', 'String to Curves.028', 'String to Curves.030', 'String to Curves.031']
+        for name in nodemountaincpointtext:
+            nodemountaincpointtext = nodemountainc_group.nodes.get(name)
+            if nodemountaincpointtext:
+                datamountaincpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmgc_bartext)
+                nodemountaincpointtext.font = datamountaincpointtext_font
 
-        nodemountaincpointtext = nestedmountaincpointtext_node_group.nodes['String to Curves.022']
-        datamountaincpointtext_font = bpy.data.fonts.load(mytool.my_pathfontmgc_bartext)
-        nodemountaincpointtext.font = datamountaincpointtext_font 
-
-        nodemountainclegend = nestedmountainclegend_node_group.nodes['String to Curves.024']
-        datamountainclegend_font = bpy.data.fonts.load(mytool.my_pathfontmgc_bartext)
-        nodemountainclegend.font = datamountainclegend_font         
+        nodemountainclegend = ['String to Curves.032', 'String to Curves.033']
+        for name in nodemountainclegend:
+            nodemountainclegend = nodemountainc_group.nodes.get(name)
+            if nodemountainclegend:
+                datamountainclegend_font = bpy.data.fonts.load(mytool.my_pathfontmgc_legend)
+                nodemountainclegend.font = datamountainclegend_font    
         
         bpy.ops.file.pack_all()    
         
@@ -16138,59 +16783,64 @@ class FontrestoreMOUNTAINGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormgcresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Mountain Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Cube.004"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestorelinec_group = modifier.node_group
-        nestedmountaincvalue_node_group = bpy.data.node_groups["NodeGroup.159"]
-        nestedmountaincrn_node_group = bpy.data.node_groups["NodeGroup.161"]
-        nestedmountaincpointtext_node_group = bpy.data.node_groups["NodeGroup.162"]
-        nestedmountainclegend_node_group = bpy.data.node_groups["NodeGroup.160"]
+        noderestoremountainc_group = modifier.node_group
         
-        noderestoremountainctitle = noderestorelinec_group.nodes['String to Curves.029']
+        noderestoremountainctitle = noderestoremountainc_group.nodes['String to Curves.029']
         datarestoremountainctitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestoremountainctitle.font = datarestoremountainctitle_font
         
-        noderestoremountaincsubtitle = noderestorelinec_group.nodes['String to Curves.028']
+        noderestoremountaincsubtitle = noderestoremountainc_group.nodes['String to Curves.028']
         datarestoremountaincsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestoremountaincsubtitle.font = datarestoremountaincsubtitle_font
 
-        noderestoremountaincvalue = nestedmountaincvalue_node_group.nodes['String to Curves.016']
-        datarestoremountaincvalue_font = bpy.data.fonts["Open Sans Regular"]
-        noderestoremountaincvalue.font = datarestoremountaincvalue_font 
+        nodemountaincvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.034', 'String to Curves.035', 'String to Curves.036', 'String to Curves.037', 'String to Curves.038', 'String to Curves.039', 'String to Curves.040', 'String to Curves.041', 'String to Curves.042', 'String to Curves.043']
+        for name in nodemountaincvalue:
+            nodemountaincvalue = noderestoremountainc_group.nodes.get(name)
+            if nodemountaincvalue:
+                datamountaincvalue_font = bpy.data.fonts["Open Sans Regular"]
+                nodemountaincvalue.font = datamountaincvalue_font     
         
-        noderestoremountaincrangenumbers = nestedmountaincrn_node_group.nodes['String to Curves']
-        datarestoremountaincrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
-        noderestoremountaincrangenumbers.font = datarestoremountaincrangenumbers_font        
-        
-        noderestoremountaincpointtext = nestedmountaincpointtext_node_group.nodes['String to Curves.022']
-        datarestoremountaincpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestoremountaincpointtext.font = datarestoremountaincpointtext_font
+        nodemountaincrangenumbers = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005']
+        for name in nodemountaincrangenumbers:
+            nodemountaincrangenumbers = noderestoremountainc_group.nodes.get(name)
+            if nodemountaincrangenumbers:
+                datamountaincrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodemountaincrangenumbers.font = datamountaincrangenumbers_font  
 
-        noderestoremountainclegend = nestedmountainclegend_node_group.nodes['String to Curves.024']
-        datarestoremountainclegend_font = bpy.data.fonts["Open Sans Light"]
-        noderestoremountainclegend.font = datarestoremountainclegend_font
+        nodemountaincpointtext = ['String to Curves.022', 'String to Curves.023', 'String to Curves.024', 'String to Curves.025', 'String to Curves.026', 'String to Curves.028', 'String to Curves.030', 'String to Curves.031']
+        for name in nodemountaincpointtext:
+            nodemountaincpointtext = noderestoremountainc_group.nodes.get(name)
+            if nodemountaincpointtext:
+                datamountaincpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodemountaincpointtext.font = datamountaincpointtext_font  
+
+        nodemountainclegend = ['String to Curves.032', 'String to Curves.033']
+        for name in nodemountainclegend:
+            nodemountainclegend = noderestoremountainc_group.nodes.get(name)
+            if nodemountainclegend:
+                datamountainclegend_font = bpy.data.fonts["Open Sans Light"]
+                nodemountainclegend.font = datamountainclegend_font  
         
         bpy.ops.file.pack_all()    
         
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class FontchangeHBG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorbgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Horizontal Bar Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodehbg_group = modifier.node_group
-        nestedhbgvalue_node_group = bpy.data.node_groups["NodeGroup.019"]
-        nestedhbgrn_node_group = bpy.data.node_groups["NodeGroup.033"]
-        nestedhbgpointtext_node_group = bpy.data.node_groups["NodeGroup.030"]
         
         nodehbgtitle = nodehbg_group.nodes['String to Curves.005']
         datahbgtitle_font = bpy.data.fonts.load(mytool.my_pathfontbg_title)
@@ -16200,25 +16850,40 @@ class FontchangeHBG(bpy.types.Operator):
         datahbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbg_subtitle)
         nodehbgsubtitle.font = datahbgsubtitle_font
 
-        nodehbgvalue = nestedhbgvalue_node_group.nodes['String to Curves.016']
-        datahbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontbg_barvalue)
-        nodehbgvalue.font = datahbgvalue_font 
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019']
+        for name in nodehbgvalue:
+            nodehbgvalue = nodehbg_group.nodes.get(name)
+            if nodehbgvalue:
+                datahbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontbg_barvalue)
+                nodehbgvalue.font = datahbgvalue_font
+
+        nodehbgrangenumbers = ['String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011']
+        for name in nodehbgrangenumbers:
+            nodehbgrangenumbers = nodehbg_group.nodes.get(name)
+            if nodehbgrangenumbers:
+                datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbg_rangenumbers)
+                nodehbgrangenumbers.font = datahbgrangenumbers_font    
         
-        nodehbgrangenumbers = nestedhbgrn_node_group.nodes['String to Curves.007']
-        datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbg_rangenumbers)
-        nodehbgrangenumbers.font = datahbgrangenumbers_font 
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        for name in nodehbgpointtext:
+            nodehbgpointtext = nodehbg_group.nodes.get(name)
+            if nodehbgpointtext:
+                datahbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbg_bartext)
+                nodehbgpointtext.font = datahbgpointtext_font
 
-        nodehbgpointtext = nestedhbgpointtext_node_group.nodes['String to Curves']
-        datahbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbg_bartext)
-        nodehbgpointtext.font = datahbgpointtext_font 
+        nodehbgtexttotal = ['String to Curves.004']
+        for name in nodehbgtexttotal:
+            nodehbgtexttotal = nodehbg_group.nodes.get(name)
+            if nodehbgtexttotal:
+                datahbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_texttotal)
+                nodehbgtexttotal.font = datahbgtexttotal_font   
 
-        nodehbgtexttotal = nodehbg_group.nodes['String to Curves.004']
-        datahbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_texttotal)
-        nodehbgtexttotal.font = datahbgtexttotal_font  
-
-        nodehbgvaluetotal = nodehbg_group.nodes['String to Curves.012']
-        datahbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_valuetotal)
-        nodehbgvaluetotal.font = datahbgvaluetotal_font        
+        nodehbgvaluetotal = ['String to Curves.012']
+        for name in nodehbgvaluetotal:
+            nodehbgvaluetotal = nodehbg_group.nodes.get(name)
+            if nodehbgvaluetotal:
+                datahbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontbg_valuetotal)
+                nodehbgvaluetotal.font = datahbgvaluetotal_font    
         
         bpy.ops.file.pack_all()    
         
@@ -16229,15 +16894,12 @@ class FontrestoreHBG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorbgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Horizontal Bar Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         noderestorehbg_group = modifier.node_group
-        nestedhbgvalue_node_group = bpy.data.node_groups["NodeGroup.019"]
-        nestedhbgrn_node_group = bpy.data.node_groups["NodeGroup.033"]
-        nestedhbgpointtext_node_group = bpy.data.node_groups["NodeGroup.030"]
         
         noderestorehbgtitle = noderestorehbg_group.nodes['String to Curves.005']
         datarestorehbgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
@@ -16247,70 +16909,92 @@ class FontrestoreHBG(bpy.types.Operator):
         datarestorehbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorehbgsubtitle.font = datarestorehbgsubtitle_font
 
-        noderestorehbgvalue = nestedhbgvalue_node_group.nodes['String to Curves.016']
-        datarestorehbgvalue_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorehbgvalue.font = datarestorehbgvalue_font 
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019']
+        for name in nodehbgvalue:
+            nodehbgvalue = noderestorehbg_group.nodes.get(name)
+            if nodehbgvalue:
+                datahbgvalue_font = bpy.data.fonts["Open Sans Regular"]
+                nodehbgvalue.font = datahbgvalue_font     
         
-        noderestorehbgrangenumbers = nestedhbgrn_node_group.nodes['String to Curves.007']
-        datarestorehbgrangenumbers_font = bpy.data.fonts["Open Sans Light"]
-        noderestorehbgrangenumbers.font = datarestorehbgrangenumbers_font        
-        
-        noderestorehbgpointtext = nestedhbgpointtext_node_group.nodes['String to Curves']
-        datarestorehbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorehbgpointtext.font = datarestorehbgpointtext_font
+        nodehbgrangenumbers = ['String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011']
+        for name in nodehbgrangenumbers:
+            nodehbgrangenumbers = noderestorehbg_group.nodes.get(name)
+            if nodehbgrangenumbers:
+                datahbgrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodehbgrangenumbers.font = datahbgrangenumbers_font  
 
-        noderestorehbgtexttotal = noderestorehbg_group.nodes['String to Curves.004']
-        datarestorehbgtexttotal_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorehbgtexttotal.font = datarestorehbgtexttotal_font
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        for name in nodehbgpointtext:
+            nodehbgpointtext = noderestorehbg_group.nodes.get(name)
+            if nodehbgpointtext:
+                datahbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodehbgpointtext.font = datahbgpointtext_font  
 
-        noderestorehbgvaluetotal = noderestorehbg_group.nodes['String to Curves.012']
-        datarestorehbgvaluetotal_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorehbgvaluetotal.font = datarestorehbgvaluetotal_font
+        nodehbgtexttotal = ['String to Curves.004']
+        for name in nodehbgtexttotal:
+            nodehbgtexttotal = noderestorehbg_group.nodes.get(name)
+            if nodehbgtexttotal:
+                datahbgtexttotal_font = bpy.data.fonts["Open Sans Light"]
+                nodehbgtexttotal.font = datahbgtexttotal_font  
+
+        nodehbgvaluetotal = ['String to Curves.012']
+        for name in nodehbgvaluetotal:
+            nodehbgvaluetotal = noderestorehbg_group.nodes.get(name)
+            if nodehbgvaluetotal:
+                datahbgvaluetotal_font = bpy.data.fonts["Open Sans Light"]
+                nodehbgvaluetotal.font = datahbgvaluetotal_font 
         
         bpy.ops.file.pack_all()    
         
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class FontchangeHBGC(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorbgcfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Horizontal Bar Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        nodehbgc_group = modifier.node_group
-        nestedhbgcvalue_node_group = bpy.data.node_groups["NodeGroup.135"]
-        nestedhbgcrn_node_group = bpy.data.node_groups["NodeGroup.146"]
-        nestedhbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.144"]
-        nestedhbgclegend_node_group = bpy.data.node_groups["NodeGroup.145"]
+        nodehbg_group = modifier.node_group
         
-        nodehbgctitle = nodehbgc_group.nodes['String to Curves.005']
-        datahbgctitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_title)
-        nodehbgctitle.font = datahbgctitle_font
+        nodehbgtitle = nodehbg_group.nodes['String to Curves.005']
+        datahbgtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_title)
+        nodehbgtitle.font = datahbgtitle_font
         
-        nodehbgcsubtitle = nodehbgc_group.nodes['String to Curves.006']
-        datahbgcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_subtitle)
-        nodehbgcsubtitle.font = datahbgcsubtitle_font
+        nodehbgsubtitle = nodehbg_group.nodes['String to Curves.006']
+        datahbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_subtitle)
+        nodehbgsubtitle.font = datahbgsubtitle_font
 
-        nodehbgcvalue = nestedhbgcvalue_node_group.nodes['String to Curves.016']
-        datahbgcvalue_font = bpy.data.fonts.load(mytool.my_pathfontbgc_barvalue)
-        nodehbgcvalue.font = datahbgcvalue_font 
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodehbgvalue:
+            nodehbgvalue = nodehbg_group.nodes.get(name)
+            if nodehbgvalue:
+                datahbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontbgc_barvalue)
+                nodehbgvalue.font = datahbgvalue_font
+
+        nodehbgrangenumbers = ['String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011']
+        for name in nodehbgrangenumbers:
+            nodehbgrangenumbers = nodehbg_group.nodes.get(name)
+            if nodehbgrangenumbers:
+                datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbgc_rangenumbers)
+                nodehbgrangenumbers.font = datahbgrangenumbers_font    
         
-        nodehbgcrangenumbers = nestedhbgcrn_node_group.nodes['String to Curves.007']
-        datahbgcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbgc_rangenumbers)
-        nodehbgcrangenumbers.font = datahbgcrangenumbers_font 
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        for name in nodehbgpointtext:
+            nodehbgpointtext = nodehbg_group.nodes.get(name)
+            if nodehbgpointtext:
+                datahbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbgc_bartext)
+                nodehbgpointtext.font = datahbgpointtext_font
 
-        nodehbgcpointtext = nestedhbgcpointtext_node_group.nodes['String to Curves']
-        datahbgcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontbgc_bartext)
-        nodehbgcpointtext.font = datahbgcpointtext_font 
-
-        nodehbgclegend = nestedhbgclegend_node_group.nodes['String to Curves.004']
-        datahbgclegend_font = bpy.data.fonts.load(mytool.my_pathfontbgc_legend)
-        nodehbgclegend.font = datahbgclegend_font  
-       
+        nodehbglegend = ['String to Curves.004', 'String to Curves.012']
+        for name in nodehbglegend:
+            nodehbglegend = nodehbg_group.nodes.get(name)
+            if nodehbglegend:
+                datahbglegend_font = bpy.data.fonts.load(mytool.my_pathfontbgc_legend)
+                nodehbglegend.font = datahbglegend_font     
         
         bpy.ops.file.pack_all()    
         
@@ -16321,41 +17005,48 @@ class FontrestoreHBGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorbgcresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Horizontal Bar Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.001"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestorehbgc_group = modifier.node_group
-        nestedhbgcvalue_node_group = bpy.data.node_groups["NodeGroup.135"]
-        nestedhbgcrn_node_group = bpy.data.node_groups["NodeGroup.146"]
-        nestedhbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.144"]
-        nestedhbgclegend_node_group = bpy.data.node_groups["NodeGroup.145"]
+        noderestorehbg_group = modifier.node_group
         
-        noderestorehbgctitle = noderestorehbgc_group.nodes['String to Curves.005']
-        datarestorehbgctitle_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorehbgctitle.font = datarestorehbgctitle_font
+        noderestorehbgtitle = noderestorehbg_group.nodes['String to Curves.005']
+        datarestorehbgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehbgtitle.font = datarestorehbgtitle_font
         
-        noderestorehbgcsubtitle = noderestorehbgc_group.nodes['String to Curves.006']
-        datarestorehbgcsubtitle_font = bpy.data.fonts["Open Sans Light"]
-        noderestorehbgcsubtitle.font = datarestorehbgcsubtitle_font
+        noderestorehbgsubtitle = noderestorehbg_group.nodes['String to Curves.006']
+        datarestorehbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehbgsubtitle.font = datarestorehbgsubtitle_font
 
-        noderestorehbgcvalue = nestedhbgcvalue_node_group.nodes['String to Curves.016']
-        datarestorehbgcvalue_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorehbgcvalue.font = datarestorehbgcvalue_font 
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodehbgvalue:
+            nodehbgvalue = noderestorehbg_group.nodes.get(name)
+            if nodehbgvalue:
+                datahbgvalue_font = bpy.data.fonts["Open Sans Regular"]
+                nodehbgvalue.font = datahbgvalue_font     
         
-        noderestorehbgcrangenumbers = nestedhbgcrn_node_group.nodes['String to Curves.007']
-        datarestorehbgcrangenumbers_font = bpy.data.fonts["Open Sans Light"]
-        noderestorehbgcrangenumbers.font = datarestorehbgcrangenumbers_font        
-        
-        noderestorehbgcpointtext = nestedhbgcpointtext_node_group.nodes['String to Curves']
-        datarestorehbgcpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorehbgcpointtext.font = datarestorehbgcpointtext_font
+        nodehbgrangenumbers = ['String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010', 'String to Curves.011']
+        for name in nodehbgrangenumbers:
+            nodehbgrangenumbers = noderestorehbg_group.nodes.get(name)
+            if nodehbgrangenumbers:
+                datahbgrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodehbgrangenumbers.font = datahbgrangenumbers_font  
 
-        noderestorehbgclegend = nestedhbgclegend_node_group.nodes['String to Curves.004']
-        datarestorehbgclegend_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorehbgclegend.font = datarestorehbgclegend_font
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        for name in nodehbgpointtext:
+            nodehbgpointtext = noderestorehbg_group.nodes.get(name)
+            if nodehbgpointtext:
+                datahbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodehbgpointtext.font = datahbgpointtext_font  
 
+        nodehbglegend = ['String to Curves.004', 'String to Curves.012']
+        for name in nodehbglegend:
+            nodehbglegend = noderestorehbg_group.nodes.get(name)
+            if nodehbglegend:
+                datahbglegend_font = bpy.data.fonts["Open Sans Light"]
+                nodehbglegend.font = datahbglegend_font  
         
         bpy.ops.file.pack_all()    
         
@@ -16366,14 +17057,12 @@ class FontchangeMCG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormcgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Multiple_Circle_Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.004"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodemcg_group = modifier.node_group
-        nestedmcg_node_group = bpy.data.node_groups["NodeGroup.147"]
-        nestedmcgdes_node_group = bpy.data.node_groups["NodeGroup.148"]
         
         nodemcgtitle = nodemcg_group.nodes['String to Curves.005']
         datamcgtitle_font = bpy.data.fonts.load(mytool.my_pathfontmcg_title)
@@ -16382,15 +17071,21 @@ class FontchangeMCG(bpy.types.Operator):
         nodemcgsubtitle = nodemcg_group.nodes['String to Curves.006']
         datamcgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmcg_subtitle)
         nodemcgsubtitle.font = datamcgsubtitle_font
-        
-        nodemcgvalue = nestedmcg_node_group.nodes['String to Curves']
-        datamcgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmcg_barvalue)
-        nodemcgvalue.font = datamcgvalue_font 
 
-        nodecgdescription = nestedmcgdes_node_group.nodes['String to Curves.011']
-        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmcg_bartext)
-        nodecgdescription.font = datacgdescription_font       
-       
+        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        for name in nodemcgvalue:
+            nodemcgvalue = nodemcg_group.nodes.get(name)
+            if nodemcgvalue:
+                datamcgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmcg_barvalue)
+                nodemcgvalue.font = datamcgvalue_font
+
+        nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodemcgdescription:
+            nodemcgdescription = nodemcg_group.nodes.get(name)
+            if nodemcgdescription:
+                datamcgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmcg_bartext)
+                nodemcgdescription.font = datamcgdescription_font      
+        
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
@@ -16400,30 +17095,34 @@ class FontrestoreMCG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormcgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Multiple_Circle_Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.004"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestore23_group = modifier.node_group
-        nestedmcg_node_group = bpy.data.node_groups["NodeGroup.147"]
-        nestedmcgdes_node_group = bpy.data.node_groups["NodeGroup.148"]
+        noderestoremcg_group = modifier.node_group
         
-        noderestoremcgtitle = noderestore23_group.nodes['String to Curves.005']
+        noderestoremcgtitle = noderestoremcg_group.nodes['String to Curves.005']
         datarestoremcgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestoremcgtitle.font = datarestoremcgtitle_font
         
-        noderestoremcgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        noderestoremcgsubtitle = noderestoremcg_group.nodes['String to Curves.006']
         datarestoremcgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestoremcgsubtitle.font = datarestoremcgsubtitle_font
+
+        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        for name in nodemcgvalue:
+            nodemcgvalue = noderestoremcg_group.nodes.get(name)
+            if nodemcgvalue:
+                datamcgvalue_font = bpy.data.fonts["Open Sans Semibold"]
+                nodemcgvalue.font = datamcgvalue_font     
         
-        noderestoremcgvalue = nestedmcg_node_group.nodes['String to Curves']
-        datarestoremcgvalue_font = bpy.data.fonts["Open Sans Semibold"]
-        noderestoremcgvalue.font = datarestoremcgvalue_font        
-        
-        noderestoremcgdescription = nestedmcgdes_node_group.nodes['String to Curves.011']
-        datarestoremcgdescription_font = bpy.data.fonts["Open Sans Light"]
-        noderestoremcgdescription.font = datarestoremcgdescription_font
+        nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodemcgdescription:
+            nodemcgdescription = noderestoremcg_group.nodes.get(name)
+            if nodemcgdescription:
+                datamcgdescription_font = bpy.data.fonts["Open Sans Light"]
+                nodemcgdescription.font = datamcgdescription_font  
         
         bpy.ops.file.pack_all()    
         
@@ -16434,14 +17133,12 @@ class FontchangeMPG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormpgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Multiple_Pie_Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodempg_group = modifier.node_group
-        nestedmpg_node_group = bpy.data.node_groups["NodeGroup.149"]
-        nestedmpgdes_node_group = bpy.data.node_groups["NodeGroup.150"]
         
         nodempgtitle = nodempg_group.nodes['String to Curves.005']
         datampgtitle_font = bpy.data.fonts.load(mytool.my_pathfontmpg_title)
@@ -16450,15 +17147,21 @@ class FontchangeMPG(bpy.types.Operator):
         nodempgsubtitle = nodempg_group.nodes['String to Curves.006']
         datampgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmpg_subtitle)
         nodempgsubtitle.font = datampgsubtitle_font
-        
-        nodempgvalue = nestedmpg_node_group.nodes['String to Curves']
-        datampgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmpg_barvalue)
-        nodempgvalue.font = datampgvalue_font 
 
-        nodecgdescription = nestedmpgdes_node_group.nodes['String to Curves.011']
-        datacgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmpg_bartext)
-        nodecgdescription.font = datacgdescription_font       
-       
+        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        for name in nodempgvalue:
+            nodempgvalue = nodempg_group.nodes.get(name)
+            if nodempgvalue:
+                datampgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmpg_barvalue)
+                nodempgvalue.font = datampgvalue_font
+
+        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodempgdescription:
+            nodempgdescription = nodempg_group.nodes.get(name)
+            if nodempgdescription:
+                datampgdescription_font = bpy.data.fonts.load(mytool.my_pathfontmpg_bartext)
+                nodempgdescription.font = datampgdescription_font      
+        
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
@@ -16468,30 +17171,34 @@ class FontrestoreMPG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatormpgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Multiple_Pie_Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Circle Graph.005"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestore23_group = modifier.node_group
-        nestedmpg_node_group = bpy.data.node_groups["NodeGroup.149"]
-        nestedmpgdes_node_group = bpy.data.node_groups["NodeGroup.150"]
+        noderestorempg_group = modifier.node_group
         
-        noderestorempgtitle = noderestore23_group.nodes['String to Curves.005']
+        noderestorempgtitle = noderestorempg_group.nodes['String to Curves.005']
         datarestorempgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
         noderestorempgtitle.font = datarestorempgtitle_font
         
-        noderestorempgsubtitle = noderestore23_group.nodes['String to Curves.006']
+        noderestorempgsubtitle = noderestorempg_group.nodes['String to Curves.006']
         datarestorempgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorempgsubtitle.font = datarestorempgsubtitle_font
+
+        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        for name in nodempgvalue:
+            nodempgvalue = noderestorempg_group.nodes.get(name)
+            if nodempgvalue:
+                datampgvalue_font = bpy.data.fonts["Open Sans Semibold"]
+                nodempgvalue.font = datampgvalue_font     
         
-        noderestorempgvalue = nestedmpg_node_group.nodes['String to Curves']
-        datarestorempgvalue_font = bpy.data.fonts["Open Sans Semibold"]
-        noderestorempgvalue.font = datarestorempgvalue_font        
-        
-        noderestorempgdescription = nestedmpgdes_node_group.nodes['String to Curves.011']
-        datarestorempgdescription_font = bpy.data.fonts["Open Sans Light"]
-        noderestorempgdescription.font = datarestorempgdescription_font
+        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodempgdescription:
+            nodempgdescription = noderestorempg_group.nodes.get(name)
+            if nodempgdescription:
+                datampgdescription_font = bpy.data.fonts["Open Sans Light"]
+                nodempgdescription.font = datampgdescription_font  
         
         bpy.ops.file.pack_all()    
         
@@ -16502,15 +17209,12 @@ class FontchangeVBG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorvbgfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Vertical Bar Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         nodevvbg_group = modifier.node_group
-        nestedvvbgvalue_node_group = bpy.data.node_groups["NodeGroup.165"]
-        nestedvvbgrn_node_group = bpy.data.node_groups["NodeGroup.167"]
-        nestedvvbgpointtext_node_group = bpy.data.node_groups["NodeGroup.166"]
         
         nodevvbgtitle = nodevvbg_group.nodes['String to Curves.005']
         datavvbgtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbg_title)
@@ -16520,25 +17224,40 @@ class FontchangeVBG(bpy.types.Operator):
         datavvbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbg_subtitle)
         nodevvbgsubtitle.font = datavvbgsubtitle_font
 
-        nodevvbgvalue = nestedvvbgvalue_node_group.nodes['String to Curves.013']
-        datavvbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontvbg_barvalue)
-        nodevvbgvalue.font = datavvbgvalue_font 
+        nodevvbgvalue = ['String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.024']
+        for name in nodevvbgvalue:
+            nodevvbgvalue = nodevvbg_group.nodes.get(name)
+            if nodevvbgvalue:
+                datavvbgvalue_font = bpy.data.fonts.load(mytool.my_pathfontvbg_barvalue)
+                nodevvbgvalue.font = datavvbgvalue_font
+
+        nodevvbgrangenumbers = ['String to Curves.011', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodevvbgrangenumbers:
+            nodevvbgrangenumbers = nodevvbg_group.nodes.get(name)
+            if nodevvbgrangenumbers:
+                datavvbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbg_rangenumbers)
+                nodevvbgrangenumbers.font = datavvbgrangenumbers_font    
         
-        nodevvbgrangenumbers = nestedvvbgrn_node_group.nodes['String to Curves.007']
-        datavvbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbg_rangenumbers)
-        nodevvbgrangenumbers.font = datavvbgrangenumbers_font 
+        nodevvbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgpointtext:
+            nodevvbgpointtext = nodevvbg_group.nodes.get(name)
+            if nodevvbgpointtext:
+                datavvbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbg_bartext)
+                nodevvbgpointtext.font = datavvbgpointtext_font
 
-        nodevvbgpointtext = nestedvvbgpointtext_node_group.nodes['String to Curves']
-        datavvbgpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbg_bartext)
-        nodevvbgpointtext.font = datavvbgpointtext_font 
+        nodevvbgtexttotal = ['String to Curves.004']
+        for name in nodevvbgtexttotal:
+            nodevvbgtexttotal = nodevvbg_group.nodes.get(name)
+            if nodevvbgtexttotal:
+                datavvbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_texttotal)
+                nodevvbgtexttotal.font = datavvbgtexttotal_font   
 
-        nodevvbgtexttotal = nodevvbg_group.nodes['String to Curves.004']
-        datavvbgtexttotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_texttotal)
-        nodevvbgtexttotal.font = datavvbgtexttotal_font  
-
-        nodevvbgvaluetotal = nodevvbg_group.nodes['String to Curves.012']
-        datavvbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_valuetotal)
-        nodevvbgvaluetotal.font = datavvbgvaluetotal_font        
+        nodevvbgvaluetotal = ['String to Curves.012']
+        for name in nodevvbgvaluetotal:
+            nodevvbgvaluetotal = nodevvbg_group.nodes.get(name)
+            if nodevvbgvaluetotal:
+                datavvbgvaluetotal_font = bpy.data.fonts.load(mytool.my_pathfontvbg_valuetotal)
+                nodevvbgvaluetotal.font = datavvbgvaluetotal_font    
         
         bpy.ops.file.pack_all()    
         
@@ -16549,15 +17268,12 @@ class FontrestoreVBG(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorvbgresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Vertical Bar Graph"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
         noderestorevvbg_group = modifier.node_group
-        nestedvvbgvalue_node_group = bpy.data.node_groups["NodeGroup.165"]
-        nestedvvbgrn_node_group = bpy.data.node_groups["NodeGroup.167"]
-        nestedvvbgpointtext_node_group = bpy.data.node_groups["NodeGroup.166"]
         
         noderestorevvbgtitle = noderestorevvbg_group.nodes['String to Curves.005']
         datarestorevvbgtitle_font = bpy.data.fonts["Open Sans Extrabold"]
@@ -16567,46 +17283,56 @@ class FontrestoreVBG(bpy.types.Operator):
         datarestorevvbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorevvbgsubtitle.font = datarestorevvbgsubtitle_font
 
-        noderestorevvbgvalue = nestedvvbgvalue_node_group.nodes['String to Curves.013']
-        datarestorevvbgvalue_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorevvbgvalue.font = datarestorevvbgvalue_font 
+        nodevvbgvalue = ['String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.024']
+        for name in nodevvbgvalue:
+            nodevvbgvalue = noderestorevvbg_group.nodes.get(name)
+            if nodevvbgvalue:
+                datavvbgvalue_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgvalue.font = datavvbgvalue_font     
         
-        noderestorevvbgrangenumbers = nestedvvbgrn_node_group.nodes['String to Curves.007']
-        datarestorevvbgrangenumbers_font = bpy.data.fonts["Open Sans Light"]
-        noderestorevvbgrangenumbers.font = datarestorevvbgrangenumbers_font        
-        
-        noderestorevvbgpointtext = nestedvvbgpointtext_node_group.nodes['String to Curves']
-        datarestorevvbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorevvbgpointtext.font = datarestorevvbgpointtext_font
+        nodevvbgrangenumbers = ['String to Curves.011', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodevvbgrangenumbers:
+            nodevvbgrangenumbers = noderestorevvbg_group.nodes.get(name)
+            if nodevvbgrangenumbers:
+                datavvbgrangenumbers_font = bpy.data.fonts["Open Sans Light"]
+                nodevvbgrangenumbers.font = datavvbgrangenumbers_font  
 
-        noderestorevvbgtexttotal = noderestorevvbg_group.nodes['String to Curves.004']
-        datarestorevvbgtexttotal_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorevvbgtexttotal.font = datarestorevvbgtexttotal_font
+        nodevvbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgpointtext:
+            nodevvbgpointtext = noderestorevvbg_group.nodes.get(name)
+            if nodevvbgpointtext:
+                datavvbgpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgpointtext.font = datavvbgpointtext_font  
 
-        noderestorevvbgvaluetotal = noderestorevvbg_group.nodes['String to Curves.012']
-        datarestorevvbgvaluetotal_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorevvbgvaluetotal.font = datarestorevvbgvaluetotal_font
+        nodevvbgtexttotal = ['String to Curves.004']
+        for name in nodevvbgtexttotal:
+            nodevvbgtexttotal = noderestorevvbg_group.nodes.get(name)
+            if nodevvbgtexttotal:
+                datavvbgtexttotal_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgtexttotal.font = datavvbgtexttotal_font  
+
+        nodevvbgvaluetotal = ['String to Curves.012']
+        for name in nodevvbgvaluetotal:
+            nodevvbgvaluetotal = noderestorevvbg_group.nodes.get(name)
+            if nodevvbgvaluetotal:
+                datavvbgvaluetotal_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgvaluetotal.font = datavvbgvaluetotal_font 
         
         bpy.ops.file.pack_all()    
         
-        return {'FINISHED'} 
+        return {'FINISHED'}
     
 class FontchangeVBGC(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorvbgcfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Vertical Bar Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        nodevvbgc_group = bpy.data.node_groups["Geometry Nodes.011"]
-        nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
-        nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
-        nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
-        nestedvvbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.172"]
-        nestedvvbgclegend_node_group = bpy.data.node_groups["NodeGroup.169"]
+        nodevvbgc_group = modifier.node_group
         
         nodevvbgctitle = nodevvbgc_group.nodes['String to Curves.005']
         datavvbgctitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_title)
@@ -16616,26 +17342,40 @@ class FontchangeVBGC(bpy.types.Operator):
         datavvbgcsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_subtitle)
         nodevvbgcsubtitle.font = datavvbgcsubtitle_font
 
-        nodevvbgcvaluea = nestedvvbgcvaluea_node_group.nodes['String to Curves.013']
-        datavvbgcvaluea_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvaluea)
-        nodevvbgcvaluea.font = datavvbgcvaluea_font 
+        nodevvbgcvaluea = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodevvbgcvaluea:
+            nodevvbgcvaluea = nodevvbgc_group.nodes.get(name)
+            if nodevvbgcvaluea:
+                datavvbgcvaluea_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvaluea)
+                nodevvbgcvaluea.font = datavvbgcvaluea_font
 
-        nodevvbgcvalueb = nestedvvbgcvalueb_node_group.nodes['String to Curves.025']
-        datavvbgcvalueb_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvalueb)
-        nodevvbgcvalueb.font = datavvbgcvalueb_font 
+        nodevvbgcvalueb = ['String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028', 'String to Curves.029', 'String to Curves.030', 'String to Curves.031', 'String to Curves.032']
+        for name in nodevvbgcvalueb:
+            nodevvbgcvalueb = nodevvbgc_group.nodes.get(name)
+            if nodevvbgcvalueb:
+                datavvbgcvalueb_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_barvalueb)
+                nodevvbgcvalueb.font = datavvbgcvalueb_font
+
+        nodevvbgcrangenumbers = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodevvbgcrangenumbers:
+            nodevvbgcrangenumbers = nodevvbgc_group.nodes.get(name)
+            if nodevvbgcrangenumbers:
+                datavvbgcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_rangenumbers)
+                nodevvbgcrangenumbers.font = datavvbgcrangenumbers_font    
         
-        nodevvbgcrangenumbers = nestedvvbgcrn_node_group.nodes['String to Curves.007']
-        datavvbgcrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_rangenumbers)
-        nodevvbgcrangenumbers.font = datavvbgcrangenumbers_font 
+        nodevvbgcpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgcpointtext:
+            nodevvbgcpointtext = nodevvbgc_group.nodes.get(name)
+            if nodevvbgcpointtext:
+                datavvbgcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_bartext)
+                nodevvbgcpointtext.font = datavvbgcpointtext_font
 
-        nodevvbgcpointtext = nestedvvbgcpointtext_node_group.nodes['String to Curves']
-        datavvbgcpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_bartext)
-        nodevvbgcpointtext.font = datavvbgcpointtext_font 
-
-        nodevvbgclegend = nestedvvbgclegend_node_group.nodes['String to Curves.033']
-        datavvbgclegend_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_legend)
-        nodevvbgclegend.font = datavvbgclegend_font  
-       
+        nodevvbgclegend = ['String to Curves.033', 'String to Curves.034']
+        for name in nodevvbgclegend:
+            nodevvbgclegend = nodevvbgc_group.nodes.get(name)
+            if nodevvbgclegend:
+                datavvbgclegend_font = bpy.data.fonts.load(mytool.my_pathfontvbgc_legend)
+                nodevvbgclegend.font = datavvbgclegend_font     
         
         bpy.ops.file.pack_all()    
         
@@ -16646,17 +17386,12 @@ class FontrestoreVBGC(bpy.types.Operator):
     bl_idname = "addonname.myop_operatorvbgcresfont"
         
     def execute(self, context):
-        scene = bpy.data.scenes["Vertical Bar Graph Comparison"]
+        scene = context.scene
         mytool = scene.my_tool
         
-        obj = bpy.data.objects["Plane.003"]
+        obj = bpy.context.view_layer.objects.active
         modifier = obj.modifiers["GeometryNodes"]
-        noderestorevvbgc_group = bpy.data.node_groups["Geometry Nodes.011"]
-        nestedvvbgcvaluea_node_group = bpy.data.node_groups["NodeGroup.170"]
-        nestedvvbgcvalueb_node_group = bpy.data.node_groups["NodeGroup.171"]
-        nestedvvbgcrn_node_group = bpy.data.node_groups["NodeGroup.168"]
-        nestedvvbgcpointtext_node_group = bpy.data.node_groups["NodeGroup.172"]
-        nestedvvbgclegend_node_group = bpy.data.node_groups["NodeGroup.169"]
+        noderestorevvbgc_group = modifier.node_group
         
         noderestorevvbgctitle = noderestorevvbgc_group.nodes['String to Curves.005']
         datarestorevvbgctitle_font = bpy.data.fonts["Open Sans Extrabold"]
@@ -16666,31 +17401,44 @@ class FontrestoreVBGC(bpy.types.Operator):
         datarestorevvbgcsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorevvbgcsubtitle.font = datarestorevvbgcsubtitle_font
 
-        noderestorevvbgcvaluea = nestedvvbgcvaluea_node_group.nodes['String to Curves.013']
-        datarestorevvbgcvaluea_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorevvbgcvaluea.font = datarestorevvbgcvaluea_font 
+        nodevvbgcvaluea = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodevvbgcvaluea:
+            nodevvbgcvaluea = noderestorevvbgc_group.nodes.get(name)
+            if nodevvbgcvaluea:
+                datavvbgcvaluea_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgcvaluea.font = datavvbgcvaluea_font   
 
-        noderestorevvbgcvalueb = nestedvvbgcvalueb_node_group.nodes['String to Curves.025']
-        datarestorevvbgcvalueb_font = bpy.data.fonts["Open Sans Extrabold"]
-        noderestorevvbgcvalueb.font = datarestorevvbgcvalueb_font 
-
-        noderestorevvbgcrangenumbers = nestedvvbgcrn_node_group.nodes['String to Curves.007']
-        datarestorevvbgcrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorevvbgcrangenumbers.font = datarestorevvbgcrangenumbers_font        
+        nodevvbgcvalueb = ['String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028', 'String to Curves.029', 'String to Curves.030', 'String to Curves.031', 'String to Curves.032']
+        for name in nodevvbgcvalueb:
+            nodevvbgcvalueb = noderestorevvbgc_group.nodes.get(name)
+            if nodevvbgcvalueb:
+                datavvbgcvalueb_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgcvalueb.font = datavvbgcvalueb_font    
         
-        noderestorevvbgcpointtext = nestedvvbgcpointtext_node_group.nodes['String to Curves']
-        datarestorevvbgcpointtext_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorevvbgcpointtext.font = datarestorevvbgcpointtext_font
+        nodevvbgcrangenumbers = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodevvbgcrangenumbers:
+            nodevvbgcrangenumbers = noderestorevvbgc_group.nodes.get(name)
+            if nodevvbgcrangenumbers:
+                datavvbgcrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgcrangenumbers.font = datavvbgcrangenumbers_font  
 
-        noderestorevvbgclegend = nestedvvbgclegend_node_group.nodes['String to Curves.033']
-        datarestorevvbgclegend_font = bpy.data.fonts["Open Sans Regular"]
-        noderestorevvbgclegend.font = datarestorevvbgclegend_font
+        nodevvbgcpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgcpointtext:
+            nodevvbgcpointtext = noderestorevvbgc_group.nodes.get(name)
+            if nodevvbgcpointtext:
+                datavvbgcpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgcpointtext.font = datavvbgcpointtext_font  
 
+        nodevvbgclegend = ['String to Curves.033', 'String to Curves.034']
+        for name in nodevvbgclegend:
+            nodevvbgclegend = noderestorevvbgc_group.nodes.get(name)
+            if nodevvbgclegend:
+                datavvbgclegend_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgclegend.font = datavvbgclegend_font  
         
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'} 
-
     
 class ADDONNAME_OT_my_op3(bpy.types.Operator):
     bl_label = "Add Object3"
