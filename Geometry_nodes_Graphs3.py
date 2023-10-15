@@ -162,6 +162,15 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatormgc()
     )
     
+    my_enum_usmap : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPUSM7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPUSM8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorusmap()
+    )
+    
     my_enumVB : bpy.props.EnumProperty(
         name= "",
         description= "Change Frame rate of the scene",
@@ -261,7 +270,11 @@ class MyProperties(bpy.types.PropertyGroup):
     
     my_stringmultiple_pie_graph : bpy.props.StringProperty(
     name= "",
-    default="multiple_pie_graph",)        
+    default="multiple_pie_graph",)  
+    
+    my_stringusmap : bpy.props.StringProperty(
+    name= "",
+    default="us_map",)      
     
     my_float: bpy.props.FloatProperty(
         name = "In seconds",
@@ -3447,6 +3460,46 @@ class MyProperties(bpy.types.PropertyGroup):
         maxlen=1024,
         subtype='FILE_PATH',
         )
+        
+    my_pathusmap: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/us_map.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontusmap_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontusmap_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontusmap_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontusmap_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
 
 
 class NG_PT_QuickRenderPresets(bpy.types.Panel):
@@ -3750,10 +3803,6 @@ class CANDLESTICK_GRAPH_PT_panel_1(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
         layout = self.layout
         scene = context.scene
         mytool = scene.my_tool
-
-        rowFPS = layout.row()
-        rowFPS.label(text= "Frames per second:")
-        layout.prop(mytool, "my_enum_candlestick")
 
 class CANDLESTICK_GRAPH_PT_panel_2(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
@@ -5413,6 +5462,111 @@ class COMPARISON_MOUNTAIN_GRAPH_PT_panel_5(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.
         rowresetmgc = layout.row()
         rowresetmgc.label(text= "Reset all Fonts:")
         layout.operator("addonname.myop_operatormgcresfont")
+        
+class US_MAP_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class US_MAP_PT_panel_1(US_MAP_panel, bpy.types.Panel):
+    bl_idname = "US_MAP_PT_panel_1"
+    bl_label = "US Map"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowusmFPS = layout.row()
+        rowusmFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enum_usmap")
+
+class US_MAP_PT_panel_2(US_MAP_panel, bpy.types.Panel):
+    bl_parent_id = "US_MAP_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowusmcsv = layout.row()
+        rowusmcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathusmap")
+        layout.operator("mesh.mycubeoperatorusmapcsv")
+        
+class US_MAP_PT_panel_3(US_MAP_panel, bpy.types.Panel):
+    bl_parent_id = "US_MAP_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowusmsql = layout.row()
+        rowusmsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringusmap")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorusmapsql")
+
+class US_MAP_PT_panel_4(US_MAP_panel, bpy.types.Panel):
+    bl_parent_id = "US_MAP_PT_panel_1"
+    bl_label = "Note"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowcandlea1 = layout.row()
+        rowcandlea1.label(text= "Duration Control is not applied")
+        
+        rowcandlea2 = layout.row()
+        rowcandlea2.label(text= "for this map,")
+        
+        rowcandlea3 = layout.row()
+        rowcandlea3.label(text= "as its tedious to control")
+        
+        rowcandlea4 = layout.row()
+        rowcandlea4.label(text= "50+ data points individually.")
+
+        rowcandlea5 = layout.row()
+        rowcandlea5.label(text= "There is a tutorial in the help")
+        
+        rowcandlea6 = layout.row()
+        rowcandlea6.label(text= "folder on how to increase duration")
+        
+        rowcandlea7 = layout.row()
+        rowcandlea7.label(text= "in an easy way.")
+        
+class US_MAP_PT_panel_5(US_MAP_panel, bpy.types.Panel):
+    bl_parent_id = "US_MAP_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitleusmap = layout.row()
+        rowtitleusmap.label(text= "Title Font: (also Credit and Source Title)")
+        layout.prop(mytool, "my_pathfontusmap_title")
+
+        rowsubtitleusmap = layout.row()
+        rowsubtitleusmap.label(text= "Subtitle Font: (Credit and Source Subtitle)")
+        layout.prop(mytool, "my_pathfontusmap_subtitle")
+        layout.operator("addonname.myop_operatorusmapfont")
+        
+        rowresetusmap = layout.row()
+        rowresetusmap.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorusmapresfont")
         
 class VERTICAL_BAR_GRAPH_panel:
     bl_space_type = "VIEW_3D"
@@ -7493,6 +7647,199 @@ class MyoperatorMGCsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class Myoperatorusmapsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorusmapsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        usmap_object = bpy.context.view_layer.objects.active
+        usmap_object_name = usmap_object.name
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringusmap
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        mycursor.execute("SELECT `US State Name` FROM usmaptable")
+        my_stringusmapg_usstatename = mycursor.fetchall()
+        usstatename_list = [str(item).strip("(").strip(")").strip(",").strip("'") for item in my_stringusmapg_usstatename]
+ 
+        mycursor.execute("SELECT `Data` FROM usmaptable")
+        datausmapg = mycursor.fetchall()
+        # Convert the fetched data to a list of floats in one line
+        datausmapg = [float(str(point).strip("(), '")) for point in datausmapg]
+
+        mycursor.execute("SELECT `Min Value` FROM usmaptable")
+        minpointvalue = mycursor.fetchone()
+        my_floatusmapg_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM usmaptable")
+        maxpointvalue = mycursor.fetchone()
+        my_floatusmapg_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM usmaptable")
+        decvalue = mycursor.fetchone()
+        my_floatusmapg_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM usmaptable")
+        my_stringusmapg_title = mycursor.fetchone()
+        my_stringusmapg_title = str(my_stringusmapg_title)
+        my_stringusmapg_title = my_stringusmapg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM usmaptable")
+        my_stringusmapg_subtitle = mycursor.fetchone()
+        my_stringusmapg_subtitle = str(my_stringusmapg_subtitle)
+        my_stringusmapg_subtitle = my_stringusmapg_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Source Title` FROM usmaptable")
+        my_stringusmapg_sourcetitle = mycursor.fetchone()
+        my_stringusmapg_sourcetitle = str(my_stringusmapg_sourcetitle)
+        my_stringusmapg_sourcetitle = my_stringusmapg_sourcetitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Source Text` FROM usmaptable")
+        my_stringusmapg_sourcesubtitle = mycursor.fetchone()
+        my_stringusmapg_sourcesubtitle = str(my_stringusmapg_sourcesubtitle)
+        my_stringusmapg_sourcesubtitle = my_stringusmapg_sourcesubtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Credit Title` FROM usmaptable")
+        my_stringusmapg_credittitle = mycursor.fetchone()
+        my_stringusmapg_credittitle = str(my_stringusmapg_credittitle)
+        my_stringusmapg_credittitle = my_stringusmapg_credittitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Credit Text` FROM usmaptable")
+        my_stringusmapg_creditsubtitle = mycursor.fetchone()
+        my_stringusmapg_creditsubtitle = str(my_stringusmapg_creditsubtitle)
+        my_stringusmapg_creditsubtitle = my_stringusmapg_creditsubtitle.strip("(").strip(")").strip(",").strip("'")
+            
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_112"] = my_floatusmapg_minpointvalue
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_113"] = my_floatusmapg_maxpointvalue
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_168"] = my_floatusmapg_decvalue
+        
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_185"] = usstatename_list[0]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_184"] = usstatename_list[1]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_183"] = usstatename_list[2]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_182"] = usstatename_list[3]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_181"] = usstatename_list[4]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_180"] = usstatename_list[5]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_179"] = usstatename_list[6]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_178"] = usstatename_list[7]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_177"] = usstatename_list[8]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_176"] = usstatename_list[9]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_175"] = usstatename_list[10]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_174"] = usstatename_list[11]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_173"] = usstatename_list[12]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_172"] = usstatename_list[13]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_171"] = usstatename_list[14]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_170"] = usstatename_list[15]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_167"] = usstatename_list[16]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_186"] = usstatename_list[17]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_187"] = usstatename_list[18]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_188"] = usstatename_list[19]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_189"] = usstatename_list[20]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_190"] = usstatename_list[21]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_191"] = usstatename_list[22]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_192"] = usstatename_list[23]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_193"] = usstatename_list[24]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_194"] = usstatename_list[25]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_195"] = usstatename_list[26]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_196"] = usstatename_list[27]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_197"] = usstatename_list[28]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_198"] = usstatename_list[29]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_199"] = usstatename_list[30]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_200"] = usstatename_list[31]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_201"] = usstatename_list[32]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_202"] = usstatename_list[33]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_203"] = usstatename_list[34]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_204"] = usstatename_list[35]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_205"] = usstatename_list[36]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_206"] = usstatename_list[37]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_207"] = usstatename_list[38]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_208"] = usstatename_list[39]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_209"] = usstatename_list[40]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_210"] = usstatename_list[41]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_211"] = usstatename_list[42]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_212"] = usstatename_list[43]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_213"] = usstatename_list[44]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_214"] = usstatename_list[45]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_215"] = usstatename_list[46]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_216"] = usstatename_list[47]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_217"] = usstatename_list[48]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_218"] = usstatename_list[49]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_219"] = usstatename_list[50]
+
+
+
+            
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_13"] = datausmapg[0]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_14"] = datausmapg[1] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_15"] = datausmapg[2]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_16"] = datausmapg[3] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_17"] = datausmapg[4]          
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_18"] = datausmapg[5]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_19"] = datausmapg[6] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_20"] = datausmapg[7] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_62"] = datausmapg[8]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_21"] = datausmapg[9]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_22"] = datausmapg[10] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_23"] = datausmapg[11] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_24"] = datausmapg[12] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_25"] = datausmapg[13] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_26"] = datausmapg[14] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_27"] = datausmapg[15]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_12"] = datausmapg[16]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_28"] = datausmapg[17]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_29"] = datausmapg[18] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_30"] = datausmapg[19]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_31"] = datausmapg[20]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_32"] = datausmapg[21]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_33"] = datausmapg[22]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_34"] = datausmapg[23] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_166"] = datausmapg[24]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_35"] = datausmapg[25] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_36"] = datausmapg[26]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_37"] = datausmapg[27]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_38"] = datausmapg[28]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_39"] = datausmapg[29]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_40"] = datausmapg[30]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_41"] = datausmapg[31]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_42"] = datausmapg[32]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_43"] = datausmapg[33]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_44"] = datausmapg[34]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_45"] = datausmapg[35]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_46"] = datausmapg[36]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_47"] = datausmapg[37]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_48"] = datausmapg[38]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_49"] = datausmapg[39]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_50"] = datausmapg[40]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_51"] = datausmapg[41]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_52"] = datausmapg[42]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_53"] = datausmapg[43]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_54"] = datausmapg[44]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_55"] = datausmapg[45]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_56"] = datausmapg[46]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_57"] = datausmapg[47]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_58"] = datausmapg[48]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_59"] = datausmapg[49]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_60"] = datausmapg[50]
+           
+    
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_232"] = my_stringusmapg_title
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_233"] = my_stringusmapg_subtitle
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_234"] = my_stringusmapg_sourcetitle
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_235"] = my_stringusmapg_sourcesubtitle
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_236"] = my_stringusmapg_credittitle
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_237"] = my_stringusmapg_creditsubtitle
+        
+        bpy.context.object.data.update()
+        return {'FINISHED'}   
+    
 class MyoperatorVBGsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorvbgsql"
     bl_label = "Import MySQL Data"
@@ -8811,6 +9158,162 @@ class MyoperatorMGCcsv(bpy.types.Operator):
                 print("No object selected.")
         bpy.context.object.data.update()
         return {'FINISHED'}
+    
+class MyoperatorUSMcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorusmapcsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        usmap_object = bpy.context.view_layer.objects.active
+        usmap_object_name = usmap_object.name
+        filepath_fullusmap = bpy.path.abspath(mytool.my_pathusmap)
+        with open(filepath_fullusmap) as f:
+            readout = list(csv.reader(f))
+            minvusmap = float(readout[1][2])
+            maxvusmap = float(readout[1][3])
+            decimalusmap = int(readout[1][4])
+
+            num_elementsstatename = 50
+            statename_usmap = []
+            for i in range(1, num_elementsstatename + 2):
+                statename_usmap.append(str(readout[i][0]))
+                
+            num_elementsstatevalue = 50
+            statevalue_usmap = []
+            for i in range(1, num_elementsstatevalue + 2):
+                statevalue_usmap.append(float(readout[i][1]))              
+                
+            titleusmap = str(readout[1][5])
+            subtitleusmap = str(readout[1][6])
+            sourcetitleusmap = str(readout[1][7])
+            sourcesubtitleusmap = str(readout[1][8])
+            credittitleusmap = str(readout[1][9])
+            creditsubtitleusmap = str(readout[1][10])
+
+            
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_112"] = minvusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_113"] = maxvusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_168"] = decimalusmap
+        
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_185"] = statename_usmap[0]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_184"] = statename_usmap[1]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_183"] = statename_usmap[2]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_182"] = statename_usmap[3]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_181"] = statename_usmap[4]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_180"] = statename_usmap[5]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_179"] = statename_usmap[6]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_178"] = statename_usmap[7]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_177"] = statename_usmap[8]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_176"] = statename_usmap[9]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_175"] = statename_usmap[10]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_174"] = statename_usmap[11]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_173"] = statename_usmap[12]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_172"] = statename_usmap[13]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_171"] = statename_usmap[14]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_170"] = statename_usmap[15]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_167"] = statename_usmap[16]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_186"] = statename_usmap[17]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_187"] = statename_usmap[18]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_188"] = statename_usmap[19]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_189"] = statename_usmap[20]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_190"] = statename_usmap[21]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_191"] = statename_usmap[22]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_192"] = statename_usmap[23]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_193"] = statename_usmap[24]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_194"] = statename_usmap[25]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_195"] = statename_usmap[26]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_196"] = statename_usmap[27]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_197"] = statename_usmap[28]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_198"] = statename_usmap[29]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_199"] = statename_usmap[30]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_200"] = statename_usmap[31]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_201"] = statename_usmap[32]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_202"] = statename_usmap[33]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_203"] = statename_usmap[34]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_204"] = statename_usmap[35]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_205"] = statename_usmap[36]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_206"] = statename_usmap[37]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_207"] = statename_usmap[38]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_208"] = statename_usmap[39]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_209"] = statename_usmap[40]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_210"] = statename_usmap[41]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_211"] = statename_usmap[42]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_212"] = statename_usmap[43]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_213"] = statename_usmap[44]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_214"] = statename_usmap[45]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_215"] = statename_usmap[46]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_216"] = statename_usmap[47]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_217"] = statename_usmap[48]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_218"] = statename_usmap[49]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_219"] = statename_usmap[50]
+
+
+
+            
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_13"] = statevalue_usmap[0]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_14"] = statevalue_usmap[1] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_15"] = statevalue_usmap[2]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_16"] = statevalue_usmap[3] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_17"] = statevalue_usmap[4]          
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_18"] = statevalue_usmap[5]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_19"] = statevalue_usmap[6] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_20"] = statevalue_usmap[7] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_62"] = statevalue_usmap[8]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_21"] = statevalue_usmap[9]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_22"] = statevalue_usmap[10] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_23"] = statevalue_usmap[11] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_24"] = statevalue_usmap[12] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_25"] = statevalue_usmap[13] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_26"] = statevalue_usmap[14] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_27"] = statevalue_usmap[15]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_12"] = statevalue_usmap[16]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_28"] = statevalue_usmap[17]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_29"] = statevalue_usmap[18] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_30"] = statevalue_usmap[19]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_31"] = statevalue_usmap[20]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_32"] = statevalue_usmap[21]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_33"] = statevalue_usmap[22]  
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_34"] = statevalue_usmap[23] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_166"] = statevalue_usmap[24]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_35"] = statevalue_usmap[25] 
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_36"] = statevalue_usmap[26]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_37"] = statevalue_usmap[27]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_38"] = statevalue_usmap[28]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_39"] = statevalue_usmap[29]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_40"] = statevalue_usmap[30]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_41"] = statevalue_usmap[31]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_42"] = statevalue_usmap[32]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_43"] = statevalue_usmap[33]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_44"] = statevalue_usmap[34]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_45"] = statevalue_usmap[35]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_46"] = statevalue_usmap[36]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_47"] = statevalue_usmap[37]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_48"] = statevalue_usmap[38]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_49"] = statevalue_usmap[39]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_50"] = statevalue_usmap[40]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_51"] = statevalue_usmap[41]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_52"] = statevalue_usmap[42]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_53"] = statevalue_usmap[43]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_54"] = statevalue_usmap[44]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_55"] = statevalue_usmap[45]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_56"] = statevalue_usmap[46]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_57"] = statevalue_usmap[47]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_58"] = statevalue_usmap[48]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_59"] = statevalue_usmap[49]
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_60"] = statevalue_usmap[50]
+           
+    
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_232"] = titleusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_233"] = subtitleusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_234"] = sourcetitleusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_235"] = sourcesubtitleusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_236"] = credittitleusmap
+        bpy.data.objects[usmap_object_name].modifiers["GeometryNodes"]["Input_237"] = creditsubtitleusmap
+        
+        bpy.context.object.data.update()
+        return {'FINISHED'}  
     
 class MyoperatorVBcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorvbcsv"
@@ -12322,6 +12825,8 @@ class ADDONNAME_23C(bpy.types.Operator):
             print("end")
 
         return {'FINISHED'}
+    
+
 
 class ADDONNAME_OT_my_op2pie(bpy.types.Operator):
     bl_label = "Add Ob33ject2"
@@ -13851,6 +14356,130 @@ class ADDONNAME_MGC(bpy.types.Operator):
                         fcurve.keyframe_points[0].handle_right[0] = 40
                         fcurve.keyframe_points[0].handle_right[1] = 0
                         fcurve.keyframe_points[1].co.x = 60
+                        fcurve.keyframe_points[1].handle_left[0] = 50
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 70
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
+    
+class ADDONNAME_USM(bpy.types.Operator):
+    bl_label = "Add Ob33jectusm"
+    bl_idname = "addonname.myop_operatorusmap"  
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enum_usmap == 'OPUSM7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 120
+
+            action_name = 'KSAction'
+
+            data_paths = []
+
+            # Add paths from 'Input_114' to 'Input_137'
+            start_index_1 = 114
+            end_index_1 = 137
+
+            for i in range(start_index_1, end_index_1 + 1):
+                path = 'modifiers["GeometryNodes"]["Input_' + str(i) + '"]'
+                data_paths.append(path)
+
+            # Add paths from 'Input_138' to 'Input_163'
+            start_index_2 = 138
+            end_index_2 = 163
+
+            # Add "Input_164" to the list
+            data_paths.append('modifiers["GeometryNodes"]["Input_164"]')
+
+            for i in range(start_index_2, end_index_2 + 1):
+                path = 'modifiers["GeometryNodes"]["Input_' + str(i) + '"]'
+                data_paths.append(path)
+
+            print(data_paths)
+
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 18
+                        fcurve.keyframe_points[0].handle_left[0] = 16
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 32
+                        fcurve.keyframe_points[0].handle_right[1] = 0
+                        fcurve.keyframe_points[1].co.x = 90
+                        fcurve.keyframe_points[1].handle_left[0] = 40
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 56
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enum_usmap == 'OPUSM8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 143
+            
+            action_name = 'KSAction'
+            data_paths = []
+
+            # Add paths from 'Input_114' to 'Input_137'
+            start_index_1 = 114
+            end_index_1 = 137
+
+            for i in range(start_index_1, end_index_1 + 1):
+                path = 'modifiers["GeometryNodes"]["Input_' + str(i) + '"]'
+                data_paths.append(path)
+
+            # Add paths from 'Input_138' to 'Input_163'
+            start_index_2 = 138
+            end_index_2 = 163
+
+            # Add "Input_164" to the list
+            data_paths.append('modifiers["GeometryNodes"]["Input_164"]')
+
+            for i in range(start_index_2, end_index_2 + 1):
+                path = 'modifiers["GeometryNodes"]["Input_' + str(i) + '"]'
+                data_paths.append(path)
+
+            print(data_paths)
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 23
+                        fcurve.keyframe_points[0].handle_left[0] = 16
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 40
+                        fcurve.keyframe_points[0].handle_right[1] = 0
+                        fcurve.keyframe_points[1].co.x = 113
                         fcurve.keyframe_points[1].handle_left[0] = 50
                         fcurve.keyframe_points[1].handle_left[1] = 1
                         fcurve.keyframe_points[1].handle_right[0] = 70
@@ -17203,6 +17832,71 @@ class FontrestoreMPG(bpy.types.Operator):
         bpy.ops.file.pack_all()    
         
         return {'FINISHED'}
+    
+class FontchangeUSM(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorusmapfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        nodeusmap_group = modifier.node_group
+        nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
+        nestedcandlegpointtext_node_group = bpy.data.node_groups["NodeGroup.173"]
+        
+        nodeusmaptitle = ['String to Curves', 'String to Curves.002', 'String to Curves.004']
+        for name in nodeusmaptitle:
+            nodeusmaptitle = nodeusmap_group.nodes.get(name)
+            if nodeusmaptitle:
+                datausmaptitle_font = bpy.data.fonts.load(mytool.my_pathfontusmap_title)
+                nodeusmaptitle.font = datausmaptitle_font
+        
+        nodeusmapsubtitle = ['String to Curves.005', 'String to Curves.001', 'String to Curves.003']
+        for name in nodeusmapsubtitle:
+            nodeusmapsubtitle = nodeusmap_group.nodes.get(name)
+            if nodeusmapsubtitle:
+                datausmapsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontusmap_subtitle)
+                nodeusmapsubtitle.font = datausmapsubtitle_font
+    
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreUSM(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorusmapresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestoreusmap_group = modifier.node_group
+        nestedcandlegrn_node_group = bpy.data.node_groups["NodeGroup.174"]
+        nestedcandlegpointtext_node_group = bpy.data.node_groups["NodeGroup.173"]
+
+        noderestoreusmaptitle = ['String to Curves', 'String to Curves.002', 'String to Curves.004']
+        for name in noderestoreusmaptitle:
+            noderestoreusmaptitle = noderestoreusmap_group.nodes.get(name)
+            if noderestoreusmaptitle:
+                datausmaptitle_font = bpy.data.fonts["Open Sans Extrabold"]
+                noderestoreusmaptitle.font = datausmaptitle_font   
+
+        noderestoreusmapsubtitle = ['String to Curves.005', 'String to Curves.001', 'String to Curves.003']
+        for name in noderestoreusmapsubtitle:
+            noderestoreusmapsubtitle = noderestoreusmap_group.nodes.get(name)
+            if noderestoreusmapsubtitle:
+                datausmapsubtitle_font = bpy.data.fonts["Open Sans Light"]
+                noderestoreusmapsubtitle.font = datausmapsubtitle_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
          
 class FontchangeVBG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
@@ -17502,19 +18196,24 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorLGcsv, MyoperatorLGCcsv, 
-MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorVBcsv, 
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorLGcsv, MyoperatorLGCcsv, 
+MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, 
 MyoperatorVBCcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL,  
-ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_VB, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeMCG, FontchangeMPG, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_23_PT_panel_1, 
 PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5,
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5,
-COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, Locationchange, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
+ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, 
+ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
+ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
+ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
+ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
  
  
 def register():
