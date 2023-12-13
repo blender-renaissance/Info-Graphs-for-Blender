@@ -2,7 +2,7 @@ bl_info = {
     "name": "Info_graphs_for_blender",
     "author": "Vikrant Jadhav, Blender Renaissance",
     "version": (1, 0),
-    "blender": (3, 6, 0),
+    "blender": (4, 0, 0),
     "location": "View3D > Sidebar > Renaissance tab",
     "description": "Quick Render Presets for Blender Renaissance Graphs.",
     "warning": "",
@@ -1041,6 +1041,113 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatorhbgdl()
         )
         
+    my_floatHBGE: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgel()
+        )
+        
+    my_floatHBGLE: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgel()
+        )
+
+    my_floatHBGF: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgfl()
+        )
+        
+    my_floatHBGLF: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgfl()
+        )
+
+    my_floatHBGG: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbggl()
+        )
+        
+    my_floatHBGLG: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbggl()
+        )
+
+    my_floatHBGH: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbghl()
+        )
+        
+    my_floatHBGLH: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbghl()
+        )
+
+    my_floatHBGI: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgil()
+        )
+        
+    my_floatHBGLI: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgil()
+        )
+
+    my_floatHBGJ: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 1,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgjl()
+        )
+        
+    my_floatHBGLJ: bpy.props.FloatProperty(
+        name = "In seconds",
+        description = "A float property",
+        default = 4,
+        min = 0.1,
+        max = 300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhbgjl()
+        )
         
     my_floatCOMPARISONAHBARA: bpy.props.FloatProperty(
         name="In seconds",
@@ -1112,6 +1219,96 @@ class MyProperties(bpy.types.PropertyGroup):
         min=0.1,
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbard()
+    )
+    
+    my_floatCOMPARISONAHBARE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbare()
+    )
+    
+    my_floatCOMPARISONAHBARLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbare()
+    )
+
+    my_floatCOMPARISONAHBARF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarf()
+    )
+    
+    my_floatCOMPARISONAHBARLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarf()
+    )
+
+    my_floatCOMPARISONAHBARG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarg()
+    )
+    
+    my_floatCOMPARISONAHBARLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarg()
+    )
+
+    my_floatCOMPARISONAHBARH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarh()
+    )
+    
+    my_floatCOMPARISONAHBARLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbarh()
+    )
+
+    my_floatCOMPARISONAHBARI: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbari()
+    )
+    
+    my_floatCOMPARISONAHBARLI: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonahbari()
     )
 
     my_floatCOMPARISONBHBARA: bpy.props.FloatProperty(
@@ -1186,6 +1383,95 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbard()
     )
 
+    my_floatCOMPARISONBHBARE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbare()
+    )
+    
+    my_floatCOMPARISONBHBARLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbare()
+    )
+
+    my_floatCOMPARISONBHBARF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarf()
+    )
+    
+    my_floatCOMPARISONBHBARLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarf()
+    )
+
+    my_floatCOMPARISONBHBARG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarg()
+    )
+    
+    my_floatCOMPARISONBHBARLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarg()
+    )
+
+    my_floatCOMPARISONBHBARH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarh()
+    )
+    
+    my_floatCOMPARISONBHBARLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbarh()
+    )
+
+    my_floatCOMPARISONBHBARI: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbari()
+    )
+    
+    my_floatCOMPARISONBHBARLI: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbhbari()
+    )
 
     my_floatCOMPARISONALINEA: bpy.props.FloatProperty(
         name="In seconds",
@@ -1489,7 +1775,7 @@ class MyProperties(bpy.types.PropertyGroup):
     my_floatLGLA: bpy.props.FloatProperty(
         name="In seconds",
         description="A float property",
-        default=1,
+        default=2,
         min=0.1,
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorlgal()
@@ -1498,7 +1784,7 @@ class MyProperties(bpy.types.PropertyGroup):
     my_floatLGB: bpy.props.FloatProperty(
         name="In seconds",
         description="A float property",
-        default=1,
+        default=2.5,
         min=0.1,
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorlgbl()
@@ -1507,7 +1793,7 @@ class MyProperties(bpy.types.PropertyGroup):
     my_floatLGLB: bpy.props.FloatProperty(
         name="In seconds",
         description="A float property",
-        default=1,
+        default=0.5,
         min=0.1,
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorlgbl()
@@ -1710,6 +1996,60 @@ class MyProperties(bpy.types.PropertyGroup):
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatormcgel()
     )
+    
+    my_floatMCGF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=6,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcgfl()
+    )
+
+    my_floatMCGLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcgfl()
+    )
+    
+    my_floatMCGG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=7,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcggl()
+    )
+
+    my_floatMCGLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcggl()
+    )
+
+    my_floatMCGH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=8,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcghl()
+    )
+
+    my_floatMCGLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormcghl()
+    )
 
     my_floatMPGA: bpy.props.FloatProperty(
         name="In seconds",
@@ -1800,7 +2140,60 @@ class MyProperties(bpy.types.PropertyGroup):
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatormpgel()
     )
+    
+    my_floatMPGF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=6,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpgfl()
+    )
 
+    my_floatMPGLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpgfl()
+    )
+
+    my_floatMPGG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=7,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpggl()
+    )
+
+    my_floatMPGLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpggl()
+    )
+
+    my_floatMPGH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=8,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpghl()
+    )
+
+    my_floatMPGLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormpghl()
+    )
 
 
     my_floatMGA: bpy.props.FloatProperty(
@@ -4181,68 +4574,21 @@ class LINE_GRAPH_PT_panel_4(LINE_GRAPH_panel, bpy.types.Panel):
         mytool = scene.my_tool
         
         rowLGA = layout.row()
-        rowLGA.label(text= "Start A:")
+        rowLGA.label(text= "Start Length of Curve:")
         layout.prop(mytool, "my_floatLGA")
 
         rowLGLA = layout.row()
-        rowLGLA.label(text= "Length of Animation A:")
+        rowLGLA.label(text= "Length of Animation of Length of Curve:")
         layout.prop(mytool, "my_floatLGLA")
 
         rowLGB = layout.row()
-        rowLGB.label(text= "Start B:")
+        rowLGB.label(text= "Start Shader Display:")
         layout.prop(mytool, "my_floatLGB")
 
         rowLGLB = layout.row()
-        rowLGLB.label(text= "Length of Animation B:")
+        rowLGLB.label(text= "Length of Animation of Shader Display:")
         layout.prop(mytool, "my_floatLGLB")
 
-        rowLGC = layout.row()
-        rowLGC.label(text= "Start C:")
-        layout.prop(mytool, "my_floatLGC")
-
-        rowLGLC = layout.row()
-        rowLGLC.label(text= "Length of Animation C:")
-        layout.prop(mytool, "my_floatLGLC")
-
-        rowLGD = layout.row()
-        rowLGD.label(text= "Start D:")
-        layout.prop(mytool, "my_floatLGD")
-
-        rowLGLD = layout.row()
-        rowLGLD.label(text= "Length of Animation D:")
-        layout.prop(mytool, "my_floatLGLD")
-
-        rowLGE = layout.row()
-        rowLGE.label(text= "Start E:")
-        layout.prop(mytool, "my_floatLGE")
-
-        rowLGLE = layout.row()
-        rowLGLE.label(text= "Length of Animation E:")
-        layout.prop(mytool, "my_floatLGLE")
-
-        rowLGF = layout.row()
-        rowLGF.label(text= "Start F:")
-        layout.prop(mytool, "my_floatLGF")
-
-        rowLGLF = layout.row()
-        rowLGLF.label(text= "Length of Animation F:")
-        layout.prop(mytool, "my_floatLGLF")
-
-        rowLGG = layout.row()
-        rowLGG.label(text= "Start G:")
-        layout.prop(mytool, "my_floatLGG")
-
-        rowLGLG = layout.row()
-        rowLGLG.label(text= "Length of Animation G:")
-        layout.prop(mytool, "my_floatLGLG")
-
-        rowLGH = layout.row()
-        rowLGH.label(text= "Start H:")
-        layout.prop(mytool, "my_floatLGH")
-
-        rowLGLH = layout.row()
-        rowLGLH.label(text= "Length of Animation H:")
-        layout.prop(mytool, "my_floatLGLH")
         
 class LINE_GRAPH_PT_panel_5(LINE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "LINE_GRAPH_PT_panel_1"
@@ -4602,6 +4948,54 @@ class HORIZONTAL_BAR_GRAPH_PT_panel_4(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Pane
         rowHBGLD.label(text= "Length of Animation D:")
         layout.prop(mytool, "my_floatHBGLD")
         
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start E:")
+        layout.prop(mytool, "my_floatHBGE")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation E:")
+        layout.prop(mytool, "my_floatHBGLE")
+        
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start F:")
+        layout.prop(mytool, "my_floatHBGF")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation F:")
+        layout.prop(mytool, "my_floatHBGLF")
+        
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start G:")
+        layout.prop(mytool, "my_floatHBGG")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation G:")
+        layout.prop(mytool, "my_floatHBGLG")
+        
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start H:")
+        layout.prop(mytool, "my_floatHBGH")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation H:")
+        layout.prop(mytool, "my_floatHBGLH")
+        
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start I:")
+        layout.prop(mytool, "my_floatHBGI")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation I:")
+        layout.prop(mytool, "my_floatHBGLI")
+        
+        rowHBGD = layout.row()
+        rowHBGD.label(text= "Start J:")
+        layout.prop(mytool, "my_floatHBGJ")
+        
+        rowHBGLD = layout.row()
+        rowHBGLD.label(text= "Length of Animation J:")
+        layout.prop(mytool, "my_floatHBGLJ")
+        
 class HORIZONTAL_BAR_GRAPH_PT_panel_5(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Font"
@@ -4769,6 +5163,86 @@ class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4(COMPARISON_HORIZONTAL_BAR_GRAPH
         rowCOMPARISONBHBARLD = layout.row()
         rowCOMPARISONBHBARLD.label(text= "Length of Animation B4:")
         layout.prop(mytool, "my_floatCOMPARISONBHBARDL")
+        
+        rowCOMPARISONAHBARE = layout.row()
+        rowCOMPARISONAHBARE.label(text= "Start A5:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARE")
+
+        rowCOMPARISONAHBARLE = layout.row()
+        rowCOMPARISONAHBARLE.label(text= "Length of Animation A5:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARLE")
+        
+        rowCOMPARISONBHBARE = layout.row()
+        rowCOMPARISONBHBARE.label(text= "Start B5:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARE")
+
+        rowCOMPARISONBHBARLE = layout.row()
+        rowCOMPARISONBHBARLE.label(text= "Length of Animation B5:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARLE")
+
+        rowCOMPARISONAHBARF = layout.row()
+        rowCOMPARISONAHBARF.label(text= "Start A6:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARF")
+
+        rowCOMPARISONAHBARLF = layout.row()
+        rowCOMPARISONAHBARLF.label(text= "Length of Animation A6:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARLF")
+        
+        rowCOMPARISONBHBARF = layout.row()
+        rowCOMPARISONBHBARF.label(text= "Start B6:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARF")
+
+        rowCOMPARISONBHBARLF = layout.row()
+        rowCOMPARISONBHBARLF.label(text= "Length of Animation B6:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARLF")
+        
+        rowCOMPARISONAHBARG = layout.row()
+        rowCOMPARISONAHBARG.label(text= "Start A7:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARG")
+
+        rowCOMPARISONAHBARLG = layout.row()
+        rowCOMPARISONAHBARLG.label(text= "Length of Animation A7:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARLG")
+        
+        rowCOMPARISONBHBARG = layout.row()
+        rowCOMPARISONBHBARG.label(text= "Start B7:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARG")
+
+        rowCOMPARISONBHBARLG = layout.row()
+        rowCOMPARISONBHBARLG.label(text= "Length of Animation B7:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARLG")
+        
+        rowCOMPARISONAHBARH = layout.row()
+        rowCOMPARISONAHBARH.label(text= "Start A8:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARH")
+
+        rowCOMPARISONAHBARLH = layout.row()
+        rowCOMPARISONAHBARLH.label(text= "Length of Animation A8:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARLH")
+        
+        rowCOMPARISONBHBARH = layout.row()
+        rowCOMPARISONBHBARH.label(text= "Start B8:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARH")
+
+        rowCOMPARISONBHBARLH = layout.row()
+        rowCOMPARISONBHBARLH.label(text= "Length of Animation B8:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARLH")
+        
+        rowCOMPARISONAHBARI = layout.row()
+        rowCOMPARISONAHBARI.label(text= "Start A9:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARI")
+
+        rowCOMPARISONAHBARLI = layout.row()
+        rowCOMPARISONAHBARLI.label(text= "Length of Animation A9:")
+        layout.prop(mytool, "my_floatCOMPARISONAHBARLI")
+        
+        rowCOMPARISONBHBARI = layout.row()
+        rowCOMPARISONBHBARI.label(text= "Start B9:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARI")
+
+        rowCOMPARISONBHBARLI = layout.row()
+        rowCOMPARISONBHBARLI.label(text= "Length of Animation B9:")
+        layout.prop(mytool, "my_floatCOMPARISONBHBARLI")
 
 class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
@@ -4909,6 +5383,30 @@ class MULTIPLE_CIRCLE_GRAPH_PT_panel_4(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Pa
         rowMCGLE = layout.row()
         rowMCGLE.label(text= "Length of Animation E:")
         layout.prop(mytool, "my_floatMCGLE")
+        
+        rowMCGE = layout.row()
+        rowMCGE.label(text= "Start F:")
+        layout.prop(mytool, "my_floatMCGF")
+
+        rowMCGLE = layout.row()
+        rowMCGLE.label(text= "Length of Animation F:")
+        layout.prop(mytool, "my_floatMCGLF")
+        
+        rowMCGE = layout.row()
+        rowMCGE.label(text= "Start G:")
+        layout.prop(mytool, "my_floatMCGG")
+
+        rowMCGLE = layout.row()
+        rowMCGLE.label(text= "Length of Animation G:")
+        layout.prop(mytool, "my_floatMCGLG")
+        
+        rowMCGE = layout.row()
+        rowMCGE.label(text= "Start H:")
+        layout.prop(mytool, "my_floatMCGH")
+
+        rowMCGLE = layout.row()
+        rowMCGLE.label(text= "Length of Animation H:")
+        layout.prop(mytool, "my_floatMCGLH")
 
 class MULTIPLE_CIRCLE_GRAPH_PT_panel_5(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
@@ -5042,6 +5540,30 @@ class MULTIPLE_PIE_GRAPH_PT_panel_4(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
         rowMPLE = layout.row()
         rowMPLE.label(text="Length of Animation E:")
         layout.prop(mytool, "my_floatMPGLE")
+        
+        rowMPF = layout.row()
+        rowMPF.label(text="Start F:")
+        layout.prop(mytool, "my_floatMPGF")
+
+        rowMPLF = layout.row()
+        rowMPLF.label(text="Length of Animation F:")
+        layout.prop(mytool, "my_floatMPGLF")
+        
+        rowMPF = layout.row()
+        rowMPF.label(text="Start G:")
+        layout.prop(mytool, "my_floatMPGG")
+
+        rowMPLF = layout.row()
+        rowMPLF.label(text="Length of Animation G:")
+        layout.prop(mytool, "my_floatMPGLG")
+        
+        rowMPF = layout.row()
+        rowMPF.label(text="Start H:")
+        layout.prop(mytool, "my_floatMPGH")
+
+        rowMPLF = layout.row()
+        rowMPLF.label(text="Length of Animation H:")
+        layout.prop(mytool, "my_floatMPGLH")
 
 class MULTIPLE_PIE_GRAPH_PT_panel_5(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
@@ -6499,7 +7021,7 @@ class MyoperatorHBGsql(bpy.types.Operator):
         mycursor = mydb.cursor(buffered=True)
 
         
-        mycursor.execute("SELECT `Number of bars (1-4)` FROM horizontal_bargtable")
+        mycursor.execute("SELECT `Number of bars (1-10)` FROM horizontal_bargtable")
         numberofbarshbg = mycursor.fetchone()
         my_floathbg_numberofbars = int(numberofbarshbg[0])
         
@@ -6509,10 +7031,22 @@ class MyoperatorHBGsql(bpy.types.Operator):
         my_stringhbg_bartext2 = str(my_stringhbg_bartext[1])
         my_stringhbg_bartext3 = str(my_stringhbg_bartext[2])
         my_stringhbg_bartext4 = str(my_stringhbg_bartext[3])
+        my_stringhbg_bartext5 = str(my_stringhbg_bartext[4])
+        my_stringhbg_bartext6 = str(my_stringhbg_bartext[5])
+        my_stringhbg_bartext7 = str(my_stringhbg_bartext[6])
+        my_stringhbg_bartext8 = str(my_stringhbg_bartext[7])
+        my_stringhbg_bartext9 = str(my_stringhbg_bartext[8])
+        my_stringhbg_bartext10 = str(my_stringhbg_bartext[9])
         my_stringhbg_bartext1 = my_stringhbg_bartext1.strip("(").strip(")").strip(",").strip("'")
         my_stringhbg_bartext2 = my_stringhbg_bartext2.strip("(").strip(")").strip(",").strip("'")
         my_stringhbg_bartext3 = my_stringhbg_bartext3.strip("(").strip(")").strip(",").strip("'")
         my_stringhbg_bartext4 = my_stringhbg_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext5 = my_stringhbg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext6 = my_stringhbg_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext7 = my_stringhbg_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext8 = my_stringhbg_bartext8.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext9 = my_stringhbg_bartext9.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbg_bartext10 = my_stringhbg_bartext10.strip("(").strip(")").strip(",").strip("'")
         
         mycursor.execute("SELECT `Max Value` FROM horizontal_bargtable")
         maxvalue = mycursor.fetchone()
@@ -6520,11 +7054,17 @@ class MyoperatorHBGsql(bpy.types.Operator):
 
         mycursor.execute("SELECT `Bar Value` FROM horizontal_bargtable")
         valuehbg = mycursor.fetchall()
-        valuehbg1, valuehbg2, valuehbg3, valuehbg4 = valuehbg
+        valuehbg1, valuehbg2, valuehbg3, valuehbg4, valuehbg5, valuehbg6, valuehbg7, valuehbg8, valuehbg9, valuehbg10 = valuehbg
         valuehbg1 = str(valuehbg1)
         valuehbg2 = str(valuehbg2)
         valuehbg3 = str(valuehbg3)
-        valuehbg4 = str(valuehbg4)          
+        valuehbg4 = str(valuehbg4)    
+        valuehbg5 = str(valuehbg5)
+        valuehbg6 = str(valuehbg6)
+        valuehbg7 = str(valuehbg7)
+        valuehbg8 = str(valuehbg8)
+        valuehbg9 = str(valuehbg9)
+        valuehbg10 = str(valuehbg10)         
         valuehbg1 = valuehbg1.strip("(").strip(")").strip(",").strip("'")
         valuehbg1 = float(valuehbg1)
         valuehbg2 = valuehbg2.strip("(").strip(")").strip(",").strip("'")
@@ -6533,6 +7073,18 @@ class MyoperatorHBGsql(bpy.types.Operator):
         valuehbg3 = float(valuehbg3)
         valuehbg4 = valuehbg4.strip("(").strip(")").strip(",").strip("'")
         valuehbg4 = float(valuehbg4)
+        valuehbg5 = valuehbg5.strip("(").strip(")").strip(",").strip("'")
+        valuehbg5 = float(valuehbg5)
+        valuehbg6 = valuehbg6.strip("(").strip(")").strip(",").strip("'")
+        valuehbg6 = float(valuehbg6)
+        valuehbg7 = valuehbg7.strip("(").strip(")").strip(",").strip("'")
+        valuehbg7 = float(valuehbg7)
+        valuehbg8 = valuehbg8.strip("(").strip(")").strip(",").strip("'")
+        valuehbg8 = float(valuehbg8)
+        valuehbg9 = valuehbg9.strip("(").strip(")").strip(",").strip("'")
+        valuehbg9 = float(valuehbg9)
+        valuehbg10 = valuehbg10.strip("(").strip(")").strip(",").strip("'")
+        valuehbg10 = float(valuehbg10)
 
 
         mycursor.execute("SELECT `Min Value` FROM horizontal_bargtable")
@@ -6574,10 +7126,22 @@ class MyoperatorHBGsql(bpy.types.Operator):
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = my_stringhbg_bartext2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = my_stringhbg_bartext3
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = my_stringhbg_bartext4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_10"] = my_stringhbg_bartext5
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_11"] = my_stringhbg_bartext6
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_12"] = my_stringhbg_bartext7
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_13"] = my_stringhbg_bartext8
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_14"] = my_stringhbg_bartext9
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_15"] = my_stringhbg_bartext10
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = valuehbg1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = valuehbg2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = valuehbg3
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = valuehbg4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_16"] = valuehbg5
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_17"] = valuehbg6
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_18"] = valuehbg7
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_19"] = valuehbg8
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_20"] = valuehbg9
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_21"] = valuehbg10
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_10"] = my_floathbg_minvalue
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = my_floathbg_maxvalue
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = my_stringhbg_title
@@ -6614,7 +7178,7 @@ class MyoperatorHBGCsql(bpy.types.Operator):
         mycursor = mydb.cursor(buffered=True)
 
         
-        mycursor.execute("SELECT `Number of bars (1-4)` FROM horizontal_bar_comparison_gtable")
+        mycursor.execute("SELECT `Number of bars (1-9)` FROM horizontal_bar_comparison_gtable")
         numberofbarshbgc = mycursor.fetchone()
         my_floathbgc_numberofbars = int(numberofbarshbgc[0])
         
@@ -6624,10 +7188,20 @@ class MyoperatorHBGCsql(bpy.types.Operator):
         my_stringhbgc_bartext2 = str(my_stringhbgc_bartext[1])
         my_stringhbgc_bartext3 = str(my_stringhbgc_bartext[2])
         my_stringhbgc_bartext4 = str(my_stringhbgc_bartext[3])
+        my_stringhbgc_bartext5 = str(my_stringhbgc_bartext[4])
+        my_stringhbgc_bartext6 = str(my_stringhbgc_bartext[5])
+        my_stringhbgc_bartext7 = str(my_stringhbgc_bartext[6])
+        my_stringhbgc_bartext8 = str(my_stringhbgc_bartext[7])
+        my_stringhbgc_bartext9 = str(my_stringhbgc_bartext[8])
         my_stringhbgc_bartext1 = my_stringhbgc_bartext1.strip("(").strip(")").strip(",").strip("'")
         my_stringhbgc_bartext2 = my_stringhbgc_bartext2.strip("(").strip(")").strip(",").strip("'")
         my_stringhbgc_bartext3 = my_stringhbgc_bartext3.strip("(").strip(")").strip(",").strip("'")
         my_stringhbgc_bartext4 = my_stringhbgc_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext5 = my_stringhbgc_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext6 = my_stringhbgc_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext7 = my_stringhbgc_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext8 = my_stringhbgc_bartext8.strip("(").strip(")").strip(",").strip("'")
+        my_stringhbgc_bartext9 = my_stringhbgc_bartext9.strip("(").strip(")").strip(",").strip("'")
         
         mycursor.execute("SELECT `Max Value` FROM horizontal_bar_comparison_gtable")
         maxvalue = mycursor.fetchone()
@@ -6635,11 +7209,16 @@ class MyoperatorHBGCsql(bpy.types.Operator):
 
         mycursor.execute("SELECT `Bar Value A` FROM horizontal_bar_comparison_gtable")
         valueahbgc = mycursor.fetchall()
-        valueahbgc1, valueahbgc2, valueahbgc3, valueahbgc4 = valueahbgc
+        valueahbgc1, valueahbgc2, valueahbgc3, valueahbgc4, valueahbgc5, valueahbgc6, valueahbgc7, valueahbgc8, valueahbgc9  = valueahbgc
         valueahbgc1 = str(valueahbgc1)
         valueahbgc2 = str(valueahbgc2)
         valueahbgc3 = str(valueahbgc3)
-        valueahbgc4 = str(valueahbgc4)          
+        valueahbgc4 = str(valueahbgc4)
+        valueahbgc5 = str(valueahbgc5)
+        valueahbgc6 = str(valueahbgc6)
+        valueahbgc7 = str(valueahbgc7)
+        valueahbgc8 = str(valueahbgc8)  
+        valueahbgc9 = str(valueahbgc9)         
         valueahbgc1 = valueahbgc1.strip("(").strip(")").strip(",").strip("'")
         valueahbgc1 = float(valueahbgc1)
         valueahbgc2 = valueahbgc2.strip("(").strip(")").strip(",").strip("'")
@@ -6648,14 +7227,29 @@ class MyoperatorHBGCsql(bpy.types.Operator):
         valueahbgc3 = float(valueahbgc3)
         valueahbgc4 = valueahbgc4.strip("(").strip(")").strip(",").strip("'")
         valueahbgc4 = float(valueahbgc4)
+        valueahbgc5 = valueahbgc5.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc5 = float(valueahbgc5)
+        valueahbgc6 = valueahbgc6.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc6 = float(valueahbgc6)
+        valueahbgc7 = valueahbgc7.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc7 = float(valueahbgc7)
+        valueahbgc8 = valueahbgc8.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc8 = float(valueahbgc8)
+        valueahbgc9 = valueahbgc9.strip("(").strip(")").strip(",").strip("'")
+        valueahbgc9 = float(valueahbgc9)
 
         mycursor.execute("SELECT `Bar Value B` FROM horizontal_bar_comparison_gtable")
         valuebhbgc = mycursor.fetchall()
-        valuebhbgc1, valuebhbgc2, valuebhbgc3, valuebhbgc4 = valuebhbgc
+        valuebhbgc1, valuebhbgc2, valuebhbgc3, valuebhbgc4, valuebhbgc5, valuebhbgc6, valuebhbgc7, valuebhbgc8, valuebhbgc9 = valuebhbgc
         valuebhbgc1 = str(valuebhbgc1)
         valuebhbgc2 = str(valuebhbgc2)
         valuebhbgc3 = str(valuebhbgc3)
-        valuebhbgc4 = str(valuebhbgc4)          
+        valuebhbgc4 = str(valuebhbgc4)  
+        valuebhbgc5 = str(valuebhbgc5)
+        valuebhbgc6 = str(valuebhbgc6)
+        valuebhbgc7 = str(valuebhbgc7)
+        valuebhbgc8 = str(valuebhbgc8) 
+        valuebhbgc9 = str(valuebhbgc9)        
         valuebhbgc1 = valuebhbgc1.strip("(").strip(")").strip(",").strip("'")
         valuebhbgc1 = float(valuebhbgc1)
         valuebhbgc2 = valuebhbgc2.strip("(").strip(")").strip(",").strip("'")
@@ -6664,6 +7258,16 @@ class MyoperatorHBGCsql(bpy.types.Operator):
         valuebhbgc3 = float(valuebhbgc3)
         valuebhbgc4 = valuebhbgc4.strip("(").strip(")").strip(",").strip("'")
         valuebhbgc4 = float(valuebhbgc4)
+        valuebhbgc5 = valuebhbgc5.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc5 = float(valuebhbgc5)
+        valuebhbgc6 = valuebhbgc6.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc6 = float(valuebhbgc6)
+        valuebhbgc7 = valuebhbgc7.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc7 = float(valuebhbgc7)
+        valuebhbgc8 = valuebhbgc8.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc8 = float(valuebhbgc8)
+        valuebhbgc9 = valuebhbgc9.strip("(").strip(")").strip(",").strip("'")
+        valuebhbgc9 = float(valuebhbgc9)
 
         mycursor.execute("SELECT `Min Value` FROM horizontal_bar_comparison_gtable")
         minvalue = mycursor.fetchone()
@@ -6706,14 +7310,29 @@ class MyoperatorHBGCsql(bpy.types.Operator):
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = my_stringhbgc_bartext2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = my_stringhbgc_bartext3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = my_stringhbgc_bartext4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_66"] = my_stringhbgc_bartext5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_67"] = my_stringhbgc_bartext6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_68"] = my_stringhbgc_bartext7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_69"] = my_stringhbgc_bartext8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_70"] = my_stringhbgc_bartext9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = valueahbgc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = valueahbgc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = valueahbgc3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = valueahbgc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_71"] = valueahbgc5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_73"] = valueahbgc6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_75"] = valueahbgc7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_77"] = valueahbgc8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_79"] = valueahbgc9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = valuebhbgc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = valuebhbgc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = valuebhbgc3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = valuebhbgc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_72"] = valuebhbgc5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_74"] = valuebhbgc6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_76"] = valuebhbgc7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_78"] = valuebhbgc8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_80"] = valuebhbgc9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_10"] = my_floathbgc_minvalue
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = my_floathbgc_maxvalue
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_12"] = my_floathbgc_decvalue
@@ -6751,7 +7370,7 @@ class MyoperatorMCGsql(bpy.types.Operator):
         mycursor = mydb.cursor(buffered=True)
 
         
-        mycursor.execute("SELECT `Number of sliders (1-5)` FROM multiple_circlegtable")
+        mycursor.execute("SELECT `Number of sliders (1-8)` FROM multiple_circlegtable")
         numberofslidersmcg = mycursor.fetchone()
         my_floatmcg_numberofsliders = int(numberofslidersmcg[0])
         
@@ -6762,11 +7381,17 @@ class MyoperatorMCGsql(bpy.types.Operator):
         my_stringmcg_bartext3 = str(my_stringmcg_bartext[2])
         my_stringmcg_bartext4 = str(my_stringmcg_bartext[3])
         my_stringmcg_bartext5 = str(my_stringmcg_bartext[4])
+        my_stringmcg_bartext6 = str(my_stringmcg_bartext[5])
+        my_stringmcg_bartext7 = str(my_stringmcg_bartext[6])
+        my_stringmcg_bartext8 = str(my_stringmcg_bartext[7])
         my_stringmcg_bartext1 = my_stringmcg_bartext1.strip("(").strip(")").strip(",").strip("'")
         my_stringmcg_bartext2 = my_stringmcg_bartext2.strip("(").strip(")").strip(",").strip("'")
         my_stringmcg_bartext3 = my_stringmcg_bartext3.strip("(").strip(")").strip(",").strip("'")
         my_stringmcg_bartext4 = my_stringmcg_bartext4.strip("(").strip(")").strip(",").strip("'")
         my_stringmcg_bartext5 = my_stringmcg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext6 = my_stringmcg_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext7 = my_stringmcg_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringmcg_bartext8 = my_stringmcg_bartext8.strip("(").strip(")").strip(",").strip("'")
         
         mycursor.execute("SELECT `Max Value` FROM multiple_circlegtable")
         maxbarvalue = mycursor.fetchone()
@@ -6774,12 +7399,15 @@ class MyoperatorMCGsql(bpy.types.Operator):
 
         mycursor.execute("SELECT `Bar Value` FROM multiple_circlegtable")
         barvaluemcg = mycursor.fetchall()
-        barvaluemcg1, barvaluemcg2, barvaluemcg3, barvaluemcg4, barvaluemcg5 = barvaluemcg
+        barvaluemcg1, barvaluemcg2, barvaluemcg3, barvaluemcg4, barvaluemcg5, barvaluemcg6, barvaluemcg7, barvaluemcg8 = barvaluemcg
         barvaluemcg1 = str(barvaluemcg1)
         barvaluemcg2 = str(barvaluemcg2)
         barvaluemcg3 = str(barvaluemcg3)
         barvaluemcg4 = str(barvaluemcg4)
-        barvaluemcg5 = str(barvaluemcg5)         
+        barvaluemcg5 = str(barvaluemcg5)
+        barvaluemcg6 = str(barvaluemcg6)
+        barvaluemcg7 = str(barvaluemcg7)
+        barvaluemcg8 = str(barvaluemcg8)            
         barvaluemcg1 = barvaluemcg1.strip("(").strip(")").strip(",").strip("'")
         barvaluemcg1 = float(barvaluemcg1)
         barvaluemcg2 = barvaluemcg2.strip("(").strip(")").strip(",").strip("'")
@@ -6790,11 +7418,20 @@ class MyoperatorMCGsql(bpy.types.Operator):
         barvaluemcg4 = float(barvaluemcg4)
         barvaluemcg5 = barvaluemcg5.strip("(").strip(")").strip(",").strip("'")
         barvaluemcg5 = float(barvaluemcg5)
+        barvaluemcg6 = barvaluemcg6.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg6 = float(barvaluemcg6)
+        barvaluemcg7 = barvaluemcg7.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg7 = float(barvaluemcg7)
+        barvaluemcg8 = barvaluemcg8.strip("(").strip(")").strip(",").strip("'")
+        barvaluemcg8 = float(barvaluemcg8)
         my_floatmcg_barvalue1 = barvaluemcg1/my_floatmcg_maxbarvalue
         my_floatmcg_barvalue2 = barvaluemcg2/my_floatmcg_maxbarvalue
         my_floatmcg_barvalue3 = barvaluemcg3/my_floatmcg_maxbarvalue
         my_floatmcg_barvalue4 = barvaluemcg4/my_floatmcg_maxbarvalue
         my_floatmcg_barvalue5 = barvaluemcg5/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue6 = barvaluemcg6/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue7 = barvaluemcg7/my_floatmcg_maxbarvalue
+        my_floatmcg_barvalue8 = barvaluemcg8/my_floatmcg_maxbarvalue
 
         mycursor.execute("SELECT `Min Value` FROM multiple_circlegtable")
         minbarvalue = mycursor.fetchone()
@@ -6831,11 +7468,17 @@ class MyoperatorMCGsql(bpy.types.Operator):
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = my_stringmcg_bartext3
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = my_stringmcg_bartext4
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = my_stringmcg_bartext5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_13"] = my_stringmcg_bartext6
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_18"] = my_stringmcg_bartext7
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_23"] = my_stringmcg_bartext8
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_2"] = my_floatmcg_barvalue1
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_12"] = my_floatmcg_barvalue2
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_14"] = my_floatmcg_barvalue3
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_15"] = my_floatmcg_barvalue4
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = my_floatmcg_barvalue5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_7"] = my_floatmcg_barvalue6
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_8"] = my_floatmcg_barvalue7
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_9"] = my_floatmcg_barvalue8
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_10"] = my_floatmcg_minbarvalue
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_11"] = my_floatmcg_maxbarvalue
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_18"] = my_floatmcg_decvalue
@@ -6871,7 +7514,7 @@ class MyoperatorMPGsql(bpy.types.Operator):
         mycursor = mydb.cursor(buffered=True)
 
         
-        mycursor.execute("SELECT `Number of sliders (1-5)` FROM multiple_piegtable")
+        mycursor.execute("SELECT `Number of sliders (1-8)` FROM multiple_piegtable")
         numberofslidersmpg = mycursor.fetchone()
         my_floatmpg_numberofsliders = int(numberofslidersmpg[0])
         
@@ -6882,11 +7525,17 @@ class MyoperatorMPGsql(bpy.types.Operator):
         my_stringmpg_bartext3 = str(my_stringmpg_bartext[2])
         my_stringmpg_bartext4 = str(my_stringmpg_bartext[3])
         my_stringmpg_bartext5 = str(my_stringmpg_bartext[4])
+        my_stringmpg_bartext6 = str(my_stringmpg_bartext[5])
+        my_stringmpg_bartext7 = str(my_stringmpg_bartext[6])
+        my_stringmpg_bartext8 = str(my_stringmpg_bartext[7])
         my_stringmpg_bartext1 = my_stringmpg_bartext1.strip("(").strip(")").strip(",").strip("'")
         my_stringmpg_bartext2 = my_stringmpg_bartext2.strip("(").strip(")").strip(",").strip("'")
         my_stringmpg_bartext3 = my_stringmpg_bartext3.strip("(").strip(")").strip(",").strip("'")
         my_stringmpg_bartext4 = my_stringmpg_bartext4.strip("(").strip(")").strip(",").strip("'")
         my_stringmpg_bartext5 = my_stringmpg_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext6 = my_stringmpg_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext7 = my_stringmpg_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringmpg_bartext8 = my_stringmpg_bartext8.strip("(").strip(")").strip(",").strip("'")
         
         mycursor.execute("SELECT `Max Value` FROM multiple_piegtable")
         maxbarvalue = mycursor.fetchone()
@@ -6894,12 +7543,15 @@ class MyoperatorMPGsql(bpy.types.Operator):
 
         mycursor.execute("SELECT `Bar Value` FROM multiple_piegtable")
         barvaluempg = mycursor.fetchall()
-        barvaluempg1, barvaluempg2, barvaluempg3, barvaluempg4, barvaluempg5 = barvaluempg
+        barvaluempg1, barvaluempg2, barvaluempg3, barvaluempg4, barvaluempg5, barvaluempg6, barvaluempg7, barvaluempg8 = barvaluempg
         barvaluempg1 = str(barvaluempg1)
         barvaluempg2 = str(barvaluempg2)
         barvaluempg3 = str(barvaluempg3)
         barvaluempg4 = str(barvaluempg4)
-        barvaluempg5 = str(barvaluempg5)         
+        barvaluempg5 = str(barvaluempg5)   
+        barvaluempg6 = str(barvaluempg6)  
+        barvaluempg7 = str(barvaluempg7) 
+        barvaluempg8 = str(barvaluempg8)      
         barvaluempg1 = barvaluempg1.strip("(").strip(")").strip(",").strip("'")
         barvaluempg1 = float(barvaluempg1)
         barvaluempg2 = barvaluempg2.strip("(").strip(")").strip(",").strip("'")
@@ -6910,11 +7562,20 @@ class MyoperatorMPGsql(bpy.types.Operator):
         barvaluempg4 = float(barvaluempg4)
         barvaluempg5 = barvaluempg5.strip("(").strip(")").strip(",").strip("'")
         barvaluempg5 = float(barvaluempg5)
+        barvaluempg6 = barvaluempg6.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg6 = float(barvaluempg6)
+        barvaluempg7 = barvaluempg7.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg7 = float(barvaluempg7)
+        barvaluempg8 = barvaluempg8.strip("(").strip(")").strip(",").strip("'")
+        barvaluempg8 = float(barvaluempg8)
         my_floatmpg_barvalue1 = barvaluempg1/my_floatmpg_maxbarvalue
         my_floatmpg_barvalue2 = barvaluempg2/my_floatmpg_maxbarvalue
         my_floatmpg_barvalue3 = barvaluempg3/my_floatmpg_maxbarvalue
         my_floatmpg_barvalue4 = barvaluempg4/my_floatmpg_maxbarvalue
         my_floatmpg_barvalue5 = barvaluempg5/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue6 = barvaluempg6/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue7 = barvaluempg7/my_floatmpg_maxbarvalue
+        my_floatmpg_barvalue8 = barvaluempg8/my_floatmpg_maxbarvalue
 
         mycursor.execute("SELECT `Min Value` FROM multiple_piegtable")
         minbarvalue = mycursor.fetchone()
@@ -6951,11 +7612,17 @@ class MyoperatorMPGsql(bpy.types.Operator):
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = my_stringmpg_bartext3
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = my_stringmpg_bartext4
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = my_stringmpg_bartext5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_88"] = my_stringmpg_bartext6
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_4"] = my_stringmpg_bartext7
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_9"] = my_stringmpg_bartext8
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_2"] = my_floatmpg_barvalue1
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_12"] = my_floatmpg_barvalue2
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = my_floatmpg_barvalue3
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_15"] = my_floatmpg_barvalue4
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_16"] = my_floatmpg_barvalue5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_93"] = my_floatmpg_barvalue6
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_0"] = my_floatmpg_barvalue7
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_1"] = my_floatmpg_barvalue8
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_10"] = my_floatmpg_minbarvalue
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] = my_floatmpg_maxbarvalue
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_18"] = my_floatmpg_decvalue
@@ -6991,13 +7658,13 @@ class MyoperatorLGsql(bpy.types.Operator):
         mycursor = mydb.cursor(buffered=True)
 
         
-        mycursor.execute("SELECT `Number of points (1-8)` FROM linegtable")
+        mycursor.execute("SELECT `Number of points (1-30)` FROM linegtable")
         numberofpointslg = mycursor.fetchone()
         my_floatlg_numberofpoints = int(numberofpointslg[0])
 
         mycursor.execute("SELECT `Value` FROM linegtable")
         pointvaluelg = mycursor.fetchall()
-        pointvaluelg1, pointvaluelg2, pointvaluelg3, pointvaluelg4, pointvaluelg5, pointvaluelg6, pointvaluelg7, pointvaluelg8 = pointvaluelg
+        pointvaluelg1, pointvaluelg2, pointvaluelg3, pointvaluelg4, pointvaluelg5, pointvaluelg6, pointvaluelg7, pointvaluelg8, pointvaluelg9, pointvaluelg10, pointvaluelg11, pointvaluelg12, pointvaluelg13, pointvaluelg14, pointvaluelg15, pointvaluelg16, pointvaluelg17, pointvaluelg18, pointvaluelg19, pointvaluelg20, pointvaluelg21, pointvaluelg22, pointvaluelg23, pointvaluelg24, pointvaluelg25, pointvaluelg26, pointvaluelg27, pointvaluelg28, pointvaluelg29, pointvaluelg30 = pointvaluelg
         pointvaluelg1 = str(pointvaluelg1)
         pointvaluelg2 = str(pointvaluelg2)
         pointvaluelg3 = str(pointvaluelg3)
@@ -7005,7 +7672,37 @@ class MyoperatorLGsql(bpy.types.Operator):
         pointvaluelg5 = str(pointvaluelg5)
         pointvaluelg6 = str(pointvaluelg6)
         pointvaluelg7 = str(pointvaluelg7)
-        pointvaluelg8 = str(pointvaluelg8)          
+        pointvaluelg8 = str(pointvaluelg8) 
+        pointvaluelg1 = str(pointvaluelg1)
+        pointvaluelg2 = str(pointvaluelg2)
+        pointvaluelg3 = str(pointvaluelg3)
+        pointvaluelg4 = str(pointvaluelg4)
+        pointvaluelg5 = str(pointvaluelg5)
+        pointvaluelg6 = str(pointvaluelg6)
+        pointvaluelg7 = str(pointvaluelg7)
+        pointvaluelg8 = str(pointvaluelg8)
+        pointvaluelg9 = str(pointvaluelg9)
+        pointvaluelg10 = str(pointvaluelg10)
+        pointvaluelg11 = str(pointvaluelg11)
+        pointvaluelg12 = str(pointvaluelg12)
+        pointvaluelg13 = str(pointvaluelg13)
+        pointvaluelg14 = str(pointvaluelg14)
+        pointvaluelg15 = str(pointvaluelg15)
+        pointvaluelg16 = str(pointvaluelg16)
+        pointvaluelg17 = str(pointvaluelg17)
+        pointvaluelg18 = str(pointvaluelg18)
+        pointvaluelg19 = str(pointvaluelg19)
+        pointvaluelg20 = str(pointvaluelg20)
+        pointvaluelg21 = str(pointvaluelg21)
+        pointvaluelg22 = str(pointvaluelg22)
+        pointvaluelg23 = str(pointvaluelg23)
+        pointvaluelg24 = str(pointvaluelg24)
+        pointvaluelg25 = str(pointvaluelg25)
+        pointvaluelg26 = str(pointvaluelg26)
+        pointvaluelg27 = str(pointvaluelg27)
+        pointvaluelg28 = str(pointvaluelg28)
+        pointvaluelg29 = str(pointvaluelg29)
+        pointvaluelg30 = str(pointvaluelg30)         
         pointvaluelg1 = pointvaluelg1.strip("(").strip(")").strip(",").strip("'")
         pointvaluelg1 = float(pointvaluelg1)
         pointvaluelg2 = pointvaluelg2.strip("(").strip(")").strip(",").strip("'")
@@ -7022,6 +7719,71 @@ class MyoperatorLGsql(bpy.types.Operator):
         pointvaluelg7 = float(pointvaluelg7)
         pointvaluelg8 = pointvaluelg8.strip("(").strip(")").strip(",").strip("'")
         pointvaluelg8 = float(pointvaluelg8)
+        pointvaluelg9 = pointvaluelg9.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg9 = float(pointvaluelg9)
+
+        pointvaluelg10 = pointvaluelg10.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg10 = float(pointvaluelg10)
+
+        pointvaluelg11 = pointvaluelg11.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg11 = float(pointvaluelg11)
+
+        pointvaluelg12 = pointvaluelg12.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg12 = float(pointvaluelg12)
+
+        pointvaluelg13 = pointvaluelg13.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg13 = float(pointvaluelg13)
+
+        pointvaluelg14 = pointvaluelg14.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg14 = float(pointvaluelg14)
+
+        pointvaluelg15 = pointvaluelg15.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg15 = float(pointvaluelg15)
+
+        pointvaluelg16 = pointvaluelg16.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg16 = float(pointvaluelg16)
+
+        pointvaluelg17 = pointvaluelg17.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg17 = float(pointvaluelg17)
+
+        pointvaluelg18 = pointvaluelg18.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg18 = float(pointvaluelg18)
+
+        pointvaluelg19 = pointvaluelg19.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg19 = float(pointvaluelg19)
+
+        pointvaluelg20 = pointvaluelg20.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg20 = float(pointvaluelg20)
+
+        pointvaluelg21 = pointvaluelg21.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg21 = float(pointvaluelg21)
+
+        pointvaluelg22 = pointvaluelg22.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg22 = float(pointvaluelg22)
+
+        pointvaluelg23 = pointvaluelg23.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg23 = float(pointvaluelg23)
+
+        pointvaluelg24 = pointvaluelg24.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg24 = float(pointvaluelg24)
+
+        pointvaluelg25 = pointvaluelg25.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg25 = float(pointvaluelg25)
+
+        pointvaluelg26 = pointvaluelg26.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg26 = float(pointvaluelg26)
+
+        pointvaluelg27 = pointvaluelg27.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg27 = float(pointvaluelg27)
+
+        pointvaluelg28 = pointvaluelg28.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg28 = float(pointvaluelg28)
+
+        pointvaluelg29 = pointvaluelg29.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg29 = float(pointvaluelg29)
+
+        pointvaluelg30 = pointvaluelg30.strip("(").strip(")").strip(",").strip("'")
+        pointvaluelg30 = float(pointvaluelg30)
 
         mycursor.execute("SELECT `Point Text` FROM linegtable")
         my_stringlg_pointtext = mycursor.fetchall()
@@ -7033,6 +7795,28 @@ class MyoperatorLGsql(bpy.types.Operator):
         my_stringlg_pointtext6 = str(my_stringlg_pointtext[5])
         my_stringlg_pointtext7 = str(my_stringlg_pointtext[6])
         my_stringlg_pointtext8 = str(my_stringlg_pointtext[7])
+        my_stringlg_pointtext9 = str(my_stringlg_pointtext[8])
+        my_stringlg_pointtext10 = str(my_stringlg_pointtext[9])
+        my_stringlg_pointtext11 = str(my_stringlg_pointtext[10])
+        my_stringlg_pointtext12 = str(my_stringlg_pointtext[11])
+        my_stringlg_pointtext13 = str(my_stringlg_pointtext[12])
+        my_stringlg_pointtext14 = str(my_stringlg_pointtext[13])
+        my_stringlg_pointtext15 = str(my_stringlg_pointtext[14])
+        my_stringlg_pointtext16 = str(my_stringlg_pointtext[15])
+        my_stringlg_pointtext17 = str(my_stringlg_pointtext[16])
+        my_stringlg_pointtext18 = str(my_stringlg_pointtext[17])
+        my_stringlg_pointtext19 = str(my_stringlg_pointtext[18])
+        my_stringlg_pointtext20 = str(my_stringlg_pointtext[19])
+        my_stringlg_pointtext21 = str(my_stringlg_pointtext[20])
+        my_stringlg_pointtext22 = str(my_stringlg_pointtext[21])
+        my_stringlg_pointtext23 = str(my_stringlg_pointtext[22])
+        my_stringlg_pointtext24 = str(my_stringlg_pointtext[23])
+        my_stringlg_pointtext25 = str(my_stringlg_pointtext[24])
+        my_stringlg_pointtext26 = str(my_stringlg_pointtext[25])
+        my_stringlg_pointtext27 = str(my_stringlg_pointtext[26])
+        my_stringlg_pointtext28 = str(my_stringlg_pointtext[27])
+        my_stringlg_pointtext29 = str(my_stringlg_pointtext[28])
+        my_stringlg_pointtext30 = str(my_stringlg_pointtext[29])
         my_stringlg_pointtext1 = my_stringlg_pointtext1.strip("(").strip(")").strip(",").strip("'")
         my_stringlg_pointtext2 = my_stringlg_pointtext2.strip("(").strip(")").strip(",").strip("'")
         my_stringlg_pointtext3 = my_stringlg_pointtext3.strip("(").strip(")").strip(",").strip("'")
@@ -7041,6 +7825,28 @@ class MyoperatorLGsql(bpy.types.Operator):
         my_stringlg_pointtext6 = my_stringlg_pointtext6.strip("(").strip(")").strip(",").strip("'")
         my_stringlg_pointtext7 = my_stringlg_pointtext7.strip("(").strip(")").strip(",").strip("'")
         my_stringlg_pointtext8 = my_stringlg_pointtext8.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext9 = my_stringlg_pointtext9.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext10 = my_stringlg_pointtext10.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext11 = my_stringlg_pointtext11.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext12 = my_stringlg_pointtext12.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext13 = my_stringlg_pointtext13.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext14 = my_stringlg_pointtext14.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext15 = my_stringlg_pointtext15.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext16 = my_stringlg_pointtext16.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext17 = my_stringlg_pointtext17.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext18 = my_stringlg_pointtext18.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext19 = my_stringlg_pointtext19.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext20 = my_stringlg_pointtext20.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext21 = my_stringlg_pointtext21.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext22 = my_stringlg_pointtext22.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext23 = my_stringlg_pointtext23.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext24 = my_stringlg_pointtext24.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext25 = my_stringlg_pointtext25.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext26 = my_stringlg_pointtext26.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext27 = my_stringlg_pointtext27.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext28 = my_stringlg_pointtext28.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext29 = my_stringlg_pointtext29.strip("(").strip(")").strip(",").strip("'")
+        my_stringlg_pointtext30 = my_stringlg_pointtext30.strip("(").strip(")").strip(",").strip("'")
 
 
         mycursor.execute("SELECT `Min Value` FROM linegtable")
@@ -7096,6 +7902,28 @@ class MyoperatorLGsql(bpy.types.Operator):
                                         modifier_0["Input_9"] = pointvaluelg6
                                         modifier_0["Input_10"] = pointvaluelg7
                                         modifier_0["Input_11"] = pointvaluelg8
+                                        modifier_0["Socket_0"] = pointvaluelg9
+                                        modifier_0["Socket_1"] = pointvaluelg10
+                                        modifier_0["Socket_2"] = pointvaluelg11
+                                        modifier_0["Socket_3"] = pointvaluelg12
+                                        modifier_0["Socket_4"] = pointvaluelg13
+                                        modifier_0["Socket_5"] = pointvaluelg14
+                                        modifier_0["Socket_6"] = pointvaluelg15
+                                        modifier_0["Socket_7"] = pointvaluelg16
+                                        modifier_0["Socket_8"] = pointvaluelg17
+                                        modifier_0["Socket_9"] = pointvaluelg18
+                                        modifier_0["Socket_10"] = pointvaluelg19
+                                        modifier_0["Socket_11"] = pointvaluelg20
+                                        modifier_0["Socket_12"] = pointvaluelg21
+                                        modifier_0["Socket_13"] = pointvaluelg22
+                                        modifier_0["Socket_14"] = pointvaluelg23
+                                        modifier_0["Socket_15"] = pointvaluelg24
+                                        modifier_0["Socket_16"] = pointvaluelg25
+                                        modifier_0["Socket_17"] = pointvaluelg26
+                                        modifier_0["Socket_18"] = pointvaluelg27
+                                        modifier_0["Socket_19"] = pointvaluelg28
+                                        modifier_0["Socket_20"] = pointvaluelg29
+                                        modifier_0["Socket_21"] = pointvaluelg30
 
                                         modifier_1["Input_4"] = my_stringlg_pointtext1
                                         modifier_1["Input_5"] = my_stringlg_pointtext2
@@ -7105,6 +7933,28 @@ class MyoperatorLGsql(bpy.types.Operator):
                                         modifier_1["Input_9"] = my_stringlg_pointtext6
                                         modifier_1["Input_10"] = my_stringlg_pointtext7
                                         modifier_1["Input_11"] = my_stringlg_pointtext8
+                                        modifier_1["Socket_0"] = my_stringlg_pointtext9
+                                        modifier_1["Socket_1"] = my_stringlg_pointtext10
+                                        modifier_1["Socket_2"] = my_stringlg_pointtext11
+                                        modifier_1["Socket_3"] = my_stringlg_pointtext12
+                                        modifier_1["Socket_4"] = my_stringlg_pointtext13
+                                        modifier_1["Socket_5"] = my_stringlg_pointtext14
+                                        modifier_1["Socket_6"] = my_stringlg_pointtext15
+                                        modifier_1["Socket_7"] = my_stringlg_pointtext16
+                                        modifier_1["Socket_8"] = my_stringlg_pointtext17
+                                        modifier_1["Socket_9"] = my_stringlg_pointtext18
+                                        modifier_1["Socket_10"] = my_stringlg_pointtext19
+                                        modifier_1["Socket_11"] = my_stringlg_pointtext20
+                                        modifier_1["Socket_12"] = my_stringlg_pointtext21
+                                        modifier_1["Socket_13"] = my_stringlg_pointtext22
+                                        modifier_1["Socket_14"] = my_stringlg_pointtext23
+                                        modifier_1["Socket_15"] = my_stringlg_pointtext24
+                                        modifier_1["Socket_16"] = my_stringlg_pointtext25
+                                        modifier_1["Socket_17"] = my_stringlg_pointtext26
+                                        modifier_1["Socket_18"] = my_stringlg_pointtext27
+                                        modifier_1["Socket_19"] = my_stringlg_pointtext28
+                                        modifier_1["Socket_20"] = my_stringlg_pointtext29
+                                        modifier_1["Socket_21"] = my_stringlg_pointtext30
                                         modifier_1["Input_23"] = my_stringlg_title
                                         modifier_1["Input_22"] = my_stringlg_subtitle
 
@@ -8533,6 +9383,28 @@ class MyoperatorLGcsv(bpy.types.Operator):
             value6lg = float(readout[6][1])
             value7lg = float(readout[7][1])
             value8lg = float(readout[8][1])
+            value9lg = float(readout[9][1])
+            value10lg = float(readout[10][1])
+            value11lg = float(readout[11][1])
+            value12lg = float(readout[12][1])
+            value13lg = float(readout[13][1])
+            value14lg = float(readout[14][1])
+            value15lg = float(readout[15][1])
+            value16lg = float(readout[16][1])
+            value17lg = float(readout[17][1])
+            value18lg = float(readout[18][1])
+            value19lg = float(readout[19][1])
+            value20lg = float(readout[20][1])
+            value21lg = float(readout[21][1])
+            value22lg = float(readout[22][1])
+            value23lg = float(readout[23][1])
+            value24lg = float(readout[24][1])
+            value25lg = float(readout[25][1])
+            value26lg = float(readout[26][1])
+            value27lg = float(readout[27][1])
+            value28lg = float(readout[28][1])
+            value29lg = float(readout[29][1])
+            value30lg = float(readout[30][1])
             text1lg = str(readout[1][2])
             text2lg = str(readout[2][2])
             text3lg = str(readout[3][2])
@@ -8541,6 +9413,28 @@ class MyoperatorLGcsv(bpy.types.Operator):
             text6lg = str(readout[6][2])
             text7lg = str(readout[7][2])
             text8lg = str(readout[8][2])
+            text9lg = str(readout[9][2])
+            text10lg = str(readout[10][2])
+            text11lg = str(readout[11][2])
+            text12lg = str(readout[12][2])
+            text13lg = str(readout[13][2])
+            text14lg = str(readout[14][2])
+            text15lg = str(readout[15][2])
+            text16lg = str(readout[16][2])
+            text17lg = str(readout[17][2])
+            text18lg = str(readout[18][2])
+            text19lg = str(readout[19][2])
+            text20lg = str(readout[20][2])
+            text21lg = str(readout[21][2])
+            text22lg = str(readout[22][2])
+            text23lg = str(readout[23][2])
+            text24lg = str(readout[24][2])
+            text25lg = str(readout[25][2])
+            text26lg = str(readout[26][2])
+            text27lg = str(readout[27][2])
+            text28lg = str(readout[28][2])
+            text29lg = str(readout[29][2])
+            text30lg = str(readout[30][2])
             titlelg = str(readout[1][7])
             subtitlelg = str(readout[1][8])
             
@@ -8571,6 +9465,28 @@ class MyoperatorLGcsv(bpy.types.Operator):
                                         modifier_0["Input_9"] = value6lg
                                         modifier_0["Input_10"] = value7lg
                                         modifier_0["Input_11"] = value8lg
+                                        modifier_0["Socket_0"] = value9lg
+                                        modifier_0["Socket_1"] = value10lg
+                                        modifier_0["Socket_2"] = value11lg
+                                        modifier_0["Socket_3"] = value12lg
+                                        modifier_0["Socket_4"] = value13lg
+                                        modifier_0["Socket_5"] = value14lg
+                                        modifier_0["Socket_6"] = value15lg
+                                        modifier_0["Socket_7"] = value16lg
+                                        modifier_0["Socket_8"] = value17lg
+                                        modifier_0["Socket_9"] = value18lg
+                                        modifier_0["Socket_10"] = value19lg
+                                        modifier_0["Socket_11"] = value20lg
+                                        modifier_0["Socket_12"] = value21lg
+                                        modifier_0["Socket_13"] = value22lg
+                                        modifier_0["Socket_14"] = value23lg
+                                        modifier_0["Socket_15"] = value24lg
+                                        modifier_0["Socket_16"] = value25lg
+                                        modifier_0["Socket_17"] = value26lg
+                                        modifier_0["Socket_18"] = value27lg
+                                        modifier_0["Socket_19"] = value28lg
+                                        modifier_0["Socket_20"] = value29lg
+                                        modifier_0["Socket_21"] = value30lg
 
                                         modifier_1["Input_4"] = text1lg
                                         modifier_1["Input_5"] = text2lg
@@ -8580,6 +9496,28 @@ class MyoperatorLGcsv(bpy.types.Operator):
                                         modifier_1["Input_9"] = text6lg
                                         modifier_1["Input_10"] = text7lg
                                         modifier_1["Input_11"] = text8lg
+                                        modifier_1["Socket_0"] = text9lg
+                                        modifier_1["Socket_1"] = text10lg
+                                        modifier_1["Socket_2"] = text11lg
+                                        modifier_1["Socket_3"] = text12lg
+                                        modifier_1["Socket_4"] = text13lg
+                                        modifier_1["Socket_5"] = text14lg
+                                        modifier_1["Socket_6"] = text15lg
+                                        modifier_1["Socket_7"] = text16lg
+                                        modifier_1["Socket_8"] = text17lg
+                                        modifier_1["Socket_9"] = text18lg
+                                        modifier_1["Socket_10"] = text19lg
+                                        modifier_1["Socket_11"] = text20lg
+                                        modifier_1["Socket_12"] = text21lg
+                                        modifier_1["Socket_13"] = text22lg
+                                        modifier_1["Socket_14"] = text23lg
+                                        modifier_1["Socket_15"] = text24lg
+                                        modifier_1["Socket_16"] = text25lg
+                                        modifier_1["Socket_17"] = text26lg
+                                        modifier_1["Socket_18"] = text27lg
+                                        modifier_1["Socket_19"] = text28lg
+                                        modifier_1["Socket_20"] = text29lg
+                                        modifier_1["Socket_21"] = text30lg
                                         modifier_1["Input_23"] = titlelg
                                         modifier_1["Input_22"] = subtitlelg
 
@@ -8714,17 +9652,34 @@ class MyoperatorHBcsv(bpy.types.Operator):
         with open(filepath_full4) as f:
             readout = list(csv.reader(f))
             gregoryhbar = int(readout[1][0])
+            
             malloryhbar1 = float(readout[1][2])
             malloryhbar2 = float(readout[2][2])
             malloryhbar3 = float(readout[3][2])
             malloryhbar4 = float(readout[4][2])
+            malloryhbar5 = float(readout[5][2])
+            malloryhbar6 = float(readout[6][2])
+            malloryhbar7 = float(readout[7][2])
+            malloryhbar8 = float(readout[8][2])
+            malloryhbar9 = float(readout[9][2])
+            malloryhbar10 = float(readout[10][2])
+            
             olatunjihbar1 = float(readout[1][3])
             olatunjihbar2 = float(readout[1][4])
+            
             jeopardyhbar1 = int(readout[1][5])
+            
             hogwashhbar1 = str(readout[1][1])
             hogwashhbar2 = str(readout[2][1])
             hogwashhbar3 = str(readout[3][1])
             hogwashhbar4 = str(readout[4][1])
+            hogwashhbar5 = str(readout[5][1])
+            hogwashhbar6 = str(readout[6][1])
+            hogwashhbar7 = str(readout[7][1])
+            hogwashhbar8 = str(readout[8][1])
+            hogwashhbar9 = str(readout[9][1])
+            hogwashhbar10 = str(readout[10][1])
+
             titlehbar1 = str(readout[1][6])
             subtitlehbar1 = str(readout[1][7])
             totalhbar1 = str(readout[1][8])
@@ -8745,6 +9700,12 @@ class MyoperatorHBcsv(bpy.types.Operator):
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = malloryhbar2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = malloryhbar3
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = malloryhbar4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_16"] = malloryhbar5
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_17"] = malloryhbar6
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_18"] = malloryhbar7
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_19"] = malloryhbar8
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_20"] = malloryhbar9
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_21"] = malloryhbar10
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_10"] = olatunjihbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = olatunjihbar2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_12"] = jeopardyhbar1
@@ -8752,6 +9713,12 @@ class MyoperatorHBcsv(bpy.types.Operator):
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = hogwashhbar2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = hogwashhbar3
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = hogwashhbar4
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_10"] = hogwashhbar5
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_11"] = hogwashhbar6
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_12"] = hogwashhbar7
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_13"] = hogwashhbar8
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_14"] = hogwashhbar9
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_15"] = hogwashhbar10
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = titlehbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_8"] = subtitlehbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_6"] = totalhbar1
@@ -8781,6 +9748,11 @@ class MyoperatorHBCcsv(bpy.types.Operator):
             bthbarc2 = str(readout[2][1])
             bthbarc3 = str(readout[3][1])
             bthbarc4 = str(readout[4][1])
+            bthbarc5 = str(readout[5][1])
+            bthbarc6 = str(readout[6][1])
+            bthbarc7 = str(readout[7][1])
+            bthbarc8 = str(readout[8][1])
+            bthbarc9 = str(readout[9][1])
             minvhbarc1 = float(readout[1][4])
             maxvhbarc2 = float(readout[1][5])
             decimalhbarc1 = int(readout[1][6])
@@ -8788,10 +9760,20 @@ class MyoperatorHBCcsv(bpy.types.Operator):
             bvahbarc2 = float(readout[2][2])
             bvahbarc3 = float(readout[3][2])
             bvahbarc4 = float(readout[4][2])
+            bvahbarc5 = float(readout[5][2])
+            bvahbarc6 = float(readout[6][2])
+            bvahbarc7 = float(readout[7][2])
+            bvahbarc8 = float(readout[8][2])
+            bvahbarc9 = float(readout[9][2])
             bvbhbarc1 = float(readout[1][3])
             bvbhbarc2 = float(readout[2][3])
             bvbhbarc3 = float(readout[3][3])
             bvbhbarc4 = float(readout[4][3])
+            bvbhbarc5 = float(readout[5][3])
+            bvbhbarc6 = float(readout[6][3])
+            bvbhbarc7 = float(readout[7][3])
+            bvbhbarc8 = float(readout[8][3])
+            bvbhbarc9 = float(readout[9][3])
             titlehbarc1 = str(readout[1][7])
             subtitlehbarc1 = str(readout[1][8])
             legendhbarc1 = str(readout[1][9])
@@ -8813,6 +9795,11 @@ class MyoperatorHBCcsv(bpy.types.Operator):
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = bthbarc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = bthbarc3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = bthbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_66"] = bthbarc5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_67"] = bthbarc6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_68"] = bthbarc7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_69"] = bthbarc8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_70"] = bthbarc9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_10"] = minvhbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = maxvhbarc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_12"] = decimalhbarc1
@@ -8820,10 +9807,20 @@ class MyoperatorHBCcsv(bpy.types.Operator):
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = bvahbarc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = bvahbarc3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = bvahbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_71"] = bvahbarc5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_73"] = bvahbarc6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_75"] = bvahbarc7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_77"] = bvahbarc8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_79"] = bvahbarc9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = bvbhbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = bvbhbarc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = bvbhbarc3
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = bvbhbarc4
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_72"] = bvbhbarc5
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_74"] = bvbhbarc6
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_76"] = bvbhbarc7
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_78"] = bvbhbarc8
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_80"] = bvbhbarc9
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_7"] = titlehbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_8"] = subtitlehbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_6"] = legendhbarc1
@@ -8855,11 +9852,17 @@ class MyoperatorMCcsv(bpy.types.Operator):
             mallorymcircle3 = float(readout[3][2])
             mallorymcircle4 = float(readout[4][2])
             mallorymcircle5 = float(readout[5][2])
+            mallorymcircle6 = float(readout[6][2])
+            mallorymcircle7 = float(readout[7][2])
+            mallorymcircle8 = float(readout[8][2])
             hogwashmcircle1 = str(readout[1][1])
             hogwashmcircle2 = str(readout[2][1])
             hogwashmcircle3 = str(readout[3][1])
             hogwashmcircle4 = str(readout[4][1])
             hogwashmcircle5 = str(readout[5][1])
+            hogwashmcircle6 = str(readout[6][1])
+            hogwashmcircle7 = str(readout[7][1])
+            hogwashmcircle8 = str(readout[8][1])
             minvaluemcircle = float(readout[1][3])
             maxvaluemcircle = float(readout[1][4])
             decimalmcircle = int(readout[1][5])
@@ -8870,6 +9873,9 @@ class MyoperatorMCcsv(bpy.types.Operator):
             mallorympercentage3 = float(mallorymcircle3/maxvaluemcircle)
             mallorympercentage4 = float(mallorymcircle4/maxvaluemcircle)
             mallorympercentage5 = float(mallorymcircle5/maxvaluemcircle)
+            mallorympercentage6 = float(mallorymcircle6/maxvaluemcircle)
+            mallorympercentage7 = float(mallorymcircle7/maxvaluemcircle)
+            mallorympercentage8 = float(mallorymcircle8/maxvaluemcircle)
              
 
             
@@ -8889,7 +9895,10 @@ class MyoperatorMCcsv(bpy.types.Operator):
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_12"] = mallorympercentage2
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_14"] = mallorympercentage3
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_15"] = mallorympercentage4
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = mallorympercentage1
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = mallorympercentage5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_7"] = mallorympercentage6
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_8"] = mallorympercentage7                               
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_9"] = mallorympercentage8                                
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_10"] = minvaluemcircle
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_11"] = maxvaluemcircle
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_18"] = decimalmcircle
@@ -8900,6 +9909,9 @@ class MyoperatorMCcsv(bpy.types.Operator):
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = hogwashmcircle3
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = hogwashmcircle4
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = hogwashmcircle5
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_13"] = hogwashmcircle6
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_18"] = hogwashmcircle7
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_23"] = hogwashmcircle8
 
                                 print(f"Set modifier input for object '{mesh_name_mcg}' and modifier '{modifier_name_mcg}'.")
                         else:
@@ -8927,11 +9939,17 @@ class MyoperatorMPcsv(bpy.types.Operator):
             mallorympie3 = float(readout[3][2])
             mallorympie4 = float(readout[4][2])
             mallorympie5 = float(readout[5][2])
+            mallorympie6 = float(readout[6][2])
+            mallorympie7 = float(readout[7][2])
+            mallorympie8 = float(readout[8][2])
             hogwashmpie1 = str(readout[1][1])
             hogwashmpie2 = str(readout[2][1])
             hogwashmpie3 = str(readout[3][1])
             hogwashmpie4 = str(readout[4][1])
             hogwashmpie5 = str(readout[5][1])
+            hogwashmpie6 = str(readout[6][1])
+            hogwashmpie7 = str(readout[7][1])
+            hogwashmpie8 = str(readout[8][1])
             minvaluempie = float(readout[1][3])
             maxvaluempie = float(readout[1][4])
             decimalmpie = int(readout[1][5])
@@ -8941,7 +9959,10 @@ class MyoperatorMPcsv(bpy.types.Operator):
             mallorympiepercentage2 = float(mallorympie2/maxvaluempie)
             mallorympiepercentage3 = float(mallorympie3/maxvaluempie)
             mallorympiepercentage4 = float(mallorympie4/maxvaluempie)
-            mallorympiepercentage5 = float(mallorympie5/maxvaluempie)           
+            mallorympiepercentage5 = float(mallorympie5/maxvaluempie)
+            mallorympiepercentage6 = float(mallorympie6/maxvaluempie)
+            mallorympiepercentage7 = float(mallorympie7/maxvaluempie)  
+            mallorympiepercentage8 = float(mallorympie8/maxvaluempie)              
             
         # Ensure an object is selected
         if bpy.context.selected_objects:
@@ -8960,6 +9981,9 @@ class MyoperatorMPcsv(bpy.types.Operator):
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = mallorympiepercentage3
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_15"] = mallorympiepercentage4
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_16"] = mallorympiepercentage5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_93"] = mallorympiepercentage6
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_0"] = mallorympiepercentage7
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_1"] = mallorympiepercentage8
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_10"] = minvaluempie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] = maxvaluempie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_18"] = decimalmpie
@@ -8970,6 +9994,9 @@ class MyoperatorMPcsv(bpy.types.Operator):
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = hogwashmpie3
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = hogwashmpie4
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = hogwashmpie5
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_88"] = hogwashmpie6
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_4"] = hogwashmpie7
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_9"] = hogwashmpie8
 
                                 print(f"Set modifier input for object '{mesh_name_mpg}' and modifier '{modifier_name_mpg}'.")
                         else:
@@ -9845,7 +10872,7 @@ class ADDONNAME_OT_my_opLGAL(bpy.types.Operator):
         mytool = scene.my_tool
         
         action_name = bpy.context.active_object.animation_data.action.name
-        data_path = 'modifiers["GeometryNodes"]["Input_26"]'
+        data_path = 'modifiers["GeometryNodes"]["Socket_44"]'
         index = 0
         stringLGAC = mytool.my_floatLGA
         frLGAC = bpy.context.scene.render.fps
@@ -9894,7 +10921,7 @@ class ADDONNAME_OT_my_opLGBL(bpy.types.Operator):
         mytool = scene.my_tool
         
         action_name = bpy.context.active_object.animation_data.action.name
-        data_path = 'modifiers["GeometryNodes"]["Input_27"]'
+        data_path = 'modifiers["GeometryNodes"]["Socket_89"]'
         index = 0
         stringLGBC = mytool.my_floatLGB
         frLGBC = bpy.context.scene.render.fps
@@ -12316,6 +13343,140 @@ class ADDONNAME_OT_my_opMCGEL(bpy.types.Operator):
                 
                 bpy.context.scene.frame_end = bobmcge+(frMCGEC*2)
 
+class ADDONNAME_OT_my_opMCGFL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormcgfl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_4"]'
+        index = 0
+        stringMCGFC = mytool.my_floatMCGF
+        frMCGFC = bpy.context.scene.render.fps
+        jeffmcgf = stringMCGFC*frMCGFC
+        onemoremcgf =  (mytool.my_floatMCGLF*frMCGFC) + jeffmcgf
+        bobmcgf = onemoremcgf     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmcgf = int(bobmcgf)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmcgf
+                kps.handle_left[0] = jeffmcgf-6
+                kps.handle_right[0] = jeffmcgf
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmcgf
+                kpz.handle_left[0] = bobmcgf-6
+                kpz.handle_right[0] = bobmcgf+6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmcgf+(frMCGFC*2)
+                
+class ADDONNAME_OT_my_opMCGGL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormcggl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_5"]'
+        index = 0
+        stringMCGGC = mytool.my_floatMCGG
+        frMCGGC = bpy.context.scene.render.fps
+        jeffmcgg = stringMCGGC*frMCGGC
+        onemoremcgg =  (mytool.my_floatMCGLG*frMCGGC) + jeffmcgg
+        bobmcgg = onemoremcgg     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmcgg = int(bobmcgg)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmcgg
+                kps.handle_left[0] = jeffmcgg-6
+                kps.handle_right[0] = jeffmcgg
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmcgg
+                kpz.handle_left[0] = bobmcgg-6
+                kpz.handle_right[0] = bobmcgg+6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmcgg+(frMCGGC*2)
+                
+class ADDONNAME_OT_my_opMCGHL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormcghl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_6"]'
+        index = 0
+        stringMCGHC = mytool.my_floatMCGH
+        frMCGHC = bpy.context.scene.render.fps
+        jeffmcgh = stringMCGHC*frMCGHC
+        onemoremcgh =  (mytool.my_floatMCGLH*frMCGHC) + jeffmcgh
+        bobmcgh = onemoremcgh     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmcgh = int(bobmcgh)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmcgh
+                kps.handle_left[0] = jeffmcgh-6
+                kps.handle_right[0] = jeffmcgh
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmcgh
+                kpz.handle_left[0] = bobmcgh-6
+                kpz.handle_right[0] = bobmcgh+6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmcgh+(frMCGHC*2)
 
              
         return {'FINISHED'}
@@ -12565,6 +13726,152 @@ class ADDONNAME_OT_my_opMPGEL(bpy.types.Operator):
              
         return {'FINISHED'}
 
+class ADDONNAME_OT_my_opMPGFL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormpgfl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_95"]'
+        index = 0
+        stringMPGFC = mytool.my_floatMPGF
+        frMPGFC = bpy.context.scene.render.fps
+        jeffmpgf = stringMPGFC * frMPGFC
+        onemorempgf = (mytool.my_floatMPGLF * frMPGFC) + jeffmpgf
+        bobmpgf = onemorempgf     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmpgf = int(bobmpgf)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmpgf
+                kps.handle_left[0] = jeffmpgf - 6
+                kps.handle_right[0] = jeffmpgf
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmpgf
+                kpz.handle_left[0] = bobmpgf - 6
+                kpz.handle_right[0] = bobmpgf + 6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmpgf + (frMPGFC * 2)
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMPGGL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormpggl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_2"]'
+        index = 0
+        stringMPGGC = mytool.my_floatMPGG
+        frMPGGC = bpy.context.scene.render.fps
+        jeffmpgg = stringMPGGC * frMPGGC
+        onemorempgg = (mytool.my_floatMPGLG * frMPGGC) + jeffmpgg
+        bobmpgg = onemorempgg     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmpgg = int(bobmpgg)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmpgg
+                kps.handle_left[0] = jeffmpgg - 6
+                kps.handle_right[0] = jeffmpgg
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmpgg
+                kpz.handle_left[0] = bobmpgg - 6
+                kpz.handle_right[0] = bobmpgg + 6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmpgg + (frMPGGC * 2)
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMPGHL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormpghl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_3"]'
+        index = 0
+        stringMPGHC = mytool.my_floatMPGH
+        frMPGHC = bpy.context.scene.render.fps
+        jeffmpgh = stringMPGHC * frMPGHC
+        onemorempgh = (mytool.my_floatMPGLH * frMPGHC) + jeffmpgh
+        bobmpgh = onemorempgh     
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobmpgh = int(bobmpgh)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffmpgh
+                kps.handle_left[0] = jeffmpgh - 6
+                kps.handle_right[0] = jeffmpgh
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobmpgh
+                kpz.handle_left[0] = bobmpgh - 6
+                kpz.handle_right[0] = bobmpgh + 6
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobmpgh + (frMPGHC * 2)
+
+
+             
+        return {'FINISHED'}
 
     
 class ADDONNAME_OT_my_opggpie(bpy.types.Operator):
@@ -12956,49 +14263,141 @@ class ADDONNAME_23P(bpy.types.Operator):
 
 class ADDONNAME_OT_my_oplgpie(bpy.types.Operator):
     bl_label = "Add Ob33jectlg"
-    bl_idname = "addonname.myop_operatorlgpie"  
-
+    bl_idname = "addonname.myop_operatorlgpie"
+        
     def execute(self, context):
         scene = context.scene
-        mytool = scene.my_tool
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumLGpie == 'OPLG7pie':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 96
 
-        if mytool.my_enumLGpie in ('OPLG7pie', 'OPLG8pie'):
-            fps = 24 if mytool.my_enumLGpie == 'OPLG7pie' else 30
-            frame_end = 96 if mytool.my_enumLGpie == 'OPLG7pie' else 120
-            bpy.context.scene.render.fps = fps
-            bpy.context.scene.frame_end = frame_end
+            action_name = 'Line GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Socket_44"]']
+            index = 0              # Z axis
 
-            for i in range(26, 34):
-                action_name = 'CubeAction.001'
-                data_path = f'modifiers["GeometryNodes"]["Input_{i}"]'
-                index = 0  # Z axis
-
+            for data_path in data_paths:
                 # Find the appropriate action
                 action = bpy.data.actions.get(action_name)
                 if action:
                     # From this action, retrieve the appropriate F-Curve
                     fcurve = action.fcurves.find(data_path=data_path, index=index)
                     if fcurve:
-                        fcurve.keyframe_points[0].co.x = 24 if fps == 24 else 30
-                        fcurve.keyframe_points[0].handle_left[0] = 16
+                        fcurve.keyframe_points[0].co.x = 24
+                        fcurve.keyframe_points[0].handle_left[0] = 8
                         fcurve.keyframe_points[0].handle_left[1] = 0
-                        fcurve.keyframe_points[0].handle_right[0] = 32 if fps == 24 else 40
+                        fcurve.keyframe_points[0].handle_right[0] = 37
                         fcurve.keyframe_points[0].handle_right[1] = 0
-                        fcurve.keyframe_points[1].co.x = 48 if fps == 24 else 60
-                        fcurve.keyframe_points[1].handle_left[0] = 40 if fps == 24 else 50
-                        fcurve.keyframe_points[1].handle_left[1] = 1
-                        fcurve.keyframe_points[1].handle_right[0] = 56 if fps == 24 else 70
-                        fcurve.keyframe_points[1].handle_right[1] = 1
+                        fcurve.keyframe_points[1].co.x = 72
+                        fcurve.keyframe_points[1].handle_left[0] = 47
+                        fcurve.keyframe_points[1].handle_left[1] = 0.976
+                        fcurve.keyframe_points[1].handle_right[0] = 77
+                        fcurve.keyframe_points[1].handle_right[1] = 1.005
+
                         print("changed")
                     else:
                         print("no fcurve")
                 else:
                     print("no action")
-                
+
             print("end")
-        else:
-            print("Invalid enum value")
-        
+
+            action_name = 'Line GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Socket_89"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 60
+                        fcurve.keyframe_points[0].handle_left[0] = 56
+                        fcurve.keyframe_points[0].handle_left[1] = 1
+                        fcurve.keyframe_points[0].handle_right[0] = 64
+                        fcurve.keyframe_points[0].handle_right[1] = 1
+                        fcurve.keyframe_points[1].co.x = 72
+                        fcurve.keyframe_points[1].handle_left[0] = 68
+                        fcurve.keyframe_points[1].handle_left[1] = 0
+                        fcurve.keyframe_points[1].handle_right[0] = 79
+                        fcurve.keyframe_points[1].handle_right[1] = 0
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enumLGpie == 'OPLG8pie':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 120
+            
+            action_name = 'Line GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Socket_44"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 30
+                        fcurve.keyframe_points[0].handle_left[0] = 8
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 54.597
+                        fcurve.keyframe_points[0].handle_right[1] = 0
+                        fcurve.keyframe_points[1].co.x = 90
+                        fcurve.keyframe_points[1].handle_left[0] = 65.419
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 90.005
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            action_name = 'Line GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Socket_89"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 75
+                        fcurve.keyframe_points[0].handle_left[0] = 70
+                        fcurve.keyframe_points[0].handle_left[1] = 0.995
+                        fcurve.keyframe_points[0].handle_right[0] = 83.275
+                        fcurve.keyframe_points[0].handle_right[1] = 1.009
+                        fcurve.keyframe_points[1].co.x = 90
+                        fcurve.keyframe_points[1].handle_left[0] = 80.733
+                        fcurve.keyframe_points[1].handle_left[1] = 0
+                        fcurve.keyframe_points[1].handle_right[0] = 95
+                        fcurve.keyframe_points[1].handle_right[1] = 0
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
         return {'FINISHED'}
 
     
@@ -13094,8 +14493,8 @@ class ADDONNAME_OT_my_ophbpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Plane.004Action.002'
-            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]']
+            action_name = 'Plane.004Action.005'
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
             for data_path in data_paths:
@@ -13124,8 +14523,8 @@ class ADDONNAME_OT_my_ophbpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.002'
-            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]']
+            action_name = 'Plane.004Action.005'
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
             for data_path in data_paths:
@@ -13346,6 +14745,299 @@ class ADDONNAME_OT_my_opHBGDL(bpy.types.Operator):
              
         return {'FINISHED'}
     
+class ADDONNAME_OT_my_opHBGEL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbgel"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_0"]'
+        index = 0
+        stringHBGE = mytool.my_floatHBGE
+        frHBGE = bpy.context.scene.render.fps
+        jeffHBGEl = stringHBGE*frHBGE
+        onemoreHBGEl =  (mytool.my_floatHBGLE*frHBGE) + jeffHBGEl
+        bobHBGEl = onemoreHBGEl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGEl = int(bobHBGEl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGEl
+                kps.handle_left[0] = jeffHBGEl-30
+                kps.handle_right[0] = jeffHBGEl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGEl
+                kpz.handle_left[0] = bobHBGEl-30
+                kpz.handle_right[0] = bobHBGEl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGEl+frHBGE
+
+
+             
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opHBGFL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbgfl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_3"]'
+        index = 0
+        stringHBGF = mytool.my_floatHBGF
+        frHBGF = bpy.context.scene.render.fps
+        jeffHBGFl = stringHBGF*frHBGF
+        onemoreHBGFl =  (mytool.my_floatHBGLF*frHBGF) + jeffHBGFl
+        bobHBGFl = onemoreHBGFl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGFl = int(bobHBGFl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGFl
+                kps.handle_left[0] = jeffHBGFl-30
+                kps.handle_right[0] = jeffHBGFl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGFl
+                kpz.handle_left[0] = bobHBGFl-30
+                kpz.handle_right[0] = bobHBGFl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGFl+frHBGF
+
+
+             
+        return {'FINISHED'}   
+    
+class ADDONNAME_OT_my_opHBGGL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbggl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_4"]'
+        index = 0
+        stringHBGG = mytool.my_floatHBGG
+        frHBGG = bpy.context.scene.render.fps
+        jeffHBGGl = stringHBGG*frHBGG
+        onemoreHBGGl =  (mytool.my_floatHBGLG*frHBGG) + jeffHBGGl
+        bobHBGGl = onemoreHBGGl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGGl = int(bobHBGGl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGGl
+                kps.handle_left[0] = jeffHBGGl-30
+                kps.handle_right[0] = jeffHBGGl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGGl
+                kpz.handle_left[0] = bobHBGGl-30
+                kpz.handle_right[0] = bobHBGGl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGGl+frHBGG
+
+
+             
+        return {'FINISHED'} 
+    
+class ADDONNAME_OT_my_opHBGHL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbghl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_5"]'
+        index = 0
+        stringHBGH = mytool.my_floatHBGH
+        frHBGH = bpy.context.scene.render.fps
+        jeffHBGHl = stringHBGH*frHBGH
+        onemoreHBGHl =  (mytool.my_floatHBGLH*frHBGH) + jeffHBGHl
+        bobHBGHl = onemoreHBGHl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGHl = int(bobHBGHl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGHl
+                kps.handle_left[0] = jeffHBGHl-30
+                kps.handle_right[0] = jeffHBGHl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGHl
+                kpz.handle_left[0] = bobHBGHl-30
+                kpz.handle_right[0] = bobHBGHl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGHl+frHBGH
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opHBGIL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbgil"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_6"]'
+        index = 0
+        stringHBGI = mytool.my_floatHBGI
+        frHBGI = bpy.context.scene.render.fps
+        jeffHBGIl = stringHBGI*frHBGI
+        onemoreHBGIl =  (mytool.my_floatHBGLI*frHBGI) + jeffHBGIl
+        bobHBGIl = onemoreHBGIl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGIl = int(bobHBGIl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGIl
+                kps.handle_left[0] = jeffHBGIl-30
+                kps.handle_right[0] = jeffHBGIl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGIl
+                kpz.handle_left[0] = bobHBGIl-30
+                kpz.handle_right[0] = bobHBGIl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGIl+frHBGI
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opHBGJL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorhbgjl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_7"]'
+        index = 0
+        stringHBGJ = mytool.my_floatHBGJ
+        frHBGJ = bpy.context.scene.render.fps
+        jeffHBGJl = stringHBGJ*frHBGJ
+        onemoreHBGJl =  (mytool.my_floatHBGLJ*frHBGJ) + jeffHBGJl
+        bobHBGJl = onemoreHBGJl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobHBGJl = int(bobHBGJl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffHBGJl
+                kps.handle_left[0] = jeffHBGJl-30
+                kps.handle_right[0] = jeffHBGJl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobHBGJl
+                kpz.handle_left[0] = bobHBGJl-30
+                kpz.handle_right[0] = bobHBGJl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobHBGJl+frHBGJ
+
+
+             
+        return {'FINISHED'}
 
 class ADDONNAME_OT_my_opCOMPARISONAHBARAL(bpy.types.Operator):
     bl_label = "Add Objecggggggt"
@@ -13527,6 +15219,231 @@ class ADDONNAME_OT_my_opCOMPARISONAHBARD(bpy.types.Operator):
                 # fcurve.keyframe_points[1].co.x = bob
                 
                 bpy.context.scene.frame_end = bobCAHBARDl + frCAHBARD
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONAHBARE(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonahbare"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_81"]'
+        index = 0
+        stringCAHBARE = mytool.my_floatCOMPARISONAHBARE
+        frCAHBARE = bpy.context.scene.render.fps
+        jeffCAHBAREl = stringCAHBARE * frCAHBARE
+        onemorecahbarel = (mytool.my_floatCOMPARISONAHBARLE * frCAHBARE) + jeffCAHBAREl
+        bobCAHBAREl = onemorecahbarel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHBAREl = int(bobCAHBAREl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHBAREl
+                kps.handle_left[0] = jeffCAHBAREl - 30
+                kps.handle_right[0] = jeffCAHBAREl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHBAREl
+                kpz.handle_left[0] = bobCAHBAREl - 30
+                kpz.handle_right[0] = bobCAHBAREl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHBAREl + frCAHBARE
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONAHBARF(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonahbarf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_82"]'
+        index = 0
+        stringCAHBARF = mytool.my_floatCOMPARISONAHBARF
+        frCAHBARF = bpy.context.scene.render.fps
+        jeffCAHBARFl = stringCAHBARF * frCAHBARF
+        onemorecahbarfl = (mytool.my_floatCOMPARISONAHBARLF * frCAHBARF) + jeffCAHBARFl
+        bobCAHBARFl = onemorecahbarfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHBARFl = int(bobCAHBARFl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHBARFl
+                kps.handle_left[0] = jeffCAHBARFl - 30
+                kps.handle_right[0] = jeffCAHBARFl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHBARFl
+                kpz.handle_left[0] = bobCAHBARFl - 30
+                kpz.handle_right[0] = bobCAHBARFl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHBARFl + frCAHBARF
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONAHBARG(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonahbarg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_83"]'
+        index = 0
+        stringCAHBARG = mytool.my_floatCOMPARISONAHBARG
+        frCAHBARG = bpy.context.scene.render.fps
+        jeffCAHBARGl = stringCAHBARG * frCAHBARG
+        onemorecahbargl = (mytool.my_floatCOMPARISONAHBARLG * frCAHBARG) + jeffCAHBARGl
+        bobCAHBARGl = onemorecahbargl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHBARGl = int(bobCAHBARGl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHBARGl
+                kps.handle_left[0] = jeffCAHBARGl - 30
+                kps.handle_right[0] = jeffCAHBARGl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHBARGl
+                kpz.handle_left[0] = bobCAHBARGl - 30
+                kpz.handle_right[0] = bobCAHBARGl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHBARGl + frCAHBARG
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONAHBARH(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonahbarh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_84"]'
+        index = 0
+        stringCAHBARH = mytool.my_floatCOMPARISONAHBARH
+        frCAHBARH = bpy.context.scene.render.fps
+        jeffCAHBARHl = stringCAHBARH * frCAHBARH
+        onemorecahbarhl = (mytool.my_floatCOMPARISONAHBARLH * frCAHBARH) + jeffCAHBARHl
+        bobCAHBARHl = onemorecahbarhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHBARHl = int(bobCAHBARHl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHBARHl
+                kps.handle_left[0] = jeffCAHBARHl - 30
+                kps.handle_right[0] = jeffCAHBARHl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHBARHl
+                kpz.handle_left[0] = bobCAHBARHl - 30
+                kpz.handle_right[0] = bobCAHBARHl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHBARHl + frCAHBARH
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONAHBARI(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonahbari"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_85"]'
+        index = 0
+        stringCAHBARI = mytool.my_floatCOMPARISONAHBARI
+        frCAHBARI = bpy.context.scene.render.fps
+        jeffCAHBARIl = stringCAHBARI * frCAHBARI
+        onemorecahbaril = (mytool.my_floatCOMPARISONAHBARLI * frCAHBARI) + jeffCAHBARIl
+        bobCAHBARIl = onemorecahbaril       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHBARIl = int(bobCAHBARIl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHBARIl
+                kps.handle_left[0] = jeffCAHBARIl - 30
+                kps.handle_right[0] = jeffCAHBARIl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHBARIl
+                kpz.handle_left[0] = bobCAHBARIl - 30
+                kpz.handle_right[0] = bobCAHBARIl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHBARIl + frCAHBARI
 
         return {'FINISHED'}
 
@@ -13711,6 +15628,231 @@ class ADDONNAME_OT_my_opCOMPARISONBHBARD(bpy.types.Operator):
                 bpy.context.scene.frame_end = bobCBHBARDl + frCBHBARD
 
         return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONBHBARE(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonbhbare"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_81"]'
+        index = 0
+        stringCBHBARE = mytool.my_floatCOMPARISONBHBARE
+        frCBHBARE = bpy.context.scene.render.fps
+        jeffCBHBAREl = stringCBHBARE * frCBHBARE
+        onemorecbhbarel = (mytool.my_floatCOMPARISONBHBARLE * frCBHBARE) + jeffCBHBAREl
+        bobCBHBAREl = onemorecbhbarel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCBHBAREl = int(bobCBHBAREl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCBHBAREl
+                kps.handle_left[0] = jeffCBHBAREl - 30
+                kps.handle_right[0] = jeffCBHBAREl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCBHBAREl
+                kpz.handle_left[0] = bobCBHBAREl - 30
+                kpz.handle_right[0] = bobCBHBAREl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCBHBAREl + frCBHBARE
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONBHBARF(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonbhbarf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_82"]'
+        index = 0
+        stringCBHBARF = mytool.my_floatCOMPARISONBHBARF
+        frCBHBARF = bpy.context.scene.render.fps
+        jeffCBHBARFl = stringCBHBARF * frCBHBARF
+        onemorecbhbarfl = (mytool.my_floatCOMPARISONBHBARLF * frCBHBARF) + jeffCBHBARFl
+        bobCBHBARFl = onemorecbhbarfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCBHBARFl = int(bobCBHBARFl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCBHBARFl
+                kps.handle_left[0] = jeffCBHBARFl - 30
+                kps.handle_right[0] = jeffCBHBARFl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCBHBARFl
+                kpz.handle_left[0] = bobCBHBARFl - 30
+                kpz.handle_right[0] = bobCBHBARFl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCBHBARFl + frCBHBARF
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONBHBARG(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonbhbarg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_83"]'
+        index = 0
+        stringCBHBARG = mytool.my_floatCOMPARISONBHBARG
+        frCBHBARG = bpy.context.scene.render.fps
+        jeffCBHBARGl = stringCBHBARG * frCBHBARG
+        onemorecbhbargl = (mytool.my_floatCOMPARISONBHBARLG * frCBHBARG) + jeffCBHBARGl
+        bobCBHBARGl = onemorecbhbargl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCBHBARGl = int(bobCBHBARGl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCBHBARGl
+                kps.handle_left[0] = jeffCBHBARGl - 30
+                kps.handle_right[0] = jeffCBHBARGl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCBHBARGl
+                kpz.handle_left[0] = bobCBHBARGl - 30
+                kpz.handle_right[0] = bobCBHBARGl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCBHBARGl + frCBHBARG
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONBHBARH(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonbhbarh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_84"]'
+        index = 0
+        stringCBHBARH = mytool.my_floatCOMPARISONBHBARH
+        frCBHBARH = bpy.context.scene.render.fps
+        jeffCBHBARHl = stringCBHBARH * frCBHBARH
+        onemorecbhbarhl = (mytool.my_floatCOMPARISONBHBARLH * frCBHBARH) + jeffCBHBARHl
+        bobCBHBARHl = onemorecbhbarhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCBHBARHl = int(bobCBHBARHl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCBHBARHl
+                kps.handle_left[0] = jeffCBHBARHl - 30
+                kps.handle_right[0] = jeffCBHBARHl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCBHBARHl
+                kpz.handle_left[0] = bobCBHBARHl - 30
+                kpz.handle_right[0] = bobCBHBARHl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCBHBARHl + frCBHBARH
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opCOMPARISONBHBARI(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorcomparisonbhbari"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_85"]'
+        index = 0
+        stringCBHBARI = mytool.my_floatCOMPARISONBHBARI
+        frCBHBARI = bpy.context.scene.render.fps
+        jeffCBHBARIl = stringCBHBARI * frCBHBARI
+        onemorecbhbaril = (mytool.my_floatCOMPARISONBHBARLI * frCBHBARI) + jeffCBHBARIl
+        bobCBHBARIl = onemorecbhbaril       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCBHBARIl = int(bobCBHBARIl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCBHBARIl
+                kps.handle_left[0] = jeffCBHBARIl - 30
+                kps.handle_right[0] = jeffCBHBARIl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCBHBARIl
+                kpz.handle_left[0] = bobCBHBARIl - 30
+                kpz.handle_right[0] = bobCBHBARIl + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCBHBARIl + frCBHBARI
+
+        return {'FINISHED'}
 
     
 class ADDONNAME_HBC(bpy.types.Operator):
@@ -13726,7 +15868,7 @@ class ADDONNAME_HBC(bpy.types.Operator):
             bpy.context.scene.frame_end = 168
 
             action_name = 'Plane.004Action.001'
-            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]']
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Input_90"]']
             index = 0               # Z axis
 
             for data_path in data_paths:
@@ -13756,7 +15898,7 @@ class ADDONNAME_HBC(bpy.types.Operator):
             bpy.context.scene.frame_end = 210
             
             action_name = 'Plane.004Action.001'
-            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]']
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Input_90"]']
             index = 0               # Z axis
 
             for data_path in data_paths:
@@ -16066,7 +18208,7 @@ class ADDONNAME_OT_my_opmcpie(bpy.types.Operator):
     
         if mytool.my_enumMCpie == 'OPMC7pie':
             bpy.context.scene.render.fps = 24
-            bpy.context.scene.frame_end = 192
+            bpy.context.scene.frame_end = 264
             
             action_name = 'Circle Graph.002Action.001'
             data_path = 'modifiers["GeometryNodes"]["Input_50"]'
@@ -16217,10 +18359,100 @@ class ADDONNAME_OT_my_opmcpie(bpy.types.Operator):
                 print("no action")
     
             print("end")
+            
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_4"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 144
+                    fcurve.keyframe_points[0].handle_left[0] = 144
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 144
+                    fcurve.keyframe_points[0].handle_right[1] = 0.727
+                    fcurve.keyframe_points[1].co.x = 168
+                    fcurve.keyframe_points[1].handle_left[0] = 160
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 176
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_5"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 168
+                    fcurve.keyframe_points[0].handle_left[0] = 168
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 168
+                    fcurve.keyframe_points[0].handle_right[1] = 0.659
+                    fcurve.keyframe_points[1].co.x = 192
+                    fcurve.keyframe_points[1].handle_left[0] = 184
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 200
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_6"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 192
+                    fcurve.keyframe_points[0].handle_left[0] = 192
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 192
+                    fcurve.keyframe_points[0].handle_right[1] = 0.606
+                    fcurve.keyframe_points[1].co.x = 216
+                    fcurve.keyframe_points[1].handle_left[0] = 206
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 224
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
 
         if mytool.my_enumMCpie == 'OPMC8pie':
             bpy.context.scene.render.fps = 30
-            bpy.context.scene.frame_end = 240
+            bpy.context.scene.frame_end = 330
             
             action_name = 'Circle Graph.002Action.001'
             data_path = 'modifiers["GeometryNodes"]["Input_50"]'
@@ -16362,6 +18594,96 @@ class ADDONNAME_OT_my_opmcpie(bpy.types.Operator):
                     fcurve.keyframe_points[1].handle_left[0] = 164.3
                     fcurve.keyframe_points[1].handle_left[1] = 1
                     fcurve.keyframe_points[1].handle_right[0] = 181
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+   
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_4"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 180
+                    fcurve.keyframe_points[0].handle_left[0] = 180
+                    fcurve.keyframe_points[0].handle_left[1] = -0.864
+                    fcurve.keyframe_points[0].handle_right[0] = 180
+                    fcurve.keyframe_points[0].handle_right[1] = 0.727
+                    fcurve.keyframe_points[1].co.x = 210
+                    fcurve.keyframe_points[1].handle_left[0] = 200
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 220
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_5"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 210
+                    fcurve.keyframe_points[0].handle_left[0] = 210
+                    fcurve.keyframe_points[0].handle_left[1] = -0.864
+                    fcurve.keyframe_points[0].handle_right[0] = 210
+                    fcurve.keyframe_points[0].handle_right[1] = 0.659
+                    fcurve.keyframe_points[1].co.x = 240
+                    fcurve.keyframe_points[1].handle_left[0] = 230
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 250
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.002Action.001'
+            data_path = 'modifiers["GeometryNodes"]["Socket_6"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 240
+                    fcurve.keyframe_points[0].handle_left[0] = 240
+                    fcurve.keyframe_points[0].handle_left[1] = -0.864
+                    fcurve.keyframe_points[0].handle_right[0] = 240
+                    fcurve.keyframe_points[0].handle_right[1] = 0.606
+                    fcurve.keyframe_points[1].co.x = 270
+                    fcurve.keyframe_points[1].handle_left[0] = 260
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 280
                     fcurve.keyframe_points[1].handle_right[1] = 1
             
                     print("changed")
@@ -16384,7 +18706,7 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
     
         if mytool.my_enumMPpie == 'OPMP7pie':
             bpy.context.scene.render.fps = 24
-            bpy.context.scene.frame_end = 192
+            bpy.context.scene.frame_end = 264
             
             action_name = 'Circle Graph.005Action'
             data_path = 'modifiers["GeometryNodes"]["Input_49"]'
@@ -16536,10 +18858,100 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
                 print("no action")
     
             print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Input_95"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 144
+                    fcurve.keyframe_points[0].handle_left[0] = 144
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 144
+                    fcurve.keyframe_points[0].handle_right[1] = 0.762
+                    fcurve.keyframe_points[1].co.x = 168
+                    fcurve.keyframe_points[1].handle_left[0] = 160
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 176
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Socket_2"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 168
+                    fcurve.keyframe_points[0].handle_left[0] = 168
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 168
+                    fcurve.keyframe_points[0].handle_right[1] = 0.762
+                    fcurve.keyframe_points[1].co.x = 192
+                    fcurve.keyframe_points[1].handle_left[0] = 184
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 200
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Socket_3"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 192
+                    fcurve.keyframe_points[0].handle_left[0] = 192
+                    fcurve.keyframe_points[0].handle_left[1] = -0.896
+                    fcurve.keyframe_points[0].handle_right[0] = 192
+                    fcurve.keyframe_points[0].handle_right[1] = 0.762
+                    fcurve.keyframe_points[1].co.x = 216
+                    fcurve.keyframe_points[1].handle_left[0] = 208
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 224
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
 
         if mytool.my_enumMPpie == 'OPMP8pie':
             bpy.context.scene.render.fps = 30
-            bpy.context.scene.frame_end = 240
+            bpy.context.scene.frame_end = 300
             
             action_name = 'Circle Graph.005Action'
             data_path = 'modifiers["GeometryNodes"]["Input_49"]'
@@ -16681,6 +19093,96 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
                     fcurve.keyframe_points[1].handle_left[0] = 164.3
                     fcurve.keyframe_points[1].handle_left[1] = 1
                     fcurve.keyframe_points[1].handle_right[0] = 181
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Input_95"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 180
+                    fcurve.keyframe_points[0].handle_left[0] = 180
+                    fcurve.keyframe_points[0].handle_left[1] = -0.722
+                    fcurve.keyframe_points[0].handle_right[0] = 180
+                    fcurve.keyframe_points[0].handle_right[1] = 0.762
+                    fcurve.keyframe_points[1].co.x = 210
+                    fcurve.keyframe_points[1].handle_left[0] = 194.3
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 211
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Socket_2"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 210
+                    fcurve.keyframe_points[0].handle_left[0] = 210
+                    fcurve.keyframe_points[0].handle_left[1] = -0.722
+                    fcurve.keyframe_points[0].handle_right[0] = 210
+                    fcurve.keyframe_points[0].handle_right[1] = 0.639
+                    fcurve.keyframe_points[1].co.x = 240
+                    fcurve.keyframe_points[1].handle_left[0] = 230
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 250
+                    fcurve.keyframe_points[1].handle_right[1] = 1
+            
+                    print("changed")
+                else:
+                    print("no fcurve")
+            else:
+                print("no action")
+    
+            print("end")
+            
+            action_name = 'Circle Graph.005Action'
+            data_path = 'modifiers["GeometryNodes"]["Socket_3"]'
+            index = 0               # Z axis
+
+            # Find the appropriate action
+            action = bpy.data.actions.get(action_name)
+            if action:
+                # From this action, retrieve the appropriate F-Curve
+                fcurve = action.fcurves.find(data_path = data_path, index = index)
+                if fcurve:
+
+                    fcurve.keyframe_points[0].co.x = 240
+                    fcurve.keyframe_points[0].handle_left[0] = 240
+                    fcurve.keyframe_points[0].handle_left[1] = -0.722
+                    fcurve.keyframe_points[0].handle_right[0] = 240
+                    fcurve.keyframe_points[0].handle_right[1] = 0.762
+                    fcurve.keyframe_points[1].co.x = 270
+                    fcurve.keyframe_points[1].handle_left[0] = 260
+                    fcurve.keyframe_points[1].handle_left[1] = 1
+                    fcurve.keyframe_points[1].handle_right[0] = 280
                     fcurve.keyframe_points[1].handle_right[1] = 1
             
                     print("changed")
@@ -17091,7 +19593,7 @@ class FontchangeLINEG(bpy.types.Operator):
         datalinegsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontlg_subtitle)
         nodelinegsubtitle.font = datalinegsubtitle_font
 
-        nodelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        nodelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.025','String to Curves.027','String to Curves.029','String to Curves.031','String to Curves.033','String to Curves.035','String to Curves.037','String to Curves.039','String to Curves.041','String to Curves.043','String to Curves.045','String to Curves.047','String to Curves.049','String to Curves.051','String to Curves.053','String to Curves.055','String to Curves.057','String to Curves.059','String to Curves.061','String to Curves.063','String to Curves.065','String to Curves.067']
         for name in nodelinegvalue:
             nodelinegvalue = nodelineg_group.nodes.get(name)
             if nodelinegvalue:
@@ -17105,7 +19607,7 @@ class FontchangeLINEG(bpy.types.Operator):
                 datalinegrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontlg_rangenumbers)
                 nodelinegrangenumbers.font = datalinegrangenumbers_font    
         
-        nodelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002']
+        nodelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002', 'String to Curves.024', 'String to Curves.026','String to Curves.028','String to Curves.030','String to Curves.032','String to Curves.034','String to Curves.036','String to Curves.038','String to Curves.040', 'String to Curves.042','String to Curves.044','String to Curves.046','String to Curves.048','String to Curves.050','String to Curves.052','String to Curves.054','String to Curves.056', 'String to Curves.058','String to Curves.060','String to Curves.062','String to Curves.064','String to Curves.066']
         for name in nodelinegpointtext:
             nodelinegpointtext = nodelineg_group.nodes.get(name)
             if nodelinegpointtext:
@@ -17136,7 +19638,7 @@ class FontrestoreLINEG(bpy.types.Operator):
         datarestorelinegsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorelinegsubtitle.font = datarestorelinegsubtitle_font
 
-        noderestorelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        noderestorelinegvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.025','String to Curves.027','String to Curves.029','String to Curves.031','String to Curves.033','String to Curves.035','String to Curves.037','String to Curves.039','String to Curves.041','String to Curves.043','String to Curves.045','String to Curves.047','String to Curves.049','String to Curves.051','String to Curves.053','String to Curves.055','String to Curves.057','String to Curves.059','String to Curves.061','String to Curves.063','String to Curves.065','String to Curves.067']
         for name in noderestorelinegvalue:
             noderestorelinegvalue = noderestoreline_group.nodes.get(name)
             if noderestorelinegvalue:
@@ -17150,7 +19652,7 @@ class FontrestoreLINEG(bpy.types.Operator):
                 datalinegrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
                 noderestorelinegrangenumbers.font = datalinegrangenumbers_font  
 
-        noderestorelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002']
+        noderestorelinegpointtext = nodelinegpointtext = ['String to Curves.005', 'String to Curves.003', 'String to Curves', 'String to Curves.001', 'String to Curves.006', 'String to Curves.007', 'String to Curves.004', 'String to Curves.002', 'String to Curves.024', 'String to Curves.026','String to Curves.028','String to Curves.030','String to Curves.032','String to Curves.034','String to Curves.036','String to Curves.038','String to Curves.040', 'String to Curves.042','String to Curves.044','String to Curves.046','String to Curves.048','String to Curves.050','String to Curves.052','String to Curves.054','String to Curves.056', 'String to Curves.058','String to Curves.060','String to Curves.062','String to Curves.064','String to Curves.066']
         for name in noderestorelinegpointtext:
             noderestorelinegpointtext = noderestoreline_group.nodes.get(name)
             if noderestorelinegpointtext:
@@ -17479,7 +19981,7 @@ class FontchangeHBG(bpy.types.Operator):
         datahbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbg_subtitle)
         nodehbgsubtitle.font = datahbgsubtitle_font
 
-        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019']
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.023', 'String to Curves.024', 'String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028']
         for name in nodehbgvalue:
             nodehbgvalue = nodehbg_group.nodes.get(name)
             if nodehbgvalue:
@@ -17493,7 +19995,7 @@ class FontchangeHBG(bpy.types.Operator):
                 datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbg_rangenumbers)
                 nodehbgrangenumbers.font = datahbgrangenumbers_font    
         
-        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.022', 'String to Curves.021', 'String to Curves.020', 'String to Curves.015', 'String to Curves.014', 'String to Curves.013']
         for name in nodehbgpointtext:
             nodehbgpointtext = nodehbg_group.nodes.get(name)
             if nodehbgpointtext:
@@ -17538,7 +20040,7 @@ class FontrestoreHBG(bpy.types.Operator):
         datarestorehbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorehbgsubtitle.font = datarestorehbgsubtitle_font
 
-        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019']
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.023', 'String to Curves.024', 'String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028']
         for name in nodehbgvalue:
             nodehbgvalue = noderestorehbg_group.nodes.get(name)
             if nodehbgvalue:
@@ -17552,7 +20054,7 @@ class FontrestoreHBG(bpy.types.Operator):
                 datahbgrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
                 nodehbgrangenumbers.font = datahbgrangenumbers_font  
 
-        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.022', 'String to Curves.021', 'String to Curves.020', 'String to Curves.015', 'String to Curves.014', 'String to Curves.013' ]
         for name in nodehbgpointtext:
             nodehbgpointtext = noderestorehbg_group.nodes.get(name)
             if nodehbgpointtext:
@@ -17597,7 +20099,7 @@ class FontchangeHBGC(bpy.types.Operator):
         datahbgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgc_subtitle)
         nodehbgsubtitle.font = datahbgsubtitle_font
 
-        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.027','String to Curves.026', 'String to Curves.029', 'String to Curves.028', 'String to Curves.031', 'String to Curves.030', 'String to Curves.033', 'String to Curves.032', 'String to Curves.035', 'String to Curves.034']
         for name in nodehbgvalue:
             nodehbgvalue = nodehbg_group.nodes.get(name)
             if nodehbgvalue:
@@ -17611,7 +20113,7 @@ class FontchangeHBGC(bpy.types.Operator):
                 datahbgrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbgc_rangenumbers)
                 nodehbgrangenumbers.font = datahbgrangenumbers_font    
         
-        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.025', 'String to Curves.024', 'String to Curves.015', 'String to Curves.014', 'String to Curves.013']
         for name in nodehbgpointtext:
             nodehbgpointtext = nodehbg_group.nodes.get(name)
             if nodehbgpointtext:
@@ -17649,7 +20151,7 @@ class FontrestoreHBGC(bpy.types.Operator):
         datarestorehbgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorehbgsubtitle.font = datarestorehbgsubtitle_font
 
-        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        nodehbgvalue = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023', 'String to Curves.027','String to Curves.026', 'String to Curves.029', 'String to Curves.028', 'String to Curves.031', 'String to Curves.030', 'String to Curves.033', 'String to Curves.032', 'String to Curves.035', 'String to Curves.034']
         for name in nodehbgvalue:
             nodehbgvalue = noderestorehbg_group.nodes.get(name)
             if nodehbgvalue:
@@ -17663,7 +20165,7 @@ class FontrestoreHBGC(bpy.types.Operator):
                 datahbgrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
                 nodehbgrangenumbers.font = datahbgrangenumbers_font  
 
-        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003']
+        nodehbgpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.025', 'String to Curves.024', 'String to Curves.015', 'String to Curves.014', 'String to Curves.013']
         for name in nodehbgpointtext:
             nodehbgpointtext = noderestorehbg_group.nodes.get(name)
             if nodehbgpointtext:
@@ -17701,14 +20203,14 @@ class FontchangeMCG(bpy.types.Operator):
         datamcgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmcg_subtitle)
         nodemcgsubtitle.font = datamcgsubtitle_font
 
-        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.009', 'String to Curves.008', 'String to Curves.007']
         for name in nodemcgvalue:
             nodemcgvalue = nodemcg_group.nodes.get(name)
             if nodemcgvalue:
                 datamcgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmcg_barvalue)
                 nodemcgvalue.font = datamcgvalue_font
 
-        nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        nodemcgdescription = nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.018', 'String to Curves.017', 'String to Curves.016']
         for name in nodemcgdescription:
             nodemcgdescription = nodemcg_group.nodes.get(name)
             if nodemcgdescription:
@@ -17739,14 +20241,14 @@ class FontrestoreMCG(bpy.types.Operator):
         datarestoremcgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestoremcgsubtitle.font = datarestoremcgsubtitle_font
 
-        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        nodemcgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.009', 'String to Curves.008', 'String to Curves.007']
         for name in nodemcgvalue:
             nodemcgvalue = noderestoremcg_group.nodes.get(name)
             if nodemcgvalue:
                 datamcgvalue_font = bpy.data.fonts["Open Sans Semibold"]
                 nodemcgvalue.font = datamcgvalue_font     
         
-        nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        nodemcgdescription = nodemcgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.018', 'String to Curves.017', 'String to Curves.016']
         for name in nodemcgdescription:
             nodemcgdescription = noderestoremcg_group.nodes.get(name)
             if nodemcgdescription:
@@ -17777,14 +20279,14 @@ class FontchangeMPG(bpy.types.Operator):
         datampgsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontmpg_subtitle)
         nodempgsubtitle.font = datampgsubtitle_font
 
-        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.007', 'String to Curves.009', 'String to Curves.008']
         for name in nodempgvalue:
             nodempgvalue = nodempg_group.nodes.get(name)
             if nodempgvalue:
                 datampgvalue_font = bpy.data.fonts.load(mytool.my_pathfontmpg_barvalue)
                 nodempgvalue.font = datampgvalue_font
 
-        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016', 'String to Curves.018', 'String to Curves.017']
         for name in nodempgdescription:
             nodempgdescription = nodempg_group.nodes.get(name)
             if nodempgdescription:
@@ -17815,14 +20317,14 @@ class FontrestoreMPG(bpy.types.Operator):
         datarestorempgsubtitle_font = bpy.data.fonts["Open Sans Light"]
         noderestorempgsubtitle.font = datarestorempgsubtitle_font
 
-        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004']
+        nodempgvalue = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.007', 'String to Curves.009', 'String to Curves.008']
         for name in nodempgvalue:
             nodempgvalue = noderestorempg_group.nodes.get(name)
             if nodempgvalue:
                 datampgvalue_font = bpy.data.fonts["Open Sans Semibold"]
                 nodempgvalue.font = datampgvalue_font     
         
-        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        nodempgdescription = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016', 'String to Curves.018', 'String to Curves.017']
         for name in nodempgdescription:
             nodempgdescription = noderestorempg_group.nodes.get(name)
             if nodempgdescription:
@@ -18200,17 +20702,17 @@ classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, My
 MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, 
 MyoperatorVBCcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
-ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
+ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL,  
 ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_opmcpie, 
 ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_23_PT_panel_1, 
-PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5,
+PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, 
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5,
 COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
-ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, 
-ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
+ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
+ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
 ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
 ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
 ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
