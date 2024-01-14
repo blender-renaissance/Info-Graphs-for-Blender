@@ -15,6 +15,9 @@ import bpy
 import os
 import csv
 import mysql.connector
+import requests
+import json
+import re
 
 from bpy.types import (Panel,
                        Menu,
@@ -212,9 +215,61 @@ class MyProperties(bpy.types.PropertyGroup):
     name= "",
     subtype='PASSWORD',)
     
+    my_stringsiteurl : bpy.props.StringProperty(
+    name= "",
+    default='https://your_site_url.com',)
+    
+    my_stringappname : bpy.props.StringProperty(
+    name= "",
+    default='YourAppName',)
+    
+    my_stringapikeyname : bpy.props.StringProperty(
+    name= "",
+    subtype='PASSWORD',)
+    
+    my_stringmodelname1 : bpy.props.StringProperty(
+    name= "",
+    default='perplexity/pplx-70b-online',)
+    
+    my_stringmodelname2 : bpy.props.StringProperty(
+    name= "",
+    default='mistralai/mixtral-8x7b-instruct',)
+    
+    my_stringresponseurl : bpy.props.StringProperty(
+    name= "",
+    default='https://openrouter.ai/api/v1/chat/completions')
+    
     my_stringcirclegraph : bpy.props.StringProperty(
     name= "",
     default="circle_graph",)
+    
+    my_stringpiegengraph : bpy.props.StringProperty(
+    name= "",
+    default="What percentage of people are obese in the US?",)
+    
+    my_stringcirclegengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="What percentage of americans are millionaires?",)
+    
+    my_stringcirclegengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringcirclegengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+
+    my_stringpiegengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="What percentage of germans speak english?",)
+    
+    my_stringpiegengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringpiegengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
     
     my_stringpiegraph : bpy.props.StringProperty(
     name= "",
@@ -268,6 +323,18 @@ class MyProperties(bpy.types.PropertyGroup):
     name= "",
     default="multiple_circle_graph",)
     
+    my_stringmcgndp : bpy.props.StringProperty(
+    name= "",
+    default='8')
+    
+    my_stringmpgndp : bpy.props.StringProperty(
+    name= "",
+    default='8')
+    
+    my_stringhbgndp : bpy.props.StringProperty(
+    name= "",
+    default='10')
+    
     my_stringmultiple_pie_graph : bpy.props.StringProperty(
     name= "",
     default="multiple_pie_graph",)  
@@ -275,6 +342,175 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringusmap : bpy.props.StringProperty(
     name= "",
     default="us_map",)      
+    
+    my_stringcircle23gen_graph1 : bpy.props.StringProperty(
+    name= "",
+    default="circle23_graph",)
+    
+    my_stringcircle23gen_graph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: Men's obesity rate in India, US, China is 10%, 53%, and 20% respectively. Step 2: I obtained this information from the data.",)
+    
+    my_stringcircle23gen_graph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Step D: Describing the Values. Here's a sample answer, ( Step A: Obese people in India, US, and China; Step B: According to MoHW; Step C: 10, 53, 20; Step D: India, US, China.)",)
+    
+    my_stringcandlestickgen_graph1 : bpy.props.StringProperty(
+    name= "",
+    default="candlestick_graph",)
+    
+    my_stringcandlestickgen_graph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. I only want the answer from open-source data. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringcandlestickgen_graph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+    
+    my_stringpie23gen_graph1 : bpy.props.StringProperty(
+    name= "",
+    default="pie23_graph",)
+    
+    my_stringpie23gen_graph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: Men's obesity rate in India, US, China is 10%, 53%, and 20% respectively. Step 2: I obtained this information from the data.",)
+    
+    my_stringpie23gen_graph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Step D: Describing the Values. Here's a sample answer, ( Step A: Obese people in India, US, and China; Step B: According to MoHW; Step C: 10, 53, 20; Step D: India, US, China.)",)
+    
+    my_stringhorizontal_bar_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="horizontal_bar_graph",)
+    
+    my_stringhorizontal_bar_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: Number of Aircraft carriers per country is as follows; US: 11, China: 2, India: 2, Italy: 2, Japan: 2, UK: 2, France: 1, Russia: 1, Spain: 1, Thailand 1. Step 2: I obtained this information from the data.",)
+    
+    my_stringhorizontal_bar_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Values in digit only separated by a comma. Step D: Describing the Values separated by a comma. Here's a sample answer, ( Step A: Aircraft carriers per country; Step B: Source Wisevoter; Step C: 11,2,2,2,2,2,1,1,1,1; Step D: US,China,India,Italy,Japan,UK,France,Russia,Spain,Thailand.)",)
+    
+    my_stringhorizontal_bar_gengraph_comparison1 : bpy.props.StringProperty(
+    name= "",
+    default="Wheat production of same 9 countries in 2019 and 2021",)
+    
+    my_stringhorizontal_bar_gengraph_comparison2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringhorizontal_bar_gengraph_comparison3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+    
+    my_stringvertical_bar_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="vertical_bar_graph",)
+    
+    my_stringvertical_bar_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: Number of Aircraft carriers per country is as follows; US: 11, China: 2, India: 2, Italy: 2, Japan: 2, UK: 2, France: 1, Russia: 1. Step 2: I obtained this information from the data.",)
+    
+    my_stringvertical_bar_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Values in digit only separated by a comma. Step D: Describing the Values separated by a comma. Here's a sample answer, ( Step A: Aircraft carriers per country; Step B: Source Wisevoter; Step C: 11,2,2,2,2,2,1,1; Step D: US,China,India,Italy,Japan,UK,France,Russia.)",)
+    
+    my_stringvertical_bar_gengraph_comparison1 : bpy.props.StringProperty(
+    name= "",
+    default="vertical_bar_graph_comparison",)
+    
+    my_stringvertical_bar_gengraph_comparison2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringvertical_bar_gengraph_comparison3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+    
+    my_stringline_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="line_graph",)
+    
+    my_stringline_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: The 30-year data of India's population from 1993 to 2023 is as follows: 1993: 926351297, 1994: 945261958, 1995: 964279129, 1996: 983281218, 1997: 1002335230, 1998: 1021449248, 1999: 1040619456, 2000: 1059828737, 2001: 1078999477, 2002: 1098379968, 2003: 1118089438, 2004: 1137998566, 2005: 1157908987, 2006: 1177811083, 2007: 1197714248, 2008: 1217614333, 2009: 1237438004, 2010: 1257345183, 2011: 1277421968, 2012: 1297323842, 2013: 1317530279, 2014: 1337639382, 2015: 1357996628, 2016: 1378493737, 2017: 1396387127, 2018: 1417173173, 2019: 1428627663, 2020: 1428627663, 2021: 1407563842, 2022: 1417173173, 2023: 1428627663. Step 2: The information was obtained from data.",)
+    
+    my_stringline_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: First range Values in digit only separated by a comma. Step D: Second range Values in digit only separated by a comma. Here's a sample answer, ( Step A: India's population from 1993 to 2023; Step B: according to Macrotrends; Step C: 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023; Step D: 926, 9458, 964, 983, 1002, 1021, 1040, 1059, 1078, 1098, 1118, 1137, 1157, 1177, 1197, 1217, 1237, 1257, 1277, 1297, 1317, 1337, 1357, 1378, 1396, 1417, 1428, 1428, 1407, 1417, 1428). ",)
+    
+    my_stringline_gengraph_comparison1 : bpy.props.StringProperty(
+    name= "",
+    default="line_graph_comparison",)
+    
+    my_stringline_gengraph_comparison2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringline_gengraph_comparison3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+    
+    my_stringmountain_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="mountain_graph",)
+    
+    my_stringmountain_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: Number of Aircraft carriers per country is as follows; US: 11, China: 2, India: 2, Italy: 2, Japan: 2, UK: 2, France: 1, Russia: 1, Spain: 1, Thailand 1. Step 2: I obtained this information from the data.",)
+    
+    my_stringmountain_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Values in digit only separated by a comma. Step D: Describing the Values separated by a comma. Here's a sample answer, ( Step A: Aircraft carriers per country; Step B: Source Wisevoter; Step C: 11,2,2,2,2,2,1,1,1,1; Step D: US,China,India,Italy,Japan,UK,France,Russia,Spain,Thailand.)",)
+    
+    my_stringmountain_gengraph_comparison1 : bpy.props.StringProperty(
+    name= "",
+    default="mountain_graph_comparison",)
+    
+    my_stringmountain_gengraph_comparison2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringmountain_gengraph_comparison3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",)
+    
+    my_stringmultiple_circle_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="multiple_circle_graph",)
+    
+    my_stringmultiple_circle_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: The top 8 countries with the highest percentage of the world's GDP are as follows: United States: 25.32%, China: 17.86%, Japan: 4.21%, Germany: 4.05%, India: 3.37%, United Kingdom: 3.1%, France: 2.8% and Canada: 2.1%. Step 2: The information is sourced from data.",)
+    
+    my_stringmultiple_circle_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Step D: Describing the Values. Here's a sample answer, ( Step A: World's GDP in percentage; Step B: according to Worldometers and Visual capitalist; Step C: 25.32, 17.86, 4.21, 4.05, 3.37, 3.1, 2.8, 2.1; Step D: United States, China, Japan, Germany, India, United Kingdom, France, Canada). ",)
+    
+    my_stringmultiple_pie_gengraph1 : bpy.props.StringProperty(
+    name= "",
+    default="multiple_pie_graph",) 
+    
+    my_stringmultiple_pie_gengraph2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}; no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: The top 8 countries with the highest percentage of the world's GDP are as follows: United States: 25.32%, China: 17.86%, Japan: 4.21%, Germany: 4.05%, India: 3.37%, United Kingdom: 3.1%, France: 2.8% and Canada: 2.1%. Step 2: The information is sourced from data.",)
+    
+    my_stringmultiple_pie_gengraph3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Step D: Describing the Values. Here's a sample answer, ( Step A: World's GDP in percentage; Step B: according to Worldometers and Visual capitalist; Step C: 25.32, 17.86, 4.21, 4.05, 3.37, 3.1, 2.8, 2.1; Step D: United States, China, Japan, Germany, India, United Kingdom, France, Canada). ",) 
+    
+    my_stringusgenmap1 : bpy.props.StringProperty(
+    name= "",
+    default="us_map",) 
+    
+    my_stringusgenmap2 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think before responding. Step 1: {}, no range, no explanation and one sentence. Step 2: Where did you get this information from in one sentence. Here's a sample answer, Step 1: India's Men's obesity rate is approximately 12.00%. Step 2: I obtained this information from the data.",)
+    
+    my_stringusgenmap3 : bpy.props.StringProperty(
+    name= "",
+    default="Answer this step-by-step and take your time to think. Divide each step by a semicolon. Step A: title in 6 words. Step B: Subtitle starting with the word (Source:). Step C: Value in digit only. Here's a sample answer, ( Step A: Obese people in India; Step B: According to MoHW; Step C: 10 )",) 
+      
     
     my_float: bpy.props.FloatProperty(
         name = "In seconds",
@@ -3893,6 +4129,23 @@ class MyProperties(bpy.types.PropertyGroup):
         maxlen=1024,
         subtype='FILE_PATH',
         )
+        
+    my_pathapi_key: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//API_KEY.txt",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+def read_api_key(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            api_key = file.read().strip()
+            return api_key
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return None
 
 
 class NG_PT_QuickRenderPresets(bpy.types.Panel):
@@ -3959,6 +4212,40 @@ class NG_PT_QuickRenderPresets_2(NG_PT_QuickRenderPresets, bpy.types.Panel):
         rowSPW = layout.row()
         rowSPW.label(text= "Password:")
         layout.prop(mytool, "my_stringpassword")
+    
+class NG_PT_QuickRenderPresets_3(NG_PT_QuickRenderPresets, bpy.types.Panel):
+    bl_parent_id = "NG_PT_QuickRenderPresets_1"
+    bl_label = "Gen AI API Details"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool 
+        
+        rowSHAI = layout.row()
+        rowSHAI.label(text= "Your Site URL: (Keep default if you don't know)")
+        layout.prop(mytool, "my_stringsiteurl")
+        
+        rowSUAI = layout.row()
+        rowSUAI.label(text= "Your App Name: (Keep default if you don't know)")
+        layout.prop(mytool, "my_stringappname")
+        
+        rowSPWAI = layout.row()
+        rowSPWAI.label(text= "Your API Key (Check PDF / video tutorial in the help folder to get your own API key) ")
+        layout.prop(mytool, "my_pathapi_key")
+    
+        rowGenAI1 = layout.row()
+        rowGenAI1.label(text= "Model Name for Fetching Datapoints: (Check 'https://openrouter.ai/docs#models' for options)")
+        layout.prop(mytool, "my_stringmodelname1")
+        
+        rowGenAI2 = layout.row()
+        rowGenAI2.label(text= "Model Name for Structuring datapoints: (Check 'https://openrouter.ai/docs#models' for options)")
+        layout.prop(mytool, "my_stringmodelname2")
+        
+        rowRURL = layout.row()
+        rowRURL.label(text= "Response URL: (Keep default if you don't know)")
+        layout.prop(mytool, "my_stringresponseurl")
         
         
 class CIRCLE_GRAPH_panel:
@@ -4011,8 +4298,31 @@ class CIRCLE_GRAPH_PT_panel_3(CIRCLE_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorcgsql")
-
+        
 class CIRCLE_GRAPH_PT_panel_4(CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringcirclegengraph1")
+        layout.operator("mesh.mycubeoperatorcggenai")
+        
+        rowCGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringcirclegengraph2")
+        
+        rowCGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringcirclegengraph3")
+
+class CIRCLE_GRAPH_PT_panel_5(CIRCLE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4030,7 +4340,7 @@ class CIRCLE_GRAPH_PT_panel_4(CIRCLE_GRAPH_panel, bpy.types.Panel):
         rowE.label(text= "Length of Animation:")
         layout.prop(mytool, "my_float")
         
-class CIRCLE_GRAPH_PT_panel_5(CIRCLE_GRAPH_panel, bpy.types.Panel):
+class CIRCLE_GRAPH_PT_panel_6(CIRCLE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4112,8 +4422,31 @@ class CIRCLE_GRAPH_23_PT_panel_3(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorcg23sql")
-
+        
 class CIRCLE_GRAPH_23_PT_panel_4(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        row23CGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringcircle23gen_graph1")
+        layout.operator("mesh.mycubeoperator23cggenai")
+        
+        row23CGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringcircle23gen_graph2")
+        
+        row23CGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringcircle23gen_graph3")
+
+class CIRCLE_GRAPH_23_PT_panel_5(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
     bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4147,7 +4480,7 @@ class CIRCLE_GRAPH_23_PT_panel_4(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
         row23CLC.label(text= "Length of Animation C:")
         layout.prop(mytool, "my_float23CLC")
         
-class CIRCLE_GRAPH_23_PT_panel_5(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
+class CIRCLE_GRAPH_23_PT_panel_6(CIRCLE_GRAPH_23_panel, bpy.types.Panel):
     bl_parent_id = "CIRCLE_GRAPH_23_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4228,8 +4561,20 @@ class CANDLESTICK_GRAPH_PT_panel_3(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorcandlesql")
-
+        
 class CANDLESTICK_GRAPH_PT_panel_4(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+
+
+class CANDLESTICK_GRAPH_PT_panel_5(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
     bl_label = "Note"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4260,7 +4605,7 @@ class CANDLESTICK_GRAPH_PT_panel_4(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
         rowcandlea7 = layout.row()
         rowcandlea7.label(text= "in an easy way.")
         
-class CANDLESTICK_GRAPH_PT_panel_5(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
+class CANDLESTICK_GRAPH_PT_panel_6(CANDLESTICK_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "CANDLESTICK_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4341,8 +4686,31 @@ class PIE_GRAPH_PT_panel_3(PIE_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorpgsql")
-
+        
 class PIE_GRAPH_PT_panel_4(PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowPGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringpiegengraph1")
+        layout.operator("mesh.mycubeoperatorpggenai")
+        
+        rowPGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringpiegengraph2")
+        
+        rowPGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringpiegengraph3")
+
+class PIE_GRAPH_PT_panel_5(PIE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "PIE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4360,7 +4728,7 @@ class PIE_GRAPH_PT_panel_4(PIE_GRAPH_panel, bpy.types.Panel):
         rowPE.label(text= "Length of Animation:")
         layout.prop(mytool, "my_floatpie")
         
-class PIE_GRAPH_PT_panel_5(PIE_GRAPH_panel, bpy.types.Panel):
+class PIE_GRAPH_PT_panel_6(PIE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "PIE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4442,8 +4810,31 @@ class PIE_GRAPH_23_PT_panel_3(PIE_GRAPH_23_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorpg23sql")
-
+        
 class PIE_GRAPH_23_PT_panel_4(PIE_GRAPH_23_panel, bpy.types.Panel):
+    bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        row23PGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringpie23gen_graph1")
+        layout.operator("mesh.mycubeoperator23pggenai")
+        
+        row23PGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringpie23gen_graph2")
+        
+        row23PGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringpie23gen_graph3")
+
+class PIE_GRAPH_23_PT_panel_5(PIE_GRAPH_23_panel, bpy.types.Panel):
     bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4477,7 +4868,7 @@ class PIE_GRAPH_23_PT_panel_4(PIE_GRAPH_23_panel, bpy.types.Panel):
         row23PLC.label(text= "Length of Animation C:")
         layout.prop(mytool, "my_float23PLC")
         
-class PIE_GRAPH_23_PT_panel_5(PIE_GRAPH_23_panel, bpy.types.Panel):
+class PIE_GRAPH_23_PT_panel_6(PIE_GRAPH_23_panel, bpy.types.Panel):
     bl_parent_id = "PIE_GRAPH_23_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4562,8 +4953,31 @@ class LINE_GRAPH_PT_panel_3(LINE_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorlgsql")
-
+        
 class LINE_GRAPH_PT_panel_4(LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "LINE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowLGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringline_gengraph1")
+        layout.operator("mesh.mycubeoperatorlineggenai")
+        
+        rowLGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringline_gengraph2")
+        
+        rowLGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringline_gengraph3")
+
+class LINE_GRAPH_PT_panel_5(LINE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "LINE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4590,7 +5004,7 @@ class LINE_GRAPH_PT_panel_4(LINE_GRAPH_panel, bpy.types.Panel):
         layout.prop(mytool, "my_floatLGLB")
 
         
-class LINE_GRAPH_PT_panel_5(LINE_GRAPH_panel, bpy.types.Panel):
+class LINE_GRAPH_PT_panel_6(LINE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "LINE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4676,8 +5090,31 @@ class COMPARISON_LINE_GRAPH_PT_panel_3(COMPARISON_LINE_GRAPH_panel, bpy.types.Pa
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorlgcsql")
-
+        
 class COMPARISON_LINE_GRAPH_PT_panel_4(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowLGCAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringline_gengraph_comparison1")
+        layout.operator("mesh.mycubeoperatorlgcgenai")
+        
+        rowLGCAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringline_gengraph_comparison2")
+        
+        rowLGCAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringline_gengraph_comparison3")
+
+class COMPARISON_LINE_GRAPH_PT_panel_5(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4815,7 +5252,7 @@ class COMPARISON_LINE_GRAPH_PT_panel_4(COMPARISON_LINE_GRAPH_panel, bpy.types.Pa
         rowCOMPARISONBLINELH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBLINELH")
 
-class COMPARISON_LINE_GRAPH_PT_panel_5(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
+class COMPARISON_LINE_GRAPH_PT_panel_6(COMPARISON_LINE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_LINE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4905,8 +5342,31 @@ class HORIZONTAL_BAR_GRAPH_PT_panel_3(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Pane
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorhbgsql")
-
+        
 class HORIZONTAL_BAR_GRAPH_PT_panel_4(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowHBGGAIA1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph1")
+        layout.operator("mesh.mycubeoperatorhbggenai")
+        
+        rowHBGGAIA2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph2")
+        
+        rowHBGGAIA3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph3")
+
+class HORIZONTAL_BAR_GRAPH_PT_panel_5(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -4996,7 +5456,7 @@ class HORIZONTAL_BAR_GRAPH_PT_panel_4(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Pane
         rowHBGLD.label(text= "Length of Animation J:")
         layout.prop(mytool, "my_floatHBGLJ")
         
-class HORIZONTAL_BAR_GRAPH_PT_panel_5(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+class HORIZONTAL_BAR_GRAPH_PT_panel_6(HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5089,8 +5549,31 @@ class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3(COMPARISON_HORIZONTAL_BAR_GRAPH
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorhbgcsql")
-
+        
 class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowHBGCGAIA1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph_comparison1")
+        layout.operator("mesh.mycubeoperatorhbgcgenai")
+        
+        rowHBGCGAIA2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph_comparison2")
+        
+        rowHBGCGAIA3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringhorizontal_bar_gengraph_comparison3")
+
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5244,7 +5727,7 @@ class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4(COMPARISON_HORIZONTAL_BAR_GRAPH
         rowCOMPARISONBHBARLI.label(text= "Length of Animation B9:")
         layout.prop(mytool, "my_floatCOMPARISONBHBARLI")
 
-class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
+class COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6(COMPARISON_HORIZONTAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5333,8 +5816,31 @@ class MULTIPLE_CIRCLE_GRAPH_PT_panel_3(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Pa
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatormcgsql")
-
+        
 class MULTIPLE_CIRCLE_GRAPH_PT_panel_4(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowMCGGAIB = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringmultiple_circle_gengraph1")
+        layout.operator("mesh.mycubeoperatormcggenai")
+        
+        rowMCGGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmultiple_circle_gengraph2")
+        
+        rowMCGGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmultiple_circle_gengraph3")
+
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_5(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5408,7 +5914,7 @@ class MULTIPLE_CIRCLE_GRAPH_PT_panel_4(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Pa
         rowMCGLE.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatMCGLH")
 
-class MULTIPLE_CIRCLE_GRAPH_PT_panel_5(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
+class MULTIPLE_CIRCLE_GRAPH_PT_panel_6(MULTIPLE_CIRCLE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_CIRCLE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5490,8 +5996,31 @@ class MULTIPLE_PIE_GRAPH_PT_panel_3(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatormpgsql")
-
+        
 class MULTIPLE_PIE_GRAPH_PT_panel_4(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowMPGGAIB = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringmultiple_pie_gengraph1")
+        layout.operator("mesh.mycubeoperatormpggenai")
+        
+        rowMPGGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmultiple_pie_gengraph2")
+        
+        rowMPGGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmultiple_pie_gengraph3")
+
+class MULTIPLE_PIE_GRAPH_PT_panel_5(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5565,7 +6094,7 @@ class MULTIPLE_PIE_GRAPH_PT_panel_4(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
         rowMPLF.label(text="Length of Animation H:")
         layout.prop(mytool, "my_floatMPGLH")
 
-class MULTIPLE_PIE_GRAPH_PT_panel_5(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
+class MULTIPLE_PIE_GRAPH_PT_panel_6(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MULTIPLE_PIE_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5647,8 +6176,31 @@ class MOUNTAIN_GRAPH_PT_panel_3(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatormgsql")
-
+        
 class MOUNTAIN_GRAPH_PT_panel_4(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowMGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringmountain_gengraph1")
+        layout.operator("mesh.mycubeoperatormggenai")
+        
+        rowMGGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmountain_gengraph2")
+        
+        rowMGGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmountain_gengraph3")
+
+class MOUNTAIN_GRAPH_PT_panel_5(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5722,7 +6274,7 @@ class MOUNTAIN_GRAPH_PT_panel_4(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
         rowMGLH.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatMGLH")
         
-class MOUNTAIN_GRAPH_PT_panel_5(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+class MOUNTAIN_GRAPH_PT_panel_6(MOUNTAIN_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5807,8 +6359,31 @@ class COMPARISON_MOUNTAIN_GRAPH_PT_panel_3(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatormgcsql")
-
+        
 class COMPARISON_MOUNTAIN_GRAPH_PT_panel_4(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowHBGsql = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringmountain_gengraph_comparison1")
+        layout.operator("mesh.mycubeoperatormgcgenai")
+        
+        rowMGGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmountain_gengraph_comparison2")
+        
+        rowMGGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringmountain_gengraph_comparison3")
+
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_5(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -5946,7 +6521,7 @@ class COMPARISON_MOUNTAIN_GRAPH_PT_panel_4(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.
         rowCOMPARISONBMOUNTLH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBMOUNTLH")
         
-class COMPARISON_MOUNTAIN_GRAPH_PT_panel_5(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
+class COMPARISON_MOUNTAIN_GRAPH_PT_panel_6(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_MOUNTAIN_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6035,8 +6610,31 @@ class US_MAP_PT_panel_3(US_MAP_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorusmapsql")
-
+        
 class US_MAP_PT_panel_4(US_MAP_panel, bpy.types.Panel):
+    bl_parent_id = "US_MAP_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowUSMAPAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringusgenmap1")
+        layout.operator("mesh.mycubeoperatorusmapgenai")
+        
+        rowUSMAPAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringusgenmap2")
+        
+        rowUSMAPAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringusgenmap3")
+
+class US_MAP_PT_panel_5(US_MAP_panel, bpy.types.Panel):
     bl_parent_id = "US_MAP_PT_panel_1"
     bl_label = "Note"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6067,7 +6665,7 @@ class US_MAP_PT_panel_4(US_MAP_panel, bpy.types.Panel):
         rowcandlea7 = layout.row()
         rowcandlea7.label(text= "in an easy way.")
         
-class US_MAP_PT_panel_5(US_MAP_panel, bpy.types.Panel):
+class US_MAP_PT_panel_6(US_MAP_panel, bpy.types.Panel):
     bl_parent_id = "US_MAP_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6140,8 +6738,31 @@ class VERTICAL_BAR_GRAPH_PT_panel_3(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorvbgsql")
-
+        
 class VERTICAL_BAR_GRAPH_PT_panel_4(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowVBGAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph1")
+        layout.operator("mesh.mycubeoperatorvbggenai")
+        
+        rowVBGAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph2")
+        
+        rowVBGAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph3")
+
+class VERTICAL_BAR_GRAPH_PT_panel_5(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6215,7 +6836,7 @@ class VERTICAL_BAR_GRAPH_PT_panel_4(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
         rowVBGLH.label(text= "Length of Animation H:")
         layout.prop(mytool, "my_floatVBGLH") 
  
-class VERTICAL_BAR_GRAPH_PT_panel_5(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+class VERTICAL_BAR_GRAPH_PT_panel_6(VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6309,8 +6930,31 @@ class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3(COMPARISON_VERTICAL_BAR_GRAPH_pan
         
         layout.label(text="Import data from MySQL database:")
         layout.operator("mesh.mycubeoperatorvbgcsql")
-
+        
 class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import Gen AI Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowVBGCAI1 = layout.row()        
+        layout.label(text="Type the info you want:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph_comparison1")
+        layout.operator("mesh.mycubeoperatorvbgcgenai")
+        
+        rowVBGCAI2 = layout.row()        
+        layout.label(text="Prompt to get datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph_comparison2")
+        
+        rowVBGCAI3 = layout.row()        
+        layout.label(text="Prompt to rephrase datapoints {Keep default if you don't know}:")
+        layout.prop(mytool, "my_stringvertical_bar_gengraph_comparison3")
+
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Duration Control"
     bl_options = {"DEFAULT_CLOSED"}
@@ -6448,7 +7092,7 @@ class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4(COMPARISON_VERTICAL_BAR_GRAPH_pan
         rowCOMPARISONBBARVLH.label(text= "Length of Animation B8:")
         layout.prop(mytool, "my_floatCOMPARISONBBARVLH")
         
-class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+class COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6(COMPARISON_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
     bl_parent_id = "COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1"
     bl_label = "Font"
     bl_options = {"DEFAULT_CLOSED"}
@@ -7639,6 +8283,6502 @@ class MyoperatorMPGsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorHBGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhbggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullhbgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullhbgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullhbgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullhbgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullhbgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullhbgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullhbgaiinput1 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph1)
+        filepath_fullhbgaiinput2 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph2)
+        filepath_fullhbgaiinput3 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionhbg = filepath_fullhbgaiinput1
+        main_questionhbg = filepath_fullhbgaiinput2.format(sub_questionhbg)
+
+        questionhbg = f"{main_questionhbg} {sub_questionhbg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullhbgaisiteurl
+        YOUR_APP_NAME = filepath_fullhbgaiappname
+        YOUR_API_KEY = filepath_fullhbgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullhbgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionhbg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonhbga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonhbga)
+
+        # Extract the answer if available
+        answer_hbg = response_jsonhbga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_hbg)
+        
+                
+        relevant_infohbg = answer_hbg
+        
+        if relevant_infohbg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionhbg = f"{filepath_fullhbgaiinput3}. Here's the text: {relevant_infohbg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullhbgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionhbg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonhbgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_hbg1 = new_response_jsonhbgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_hbg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_hbg = answer_hbg1.split(';')
+            
+            # Split the answer further
+            float_valueshbg = [value for value in answer_variables_hbg[2].split(',')]
+            float_nameshbg = [value for value in answer_variables_hbg[3].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valueshbg = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valueshbg]
+
+            hbgfloat_values = [float(cleaned_value) for cleaned_value in cleaned_valueshbg]
+
+            # Find the maximum value
+            float_valuesmaxhbg = max(hbgfloat_values)
+            print(float_valuesmaxhbg)
+        
+            range_maxhbg = 1.1 * float(float_valuesmaxhbg)
+            print("range_maxhbg:", range_maxhbg)
+
+            # Now you can use the individual variables as needed
+            title_variable_hbg = answer_variables_hbg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_hbg = answer_variables_hbg[1].replace("Step B:", "").strip()
+            value_variable_hbg1 = re.sub(r"[^0-9.]", "", float_valueshbg[0].replace("Step C:", "").strip())
+
+            # Check if float_valueshbg[1] is not empty
+            if float_valueshbg and len(float_valueshbg) > 1:
+                value_variable_hbg2 = re.sub(r"[^0-9.]", "", float_valueshbg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[1] is empty or not provided
+                value_variable_hbg2 = None  # or any default value you want
+
+            # Check if float_valueshbg[2] is not empty
+            if float_valueshbg and len(float_valueshbg) > 2:
+                value_variable_hbg3 = re.sub(r"[^0-9.]", "", float_valueshbg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[2] is empty or not provided
+                value_variable_hbg3 = None  # or any default value you want
+
+            # Check if float_valueshbg[3] is not empty
+            if float_valueshbg and len(float_valueshbg) > 3:
+                value_variable_hbg4 = re.sub(r"[^0-9.]", "", float_valueshbg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[3] is empty or not provided
+                value_variable_hbg4 = None  # or any default value you want
+
+            # Check if float_valueshbg[4] is not empty
+            if float_valueshbg and len(float_valueshbg) > 4:
+                value_variable_hbg5 = re.sub(r"[^0-9.]", "", float_valueshbg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[4] is empty or not provided
+                value_variable_hbg5 = None  # or any default value you want
+
+            # Check if float_valueshbg[5] is not empty
+            if float_valueshbg and len(float_valueshbg) > 5:
+                value_variable_hbg6 = re.sub(r"[^0-9.]", "", float_valueshbg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[5] is empty or not provided
+                value_variable_hbg6 = None  # or any default value you want
+
+            # Check if float_valueshbg[6] is not empty
+            if float_valueshbg and len(float_valueshbg) > 6:
+                value_variable_hbg7 = re.sub(r"[^0-9.]", "", float_valueshbg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[6] is empty or not provided
+                value_variable_hbg7 = None  # or any default value you want
+
+            # Check if float_valueshbg[7] is not empty
+            if float_valueshbg and len(float_valueshbg) > 7:
+                value_variable_hbg8 = re.sub(r"[^0-9.]", "", float_valueshbg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[7] is empty or not provided
+                value_variable_hbg8 = None  # or any default value you want
+
+            # Check if float_valueshbg[8] is not empty
+            if float_valueshbg and len(float_valueshbg) > 8:
+                value_variable_hbg9 = re.sub(r"[^0-9.]", "", float_valueshbg[8].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[8] is empty or not provided
+                value_variable_hbg9 = None  # or any default value you want
+
+            # Check if float_valueshbg[9] is not empty
+            if float_valueshbg and len(float_valueshbg) > 9:
+                value_variable_hbg10 = re.sub(r"[^0-9.]", "", float_valueshbg[9].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueshbg[9] is empty or not provided
+                value_variable_hbg10 = None  # or any default value you want
+
+                       
+            
+            name_variable_hbg1 = float_nameshbg[0].replace("Step D:", "").strip()
+
+            # Check if float_nameshbg[1] is not empty
+            if float_nameshbg and len(float_nameshbg) > 1:
+                name_variable_hbg2 = float_nameshbg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[1] is empty or not provided
+                name_variable_hbg2 = None  # or any default name you want
+
+            # Check if float_nameshbg[2] is not empty
+            if float_nameshbg and len(float_nameshbg) > 2:
+                name_variable_hbg3 = float_nameshbg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[2] is empty or not provided
+                name_variable_hbg3 = None  # or any default name you want
+
+            # Check if float_nameshbg[3] is not empty
+            if float_nameshbg and len(float_nameshbg) > 3:
+                name_variable_hbg4 = float_nameshbg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[3] is empty or not provided
+                name_variable_hbg4 = None  # or any default name you want
+
+            # Check if float_nameshbg[4] is not empty
+            if float_nameshbg and len(float_nameshbg) > 4:
+                name_variable_hbg5 = float_nameshbg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[4] is empty or not provided
+                name_variable_hbg5 = None  # or any default name you want
+
+            # Check if float_nameshbg[5] is not empty
+            if float_nameshbg and len(float_nameshbg) > 5:
+                name_variable_hbg6 = float_nameshbg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[5] is empty or not provided
+                name_variable_hbg6 = None  # or any default name you want
+
+            # Check if float_nameshbg[6] is not empty
+            if float_nameshbg and len(float_nameshbg) > 6:
+                name_variable_hbg7 = float_nameshbg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[6] is empty or not provided
+                name_variable_hbg7 = None  # or any default name you want
+
+            # Check if float_nameshbg[7] is not empty
+            if float_nameshbg and len(float_nameshbg) > 7:
+                name_variable_hbg8 = float_nameshbg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[7] is empty or not provided
+                name_variable_hbg8 = None  # or any default name you want
+
+            # Check if float_nameshbg[8] is not empty
+            if float_nameshbg and len(float_nameshbg) > 8:
+                name_variable_hbg9 = float_nameshbg[8].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[8] is empty or not provided
+                name_variable_hbg9 = None  # or any default name you want
+
+            # Check if float_nameshbg[9] is not empty
+            if float_nameshbg and len(float_nameshbg) > 9:
+                name_variable_hbg10 = float_nameshbg[9].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameshbg[9] is empty or not provided
+                name_variable_hbg10 = None  # or any default name you want
+
+
+
+            if value_variable_hbg1.endswith('.'):
+                value_variable_hbg1 = value_variable_hbg1[:-1]
+            if value_variable_hbg1.startswith('.'):
+                value_variable_hbg1 = value_variable_hbg1[1:]
+
+            if value_variable_hbg2 is not None:
+                if value_variable_hbg2.endswith('.'):
+                    value_variable_hbg2 = value_variable_hbg2[:-1]
+                if value_variable_hbg2.startswith('.'):
+                    value_variable_hbg2 = value_variable_hbg2[1:]
+
+            if value_variable_hbg3 is not None:
+                if value_variable_hbg3.endswith('.'):
+                    value_variable_hbg3 = value_variable_hbg3[:-1]
+                if value_variable_hbg3.startswith('.'):
+                    value_variable_hbg3 = value_variable_hbg3[1:]
+
+            if value_variable_hbg4 is not None:
+                if value_variable_hbg4.endswith('.'):
+                    value_variable_hbg4 = value_variable_hbg4[:-1]
+                if value_variable_hbg4.startswith('.'):
+                    value_variable_hbg4 = value_variable_hbg4[1:]
+
+            if value_variable_hbg5 is not None:
+                if value_variable_hbg5.endswith('.'):
+                    value_variable_hbg5 = value_variable_hbg5[:-1]
+                if value_variable_hbg5.startswith('.'):
+                    value_variable_hbg5 = value_variable_hbg5[1:]
+
+            if value_variable_hbg6 is not None:
+                if value_variable_hbg6.endswith('.'):
+                    value_variable_hbg6 = value_variable_hbg6[:-1]
+                if value_variable_hbg6.startswith('.'):
+                    value_variable_hbg6 = value_variable_hbg6[1:]
+
+            if value_variable_hbg7 is not None:
+                if value_variable_hbg7.endswith('.'):
+                    value_variable_hbg7 = value_variable_hbg7[:-1]
+                if value_variable_hbg7.startswith('.'):
+                    value_variable_hbg7 = value_variable_hbg7[1:]
+
+            if value_variable_hbg8 is not None:
+                if value_variable_hbg8.endswith('.'):
+                    value_variable_hbg8 = value_variable_hbg8[:-1]
+                if value_variable_hbg8.startswith('.'):
+                    value_variable_hbg8 = value_variable_hbg8[1:]
+
+            if value_variable_hbg9 is not None:
+                if value_variable_hbg9.endswith('.'):
+                    value_variable_hbg9 = value_variable_hbg9[:-1]
+                if value_variable_hbg9.startswith('.'):
+                    value_variable_hbg9 = value_variable_hbg9[1:]
+
+            if value_variable_hbg10 is not None:
+                if value_variable_hbg10.endswith('.'):
+                    value_variable_hbg10 = value_variable_hbg10[:-1]
+                if value_variable_hbg10.startswith('.'):
+                    value_variable_hbg10 = value_variable_hbg10[1:]
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_hbg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_hbg.type == 'MESH':
+                            mesh_name_hbg = selected_obj_hbg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_hbg.modifiers:
+                                    modifier_name_hbg = selected_obj_hbg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valueshbg has 1 to 8 elements and assign the length directly
+                                    num_elementshbg = len(float_valueshbg)
+                                    if 1 <= num_elementshbg <= 10:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_36"] = num_elementshbg
+
+
+                                    selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = title_variable_hbg
+                                    selected_obj_hbg.modifiers[modifier_name_hbg]["Input_8"] = subtitle_variable_hbg
+                                    selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = float(range_maxhbg)
+                                    selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = float(value_variable_hbg1)
+
+                                    # Check if value_variable_hbg2 is not empty
+                                    if value_variable_hbg2:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = float(value_variable_hbg2)
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_hbg3 is not empty
+                                    if value_variable_hbg3:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = float(value_variable_hbg3)
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_hbg4 is not empty
+                                    if value_variable_hbg4:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = float(value_variable_hbg4)
+                                    else:
+                                        print("Value for Input_17 is empty or not provided.")
+
+                                    # Check if value_variable_hbg5 is not empty
+                                    if value_variable_hbg5:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_16"] = float(value_variable_hbg5)
+                                    else:
+                                        print("Value for Socket_16 is empty or not provided.")
+
+                                    # Check if value_variable_hbg6 is not empty
+                                    if value_variable_hbg6:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_17"] = float(value_variable_hbg6)
+                                    else:
+                                        print("Value for Socket_17 is empty or not provided.")
+
+                                    # Check if value_variable_hbg7 is not empty
+                                    if value_variable_hbg7:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_18"] = float(value_variable_hbg7)
+                                    else:
+                                        print("Value for Socket_18 is empty or not provided.")
+
+                                    # Check if value_variable_hbg8 is not empty
+                                    if value_variable_hbg8:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_19"] = float(value_variable_hbg8)
+                                    else:
+                                        print("Value for Socket_19 is empty or not provided.")
+
+                                    # Check if value_variable_hbg9 is not empty
+                                    if value_variable_hbg9:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_20"] = float(value_variable_hbg9)
+                                    else:
+                                        print("Value for Socket_20 is empty or not provided.")
+
+                                    # Check if value_variable_hbg10 is not empty
+                                    if value_variable_hbg10:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_21"] = float(value_variable_hbg10)
+                                    else:
+                                        print("Value for Socket_21 is empty or not provided.")
+
+
+                                    selected_obj_hbg.modifiers[modifier_name_hbg]["Input_2"] = name_variable_hbg1
+
+                                    # Check if name_variable_hbg2 is not empty before setting the input
+                                    if name_variable_hbg2:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = name_variable_hbg2
+                                    else:
+                                        print("Name for Input_3 is empty or not provided.")     
+
+                                    # Check if name_variable_hbg3 is not empty before setting the input
+                                    if name_variable_hbg3:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = name_variable_hbg3
+                                    else:
+                                        print("Name for Input_4 is empty or not provided.")    
+
+                                    # Check if name_variable_hbg4 is not empty before setting the input
+                                    if name_variable_hbg4:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = name_variable_hbg4
+                                    else:
+                                        print("Name for Input_5 is empty or not provided.")    
+
+                                    # Check if name_variable_hbg5 is not empty before setting the input
+                                    if name_variable_hbg5:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_10"] = name_variable_hbg5
+                                    else:
+                                        print("Name for Socket_10 is empty or not provided.")    
+
+                                    # Check if name_variable_hbg6 is not empty before setting the input
+                                    if name_variable_hbg6:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_11"] = name_variable_hbg6
+                                    else:
+                                        print("Name for Socket_11 is empty or not provided.")  
+
+                                    # Check if name_variable_hbg7 is not empty before setting the input
+                                    if name_variable_hbg7:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_12"] = name_variable_hbg7
+                                    else:
+                                        print("Name for Socket_12 is empty or not provided.")  
+
+                                    # Check if name_variable_hbg8 is not empty before setting the input
+                                    if name_variable_hbg8:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_13"] = name_variable_hbg8
+                                    else:
+                                        print("Name for Socket_13 is empty or not provided.")
+
+                                    # Check if name_variable_hbg9 is not empty before setting the input
+                                    if name_variable_hbg9:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_14"] = name_variable_hbg9
+                                    else:
+                                        print("Name for Socket_14 is empty or not provided.")
+
+                                    # Check if name_variable_hbg10 is not empty before setting the input
+                                    if name_variable_hbg10:
+                                        selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_15"] = name_variable_hbg10
+                                    else:
+                                        print("Name for Socket_15 is empty or not provided.")                                         
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_hbg}' and modifier '{modifier_name_hbg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_hbg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorHBGCgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhbgcgenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullhbgcaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullhbgcaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullhbgcaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullhbgcaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullhbgcaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullhbgcaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullhbgcaiinput1 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph_comparison1)
+        filepath_fullhbgcaiinput2 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph_comparison2)
+        filepath_fullhbgcaiinput3 = bpy.path.abspath(mytool.my_stringhorizontal_bar_gengraph_comparison3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionhbgc = filepath_fullhbgcaiinput1
+        main_questionhbgc = filepath_fullhbgcaiinput2.format(sub_questionhbgc)
+
+        questionhbgc = f"{main_questionhbgc} {sub_questionhbgc}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullhbgcaisiteurl
+        YOUR_APP_NAME = filepath_fullhbgcaiappname
+        YOUR_API_KEY = filepath_fullhbgcaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullhbgcaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionhbgc}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonhbgca = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonhbgca)
+
+        # Extract the answer if available
+        answer_hbgc = response_jsonhbgca.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_hbgc)
+        
+                
+        relevant_infohbgc = answer_hbgc
+        
+        if relevant_infohbgc:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionhbgc = f"{filepath_fullhbgcaiinput3}. Here's the text: {relevant_infohbgc}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullhbgcaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionhbgc}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonhbgcb = new_response.json()
+            
+            # Extract the answer if available
+            answer_hbgc1 = new_response_jsonhbgcb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_hbgc1)
+
+            # Split the answer into variables based on commas
+            answer_variables_hbgc = answer_hbgc1.split(';')
+            
+            # Split the answer further
+            float_valuesahbgc = [value for value in answer_variables_hbgc[2].split('|')]
+            float_valuesbhbgc = [value for value in answer_variables_hbgc[3].split('|')]
+            float_namesahbgc = [value for value in answer_variables_hbgc[4].split(',')]
+            float_legendhbgc = [value for value in answer_variables_hbgc[5].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesahbgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesahbgc]
+
+            hbgcfloat_avalues = []
+            for cleaned_value in cleaned_valuesahbgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    hbgcfloat_avalues.append(float(cleaned_value))
+                else:
+                    hbgcfloat_avalues.append(0.0)  # or any default value you prefer
+
+            # Remove letters and symbols except period
+            cleaned_valuesbhbgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesbhbgc]
+
+            hbgcfloat_bvalues = []
+            for cleaned_value in cleaned_valuesbhbgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    hbgcfloat_bvalues.append(float(cleaned_value))
+                else:
+                    hbgcfloat_bvalues.append(0.0)  # or any default value you prefer
+            
+
+            # Find the maximum value
+            float_valuesmaxhbgc = max(hbgcfloat_avalues + hbgcfloat_bvalues)
+            print(float_valuesmaxhbgc)
+        
+            range_maxhbgc = 1.1 * float(float_valuesmaxhbgc)
+            print("range_maxhbgc:", range_maxhbgc)
+
+            # Now you can use the individual variables as needed
+            title_variable_hbgc = answer_variables_hbgc[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_hbgc = answer_variables_hbgc[1].replace("Step B:", "").strip()
+            legend_variable_hbgc = answer_variables_hbgc[5].replace("Step F:", "").strip()
+            value_variable_ahbgc1 = re.sub(r"[^0-9.]", "", float_valuesahbgc[0].replace("Step C:", "").strip())
+
+            # Check if float_valueshbgc[1] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 1:
+                value_variable_ahbgc2 = re.sub(r"[^0-9.]", "", float_valuesahbgc[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[1] is empty or not provided
+                value_variable_ahbgc2 = None  # or any default value you want
+
+            # Check if float_valueshbgc[2] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 2:
+                value_variable_ahbgc3 = re.sub(r"[^0-9.]", "", float_valuesahbgc[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[2] is empty or not provided
+                value_variable_ahbgc3 = None  # or any default value you want
+
+            # Check if float_valueshbgc[3] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 3:
+                value_variable_ahbgc4 = re.sub(r"[^0-9.]", "", float_valuesahbgc[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[3] is empty or not provided
+                value_variable_ahbgc4 = None  # or any default value you want
+
+            # Check if float_valueshbgc[4] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 4:
+                value_variable_ahbgc5 = re.sub(r"[^0-9.]", "", float_valuesahbgc[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[4] is empty or not provided
+                value_variable_ahbgc5 = None  # or any default value you want
+
+            # Check if float_valueshbgc[5] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 5:
+                value_variable_ahbgc6 = re.sub(r"[^0-9.]", "", float_valuesahbgc[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[5] is empty or not provided
+                value_variable_ahbgc6 = None  # or any default value you want
+
+            # Check if float_valueshbgc[6] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 6:
+                value_variable_ahbgc7 = re.sub(r"[^0-9.]", "", float_valuesahbgc[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[6] is empty or not provided
+                value_variable_ahbgc7 = None  # or any default value you want
+
+            # Check if float_valuesahbgc[7] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 7:
+                value_variable_ahbgc8 = re.sub(r"[^0-9.]", "", float_valuesahbgc[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[7] is empty or not provided
+                value_variable_ahbgc8 = None  # or any default value you want
+                
+            # Check if float_valuesahbgc[8] is not empty
+            if float_valuesahbgc and len(float_valuesahbgc) > 8:
+                value_variable_ahbgc9 = re.sub(r"[^0-9.]", "", float_valuesahbgc[8].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesahbgc[8] is empty or not provided
+                value_variable_ahbgc9 = None  # or any default value you want
+
+            # Check if float_valuesbhbgc[0] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 0:
+                value_variable_bhbgc1 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[0].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[0] is empty or not provided
+                value_variable_bhbgc1= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[1] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 1:
+                value_variable_bhbgc2 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[1].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[1] is empty or not provided
+                value_variable_bhbgc2= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[2] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 2:
+                value_variable_bhbgc3 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[2].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[2] is empty or not provided
+                value_variable_bhbgc3= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[3] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 3:
+                value_variable_bhbgc4 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[3].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[3] is empty or not provided
+                value_variable_bhbgc4= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[4] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 4:
+                value_variable_bhbgc5 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[4].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[4] is empty or not provided
+                value_variable_bhbgc5= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[5] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 5:
+                value_variable_bhbgc6 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[5].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[5] is empty or not provided
+                value_variable_bhbgc6= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[6] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 6:
+                value_variable_bhbgc7 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[6].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[6] is empty or not provided
+                value_variable_bhbgc7= None  # or any default value you want
+
+            # Check if float_valuesbhbgc[7] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 7:
+                value_variable_bhbgc8 = re.sub(r"[^0-9.]", "", float_valuesbhbgc[7].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[7] is empty or not provided
+                value_variable_bhbgc8= None  # or any default value you want
+                
+            # Check if float_valuesbhbgc[8] is not empty
+            if float_valuesbhbgc and len(float_valuesbhbgc) > 8:
+                value_variable_bhbgc9= re.sub(r"[^0-9.]", "", float_valuesbhbgc[8].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbhbgc[8] is empty or not provided
+                value_variable_bhbgc9= None  # or any default value you want
+
+                       
+            
+            name_variable_ahbgc1 = float_namesahbgc[0].replace("Step E:", "").strip()
+
+            # Check if float_nameshbgc[1] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 1:
+                name_variable_ahbgc2 = float_namesahbgc[1].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[1] is empty or not provided
+                name_variable_ahbgc2 = None  # or any default name you want
+
+            # Check if float_nameshbgc[2] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 2:
+                name_variable_ahbgc3 = float_namesahbgc[2].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[2] is empty or not provided
+                name_variable_ahbgc3 = None  # or any default name you want
+
+            # Check if float_nameshbgc[3] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 3:
+                name_variable_ahbgc4 = float_namesahbgc[3].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[3] is empty or not provided
+                name_variable_ahbgc4 = None  # or any default name you want
+
+            # Check if float_nameshbgc[4] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 4:
+                name_variable_ahbgc5 = float_namesahbgc[4].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[4] is empty or not provided
+                name_variable_ahbgc5 = None  # or any default name you want
+
+            # Check if float_nameshbgc[5] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 5:
+                name_variable_ahbgc6 = float_namesahbgc[5].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[5] is empty or not provided
+                name_variable_ahbgc6 = None  # or any default name you want
+
+            # Check if float_nameshbgc[6] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 6:
+                name_variable_ahbgc7 = float_namesahbgc[6].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[6] is empty or not provided
+                name_variable_ahbgc7 = None  # or any default name you want
+
+            # Check if float_nameshbgc[7] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 7:
+                name_variable_ahbgc8 = float_namesahbgc[7].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[7] is empty or not provided
+                name_variable_ahbgc8 = None  # or any default name you want
+                
+            # Check if float_nameshbgc[8] is not empty
+            if float_namesahbgc and len(float_namesahbgc) > 8:
+                name_variable_ahbgc9 = float_namesahbgc[8].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesahbgc[8] is empty or not provided
+                name_variable_ahbgc9 = None  # or any default name you want
+
+
+
+
+
+            if value_variable_ahbgc1.endswith('.'):
+                value_variable_ahbgc1 = value_variable_ahbgc1[:-1]
+            if value_variable_ahbgc1.startswith('.'):
+                value_variable_ahbgc1 = value_variable_ahbgc1[1:]
+
+            if value_variable_ahbgc2 is not None:
+                if value_variable_ahbgc2.endswith('.'):
+                    value_variable_ahbgc2 = value_variable_ahbgc2[:-1]
+                if value_variable_ahbgc2.startswith('.'):
+                    value_variable_ahbgc2 = value_variable_ahbgc2[1:]
+
+            if value_variable_ahbgc3 is not None:
+                if value_variable_ahbgc3.endswith('.'):
+                    value_variable_ahbgc3 = value_variable_ahbgc3[:-1]
+                if value_variable_ahbgc3.startswith('.'):
+                    value_variable_ahbgc3 = value_variable_ahbgc3[1:]
+
+            if value_variable_ahbgc4 is not None:
+                if value_variable_ahbgc4.endswith('.'):
+                    value_variable_ahbgc4 = value_variable_ahbgc4[:-1]
+                if value_variable_ahbgc4.startswith('.'):
+                    value_variable_ahbgc4 = value_variable_ahbgc4[1:]
+
+            if value_variable_ahbgc5 is not None:
+                if value_variable_ahbgc5.endswith('.'):
+                    value_variable_ahbgc5 = value_variable_ahbgc5[:-1]
+                if value_variable_ahbgc5.startswith('.'):
+                    value_variable_ahbgc5 = value_variable_ahbgc5[1:]
+
+            if value_variable_ahbgc6 is not None:
+                if value_variable_ahbgc6.endswith('.'):
+                    value_variable_ahbgc6 = value_variable_ahbgc6[:-1]
+                if value_variable_ahbgc6.startswith('.'):
+                    value_variable_ahbgc6 = value_variable_ahbgc6[1:]
+
+            if value_variable_ahbgc7 is not None:
+                if value_variable_ahbgc7.endswith('.'):
+                    value_variable_ahbgc7 = value_variable_ahbgc7[:-1]
+                if value_variable_ahbgc7.startswith('.'):
+                    value_variable_ahbgc7 = value_variable_ahbgc7[1:]
+
+            if value_variable_ahbgc8 is not None:
+                if value_variable_ahbgc8.endswith('.'):
+                    value_variable_ahbgc8 = value_variable_ahbgc8[:-1]
+                if value_variable_ahbgc8.startswith('.'):
+                    value_variable_ahbgc8 = value_variable_ahbgc8[1:]
+                    
+            if value_variable_ahbgc9 is not None:
+                if value_variable_ahbgc9.endswith('.'):
+                    value_variable_ahbgc9 = value_variable_ahbgc9[:-1]
+                if value_variable_ahbgc9.startswith('.'):
+                    value_variable_ahbgc9 = value_variable_ahbgc9[1:]
+
+            if value_variable_bhbgc1.endswith('.'):
+                value_variable_bhbgc1 = value_variable_bhbgc1[:-1]
+            if value_variable_bhbgc1.startswith('.'):
+                value_variable_bhbgc1 = value_variable_bhbgc1[1:]
+
+            if value_variable_bhbgc2 is not None:
+                if value_variable_bhbgc2.endswith('.'):
+                    value_variable_bhbgc2 = value_variable_bhbgc2[:-1]
+                if value_variable_bhbgc2.startswith('.'):
+                    value_variable_bhbgc2 = value_variable_bhbgc2[1:]
+
+            if value_variable_bhbgc3 is not None:
+                if value_variable_bhbgc3.endswith('.'):
+                    value_variable_bhbgc3 = value_variable_bhbgc3[:-1]
+                if value_variable_bhbgc3.startswith('.'):
+                    value_variable_bhbgc3 = value_variable_bhbgc3[1:]
+
+            if value_variable_bhbgc4 is not None:
+                if value_variable_bhbgc4.endswith('.'):
+                    value_variable_bhbgc4 = value_variable_bhbgc4[:-1]
+                if value_variable_bhbgc4.startswith('.'):
+                    value_variable_bhbgc4 = value_variable_bhbgc4[1:]
+
+            if value_variable_bhbgc5 is not None:
+                if value_variable_bhbgc5.endswith('.'):
+                    value_variable_bhbgc5 = value_variable_bhbgc5[:-1]
+                if value_variable_bhbgc5.startswith('.'):
+                    value_variable_bhbgc5 = value_variable_bhbgc5[1:]
+
+            if value_variable_bhbgc6 is not None:
+                if value_variable_bhbgc6.endswith('.'):
+                    value_variable_bhbgc6 = value_variable_bhbgc6[:-1]
+                if value_variable_bhbgc6.startswith('.'):
+                    value_variable_bhbgc6 = value_variable_bhbgc6[1:]
+
+            if value_variable_bhbgc7 is not None:
+                if value_variable_bhbgc7.endswith('.'):
+                    value_variable_bhbgc7 = value_variable_bhbgc7[:-1]
+                if value_variable_bhbgc7.startswith('.'):
+                    value_variable_bhbgc7 = value_variable_bhbgc7[1:]
+
+            if value_variable_bhbgc8 is not None:
+                if value_variable_bhbgc8.endswith('.'):
+                    value_variable_bhbgc8 = value_variable_bhbgc8[:-1]
+                if value_variable_bhbgc8.startswith('.'):
+                    value_variable_bhbgc8 = value_variable_bhbgc8[1:]
+                    
+            if value_variable_bhbgc9 is not None:
+                if value_variable_bhbgc9.endswith('.'):
+                    value_variable_bhbgc9 = value_variable_bhbgc9[:-1]
+                if value_variable_bhbgc9.startswith('.'):
+                    value_variable_bhbgc9 = value_variable_bhbgc9[1:]
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_hbgc = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_hbgc.type == 'MESH':
+                            mesh_name_hbgc = selected_obj_hbgc.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_hbgc.modifiers:
+                                    modifier_name_hbgc = selected_obj_hbgc.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valueshbgc has 1 to 9 elements and assign the length directly
+                                    num_elementshbgc = len(float_valuesahbgc)
+                                    if 1 <= num_elementshbgc <= 9:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_45"] = num_elementshbgc
+
+
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_7"] = title_variable_hbgc
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_8"] = subtitle_variable_hbgc
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = float(range_maxhbgc)
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_6"] = float_legendhbgc[0]
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_40"] = float_legendhbgc[1] 
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = float(value_variable_ahbgc1)
+
+                                    # Check if value_variable_ahbgc2 is not empty
+                                    if value_variable_ahbgc2:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = float(value_variable_ahbgc2)
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc3 is not empty
+                                    if value_variable_ahbgc3:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = float(value_variable_ahbgc3)
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc4 is not empty
+                                    if value_variable_ahbgc4:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = float(value_variable_ahbgc4)
+                                    else:
+                                        print("Value for Input_17 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc5 is not empty
+                                    if value_variable_ahbgc5:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_71"] = float(value_variable_ahbgc5)
+                                    else:
+                                        print("Value for Input_71 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc6 is not empty
+                                    if value_variable_ahbgc6:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_73"] = float(value_variable_ahbgc6)
+                                    else:
+                                        print("Value for Input_73 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc7 is not empty
+                                    if value_variable_ahbgc7:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_75"] = float(value_variable_ahbgc7)
+                                    else:
+                                        print("Value for Input_75 is empty or not provided.")
+
+                                    # Check if value_variable_ahbgc8 is not empty
+                                    if value_variable_ahbgc8:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_77"] = float(value_variable_ahbgc8)
+                                    else:
+                                        print("Value for Input_77 is empty or not provided.")
+                                        
+                                    # Check if value_variable_ahbgc9 is not empty
+                                    if value_variable_ahbgc9:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_79"] = float(value_variable_ahbgc9)
+                                    else:
+                                        print("Value for Input_79 is empty or not provided.")
+
+
+
+
+
+                                    # Check if value_variable_bhbgc1 is not empty
+                                    if value_variable_bhbgc1:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = float(value_variable_bhbgc1)
+                                    else:
+                                        print("Value for Input_36 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc2 is not empty
+                                    if value_variable_bhbgc2:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = float(value_variable_bhbgc2)
+                                    else:
+                                        print("Value for Input_37 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc3 is not empty
+                                    if value_variable_bhbgc3:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = float(value_variable_bhbgc3)
+                                    else:
+                                        print("Value for Input_38 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc4 is not empty
+                                    if value_variable_bhbgc4:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = float(value_variable_bhbgc4)
+                                    else:
+                                        print("Value for Input_39 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc5 is not empty
+                                    if value_variable_bhbgc5:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_72"] = float(value_variable_bhbgc5)
+                                    else:
+                                        print("Value for Input_72 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc6 is not empty
+                                    if value_variable_bhbgc6:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_74"] = float(value_variable_bhbgc6)
+                                    else:
+                                        print("Value for Input_74 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc7 is not empty
+                                    if value_variable_bhbgc7:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_76"] = float(value_variable_bhbgc7)
+                                    else:
+                                        print("Value for Input_76 is empty or not provided.")
+
+                                    # Check if value_variable_bhbgc8 is not empty
+                                    if value_variable_bhbgc8:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_78"] = float(value_variable_bhbgc8)
+                                    else:
+                                        print("Value for Input_78 is empty or not provided.")
+                                        
+                                    # Check if value_variable_bhbgc9 is not empty
+                                    if value_variable_bhbgc9:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_80"] = float(value_variable_bhbgc9)
+                                    else:
+                                        print("Value for Input_80 is empty or not provided.")
+
+
+
+                                    selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_2"] = name_variable_ahbgc1
+
+                                    # Check if name_variable_ahbgc2 is not empty before setting the input
+                                    if name_variable_ahbgc2:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = name_variable_ahbgc2
+                                    else:
+                                        print("Name for Input_3 is empty or not provided.")     
+
+                                    # Check if name_variable_ahbgc3 is not empty before setting the input
+                                    if name_variable_ahbgc3:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = name_variable_ahbgc3
+                                    else:
+                                        print("Name for Input_4 is empty or not provided.")    
+
+                                    # Check if name_variable_ahbgc4 is not empty before setting the input
+                                    if name_variable_ahbgc4:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = name_variable_ahbgc4
+                                    else:
+                                        print("Name for Input_5 is empty or not provided.")    
+
+                                    # Check if name_variable_ahbgc5 is not empty before setting the input
+                                    if name_variable_ahbgc5:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_66"] = name_variable_ahbgc5
+                                    else:
+                                        print("Name for Input_66 is empty or not provided.")    
+
+                                    # Check if name_variable_ahbgc6 is not empty before setting the input
+                                    if name_variable_ahbgc6:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_67"] = name_variable_ahbgc6
+                                    else:
+                                        print("Name for Input_67 is empty or not provided.")  
+
+                                    # Check if name_variable_ahbgc7 is not empty before setting the input
+                                    if name_variable_ahbgc7:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_68"] = name_variable_ahbgc7
+                                    else:
+                                        print("Name for Input_68 is empty or not provided.")  
+
+                                    # Check if name_variable_ahbgc8 is not empty before setting the input
+                                    if name_variable_ahbgc8:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_69"] = name_variable_ahbgc8
+                                    else:
+                                        print("Name for Input_69 is empty or not provided.")
+                                        
+                                    # Check if name_variable_ahbgc9 is not empty before setting the input
+                                    if name_variable_ahbgc9:
+                                        selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_70"] = name_variable_ahbgc9
+                                    else:
+                                        print("Name for Input_70 is empty or not provided.")
+
+                                       
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_hbgc}' and modifier '{modifier_name_hbgc}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_hbgc}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorVBGCgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbgcgenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullvbgcaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullvbgcaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullvbgcaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullvbgcaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullvbgcaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullvbgcaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullvbgcaiinput1 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph_comparison1)
+        filepath_fullvbgcaiinput2 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph_comparison2)
+        filepath_fullvbgcaiinput3 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph_comparison3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionvbgc = filepath_fullvbgcaiinput1
+        main_questionvbgc = filepath_fullvbgcaiinput2.format(sub_questionvbgc)
+
+        questionvbgc = f"{main_questionvbgc} {sub_questionvbgc}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullvbgcaisiteurl
+        YOUR_APP_NAME = filepath_fullvbgcaiappname
+        YOUR_API_KEY = filepath_fullvbgcaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullvbgcaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionvbgc}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonvbgca = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonvbgca)
+
+        # Extract the answer if available
+        answer_vbgc = response_jsonvbgca.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_vbgc)
+        
+                
+        relevant_infovbgc = answer_vbgc
+        
+        if relevant_infovbgc:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionvbgc = f"{filepath_fullvbgcaiinput3}. Here's the text: {relevant_infovbgc}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullvbgcaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionvbgc}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonvbgcb = new_response.json()
+            
+            # Extract the answer if available
+            answer_vbgc1 = new_response_jsonvbgcb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_vbgc1)
+
+            # Split the answer into variables based on commas
+            answer_variables_vbgc = answer_vbgc1.split(';')
+            
+            # Split the answer further
+            float_valuesavbgc = [value for value in answer_variables_vbgc[2].split('|')]
+            float_valuesbvbgc = [value for value in answer_variables_vbgc[3].split('|')]
+            float_namesavbgc = [value for value in answer_variables_vbgc[4].split(',')]
+            float_legendvbgc = [value for value in answer_variables_vbgc[5].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesavbgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesavbgc]
+
+            vbgcfloat_avalues = []
+            for cleaned_value in cleaned_valuesavbgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    vbgcfloat_avalues.append(float(cleaned_value))
+                else:
+                    vbgcfloat_avalues.append(0.0)  # or any default value you prefer
+
+            # Remove letters and symbols except period
+            cleaned_valuesbvbgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesbvbgc]
+
+            vbgcfloat_bvalues = []
+            for cleaned_value in cleaned_valuesbvbgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    vbgcfloat_bvalues.append(float(cleaned_value))
+                else:
+                    vbgcfloat_bvalues.append(0.0)  # or any default value you prefer
+            
+
+            # Find the maximum value
+            float_valuesmaxvbgc = max(vbgcfloat_avalues + vbgcfloat_bvalues)
+            print(float_valuesmaxvbgc)
+        
+            range_maxvbgc = 1.1 * float(float_valuesmaxvbgc)
+            print("range_maxvbgc:", range_maxvbgc)
+
+            # Now you can use the individual variables as needed
+            title_variable_vbgc = answer_variables_vbgc[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_vbgc = answer_variables_vbgc[1].replace("Step B:", "").strip()
+            legend_variable_vbgc = answer_variables_vbgc[5].replace("Step F:", "").strip()
+            value_variable_avbgc1 = re.sub(r"[^0-9.]", "", float_valuesavbgc[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesvbgc[1] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 1:
+                value_variable_avbgc2 = re.sub(r"[^0-9.]", "", float_valuesavbgc[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[1] is empty or not provided
+                value_variable_avbgc2 = None  # or any default value you want
+
+            # Check if float_valuesvbgc[2] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 2:
+                value_variable_avbgc3 = re.sub(r"[^0-9.]", "", float_valuesavbgc[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[2] is empty or not provided
+                value_variable_avbgc3 = None  # or any default value you want
+
+            # Check if float_valuesvbgc[3] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 3:
+                value_variable_avbgc4 = re.sub(r"[^0-9.]", "", float_valuesavbgc[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[3] is empty or not provided
+                value_variable_avbgc4 = None  # or any default value you want
+
+            # Check if float_valuesvbgc[4] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 4:
+                value_variable_avbgc5 = re.sub(r"[^0-9.]", "", float_valuesavbgc[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[4] is empty or not provided
+                value_variable_avbgc5 = None  # or any default value you want
+
+            # Check if float_valuesvbgc[5] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 5:
+                value_variable_avbgc6 = re.sub(r"[^0-9.]", "", float_valuesavbgc[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[5] is empty or not provided
+                value_variable_avbgc6 = None  # or any default value you want
+
+            # Check if float_valuesvbgc[6] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 6:
+                value_variable_avbgc7 = re.sub(r"[^0-9.]", "", float_valuesavbgc[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[6] is empty or not provided
+                value_variable_avbgc7 = None  # or any default value you want
+
+            # Check if float_valuesavbgc[7] is not empty
+            if float_valuesavbgc and len(float_valuesavbgc) > 7:
+                value_variable_avbgc8 = re.sub(r"[^0-9.]", "", float_valuesavbgc[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesavbgc[7] is empty or not provided
+                value_variable_avbgc8 = None  # or any default value you want
+                
+
+
+            # Check if float_valuesbvbgc[0] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 0:
+                value_variable_bvbgc1 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[0].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[0] is empty or not provided
+                value_variable_bvbgc1= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[1] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 1:
+                value_variable_bvbgc2 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[1].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[1] is empty or not provided
+                value_variable_bvbgc2= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[2] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 2:
+                value_variable_bvbgc3 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[2].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[2] is empty or not provided
+                value_variable_bvbgc3= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[3] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 3:
+                value_variable_bvbgc4 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[3].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[3] is empty or not provided
+                value_variable_bvbgc4= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[4] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 4:
+                value_variable_bvbgc5 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[4].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[4] is empty or not provided
+                value_variable_bvbgc5= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[5] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 5:
+                value_variable_bvbgc6 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[5].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[5] is empty or not provided
+                value_variable_bvbgc6= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[6] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 6:
+                value_variable_bvbgc7 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[6].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[6] is empty or not provided
+                value_variable_bvbgc7= None  # or any default value you want
+
+            # Check if float_valuesbvbgc[7] is not empty
+            if float_valuesbvbgc and len(float_valuesbvbgc) > 7:
+                value_variable_bvbgc8 = re.sub(r"[^0-9.]", "", float_valuesbvbgc[7].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbvbgc[7] is empty or not provided
+                value_variable_bvbgc8= None  # or any default value you want
+                
+
+
+                       
+            
+            name_variable_avbgc1 = float_namesavbgc[0].replace("Step E:", "").strip()
+
+            # Check if float_namesvbgc[1] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 1:
+                name_variable_avbgc2 = float_namesavbgc[1].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[1] is empty or not provided
+                name_variable_avbgc2 = None  # or any default name you want
+
+            # Check if float_namesvbgc[2] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 2:
+                name_variable_avbgc3 = float_namesavbgc[2].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[2] is empty or not provided
+                name_variable_avbgc3 = None  # or any default name you want
+
+            # Check if float_namesvbgc[3] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 3:
+                name_variable_avbgc4 = float_namesavbgc[3].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[3] is empty or not provided
+                name_variable_avbgc4 = None  # or any default name you want
+
+            # Check if float_namesvbgc[4] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 4:
+                name_variable_avbgc5 = float_namesavbgc[4].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[4] is empty or not provided
+                name_variable_avbgc5 = None  # or any default name you want
+
+            # Check if float_namesvbgc[5] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 5:
+                name_variable_avbgc6 = float_namesavbgc[5].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[5] is empty or not provided
+                name_variable_avbgc6 = None  # or any default name you want
+
+            # Check if float_namesvbgc[6] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 6:
+                name_variable_avbgc7 = float_namesavbgc[6].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[6] is empty or not provided
+                name_variable_avbgc7 = None  # or any default name you want
+
+            # Check if float_namesvbgc[7] is not empty
+            if float_namesavbgc and len(float_namesavbgc) > 7:
+                name_variable_avbgc8 = float_namesavbgc[7].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesavbgc[7] is empty or not provided
+                name_variable_avbgc8 = None  # or any default name you want
+                
+
+
+
+
+
+
+            if value_variable_avbgc1.endswith('.'):
+                value_variable_avbgc1 = value_variable_avbgc1[:-1]
+            if value_variable_avbgc1.startswith('.'):
+                value_variable_avbgc1 = value_variable_avbgc1[1:]
+
+            if value_variable_avbgc2 is not None:
+                if value_variable_avbgc2.endswith('.'):
+                    value_variable_avbgc2 = value_variable_avbgc2[:-1]
+                if value_variable_avbgc2.startswith('.'):
+                    value_variable_avbgc2 = value_variable_avbgc2[1:]
+
+            if value_variable_avbgc3 is not None:
+                if value_variable_avbgc3.endswith('.'):
+                    value_variable_avbgc3 = value_variable_avbgc3[:-1]
+                if value_variable_avbgc3.startswith('.'):
+                    value_variable_avbgc3 = value_variable_avbgc3[1:]
+
+            if value_variable_avbgc4 is not None:
+                if value_variable_avbgc4.endswith('.'):
+                    value_variable_avbgc4 = value_variable_avbgc4[:-1]
+                if value_variable_avbgc4.startswith('.'):
+                    value_variable_avbgc4 = value_variable_avbgc4[1:]
+
+            if value_variable_avbgc5 is not None:
+                if value_variable_avbgc5.endswith('.'):
+                    value_variable_avbgc5 = value_variable_avbgc5[:-1]
+                if value_variable_avbgc5.startswith('.'):
+                    value_variable_avbgc5 = value_variable_avbgc5[1:]
+
+            if value_variable_avbgc6 is not None:
+                if value_variable_avbgc6.endswith('.'):
+                    value_variable_avbgc6 = value_variable_avbgc6[:-1]
+                if value_variable_avbgc6.startswith('.'):
+                    value_variable_avbgc6 = value_variable_avbgc6[1:]
+
+            if value_variable_avbgc7 is not None:
+                if value_variable_avbgc7.endswith('.'):
+                    value_variable_avbgc7 = value_variable_avbgc7[:-1]
+                if value_variable_avbgc7.startswith('.'):
+                    value_variable_avbgc7 = value_variable_avbgc7[1:]
+
+            if value_variable_avbgc8 is not None:
+                if value_variable_avbgc8.endswith('.'):
+                    value_variable_avbgc8 = value_variable_avbgc8[:-1]
+                if value_variable_avbgc8.startswith('.'):
+                    value_variable_avbgc8 = value_variable_avbgc8[1:]
+                    
+
+
+            if value_variable_bvbgc1.endswith('.'):
+                value_variable_bvbgc1 = value_variable_bvbgc1[:-1]
+            if value_variable_bvbgc1.startswith('.'):
+                value_variable_bvbgc1 = value_variable_bvbgc1[1:]
+
+            if value_variable_bvbgc2 is not None:
+                if value_variable_bvbgc2.endswith('.'):
+                    value_variable_bvbgc2 = value_variable_bvbgc2[:-1]
+                if value_variable_bvbgc2.startswith('.'):
+                    value_variable_bvbgc2 = value_variable_bvbgc2[1:]
+
+            if value_variable_bvbgc3 is not None:
+                if value_variable_bvbgc3.endswith('.'):
+                    value_variable_bvbgc3 = value_variable_bvbgc3[:-1]
+                if value_variable_bvbgc3.startswith('.'):
+                    value_variable_bvbgc3 = value_variable_bvbgc3[1:]
+
+            if value_variable_bvbgc4 is not None:
+                if value_variable_bvbgc4.endswith('.'):
+                    value_variable_bvbgc4 = value_variable_bvbgc4[:-1]
+                if value_variable_bvbgc4.startswith('.'):
+                    value_variable_bvbgc4 = value_variable_bvbgc4[1:]
+
+            if value_variable_bvbgc5 is not None:
+                if value_variable_bvbgc5.endswith('.'):
+                    value_variable_bvbgc5 = value_variable_bvbgc5[:-1]
+                if value_variable_bvbgc5.startswith('.'):
+                    value_variable_bvbgc5 = value_variable_bvbgc5[1:]
+
+            if value_variable_bvbgc6 is not None:
+                if value_variable_bvbgc6.endswith('.'):
+                    value_variable_bvbgc6 = value_variable_bvbgc6[:-1]
+                if value_variable_bvbgc6.startswith('.'):
+                    value_variable_bvbgc6 = value_variable_bvbgc6[1:]
+
+            if value_variable_bvbgc7 is not None:
+                if value_variable_bvbgc7.endswith('.'):
+                    value_variable_bvbgc7 = value_variable_bvbgc7[:-1]
+                if value_variable_bvbgc7.startswith('.'):
+                    value_variable_bvbgc7 = value_variable_bvbgc7[1:]
+
+            if value_variable_bvbgc8 is not None:
+                if value_variable_bvbgc8.endswith('.'):
+                    value_variable_bvbgc8 = value_variable_bvbgc8[:-1]
+                if value_variable_bvbgc8.startswith('.'):
+                    value_variable_bvbgc8 = value_variable_bvbgc8[1:]
+                    
+
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_vbgc = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_vbgc.type == 'MESH':
+                            mesh_name_vbgc = selected_obj_vbgc.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_vbgc.modifiers:
+                                    modifier_name_vbgc = selected_obj_vbgc.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesvbgc has 1 to 9 elements and assign the length directly
+                                    num_elementsvbgc = len(float_valuesavbgc)
+                                    if 1 <= num_elementsvbgc <= 9:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = num_elementsvbgc
+
+
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_7"] = title_variable_vbgc
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_8"] = subtitle_variable_vbgc
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_11"] = float(range_maxvbgc)
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_70"] = float_legendvbgc[0]
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_69"] = float_legendvbgc[1] 
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_14"] = float(value_variable_avbgc1)
+
+                                    # Check if value_variable_avbgc2 is not empty
+                                    if value_variable_avbgc2:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_41"] = float(value_variable_avbgc2)
+                                    else:
+                                        print("Value for Input_41 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc3 is not empty
+                                    if value_variable_avbgc3:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_15"] = float(value_variable_avbgc3)
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc4 is not empty
+                                    if value_variable_avbgc4:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_44"] = float(value_variable_avbgc4)
+                                    else:
+                                        print("Value for Input_44 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc5 is not empty
+                                    if value_variable_avbgc5:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_16"] = float(value_variable_avbgc5)
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc6 is not empty
+                                    if value_variable_avbgc6:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_48"] = float(value_variable_avbgc6)
+                                    else:
+                                        print("Value for Input_48 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc7 is not empty
+                                    if value_variable_avbgc7:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_17"] = float(value_variable_avbgc7)
+                                    else:
+                                        print("Value for Input_17 is empty or not provided.")
+
+                                    # Check if value_variable_avbgc8 is not empty
+                                    if value_variable_avbgc8:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_50"] = float(value_variable_avbgc8)
+                                    else:
+                                        print("Value for Input_50 is empty or not provided.")
+                                        
+
+
+
+
+
+
+                                    # Check if value_variable_bvbgc1 is not empty
+                                    if value_variable_bvbgc1:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_57"] = float(value_variable_bvbgc1)
+                                    else:
+                                        print("Value for Input_57 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc2 is not empty
+                                    if value_variable_bvbgc2:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_58"] = float(value_variable_bvbgc2)
+                                    else:
+                                        print("Value for Input_58 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc3 is not empty
+                                    if value_variable_bvbgc3:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_59"] = float(value_variable_bvbgc3)
+                                    else:
+                                        print("Value for Input_59 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc4 is not empty
+                                    if value_variable_bvbgc4:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_64"] = float(value_variable_bvbgc4)
+                                    else:
+                                        print("Value for Input_64 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc5 is not empty
+                                    if value_variable_bvbgc5:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_60"] = float(value_variable_bvbgc5)
+                                    else:
+                                        print("Value for Input_60 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc6 is not empty
+                                    if value_variable_bvbgc6:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_61"] = float(value_variable_bvbgc6)
+                                    else:
+                                        print("Value for Input_61 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc7 is not empty
+                                    if value_variable_bvbgc7:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_62"] = float(value_variable_bvbgc7)
+                                    else:
+                                        print("Value for Input_62 is empty or not provided.")
+
+                                    # Check if value_variable_bvbgc8 is not empty
+                                    if value_variable_bvbgc8:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_63"] = float(value_variable_bvbgc8)
+                                    else:
+                                        print("Value for Input_63 is empty or not provided.")
+                                        
+
+
+
+
+                                    selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_2"] = name_variable_avbgc1
+
+                                    # Check if name_variable_avbgc2 is not empty before setting the input
+                                    if name_variable_avbgc2:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_42"] = name_variable_avbgc2
+                                    else:
+                                        print("Name for Input_42 is empty or not provided.")     
+
+                                    # Check if name_variable_avbgc3 is not empty before setting the input
+                                    if name_variable_avbgc3:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_3"] = name_variable_avbgc3
+                                    else:
+                                        print("Name for Input_3 is empty or not provided.")    
+
+                                    # Check if name_variable_avbgc4 is not empty before setting the input
+                                    if name_variable_avbgc4:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = name_variable_avbgc4
+                                    else:
+                                        print("Name for Input_45 is empty or not provided.")    
+
+                                    # Check if name_variable_avbgc5 is not empty before setting the input
+                                    if name_variable_avbgc5:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_4"] = name_variable_avbgc5
+                                    else:
+                                        print("Name for Input_4 is empty or not provided.")    
+
+                                    # Check if name_variable_avbgc6 is not empty before setting the input
+                                    if name_variable_avbgc6:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_47"] = name_variable_avbgc6
+                                    else:
+                                        print("Name for Input_47 is empty or not provided.")  
+
+                                    # Check if name_variable_avbgc7 is not empty before setting the input
+                                    if name_variable_avbgc7:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_5"] = name_variable_avbgc7
+                                    else:
+                                        print("Name for Input_5 is empty or not provided.")  
+
+                                    # Check if name_variable_avbgc8 is not empty before setting the input
+                                    if name_variable_avbgc8:
+                                        selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_49"] = name_variable_avbgc8
+                                    else:
+                                        print("Name for Input_49 is empty or not provided.")
+                                        
+
+
+                                       
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_vbgc}' and modifier '{modifier_name_vbgc}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_vbgc}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorMGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullmgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullmgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullmgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullmgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullmgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullmgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullmgaiinput1 = bpy.path.abspath(mytool.my_stringmountain_gengraph1)
+        filepath_fullmgaiinput2 = bpy.path.abspath(mytool.my_stringmountain_gengraph2)
+        filepath_fullmgaiinput3 = bpy.path.abspath(mytool.my_stringmountain_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionmg = filepath_fullmgaiinput1
+        main_questionmg = filepath_fullmgaiinput2.format(sub_questionmg)
+
+        questionmg = f"{main_questionmg} {sub_questionmg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullmgaisiteurl
+        YOUR_APP_NAME = filepath_fullmgaiappname
+        YOUR_API_KEY = filepath_fullmgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullmgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionmg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonmga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonmga)
+
+        # Extract the answer if available
+        answer_mg = response_jsonmga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_mg)
+        
+                
+        relevant_infomg = answer_mg
+        
+        if relevant_infomg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionmg = f"{filepath_fullmgaiinput3}. Here's the text: {relevant_infomg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullmgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionmg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonmgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_mg1 = new_response_jsonmgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_mg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_mg = answer_mg1.split(';')
+            
+            # Split the answer further
+            float_valuesmg = [value for value in answer_variables_mg[2].split(',')]
+            float_namesmg = [value for value in answer_variables_mg[3].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesmg = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesmg]
+
+            mgfloat_values = [float(cleaned_value) for cleaned_value in cleaned_valuesmg]
+
+            # Find the maximum value
+            float_valuesmaxmg = max(mgfloat_values)
+            print(float_valuesmaxmg)
+        
+            range_maxmg = 1.1 * float(float_valuesmaxmg)
+            print("range_maxmg:", range_maxmg)
+
+            # Now you can use the individual variables as needed
+            title_variable_mg = answer_variables_mg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_mg = answer_variables_mg[1].replace("Step B:", "").strip()
+            value_variable_mg1 = re.sub(r"[^0-9.]", "", float_valuesmg[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesmg[1] is not empty
+            if float_valuesmg and len(float_valuesmg) > 1:
+                value_variable_mg2 = re.sub(r"[^0-9.]", "", float_valuesmg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[1] is empty or not provided
+                value_variable_mg2 = None  # or any default value you want
+
+            # Check if float_valuesmg[2] is not empty
+            if float_valuesmg and len(float_valuesmg) > 2:
+                value_variable_mg3 = re.sub(r"[^0-9.]", "", float_valuesmg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[2] is empty or not provided
+                value_variable_mg3 = None  # or any default value you want
+
+            # Check if float_valuesmg[3] is not empty
+            if float_valuesmg and len(float_valuesmg) > 3:
+                value_variable_mg4 = re.sub(r"[^0-9.]", "", float_valuesmg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[3] is empty or not provided
+                value_variable_mg4 = None  # or any default value you want
+
+            # Check if float_valuesmg[4] is not empty
+            if float_valuesmg and len(float_valuesmg) > 4:
+                value_variable_mg5 = re.sub(r"[^0-9.]", "", float_valuesmg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[4] is empty or not provided
+                value_variable_mg5 = None  # or any default value you want
+
+            # Check if float_valuesmg[5] is not empty
+            if float_valuesmg and len(float_valuesmg) > 5:
+                value_variable_mg6 = re.sub(r"[^0-9.]", "", float_valuesmg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[5] is empty or not provided
+                value_variable_mg6 = None  # or any default value you want
+
+            # Check if float_valuesmg[6] is not empty
+            if float_valuesmg and len(float_valuesmg) > 6:
+                value_variable_mg7 = re.sub(r"[^0-9.]", "", float_valuesmg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[6] is empty or not provided
+                value_variable_mg7 = None  # or any default value you want
+
+            # Check if float_valuesmg[7] is not empty
+            if float_valuesmg and len(float_valuesmg) > 7:
+                value_variable_mg8 = re.sub(r"[^0-9.]", "", float_valuesmg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmg[7] is empty or not provided
+                value_variable_mg8 = None  # or any default value you want
+
+
+
+                       
+            
+            name_variable_mg1 = float_namesmg[0].replace("Step D:", "").strip()
+
+            # Check if float_namesmg[1] is not empty
+            if float_namesmg and len(float_namesmg) > 1:
+                name_variable_mg2 = float_namesmg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[1] is empty or not provided
+                name_variable_mg2 = None  # or any default name you want
+
+            # Check if float_namesmg[2] is not empty
+            if float_namesmg and len(float_namesmg) > 2:
+                name_variable_mg3 = float_namesmg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[2] is empty or not provided
+                name_variable_mg3 = None  # or any default name you want
+
+            # Check if float_namesmg[3] is not empty
+            if float_namesmg and len(float_namesmg) > 3:
+                name_variable_mg4 = float_namesmg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[3] is empty or not provided
+                name_variable_mg4 = None  # or any default name you want
+
+            # Check if float_namesmg[4] is not empty
+            if float_namesmg and len(float_namesmg) > 4:
+                name_variable_mg5 = float_namesmg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[4] is empty or not provided
+                name_variable_mg5 = None  # or any default name you want
+
+            # Check if float_namesmg[5] is not empty
+            if float_namesmg and len(float_namesmg) > 5:
+                name_variable_mg6 = float_namesmg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[5] is empty or not provided
+                name_variable_mg6 = None  # or any default name you want
+
+            # Check if float_namesmg[6] is not empty
+            if float_namesmg and len(float_namesmg) > 6:
+                name_variable_mg7 = float_namesmg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[6] is empty or not provided
+                name_variable_mg7 = None  # or any default name you want
+
+            # Check if float_namesmg[7] is not empty
+            if float_namesmg and len(float_namesmg) > 7:
+                name_variable_mg8 = float_namesmg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmg[7] is empty or not provided
+                name_variable_mg8 = None  # or any default name you want
+
+
+
+
+
+            if value_variable_mg1.endswith('.'):
+                value_variable_mg1 = value_variable_mg1[:-1]
+            if value_variable_mg1.startswith('.'):
+                value_variable_mg1 = value_variable_mg1[1:]
+
+            if value_variable_mg2 is not None:
+                if value_variable_mg2.endswith('.'):
+                    value_variable_mg2 = value_variable_mg2[:-1]
+                if value_variable_mg2.startswith('.'):
+                    value_variable_mg2 = value_variable_mg2[1:]
+
+            if value_variable_mg3 is not None:
+                if value_variable_mg3.endswith('.'):
+                    value_variable_mg3 = value_variable_mg3[:-1]
+                if value_variable_mg3.startswith('.'):
+                    value_variable_mg3 = value_variable_mg3[1:]
+
+            if value_variable_mg4 is not None:
+                if value_variable_mg4.endswith('.'):
+                    value_variable_mg4 = value_variable_mg4[:-1]
+                if value_variable_mg4.startswith('.'):
+                    value_variable_mg4 = value_variable_mg4[1:]
+
+            if value_variable_mg5 is not None:
+                if value_variable_mg5.endswith('.'):
+                    value_variable_mg5 = value_variable_mg5[:-1]
+                if value_variable_mg5.startswith('.'):
+                    value_variable_mg5 = value_variable_mg5[1:]
+
+            if value_variable_mg6 is not None:
+                if value_variable_mg6.endswith('.'):
+                    value_variable_mg6 = value_variable_mg6[:-1]
+                if value_variable_mg6.startswith('.'):
+                    value_variable_mg6 = value_variable_mg6[1:]
+
+            if value_variable_mg7 is not None:
+                if value_variable_mg7.endswith('.'):
+                    value_variable_mg7 = value_variable_mg7[:-1]
+                if value_variable_mg7.startswith('.'):
+                    value_variable_mg7 = value_variable_mg7[1:]
+
+            if value_variable_mg8 is not None:
+                if value_variable_mg8.endswith('.'):
+                    value_variable_mg8 = value_variable_mg8[:-1]
+                if value_variable_mg8.startswith('.'):
+                    value_variable_mg8 = value_variable_mg8[1:]
+
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_mg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_mg.type == 'MESH':
+                            mesh_name_mg = selected_obj_mg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_mg.modifiers:
+                                    modifier_name_mg = selected_obj_mg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesmg has 1 to 8 elements and assign the length directly
+                                    num_elementsmg = len(float_valuesmg)
+                                    if 1 <= num_elementsmg <= 10:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_2"] = num_elementsmg
+
+
+                                    selected_obj_mg.modifiers[modifier_name_mg]["Input_38"] = title_variable_mg
+                                    selected_obj_mg.modifiers[modifier_name_mg]["Input_39"] = subtitle_variable_mg
+                                    selected_obj_mg.modifiers[modifier_name_mg]["Input_24"] = float(range_maxmg)
+                                    selected_obj_mg.modifiers[modifier_name_mg]["Input_3"] = float(value_variable_mg1)
+
+                                    # Check if value_variable_mg2 is not empty
+                                    if value_variable_mg2:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_4"] = float(value_variable_mg2)
+                                    else:
+                                        print("Value for Input_4 is empty or not provided.")
+
+                                    # Check if value_variable_mg3 is not empty
+                                    if value_variable_mg3:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_5"] = float(value_variable_mg3)
+                                    else:
+                                        print("Value for Input_5 is empty or not provided.")
+
+                                    # Check if value_variable_mg4 is not empty
+                                    if value_variable_mg4:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_6"] = float(value_variable_mg4)
+                                    else:
+                                        print("Value for Input_6 is empty or not provided.")
+
+                                    # Check if value_variable_mg5 is not empty
+                                    if value_variable_mg5:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_7"] = float(value_variable_mg5)
+                                    else:
+                                        print("Value for Input_7 is empty or not provided.")
+
+                                    # Check if value_variable_mg6 is not empty
+                                    if value_variable_mg6:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_8"] = float(value_variable_mg6)
+                                    else:
+                                        print("Value for Input_8 is empty or not provided.")
+
+                                    # Check if value_variable_mg7 is not empty
+                                    if value_variable_mg7:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_9"] = float(value_variable_mg7)
+                                    else:
+                                        print("Value for Input_9 is empty or not provided.")
+
+                                    # Check if value_variable_mg8 is not empty
+                                    if value_variable_mg8:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_10"] = float(value_variable_mg8)
+                                    else:
+                                        print("Value for Input_10 is empty or not provided.")
+
+
+
+
+                                    selected_obj_mg.modifiers[modifier_name_mg]["Input_13"] = name_variable_mg1
+
+                                    # Check if name_variable_mg2 is not empty before setting the input
+                                    if name_variable_mg2:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_14"] = name_variable_mg2
+                                    else:
+                                        print("Name for Input_14 is empty or not provided.")     
+
+                                    # Check if name_variable_mg3 is not empty before setting the input
+                                    if name_variable_mg3:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_15"] = name_variable_mg3
+                                    else:
+                                        print("Name for Input_15 is empty or not provided.")    
+
+                                    # Check if name_variable_mg4 is not empty before setting the input
+                                    if name_variable_mg4:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_16"] = name_variable_mg4
+                                    else:
+                                        print("Name for Input_16 is empty or not provided.")    
+
+                                    # Check if name_variable_mg5 is not empty before setting the input
+                                    if name_variable_mg5:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_17"] = name_variable_mg5
+                                    else:
+                                        print("Name for Input_17 is empty or not provided.")    
+
+                                    # Check if name_variable_mg6 is not empty before setting the input
+                                    if name_variable_mg6:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_18"] = name_variable_mg6
+                                    else:
+                                        print("Name for Input_18 is empty or not provided.")  
+
+                                    # Check if name_variable_mg7 is not empty before setting the input
+                                    if name_variable_mg7:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_19"] = name_variable_mg7
+                                    else:
+                                        print("Name for Input_19 is empty or not provided.")  
+
+                                    # Check if name_variable_mg8 is not empty before setting the input
+                                    if name_variable_mg8:
+                                        selected_obj_mg.modifiers[modifier_name_mg]["Input_20"] = name_variable_mg8
+                                    else:
+                                        print("Name for Input_20 is empty or not provided.")
+
+                                     
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_mg}' and modifier '{modifier_name_mg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_mg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+
+class MyoperatorMGCgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormgcgenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullmgcaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullmgcaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullmgcaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullmgcaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullmgcaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullmgcaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullmgcaiinput1 = bpy.path.abspath(mytool.my_stringmountain_gengraph_comparison1)
+        filepath_fullmgcaiinput2 = bpy.path.abspath(mytool.my_stringmountain_gengraph_comparison2)
+        filepath_fullmgcaiinput3 = bpy.path.abspath(mytool.my_stringmountain_gengraph_comparison3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionmgc = filepath_fullmgcaiinput1
+        main_questionmgc = filepath_fullmgcaiinput2.format(sub_questionmgc)
+
+        questionmgc = f"{main_questionmgc} {sub_questionmgc}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullmgcaisiteurl
+        YOUR_APP_NAME = filepath_fullmgcaiappname
+        YOUR_API_KEY = filepath_fullmgcaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullmgcaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionmgc}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonmgca = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonmgca)
+
+        # Extract the answer if available
+        answer_mgc = response_jsonmgca.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_mgc)
+        
+                
+        relevant_infomgc = answer_mgc
+        
+        if relevant_infomgc:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionmgc = f"{filepath_fullmgcaiinput3}. Here's the text: {relevant_infomgc}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullmgcaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionmgc}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonmgcb = new_response.json()
+            
+            # Extract the answer if available
+            answer_mgc1 = new_response_jsonmgcb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_mgc1)
+
+            # Split the answer into variables based on commas
+            answer_variables_mgc = answer_mgc1.split(';')
+            
+            # Split the answer further
+            float_valuesamgc = [value for value in answer_variables_mgc[2].split('|')]
+            float_valuesbmgc = [value for value in answer_variables_mgc[3].split('|')]
+            float_namesamgc = [value for value in answer_variables_mgc[4].split(',')]
+            float_legendmgc = [value for value in answer_variables_mgc[5].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesamgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesamgc]
+
+            mgcfloat_avalues = []
+            for cleaned_value in cleaned_valuesamgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    mgcfloat_avalues.append(float(cleaned_value))
+                else:
+                    mgcfloat_avalues.append(0.0)  # or any default value you prefer
+
+            # Remove letters and symbols except period
+            cleaned_valuesbmgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesbmgc]
+
+            mgcfloat_bvalues = []
+            for cleaned_value in cleaned_valuesbmgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    mgcfloat_bvalues.append(float(cleaned_value))
+                else:
+                    mgcfloat_bvalues.append(0.0)  # or any default value you prefer
+            
+
+            # Find the maximum value
+            float_valuesmaxmgc = max(mgcfloat_avalues + mgcfloat_bvalues)
+            print(float_valuesmaxmgc)
+        
+            range_maxmgc = 1.1 * float(float_valuesmaxmgc)
+            print("range_maxmgc:", range_maxmgc)
+
+            # Now you can use the individual variables as needed
+            title_variable_mgc = answer_variables_mgc[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_mgc = answer_variables_mgc[1].replace("Step B:", "").strip()
+            legend_variable_mgc = answer_variables_mgc[5].replace("Step F:", "").strip()
+            value_variable_amgc1 = re.sub(r"[^0-9.]", "", float_valuesamgc[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesmgc[1] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 1:
+                value_variable_amgc2 = re.sub(r"[^0-9.]", "", float_valuesamgc[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[1] is empty or not provided
+                value_variable_amgc2 = None  # or any default value you want
+
+            # Check if float_valuesmgc[2] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 2:
+                value_variable_amgc3 = re.sub(r"[^0-9.]", "", float_valuesamgc[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[2] is empty or not provided
+                value_variable_amgc3 = None  # or any default value you want
+
+            # Check if float_valuesmgc[3] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 3:
+                value_variable_amgc4 = re.sub(r"[^0-9.]", "", float_valuesamgc[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[3] is empty or not provided
+                value_variable_amgc4 = None  # or any default value you want
+
+            # Check if float_valuesmgc[4] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 4:
+                value_variable_amgc5 = re.sub(r"[^0-9.]", "", float_valuesamgc[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[4] is empty or not provided
+                value_variable_amgc5 = None  # or any default value you want
+
+            # Check if float_valuesmgc[5] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 5:
+                value_variable_amgc6 = re.sub(r"[^0-9.]", "", float_valuesamgc[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[5] is empty or not provided
+                value_variable_amgc6 = None  # or any default value you want
+
+            # Check if float_valuesmgc[6] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 6:
+                value_variable_amgc7 = re.sub(r"[^0-9.]", "", float_valuesamgc[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[6] is empty or not provided
+                value_variable_amgc7 = None  # or any default value you want
+
+            # Check if float_valuesamgc[7] is not empty
+            if float_valuesamgc and len(float_valuesamgc) > 7:
+                value_variable_amgc8 = re.sub(r"[^0-9.]", "", float_valuesamgc[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesamgc[7] is empty or not provided
+                value_variable_amgc8 = None  # or any default value you want
+                
+
+
+            # Check if float_valuesbmgc[0] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 0:
+                value_variable_bmgc1 = re.sub(r"[^0-9.]", "", float_valuesbmgc[0].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[0] is empty or not provided
+                value_variable_bmgc1= None  # or any default value you want
+
+            # Check if float_valuesbmgc[1] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 1:
+                value_variable_bmgc2 = re.sub(r"[^0-9.]", "", float_valuesbmgc[1].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[1] is empty or not provided
+                value_variable_bmgc2= None  # or any default value you want
+
+            # Check if float_valuesbmgc[2] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 2:
+                value_variable_bmgc3 = re.sub(r"[^0-9.]", "", float_valuesbmgc[2].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[2] is empty or not provided
+                value_variable_bmgc3= None  # or any default value you want
+
+            # Check if float_valuesbmgc[3] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 3:
+                value_variable_bmgc4 = re.sub(r"[^0-9.]", "", float_valuesbmgc[3].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[3] is empty or not provided
+                value_variable_bmgc4= None  # or any default value you want
+
+            # Check if float_valuesbmgc[4] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 4:
+                value_variable_bmgc5 = re.sub(r"[^0-9.]", "", float_valuesbmgc[4].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[4] is empty or not provided
+                value_variable_bmgc5= None  # or any default value you want
+
+            # Check if float_valuesbmgc[5] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 5:
+                value_variable_bmgc6 = re.sub(r"[^0-9.]", "", float_valuesbmgc[5].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[5] is empty or not provided
+                value_variable_bmgc6= None  # or any default value you want
+
+            # Check if float_valuesbmgc[6] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 6:
+                value_variable_bmgc7 = re.sub(r"[^0-9.]", "", float_valuesbmgc[6].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[6] is empty or not provided
+                value_variable_bmgc7= None  # or any default value you want
+
+            # Check if float_valuesbmgc[7] is not empty
+            if float_valuesbmgc and len(float_valuesbmgc) > 7:
+                value_variable_bmgc8 = re.sub(r"[^0-9.]", "", float_valuesbmgc[7].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesbmgc[7] is empty or not provided
+                value_variable_bmgc8= None  # or any default value you want
+                
+
+
+                       
+            
+            name_variable_amgc1 = float_namesamgc[0].replace("Step E:", "").strip()
+
+            # Check if float_namesmgc[1] is not empty
+            if float_namesamgc and len(float_namesamgc) > 1:
+                name_variable_amgc2 = float_namesamgc[1].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[1] is empty or not provided
+                name_variable_amgc2 = None  # or any default name you want
+
+            # Check if float_namesmgc[2] is not empty
+            if float_namesamgc and len(float_namesamgc) > 2:
+                name_variable_amgc3 = float_namesamgc[2].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[2] is empty or not provided
+                name_variable_amgc3 = None  # or any default name you want
+
+            # Check if float_namesmgc[3] is not empty
+            if float_namesamgc and len(float_namesamgc) > 3:
+                name_variable_amgc4 = float_namesamgc[3].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[3] is empty or not provided
+                name_variable_amgc4 = None  # or any default name you want
+
+            # Check if float_namesmgc[4] is not empty
+            if float_namesamgc and len(float_namesamgc) > 4:
+                name_variable_amgc5 = float_namesamgc[4].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[4] is empty or not provided
+                name_variable_amgc5 = None  # or any default name you want
+
+            # Check if float_namesmgc[5] is not empty
+            if float_namesamgc and len(float_namesamgc) > 5:
+                name_variable_amgc6 = float_namesamgc[5].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[5] is empty or not provided
+                name_variable_amgc6 = None  # or any default name you want
+
+            # Check if float_namesmgc[6] is not empty
+            if float_namesamgc and len(float_namesamgc) > 6:
+                name_variable_amgc7 = float_namesamgc[6].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[6] is empty or not provided
+                name_variable_amgc7 = None  # or any default name you want
+
+            # Check if float_namesmgc[7] is not empty
+            if float_namesamgc and len(float_namesamgc) > 7:
+                name_variable_amgc8 = float_namesamgc[7].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesamgc[7] is empty or not provided
+                name_variable_amgc8 = None  # or any default name you want
+                
+
+
+
+
+
+
+            if value_variable_amgc1.endswith('.'):
+                value_variable_amgc1 = value_variable_amgc1[:-1]
+            if value_variable_amgc1.startswith('.'):
+                value_variable_amgc1 = value_variable_amgc1[1:]
+
+            if value_variable_amgc2 is not None:
+                if value_variable_amgc2.endswith('.'):
+                    value_variable_amgc2 = value_variable_amgc2[:-1]
+                if value_variable_amgc2.startswith('.'):
+                    value_variable_amgc2 = value_variable_amgc2[1:]
+
+            if value_variable_amgc3 is not None:
+                if value_variable_amgc3.endswith('.'):
+                    value_variable_amgc3 = value_variable_amgc3[:-1]
+                if value_variable_amgc3.startswith('.'):
+                    value_variable_amgc3 = value_variable_amgc3[1:]
+
+            if value_variable_amgc4 is not None:
+                if value_variable_amgc4.endswith('.'):
+                    value_variable_amgc4 = value_variable_amgc4[:-1]
+                if value_variable_amgc4.startswith('.'):
+                    value_variable_amgc4 = value_variable_amgc4[1:]
+
+            if value_variable_amgc5 is not None:
+                if value_variable_amgc5.endswith('.'):
+                    value_variable_amgc5 = value_variable_amgc5[:-1]
+                if value_variable_amgc5.startswith('.'):
+                    value_variable_amgc5 = value_variable_amgc5[1:]
+
+            if value_variable_amgc6 is not None:
+                if value_variable_amgc6.endswith('.'):
+                    value_variable_amgc6 = value_variable_amgc6[:-1]
+                if value_variable_amgc6.startswith('.'):
+                    value_variable_amgc6 = value_variable_amgc6[1:]
+
+            if value_variable_amgc7 is not None:
+                if value_variable_amgc7.endswith('.'):
+                    value_variable_amgc7 = value_variable_amgc7[:-1]
+                if value_variable_amgc7.startswith('.'):
+                    value_variable_amgc7 = value_variable_amgc7[1:]
+
+            if value_variable_amgc8 is not None:
+                if value_variable_amgc8.endswith('.'):
+                    value_variable_amgc8 = value_variable_amgc8[:-1]
+                if value_variable_amgc8.startswith('.'):
+                    value_variable_amgc8 = value_variable_amgc8[1:]
+                    
+
+
+            if value_variable_bmgc1.endswith('.'):
+                value_variable_bmgc1 = value_variable_bmgc1[:-1]
+            if value_variable_bmgc1.startswith('.'):
+                value_variable_bmgc1 = value_variable_bmgc1[1:]
+
+            if value_variable_bmgc2 is not None:
+                if value_variable_bmgc2.endswith('.'):
+                    value_variable_bmgc2 = value_variable_bmgc2[:-1]
+                if value_variable_bmgc2.startswith('.'):
+                    value_variable_bmgc2 = value_variable_bmgc2[1:]
+
+            if value_variable_bmgc3 is not None:
+                if value_variable_bmgc3.endswith('.'):
+                    value_variable_bmgc3 = value_variable_bmgc3[:-1]
+                if value_variable_bmgc3.startswith('.'):
+                    value_variable_bmgc3 = value_variable_bmgc3[1:]
+
+            if value_variable_bmgc4 is not None:
+                if value_variable_bmgc4.endswith('.'):
+                    value_variable_bmgc4 = value_variable_bmgc4[:-1]
+                if value_variable_bmgc4.startswith('.'):
+                    value_variable_bmgc4 = value_variable_bmgc4[1:]
+
+            if value_variable_bmgc5 is not None:
+                if value_variable_bmgc5.endswith('.'):
+                    value_variable_bmgc5 = value_variable_bmgc5[:-1]
+                if value_variable_bmgc5.startswith('.'):
+                    value_variable_bmgc5 = value_variable_bmgc5[1:]
+
+            if value_variable_bmgc6 is not None:
+                if value_variable_bmgc6.endswith('.'):
+                    value_variable_bmgc6 = value_variable_bmgc6[:-1]
+                if value_variable_bmgc6.startswith('.'):
+                    value_variable_bmgc6 = value_variable_bmgc6[1:]
+
+            if value_variable_bmgc7 is not None:
+                if value_variable_bmgc7.endswith('.'):
+                    value_variable_bmgc7 = value_variable_bmgc7[:-1]
+                if value_variable_bmgc7.startswith('.'):
+                    value_variable_bmgc7 = value_variable_bmgc7[1:]
+
+            if value_variable_bmgc8 is not None:
+                if value_variable_bmgc8.endswith('.'):
+                    value_variable_bmgc8 = value_variable_bmgc8[:-1]
+                if value_variable_bmgc8.startswith('.'):
+                    value_variable_bmgc8 = value_variable_bmgc8[1:]
+                    
+
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_mgc = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_mgc.type == 'MESH':
+                            mesh_name_mgc = selected_obj_mgc.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_mgc.modifiers:
+                                    modifier_name_mgc = selected_obj_mgc.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesmgc has 1 to 9 elements and assign the length directly
+                                    num_elementsmgc = len(float_valuesamgc)
+                                    if 1 <= num_elementsmgc <= 9:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_2"] = num_elementsmgc
+
+
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_54"] = title_variable_mgc
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_55"] = subtitle_variable_mgc
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_24"] = float(range_maxmgc)
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_57"] = float_legendmgc[0]
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_56"] = float_legendmgc[1] 
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_3"] = float(value_variable_amgc1)
+
+                                    # Check if value_variable_amgc2 is not empty
+                                    if value_variable_amgc2:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_4"] = float(value_variable_amgc2)
+                                    else:
+                                        print("Value for Input_4 is empty or not provided.")
+
+                                    # Check if value_variable_amgc3 is not empty
+                                    if value_variable_amgc3:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_67"] = float(value_variable_amgc3)
+                                    else:
+                                        print("Value for Input_67 is empty or not provided.")
+
+                                    # Check if value_variable_amgc4 is not empty
+                                    if value_variable_amgc4:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_6"] = float(value_variable_amgc4)
+                                    else:
+                                        print("Value for Input_6 is empty or not provided.")
+
+                                    # Check if value_variable_amgc5 is not empty
+                                    if value_variable_amgc5:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_7"] = float(value_variable_amgc5)
+                                    else:
+                                        print("Value for Input_7 is empty or not provided.")
+
+                                    # Check if value_variable_amgc6 is not empty
+                                    if value_variable_amgc6:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_8"] = float(value_variable_amgc6)
+                                    else:
+                                        print("Value for Input_8 is empty or not provided.")
+
+                                    # Check if value_variable_amgc7 is not empty
+                                    if value_variable_amgc7:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_9"] = float(value_variable_amgc7)
+                                    else:
+                                        print("Value for Input_9 is empty or not provided.")
+
+                                    # Check if value_variable_amgc8 is not empty
+                                    if value_variable_amgc8:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_10"] = float(value_variable_amgc8)
+                                    else:
+                                        print("Value for Input_10 is empty or not provided.")
+                                        
+
+
+
+
+
+
+                                    # Check if value_variable_bmgc1 is not empty
+                                    if value_variable_bmgc1:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_30"] = float(value_variable_bmgc1)
+                                    else:
+                                        print("Value for Input_30 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc2 is not empty
+                                    if value_variable_bmgc2:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_39"] = float(value_variable_bmgc2)
+                                    else:
+                                        print("Value for Input_39 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc3 is not empty
+                                    if value_variable_bmgc3:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_40"] = float(value_variable_bmgc3)
+                                    else:
+                                        print("Value for Input_40 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc4 is not empty
+                                    if value_variable_bmgc4:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_41"] = float(value_variable_bmgc4)
+                                    else:
+                                        print("Value for Input_41 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc5 is not empty
+                                    if value_variable_bmgc5:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_42"] = float(value_variable_bmgc5)
+                                    else:
+                                        print("Value for Input_42 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc6 is not empty
+                                    if value_variable_bmgc6:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_43"] = float(value_variable_bmgc6)
+                                    else:
+                                        print("Value for Input_43 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc7 is not empty
+                                    if value_variable_bmgc7:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_44"] = float(value_variable_bmgc7)
+                                    else:
+                                        print("Value for Input_44 is empty or not provided.")
+
+                                    # Check if value_variable_bmgc8 is not empty
+                                    if value_variable_bmgc8:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_45"] = float(value_variable_bmgc8)
+                                    else:
+                                        print("Value for Input_45 is empty or not provided.")
+                                        
+
+
+
+
+                                    selected_obj_mgc.modifiers[modifier_name_mgc]["Input_13"] = name_variable_amgc1
+
+                                    # Check if name_variable_amgc2 is not empty before setting the input
+                                    if name_variable_amgc2:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_14"] = name_variable_amgc2
+                                    else:
+                                        print("Name for Input_14 is empty or not provided.")     
+
+                                    # Check if name_variable_amgc3 is not empty before setting the input
+                                    if name_variable_amgc3:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_15"] = name_variable_amgc3
+                                    else:
+                                        print("Name for Input_15 is empty or not provided.")    
+
+                                    # Check if name_variable_amgc4 is not empty before setting the input
+                                    if name_variable_amgc4:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_16"] = name_variable_amgc4
+                                    else:
+                                        print("Name for Input_16 is empty or not provided.")    
+
+                                    # Check if name_variable_amgc5 is not empty before setting the input
+                                    if name_variable_amgc5:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_17"] = name_variable_amgc5
+                                    else:
+                                        print("Name for Input_17 is empty or not provided.")    
+
+                                    # Check if name_variable_amgc6 is not empty before setting the input
+                                    if name_variable_amgc6:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_18"] = name_variable_amgc6
+                                    else:
+                                        print("Name for Input_18 is empty or not provided.")  
+
+                                    # Check if name_variable_amgc7 is not empty before setting the input
+                                    if name_variable_amgc7:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_19"] = name_variable_amgc7
+                                    else:
+                                        print("Name for Input_19 is empty or not provided.")  
+
+                                    # Check if name_variable_amgc8 is not empty before setting the input
+                                    if name_variable_amgc8:
+                                        selected_obj_mgc.modifiers[modifier_name_mgc]["Input_20"] = name_variable_amgc8
+                                    else:
+                                        print("Name for Input_20 is empty or not provided.")
+                                        
+
+
+                                       
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_mgc}' and modifier '{modifier_name_mgc}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_mgc}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+
+
+class MyoperatorVBGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullvbgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullvbgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullvbgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullvbgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullvbgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullvbgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullvbgaiinput1 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph1)
+        filepath_fullvbgaiinput2 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph2)
+        filepath_fullvbgaiinput3 = bpy.path.abspath(mytool.my_stringvertical_bar_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionvbg = filepath_fullvbgaiinput1
+        main_questionvbg = filepath_fullvbgaiinput2.format(sub_questionvbg)
+
+        questionvbg = f"{main_questionvbg} {sub_questionvbg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullvbgaisiteurl
+        YOUR_APP_NAME = filepath_fullvbgaiappname
+        YOUR_API_KEY = filepath_fullvbgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullvbgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionvbg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonvbga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonvbga)
+
+        # Extract the answer if available
+        answer_vbg = response_jsonvbga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_vbg)
+        
+                
+        relevant_infovbg = answer_vbg
+        
+        if relevant_infovbg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionvbg = f"{filepath_fullvbgaiinput3}. Here's the text: {relevant_infovbg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullvbgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionvbg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonvbgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_vbg1 = new_response_jsonvbgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_vbg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_vbg = answer_vbg1.split(';')
+            
+            # Split the answer further
+            float_valuesvbg = [value for value in answer_variables_vbg[2].split(',')]
+            float_namesvbg = [value for value in answer_variables_vbg[3].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesvbg = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesvbg]
+
+            vbgfloat_values = [float(cleaned_value) for cleaned_value in cleaned_valuesvbg]
+
+            # Find the maximum value
+            float_valuesmaxvbg = max(vbgfloat_values)
+            print(float_valuesmaxvbg)
+        
+            range_maxvbg = 1.1 * float(float_valuesmaxvbg)
+            print("range_maxvbg:", range_maxvbg)
+
+            # Now you can use the individual variables as needed
+            title_variable_vbg = answer_variables_vbg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_vbg = answer_variables_vbg[1].replace("Step B:", "").strip()
+            value_variable_vbg1 = re.sub(r"[^0-9.]", "", float_valuesvbg[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesvbg[1] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 1:
+                value_variable_vbg2 = re.sub(r"[^0-9.]", "", float_valuesvbg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[1] is empty or not provided
+                value_variable_vbg2 = None  # or any default value you want
+
+            # Check if float_valuesvbg[2] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 2:
+                value_variable_vbg3 = re.sub(r"[^0-9.]", "", float_valuesvbg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[2] is empty or not provided
+                value_variable_vbg3 = None  # or any default value you want
+
+            # Check if float_valuesvbg[3] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 3:
+                value_variable_vbg4 = re.sub(r"[^0-9.]", "", float_valuesvbg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[3] is empty or not provided
+                value_variable_vbg4 = None  # or any default value you want
+
+            # Check if float_valuesvbg[4] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 4:
+                value_variable_vbg5 = re.sub(r"[^0-9.]", "", float_valuesvbg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[4] is empty or not provided
+                value_variable_vbg5 = None  # or any default value you want
+
+            # Check if float_valuesvbg[5] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 5:
+                value_variable_vbg6 = re.sub(r"[^0-9.]", "", float_valuesvbg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[5] is empty or not provided
+                value_variable_vbg6 = None  # or any default value you want
+
+            # Check if float_valuesvbg[6] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 6:
+                value_variable_vbg7 = re.sub(r"[^0-9.]", "", float_valuesvbg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[6] is empty or not provided
+                value_variable_vbg7 = None  # or any default value you want
+
+            # Check if float_valuesvbg[7] is not empty
+            if float_valuesvbg and len(float_valuesvbg) > 7:
+                value_variable_vbg8 = re.sub(r"[^0-9.]", "", float_valuesvbg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesvbg[7] is empty or not provided
+                value_variable_vbg8 = None  # or any default value you want
+
+                       
+            
+            name_variable_vbg1 = float_namesvbg[0].replace("Step D:", "").strip()
+
+            # Check if float_namesvbg[1] is not empty
+            if float_namesvbg and len(float_namesvbg) > 1:
+                name_variable_vbg2 = float_namesvbg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[1] is empty or not provided
+                name_variable_vbg2 = None  # or any default name you want
+
+            # Check if float_namesvbg[2] is not empty
+            if float_namesvbg and len(float_namesvbg) > 2:
+                name_variable_vbg3 = float_namesvbg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[2] is empty or not provided
+                name_variable_vbg3 = None  # or any default name you want
+
+            # Check if float_namesvbg[3] is not empty
+            if float_namesvbg and len(float_namesvbg) > 3:
+                name_variable_vbg4 = float_namesvbg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[3] is empty or not provided
+                name_variable_vbg4 = None  # or any default name you want
+
+            # Check if float_namesvbg[4] is not empty
+            if float_namesvbg and len(float_namesvbg) > 4:
+                name_variable_vbg5 = float_namesvbg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[4] is empty or not provided
+                name_variable_vbg5 = None  # or any default name you want
+
+            # Check if float_namesvbg[5] is not empty
+            if float_namesvbg and len(float_namesvbg) > 5:
+                name_variable_vbg6 = float_namesvbg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[5] is empty or not provided
+                name_variable_vbg6 = None  # or any default name you want
+
+            # Check if float_namesvbg[6] is not empty
+            if float_namesvbg and len(float_namesvbg) > 6:
+                name_variable_vbg7 = float_namesvbg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[6] is empty or not provided
+                name_variable_vbg7 = None  # or any default name you want
+
+            # Check if float_namesvbg[7] is not empty
+            if float_namesvbg and len(float_namesvbg) > 7:
+                name_variable_vbg8 = float_namesvbg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesvbg[7] is empty or not provided
+                name_variable_vbg8 = None  # or any default name you want
+
+
+
+            if value_variable_vbg1.endswith('.'):
+                value_variable_vbg1 = value_variable_vbg1[:-1]
+            if value_variable_vbg1.startswith('.'):
+                value_variable_vbg1 = value_variable_vbg1[1:]
+
+            if value_variable_vbg2 is not None:
+                if value_variable_vbg2.endswith('.'):
+                    value_variable_vbg2 = value_variable_vbg2[:-1]
+                if value_variable_vbg2.startswith('.'):
+                    value_variable_vbg2 = value_variable_vbg2[1:]
+
+            if value_variable_vbg3 is not None:
+                if value_variable_vbg3.endswith('.'):
+                    value_variable_vbg3 = value_variable_vbg3[:-1]
+                if value_variable_vbg3.startswith('.'):
+                    value_variable_vbg3 = value_variable_vbg3[1:]
+
+            if value_variable_vbg4 is not None:
+                if value_variable_vbg4.endswith('.'):
+                    value_variable_vbg4 = value_variable_vbg4[:-1]
+                if value_variable_vbg4.startswith('.'):
+                    value_variable_vbg4 = value_variable_vbg4[1:]
+
+            if value_variable_vbg5 is not None:
+                if value_variable_vbg5.endswith('.'):
+                    value_variable_vbg5 = value_variable_vbg5[:-1]
+                if value_variable_vbg5.startswith('.'):
+                    value_variable_vbg5 = value_variable_vbg5[1:]
+
+            if value_variable_vbg6 is not None:
+                if value_variable_vbg6.endswith('.'):
+                    value_variable_vbg6 = value_variable_vbg6[:-1]
+                if value_variable_vbg6.startswith('.'):
+                    value_variable_vbg6 = value_variable_vbg6[1:]
+
+            if value_variable_vbg7 is not None:
+                if value_variable_vbg7.endswith('.'):
+                    value_variable_vbg7 = value_variable_vbg7[:-1]
+                if value_variable_vbg7.startswith('.'):
+                    value_variable_vbg7 = value_variable_vbg7[1:]
+
+            if value_variable_vbg8 is not None:
+                if value_variable_vbg8.endswith('.'):
+                    value_variable_vbg8 = value_variable_vbg8[:-1]
+                if value_variable_vbg8.startswith('.'):
+                    value_variable_vbg8 = value_variable_vbg8[1:]
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_vbg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_vbg.type == 'MESH':
+                            mesh_name_vbg = selected_obj_vbg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_vbg.modifiers:
+                                    modifier_name_vbg = selected_obj_vbg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesvbg has 1 to 8 elements and assign the length directly
+                                    num_elementsvbg = len(float_valuesvbg)
+                                    if 1 <= num_elementsvbg <= 8:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_57"] = num_elementsvbg
+
+
+                                    selected_obj_vbg.modifiers[modifier_name_vbg]["Input_7"] = title_variable_vbg
+                                    selected_obj_vbg.modifiers[modifier_name_vbg]["Input_8"] = subtitle_variable_vbg
+                                    selected_obj_vbg.modifiers[modifier_name_vbg]["Input_11"] = float(range_maxvbg)
+                                    selected_obj_vbg.modifiers[modifier_name_vbg]["Input_14"] = float(value_variable_vbg1)
+
+                                    # Check if value_variable_vbg2 is not empty
+                                    if value_variable_vbg2:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_41"] = float(value_variable_vbg2)
+                                    else:
+                                        print("Value for Input_41 is empty or not provided.")
+
+                                    # Check if value_variable_vbg3 is not empty
+                                    if value_variable_vbg3:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_15"] = float(value_variable_vbg3)
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_vbg4 is not empty
+                                    if value_variable_vbg4:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_44"] = float(value_variable_vbg4)
+                                    else:
+                                        print("Value for Input_44 is empty or not provided.")
+
+                                    # Check if value_variable_vbg5 is not empty
+                                    if value_variable_vbg5:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_16"] = float(value_variable_vbg5)
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_vbg6 is not empty
+                                    if value_variable_vbg6:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_48"] = float(value_variable_vbg6)
+                                    else:
+                                        print("Value for Input_48 is empty or not provided.")
+
+                                    # Check if value_variable_vbg7 is not empty
+                                    if value_variable_vbg7:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_17"] = float(value_variable_vbg7)
+                                    else:
+                                        print("Value for Input_17 is empty or not provided.")
+
+                                    # Check if value_variable_vbg8 is not empty
+                                    if value_variable_vbg8:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_50"] = float(value_variable_vbg8)
+                                    else:
+                                        print("Value for Input_50 is empty or not provided.")
+
+
+                                    selected_obj_vbg.modifiers[modifier_name_vbg]["Input_2"] = name_variable_vbg1
+
+                                    # Check if name_variable_vbg2 is not empty before setting the input
+                                    if name_variable_vbg2:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_42"] = name_variable_vbg2
+                                    else:
+                                        print("Name for Input_42 is empty or not provided.")     
+
+                                    # Check if name_variable_vbg3 is not empty before setting the input
+                                    if name_variable_vbg3:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_3"] = name_variable_vbg3
+                                    else:
+                                        print("Name for Input_3 is empty or not provided.")    
+
+                                    # Check if name_variable_vbg4 is not empty before setting the input
+                                    if name_variable_vbg4:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_45"] = name_variable_vbg4
+                                    else:
+                                        print("Name for Input_45 is empty or not provided.")    
+
+                                    # Check if name_variable_vbg5 is not empty before setting the input
+                                    if name_variable_vbg5:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_4"] = name_variable_vbg5
+                                    else:
+                                        print("Name for Input_4 is empty or not provided.")    
+
+                                    # Check if name_variable_vbg6 is not empty before setting the input
+                                    if name_variable_vbg6:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_47"] = name_variable_vbg6
+                                    else:
+                                        print("Name for Input_47 is empty or not provided.")  
+
+                                    # Check if name_variable_vbg7 is not empty before setting the input
+                                    if name_variable_vbg7:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_5"] = name_variable_vbg7
+                                    else:
+                                        print("Name for Input_5 is empty or not provided.")  
+
+                                    # Check if name_variable_vbg8 is not empty before setting the input
+                                    if name_variable_vbg8:
+                                        selected_obj_vbg.modifiers[modifier_name_vbg]["Input_49"] = name_variable_vbg8
+                                    else:
+                                        print("Name for Input_49 is empty or not provided.")
+
+                                      
+
+
+                                    print(f"Set modifier input for object '{mesh_name_vbg}' and modifier '{modifier_name_vbg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_vbg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorLGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorlineggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fulllgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fulllgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fulllgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fulllgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fulllgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fulllgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fulllgaiinput1 = bpy.path.abspath(mytool.my_stringline_gengraph1)
+        filepath_fulllgaiinput2 = bpy.path.abspath(mytool.my_stringline_gengraph2)
+        filepath_fulllgaiinput3 = bpy.path.abspath(mytool.my_stringline_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionlg = filepath_fulllgaiinput1
+        main_questionlg = filepath_fulllgaiinput2.format(sub_questionlg)
+
+        questionlg = f"{main_questionlg} {sub_questionlg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fulllgaisiteurl
+        YOUR_APP_NAME = filepath_fulllgaiappname
+        YOUR_API_KEY = filepath_fulllgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fulllgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionlg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonlga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonlga)
+
+        # Extract the answer if available
+        answer_lg = response_jsonlga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_lg)
+        
+                
+        relevant_infolg = answer_lg
+        
+        if relevant_infolg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionlg = f"{filepath_fulllgaiinput3}. Here's the text: {relevant_infolg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fulllgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionlg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonlgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_lg1 = new_response_jsonlgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_lg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_lg = answer_lg1.split(';')
+            
+            # Split the answer further
+            float_valueslg = [value for value in answer_variables_lg[2].split(',')]
+            float_nameslg = [value for value in answer_variables_lg[3].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valueslg = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valueslg]
+
+            lgfloat_values = [float(cleaned_value) for cleaned_value in cleaned_valueslg]
+
+            # Find the maximum value
+            float_valuesmaxlg = max(lgfloat_values)
+            print(float_valuesmaxlg)
+        
+            range_maxlg = 1.1 * float(float_valuesmaxlg)
+            print("range_maxlg:", range_maxlg)
+
+            # Now you can use the individual variables as needed
+            title_variable_lg = answer_variables_lg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_lg = answer_variables_lg[1].replace("Step B:", "").strip()
+            value_variable_lg1 = re.sub(r"[^0-9.]", "", float_valueslg[0].replace("Step C:", "").strip())
+
+            # Check if float_valueslg[1] is not empty
+            if float_valueslg and len(float_valueslg) > 1:
+                value_variable_lg2 = re.sub(r"[^0-9.]", "", float_valueslg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[1] is empty or not provided
+                value_variable_lg2 = None  # or any default value you want
+
+            # Check if float_valueslg[2] is not empty
+            if float_valueslg and len(float_valueslg) > 2:
+                value_variable_lg3 = re.sub(r"[^0-9.]", "", float_valueslg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[2] is empty or not provided
+                value_variable_lg3 = None  # or any default value you want
+
+            # Check if float_valueslg[3] is not empty
+            if float_valueslg and len(float_valueslg) > 3:
+                value_variable_lg4 = re.sub(r"[^0-9.]", "", float_valueslg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[3] is empty or not provided
+                value_variable_lg4 = None  # or any default value you want
+
+            # Check if float_valueslg[4] is not empty
+            if float_valueslg and len(float_valueslg) > 4:
+                value_variable_lg5 = re.sub(r"[^0-9.]", "", float_valueslg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[4] is empty or not provided
+                value_variable_lg5 = None  # or any default value you want
+
+            # Check if float_valueslg[5] is not empty
+            if float_valueslg and len(float_valueslg) > 5:
+                value_variable_lg6 = re.sub(r"[^0-9.]", "", float_valueslg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[5] is empty or not provided
+                value_variable_lg6 = None  # or any default value you want
+
+            # Check if float_valueslg[6] is not empty
+            if float_valueslg and len(float_valueslg) > 6:
+                value_variable_lg7 = re.sub(r"[^0-9.]", "", float_valueslg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[6] is empty or not provided
+                value_variable_lg7 = None  # or any default value you want
+
+            # Check if float_valueslg[7] is not empty
+            if float_valueslg and len(float_valueslg) > 7:
+                value_variable_lg8 = re.sub(r"[^0-9.]", "", float_valueslg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[7] is empty or not provided
+                value_variable_lg8 = None  # or any default value you want
+
+            # Check if float_valueslg[8] is not empty
+            if float_valueslg and len(float_valueslg) > 8:
+                value_variable_lg9 = re.sub(r"[^0-9.]", "", float_valueslg[8].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[8] is empty or not provided
+                value_variable_lg9 = None  # or any default value you want
+
+            # Check if float_valueslg[9] is not empty
+            if float_valueslg and len(float_valueslg) > 9:
+                value_variable_lg10 = re.sub(r"[^0-9.]", "", float_valueslg[9].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[9] is empty or not provided
+                value_variable_lg10 = None  # or any default value you want
+
+            # Check if float_valueslg[10] is not empty
+            if float_valueslg and len(float_valueslg) > 10:
+                value_variable_lg11 = re.sub(r"[^0-9.]", "", float_valueslg[10].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[10] is empty or not provided
+                value_variable_lg11 = None  # or any default value you want                       
+
+            # Check if float_valueslg[11] is not empty
+            if float_valueslg and len(float_valueslg) > 11:
+                value_variable_lg12 = re.sub(r"[^0-9.]", "", float_valueslg[11].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[11] is empty or not provided
+                value_variable_lg12 = None  # or any default value you want 
+
+            # Check if float_valueslg[12] is not empty
+            if float_valueslg and len(float_valueslg) > 12:
+                value_variable_lg13 = re.sub(r"[^0-9.]", "", float_valueslg[12].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[12] is empty or not provided
+                value_variable_lg13 = None  # or any default value you want 
+
+            # Check if float_valueslg[13] is not empty
+            if float_valueslg and len(float_valueslg) > 13:
+                value_variable_lg14 = re.sub(r"[^0-9.]", "", float_valueslg[13].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[13] is empty or not provided
+                value_variable_lg14 = None  # or any default value you want 
+
+            # Check if float_valueslg[14] is not empty
+            if float_valueslg and len(float_valueslg) > 14:
+                value_variable_lg15 = re.sub(r"[^0-9.]", "", float_valueslg[14].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[14] is empty or not provided
+                value_variable_lg15 = None  # or any default value you want 
+
+            # Check if float_valueslg[15] is not empty
+            if float_valueslg and len(float_valueslg) > 15:
+                value_variable_lg16 = re.sub(r"[^0-9.]", "", float_valueslg[15].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[15] is empty or not provided
+                value_variable_lg16 = None  # or any default value you want 
+
+            # Check if float_valueslg[16] is not empty
+            if float_valueslg and len(float_valueslg) > 16:
+                value_variable_lg17 = re.sub(r"[^0-9.]", "", float_valueslg[16].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[16] is empty or not provided
+                value_variable_lg17 = None  # or any default value you want 
+
+            # Check if float_valueslg[17] is not empty
+            if float_valueslg and len(float_valueslg) > 17:
+                value_variable_lg18 = re.sub(r"[^0-9.]", "", float_valueslg[17].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[17] is empty or not provided
+                value_variable_lg18 = None  # or any default value you want 
+
+            # Check if float_valueslg[18] is not empty
+            if float_valueslg and len(float_valueslg) > 18:
+                value_variable_lg19 = re.sub(r"[^0-9.]", "", float_valueslg[18].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[18] is empty or not provided
+                value_variable_lg19 = None  # or any default value you want 
+
+            # Check if float_valueslg[19] is not empty
+            if float_valueslg and len(float_valueslg) > 19:
+                value_variable_lg20 = re.sub(r"[^0-9.]", "", float_valueslg[19].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[19] is empty or not provided
+                value_variable_lg20 = None  # or any default value you want 
+
+            # Check if float_valueslg[20] is not empty
+            if float_valueslg and len(float_valueslg) > 20:
+                value_variable_lg21 = re.sub(r"[^0-9.]", "", float_valueslg[20].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[20] is empty or not provided
+                value_variable_lg21 = None  # or any default value you want 
+
+            # Check if float_valueslg[21] is not empty
+            if float_valueslg and len(float_valueslg) > 21:
+                value_variable_lg22 = re.sub(r"[^0-9.]", "", float_valueslg[21].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[21] is empty or not provided
+                value_variable_lg22 = None  # or any default value you want 
+
+            # Check if float_valueslg[22] is not empty
+            if float_valueslg and len(float_valueslg) > 22:
+                value_variable_lg23 = re.sub(r"[^0-9.]", "", float_valueslg[22].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[22] is empty or not provided
+                value_variable_lg23 = None  # or any default value you want 
+
+            # Check if float_valueslg[23] is not empty
+            if float_valueslg and len(float_valueslg) > 23:
+                value_variable_lg24 = re.sub(r"[^0-9.]", "", float_valueslg[23].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[23] is empty or not provided
+                value_variable_lg24 = None  # or any default value you want
+
+            # Check if float_valueslg[24] is not empty
+            if float_valueslg and len(float_valueslg) > 24:
+                value_variable_lg25 = re.sub(r"[^0-9.]", "", float_valueslg[24].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[24] is empty or not provided
+                value_variable_lg25 = None  # or any default value you want
+
+            # Check if float_valueslg[25] is not empty
+            if float_valueslg and len(float_valueslg) > 25:
+                value_variable_lg26 = re.sub(r"[^0-9.]", "", float_valueslg[25].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[25] is empty or not provided
+                value_variable_lg26 = None  # or any default value you want
+
+            # Check if float_valueslg[26] is not empty
+            if float_valueslg and len(float_valueslg) > 26:
+                value_variable_lg27 = re.sub(r"[^0-9.]", "", float_valueslg[26].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[26] is empty or not provided
+                value_variable_lg27 = None  # or any default value you want
+
+            # Check if float_valueslg[27] is not empty
+            if float_valueslg and len(float_valueslg) > 27:
+                value_variable_lg28 = re.sub(r"[^0-9.]", "", float_valueslg[27].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[27] is empty or not provided
+                value_variable_lg28 = None  # or any default value you want
+
+            # Check if float_valueslg[28] is not empty
+            if float_valueslg and len(float_valueslg) > 28:
+                value_variable_lg29 = re.sub(r"[^0-9.]", "", float_valueslg[28].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[28] is empty or not provided
+                value_variable_lg29 = None  # or any default value you want
+
+            # Check if float_valueslg[29] is not empty
+            if float_valueslg and len(float_valueslg) > 29:
+                value_variable_lg30 = re.sub(r"[^0-9.]", "", float_valueslg[29].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valueslg[29] is empty or not provided
+                value_variable_lg30 = None  # or any default value you want
+
+            
+            name_variable_lg1 = float_nameslg[0].replace("Step D:", "").strip()
+
+            # Check if float_nameslg[1] is not empty
+            if float_nameslg and len(float_nameslg) > 1:
+                name_variable_lg2 = float_nameslg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[1] is empty or not provided
+                name_variable_lg2 = None  # or any default name you want
+
+            # Check if float_nameslg[2] is not empty
+            if float_nameslg and len(float_nameslg) > 2:
+                name_variable_lg3 = float_nameslg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[2] is empty or not provided
+                name_variable_lg3 = None  # or any default name you want
+
+            # Check if float_nameslg[3] is not empty
+            if float_nameslg and len(float_nameslg) > 3:
+                name_variable_lg4 = float_nameslg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[3] is empty or not provided
+                name_variable_lg4 = None  # or any default name you want
+
+            # Check if float_nameslg[4] is not empty
+            if float_nameslg and len(float_nameslg) > 4:
+                name_variable_lg5 = float_nameslg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[4] is empty or not provided
+                name_variable_lg5 = None  # or any default name you want
+
+            # Check if float_nameslg[5] is not empty
+            if float_nameslg and len(float_nameslg) > 5:
+                name_variable_lg6 = float_nameslg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[5] is empty or not provided
+                name_variable_lg6 = None  # or any default name you want
+
+            # Check if float_nameslg[6] is not empty
+            if float_nameslg and len(float_nameslg) > 6:
+                name_variable_lg7 = float_nameslg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[6] is empty or not provided
+                name_variable_lg7 = None  # or any default name you want
+
+            # Check if float_nameslg[7] is not empty
+            if float_nameslg and len(float_nameslg) > 7:
+                name_variable_lg8 = float_nameslg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[7] is empty or not provided
+                name_variable_lg8 = None  # or any default name you want
+
+            # Check if float_nameslg[8] is not empty
+            if float_nameslg and len(float_nameslg) > 8:
+                name_variable_lg9 = float_nameslg[8].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[8] is empty or not provided
+                name_variable_lg9 = None  # or any default name you want
+
+            # Check if float_nameslg[9] is not empty
+            if float_nameslg and len(float_nameslg) > 9:
+                name_variable_lg10 = float_nameslg[9].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[9] is empty or not provided
+                name_variable_lg10 = None  # or any default name you want
+
+            # Check if float_nameslg[10] is not empty
+            if float_nameslg and len(float_nameslg) > 10:
+                name_variable_lg11 = float_nameslg[10].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[10] is empty or not provided
+                name_variable_lg11 = None  # or any default name you want
+
+            # Check if float_nameslg[11] is not empty
+            if float_nameslg and len(float_nameslg) > 11:
+                name_variable_lg12 = float_nameslg[11].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[11] is empty or not provided
+                name_variable_lg12 = None  # or any default name you want
+
+            # Check if float_nameslg[12] is not empty
+            if float_nameslg and len(float_nameslg) > 12:
+                name_variable_lg13 = float_nameslg[12].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[12] is empty or not provided
+                name_variable_lg13 = None  # or any default name you want
+
+            # Check if float_nameslg[13] is not empty
+            if float_nameslg and len(float_nameslg) > 13:
+                name_variable_lg14 = float_nameslg[13].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[13] is empty or not provided
+                name_variable_lg14 = None  # or any default name you want
+
+            # Check if float_nameslg[14] is not empty
+            if float_nameslg and len(float_nameslg) > 14:
+                name_variable_lg15 = float_nameslg[14].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[14] is empty or not provided
+                name_variable_lg15 = None  # or any default name you want
+
+            # Check if float_nameslg[15] is not empty
+            if float_nameslg and len(float_nameslg) > 15:
+                name_variable_lg16 = float_nameslg[15].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[15] is empty or not provided
+                name_variable_lg16 = None  # or any default name you want
+
+            # Check if float_nameslg[16] is not empty
+            if float_nameslg and len(float_nameslg) > 16:
+                name_variable_lg17 = float_nameslg[16].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[16] is empty or not provided
+                name_variable_lg17 = None  # or any default name you want
+
+            # Check if float_nameslg[17] is not empty
+            if float_nameslg and len(float_nameslg) > 17:
+                name_variable_lg18 = float_nameslg[17].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[17] is empty or not provided
+                name_variable_lg18 = None  # or any default name you want
+
+            # Check if float_nameslg[18] is not empty
+            if float_nameslg and len(float_nameslg) > 18:
+                name_variable_lg19 = float_nameslg[18].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[18] is empty or not provided
+                name_variable_lg19 = None  # or any default name you want
+
+            # Check if float_nameslg[19] is not empty
+            if float_nameslg and len(float_nameslg) > 19:
+                name_variable_lg20 = float_nameslg[19].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[19] is empty or not provided
+                name_variable_lg20 = None  # or any default name you want
+
+            # Check if float_nameslg[20] is not empty
+            if float_nameslg and len(float_nameslg) > 20:
+                name_variable_lg21 = float_nameslg[20].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[20] is empty or not provided
+                name_variable_lg21 = None  # or any default name you want
+
+            # Check if float_nameslg[21] is not empty
+            if float_nameslg and len(float_nameslg) > 21:
+                name_variable_lg22 = float_nameslg[21].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[21] is empty or not provided
+                name_variable_lg22 = None  # or any default name you want
+
+            # Check if float_nameslg[22] is not empty
+            if float_nameslg and len(float_nameslg) > 22:
+                name_variable_lg23 = float_nameslg[22].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[22] is empty or not provided
+                name_variable_lg23 = None  # or any default name you want
+
+            # Check if float_nameslg[23] is not empty
+            if float_nameslg and len(float_nameslg) > 23:
+                name_variable_lg24 = float_nameslg[23].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[23] is empty or not provided
+                name_variable_lg24 = None  # or any default name you want
+
+            # Check if float_nameslg[24] is not empty
+            if float_nameslg and len(float_nameslg) > 24:
+                name_variable_lg25 = float_nameslg[24].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[24] is empty or not provided
+                name_variable_lg25 = None  # or any default name you want
+
+            # Check if float_nameslg[25] is not empty
+            if float_nameslg and len(float_nameslg) > 25:
+                name_variable_lg26 = float_nameslg[25].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[25] is empty or not provided
+                name_variable_lg26 = None  # or any default name you want
+
+            # Check if float_nameslg[26] is not empty
+            if float_nameslg and len(float_nameslg) > 26:
+                name_variable_lg27 = float_nameslg[26].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[26] is empty or not provided
+                name_variable_lg27 = None  # or any default name you want
+
+            # Check if float_nameslg[27] is not empty
+            if float_nameslg and len(float_nameslg) > 27:
+                name_variable_lg28 = float_nameslg[27].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[27] is empty or not provided
+                name_variable_lg28 = None  # or any default name you want
+
+            # Check if float_nameslg[28] is not empty
+            if float_nameslg and len(float_nameslg) > 28:
+                name_variable_lg29 = float_nameslg[28].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[28] is empty or not provided
+                name_variable_lg29 = None  # or any default name you want
+
+            # Check if float_nameslg[29] is not empty
+            if float_nameslg and len(float_nameslg) > 29:
+                name_variable_lg30 = float_nameslg[29].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_nameslg[29] is empty or not provided
+                name_variable_lg30 = None  # or any default name you want
+
+
+
+            if value_variable_lg1.endswith('.'):
+                value_variable_lg1 = value_variable_lg1[:-1]
+            if value_variable_lg1.startswith('.'):
+                value_variable_lg1 = value_variable_lg1[1:]
+
+            if value_variable_lg2 is not None:
+                if value_variable_lg2.endswith('.'):
+                    value_variable_lg2 = value_variable_lg2[:-1]
+                if value_variable_lg2.startswith('.'):
+                    value_variable_lg2 = value_variable_lg2[1:]
+
+            if value_variable_lg3 is not None:
+                if value_variable_lg3.endswith('.'):
+                    value_variable_lg3 = value_variable_lg3[:-1]
+                if value_variable_lg3.startswith('.'):
+                    value_variable_lg3 = value_variable_lg3[1:]
+
+            if value_variable_lg4 is not None:
+                if value_variable_lg4.endswith('.'):
+                    value_variable_lg4 = value_variable_lg4[:-1]
+                if value_variable_lg4.startswith('.'):
+                    value_variable_lg4 = value_variable_lg4[1:]
+
+            if value_variable_lg5 is not None:
+                if value_variable_lg5.endswith('.'):
+                    value_variable_lg5 = value_variable_lg5[:-1]
+                if value_variable_lg5.startswith('.'):
+                    value_variable_lg5 = value_variable_lg5[1:]
+
+            if value_variable_lg6 is not None:
+                if value_variable_lg6.endswith('.'):
+                    value_variable_lg6 = value_variable_lg6[:-1]
+                if value_variable_lg6.startswith('.'):
+                    value_variable_lg6 = value_variable_lg6[1:]
+
+            if value_variable_lg7 is not None:
+                if value_variable_lg7.endswith('.'):
+                    value_variable_lg7 = value_variable_lg7[:-1]
+                if value_variable_lg7.startswith('.'):
+                    value_variable_lg7 = value_variable_lg7[1:]
+
+            if value_variable_lg8 is not None:
+                if value_variable_lg8.endswith('.'):
+                    value_variable_lg8 = value_variable_lg8[:-1]
+                if value_variable_lg8.startswith('.'):
+                    value_variable_lg8 = value_variable_lg8[1:]
+
+            if value_variable_lg9 is not None:
+                if value_variable_lg9.endswith('.'):
+                    value_variable_lg9 = value_variable_lg9[:-1]
+                if value_variable_lg9.startswith('.'):
+                    value_variable_lg9 = value_variable_lg9[1:]
+
+            if value_variable_lg10 is not None:
+                if value_variable_lg10.endswith('.'):
+                    value_variable_lg10 = value_variable_lg10[:-1]
+                if value_variable_lg10.startswith('.'):
+                    value_variable_lg10 = value_variable_lg10[1:]
+
+            if value_variable_lg11 is not None:
+                if value_variable_lg11.endswith('.'):
+                    value_variable_lg11 = value_variable_lg11[:-1]
+                if value_variable_lg11.startswith('.'):
+                    value_variable_lg11 = value_variable_lg11[1:]
+
+            if value_variable_lg12 is not None:
+                if value_variable_lg12.endswith('.'):
+                    value_variable_lg12 = value_variable_lg12[:-1]
+                if value_variable_lg12.startswith('.'):
+                    value_variable_lg12 = value_variable_lg12[1:]
+
+            if value_variable_lg13 is not None:
+                if value_variable_lg13.endswith('.'):
+                    value_variable_lg13 = value_variable_lg13[:-1]
+                if value_variable_lg13.startswith('.'):
+                    value_variable_lg13 = value_variable_lg13[1:]
+
+            if value_variable_lg14 is not None:
+                if value_variable_lg14.endswith('.'):
+                    value_variable_lg14 = value_variable_lg14[:-1]
+                if value_variable_lg14.startswith('.'):
+                    value_variable_lg14 = value_variable_lg14[1:]
+
+            if value_variable_lg15 is not None:
+                if value_variable_lg15.endswith('.'):
+                    value_variable_lg15 = value_variable_lg15[:-1]
+                if value_variable_lg15.startswith('.'):
+                    value_variable_lg15 = value_variable_lg15[1:]
+
+            if value_variable_lg16 is not None:
+                if value_variable_lg16.endswith('.'):
+                    value_variable_lg16 = value_variable_lg16[:-1]
+                if value_variable_lg16.startswith('.'):
+                    value_variable_lg16 = value_variable_lg16[1:]
+
+            if value_variable_lg17 is not None:
+                if value_variable_lg17.endswith('.'):
+                    value_variable_lg17 = value_variable_lg17[:-1]
+                if value_variable_lg17.startswith('.'):
+                    value_variable_lg17 = value_variable_lg17[1:]
+
+            if value_variable_lg18 is not None:
+                if value_variable_lg18.endswith('.'):
+                    value_variable_lg18 = value_variable_lg18[:-1]
+                if value_variable_lg18.startswith('.'):
+                    value_variable_lg18 = value_variable_lg18[1:]
+
+            if value_variable_lg19 is not None:
+                if value_variable_lg19.endswith('.'):
+                    value_variable_lg19 = value_variable_lg19[:-1]
+                if value_variable_lg19.startswith('.'):
+                    value_variable_lg19 = value_variable_lg19[1:]
+
+            if value_variable_lg20 is not None:
+                if value_variable_lg20.endswith('.'):
+                    value_variable_lg20 = value_variable_lg20[:-1]
+                if value_variable_lg20.startswith('.'):
+                    value_variable_lg20 = value_variable_lg20[1:]
+
+            if value_variable_lg21 is not None:
+                if value_variable_lg21.endswith('.'):
+                    value_variable_lg21 = value_variable_lg21[:-1]
+                if value_variable_lg21.startswith('.'):
+                    value_variable_lg21 = value_variable_lg21[1:]
+
+            if value_variable_lg22 is not None:
+                if value_variable_lg22.endswith('.'):
+                    value_variable_lg22 = value_variable_lg22[:-1]
+                if value_variable_lg22.startswith('.'):
+                    value_variable_lg22 = value_variable_lg22[1:]
+
+            if value_variable_lg23 is not None:
+                if value_variable_lg23.endswith('.'):
+                    value_variable_lg23 = value_variable_lg23[:-1]
+                if value_variable_lg23.startswith('.'):
+                    value_variable_lg23 = value_variable_lg23[1:]
+
+            if value_variable_lg24 is not None:
+                if value_variable_lg24.endswith('.'):
+                    value_variable_lg24 = value_variable_lg24[:-1]
+                if value_variable_lg24.startswith('.'):
+                    value_variable_lg24 = value_variable_lg24[1:]
+
+            if value_variable_lg25 is not None:
+                if value_variable_lg25.endswith('.'):
+                    value_variable_lg25 = value_variable_lg25[:-1]
+                if value_variable_lg25.startswith('.'):
+                    value_variable_lg25 = value_variable_lg25[1:]
+
+            if value_variable_lg26 is not None:
+                if value_variable_lg26.endswith('.'):
+                    value_variable_lg26 = value_variable_lg26[:-1]
+                if value_variable_lg26.startswith('.'):
+                    value_variable_lg26 = value_variable_lg26[1:]
+
+            if value_variable_lg27 is not None:
+                if value_variable_lg27.endswith('.'):
+                    value_variable_lg27 = value_variable_lg27[:-1]
+                if value_variable_lg27.startswith('.'):
+                    value_variable_lg27 = value_variable_lg27[1:]
+
+            if value_variable_lg28 is not None:
+                if value_variable_lg28.endswith('.'):
+                    value_variable_lg28 = value_variable_lg28[:-1]
+                if value_variable_lg28.startswith('.'):
+                    value_variable_lg28 = value_variable_lg28[1:]
+
+            if value_variable_lg29 is not None:
+                if value_variable_lg29.endswith('.'):
+                    value_variable_lg29 = value_variable_lg29[:-1]
+                if value_variable_lg29.startswith('.'):
+                    value_variable_lg29 = value_variable_lg29[1:]
+
+            if value_variable_lg30 is not None:
+                if value_variable_lg30.endswith('.'):
+                    value_variable_lg30 = value_variable_lg30[:-1]
+                if value_variable_lg30.startswith('.'):
+                    value_variable_lg30 = value_variable_lg30[1:]
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj.type == 'MESH':
+                            mesh_name = selected_obj.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj.modifiers:
+                                    if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                            modifier_0 = selected_obj.modifiers.get("GeometryNodes")
+                                            modifier_1 = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                    if modifier_0 and modifier_1:
+                                    
+                                        # Check if float_valueslg has 1 to 30 elements and assign the length directly
+                                        num_elementslg = len(float_valueslg)
+                                        if 1 <= num_elementslg <= 30:
+                                            modifier_0["Input_2"] = num_elementslg
+
+
+                                        modifier_1["Input_23"] = title_variable_lg
+                                        modifier_1["Input_22"] = subtitle_variable_lg
+                                        modifier_0["Input_14"] = float(range_maxlg)
+                                        modifier_0["Input_4"] = float(value_variable_lg1)
+
+                                        # Check if value_variable_lg2 is not empty
+                                        if value_variable_lg2:
+                                            modifier_0["Input_5"] = float(value_variable_lg2)
+                                        else:
+                                            print("Value for Input_5 is empty or not provided.")
+
+                                        # Check if value_variable_lg3 is not empty
+                                        if value_variable_lg3:
+                                            modifier_0["Input_6"] = float(value_variable_lg3)
+                                        else:
+                                            print("Value for Input_6 is empty or not provided.")
+
+                                        # Check if value_variable_lg4 is not empty
+                                        if value_variable_lg4:
+                                            modifier_0["Input_7"] = float(value_variable_lg4)
+                                        else:
+                                            print("Value for Input_7 is empty or not provided.")
+
+                                        # Check if value_variable_lg5 is not empty
+                                        if value_variable_lg5:
+                                            modifier_0["Input_8"] = float(value_variable_lg5)
+                                        else:
+                                            print("Value for Input_8 is empty or not provided.")
+
+                                        # Check if value_variable_lg6 is not empty
+                                        if value_variable_lg6:
+                                            modifier_0["Input_9"] = float(value_variable_lg6)
+                                        else:
+                                            print("Value for Input_9 is empty or not provided.")
+
+                                        # Check if value_variable_lg7 is not empty
+                                        if value_variable_lg7:
+                                            modifier_0["Input_10"] = float(value_variable_lg7)
+                                        else:
+                                            print("Value for Input_10 is empty or not provided.")
+
+                                        # Check if value_variable_lg8 is not empty
+                                        if value_variable_lg8:
+                                            modifier_0["Input_11"] = float(value_variable_lg8)
+                                        else:
+                                            print("Value for Input_11 is empty or not provided.")
+
+                                        # Check if value_variable_lg9 is not empty
+                                        if value_variable_lg9:
+                                            modifier_0["Socket_0"] = float(value_variable_lg9)
+                                        else:
+                                            print("Value for Socket_0 is empty or not provided.")
+
+                                        # Check if value_variable_lg10 is not empty
+                                        if value_variable_lg10:
+                                            modifier_0["Socket_1"] = float(value_variable_lg10)
+                                        else:
+                                            print("Value for Socket_1 is empty or not provided.")
+
+                                        # Check if value_variable_lg11 is not empty
+                                        if value_variable_lg11:
+                                            modifier_0["Socket_2"] = float(value_variable_lg11)
+                                        else:
+                                            print("Value for Socket_2 is empty or not provided.")
+
+                                        # Check if value_variable_lg12 is not empty
+                                        if value_variable_lg12:
+                                            modifier_0["Socket_3"] = float(value_variable_lg12)
+                                        else:
+                                            print("Value for Socket_3 is empty or not provided.")
+
+                                        # Check if value_variable_lg13 is not empty
+                                        if value_variable_lg13:
+                                            modifier_0["Socket_4"] = float(value_variable_lg13)
+                                        else:
+                                            print("Value for Socket_4 is empty or not provided.")
+
+                                        # Check if value_variable_lg14 is not empty
+                                        if value_variable_lg14:
+                                            modifier_0["Socket_5"] = float(value_variable_lg14)
+                                        else:
+                                            print("Value for Socket_5 is empty or not provided.")
+
+                                        # Check if value_variable_lg15 is not empty
+                                        if value_variable_lg15:
+                                            modifier_0["Socket_6"] = float(value_variable_lg15)
+                                        else:
+                                            print("Value for Socket_6 is empty or not provided.")
+
+                                        # Check if value_variable_lg16 is not empty
+                                        if value_variable_lg16:
+                                            modifier_0["Socket_7"] = float(value_variable_lg16)
+                                        else:
+                                            print("Value for Socket_7 is empty or not provided.")
+
+                                        # Check if value_variable_lg17 is not empty
+                                        if value_variable_lg17:
+                                            modifier_0["Socket_8"] = float(value_variable_lg17)
+                                        else:
+                                            print("Value for Socket_8 is empty or not provided.")
+
+                                        # Check if value_variable_lg18 is not empty
+                                        if value_variable_lg18:
+                                            modifier_0["Socket_9"] = float(value_variable_lg18)
+                                        else:
+                                            print("Value for Socket_9 is empty or not provided.")
+
+                                        # Check if value_variable_lg19 is not empty
+                                        if value_variable_lg19:
+                                            modifier_0["Socket_10"] = float(value_variable_lg19)
+                                        else:
+                                            print("Value for Socket_10 is empty or not provided.")
+
+                                        # Check if value_variable_lg20 is not empty
+                                        if value_variable_lg20:
+                                            modifier_0["Socket_11"] = float(value_variable_lg20)
+                                        else:
+                                            print("Value for Socket_11 is empty or not provided.")
+
+                                        # Check if value_variable_lg21 is not empty
+                                        if value_variable_lg21:
+                                            modifier_0["Socket_12"] = float(value_variable_lg21)
+                                        else:
+                                            print("Value for Socket_12 is empty or not provided.")
+
+                                        # Check if value_variable_lg22 is not empty
+                                        if value_variable_lg22:
+                                            modifier_0["Socket_13"] = float(value_variable_lg22)
+                                        else:
+                                            print("Value for Socket_13 is empty or not provided.")
+
+                                        # Check if value_variable_lg23 is not empty
+                                        if value_variable_lg23:
+                                            modifier_0["Socket_14"] = float(value_variable_lg23)
+                                        else:
+                                            print("Value for Socket_14 is empty or not provided.")
+
+                                        # Check if value_variable_lg24 is not empty
+                                        if value_variable_lg24:
+                                            modifier_0["Socket_15"] = float(value_variable_lg24)
+                                        else:
+                                            print("Value for Socket_15 is empty or not provided.")
+
+                                        # Check if value_variable_lg25 is not empty
+                                        if value_variable_lg25:
+                                            modifier_0["Socket_16"] = float(value_variable_lg25)
+                                        else:
+                                            print("Value for Socket_16 is empty or not provided.")
+
+                                        # Check if value_variable_lg26 is not empty
+                                        if value_variable_lg26:
+                                            modifier_0["Socket_17"] = float(value_variable_lg26)
+                                        else:
+                                            print("Value for Socket_17 is empty or not provided.")
+
+                                        # Check if value_variable_lg27 is not empty
+                                        if value_variable_lg27:
+                                            modifier_0["Socket_18"] = float(value_variable_lg27)
+                                        else:
+                                            print("Value for Socket_18 is empty or not provided.")
+
+                                        # Check if value_variable_lg28 is not empty
+                                        if value_variable_lg28:
+                                            modifier_0["Socket_19"] = float(value_variable_lg28)
+                                        else:
+                                            print("Value for Socket_19 is empty or not provided.")
+
+                                        # Check if value_variable_lg29 is not empty
+                                        if value_variable_lg29:
+                                            modifier_0["Socket_20"] = float(value_variable_lg29)
+                                        else:
+                                            print("Value for Socket_20 is empty or not provided.")
+
+                                        # Check if value_variable_lg30 is not empty
+                                        if value_variable_lg30:
+                                            modifier_0["Socket_21"] = float(value_variable_lg30)
+                                        else:
+                                            print("Value for Socket_21 is empty or not provided.")
+
+
+                                        modifier_1["Input_4"] = name_variable_lg1
+
+                                        # Check if name_variable_lg2 is not empty before setting the input
+                                        if name_variable_lg2:
+                                            modifier_1["Input_5"] = name_variable_lg2
+                                        else:
+                                            print("Name for Input_5 is empty or not provided.")     
+
+                                        # Check if name_variable_lg3 is not empty before setting the input
+                                        if name_variable_lg3:
+                                            modifier_1["Input_6"] = name_variable_lg3
+                                        else:
+                                            print("Name for Input_6 is empty or not provided.")    
+
+                                        # Check if name_variable_lg4 is not empty before setting the input
+                                        if name_variable_lg4:
+                                            modifier_1["Input_7"] = name_variable_lg4
+                                        else:
+                                            print("Name for Input_7 is empty or not provided.")    
+
+                                        # Check if name_variable_lg5 is not empty before setting the input
+                                        if name_variable_lg5:
+                                            modifier_1["Input_8"] = name_variable_lg5
+                                        else:
+                                            print("Name for Input_8 is empty or not provided.")    
+
+                                        # Check if name_variable_lg6 is not empty before setting the input
+                                        if name_variable_lg6:
+                                            modifier_1["Input_9"] = name_variable_lg6
+                                        else:
+                                            print("Name for Input_9 is empty or not provided.")  
+
+                                        # Check if name_variable_lg7 is not empty before setting the input
+                                        if name_variable_lg7:
+                                            modifier_1["Input_10"] = name_variable_lg7
+                                        else:
+                                            print("Name for Input_10 is empty or not provided.")  
+
+                                        # Check if name_variable_lg8 is not empty before setting the input
+                                        if name_variable_lg8:
+                                            modifier_1["Input_11"] = name_variable_lg8
+                                        else:
+                                            print("Name for Input_11 is empty or not provided.")
+
+                                        # Check if name_variable_lg9 is not empty before setting the input
+                                        if name_variable_lg9:
+                                            modifier_1["Socket_0"] = name_variable_lg9
+                                        else:
+                                            print("Name for Socket_0 is empty or not provided.")
+
+                                        # Check if name_variable_lg10 is not empty before setting the input
+                                        if name_variable_lg10:
+                                            modifier_1["Socket_1"] = name_variable_lg10
+                                        else:
+                                            print("Name for Socket_1 is empty or not provided.")
+
+                                        # Check if name_variable_lg11 is not empty before setting the input
+                                        if name_variable_lg11:
+                                            modifier_1["Socket_2"] = name_variable_lg11
+                                        else:
+                                            print("Name for Socket_2 is empty or not provided.")
+
+                                        # Check if name_variable_lg12 is not empty before setting the input
+                                        if name_variable_lg12:
+                                            modifier_1["Socket_3"] = name_variable_lg12
+                                        else:
+                                            print("Name for Socket_3 is empty or not provided.")
+
+                                        # Check if name_variable_lg13 is not empty before setting the input
+                                        if name_variable_lg13:
+                                            modifier_1["Socket_4"] = name_variable_lg13
+                                        else:
+                                            print("Name for Socket_4 is empty or not provided.")
+
+                                        # Check if name_variable_lg14 is not empty before setting the input
+                                        if name_variable_lg14:
+                                            modifier_1["Socket_5"] = name_variable_lg14
+                                        else:
+                                            print("Name for Socket_5 is empty or not provided.")
+
+                                        # Check if name_variable_lg15 is not empty before setting the input
+                                        if name_variable_lg15:
+                                            modifier_1["Socket_6"] = name_variable_lg15
+                                        else:
+                                            print("Name for Socket_6 is empty or not provided.")
+
+                                        # Check if name_variable_lg16 is not empty before setting the input
+                                        if name_variable_lg16:
+                                            modifier_1["Socket_7"] = name_variable_lg16
+                                        else:
+                                            print("Name for Socket_7 is empty or not provided.")
+
+                                        # Check if name_variable_lg17 is not empty before setting the input
+                                        if name_variable_lg17:
+                                            modifier_1["Socket_8"] = name_variable_lg17
+                                        else:
+                                            print("Name for Socket_8 is empty or not provided.")
+
+                                        # Check if name_variable_lg18 is not empty before setting the input
+                                        if name_variable_lg18:
+                                            modifier_1["Socket_9"] = name_variable_lg18
+                                        else:
+                                            print("Name for Socket_9 is empty or not provided.")
+
+                                        # Check if name_variable_lg19 is not empty before setting the input
+                                        if name_variable_lg19:
+                                            modifier_1["Socket_10"] = name_variable_lg19
+                                        else:
+                                            print("Name for Socket_10 is empty or not provided.")
+
+                                        # Check if name_variable_lg20 is not empty before setting the input
+                                        if name_variable_lg20:
+                                            modifier_1["Socket_11"] = name_variable_lg20
+                                        else:
+                                            print("Name for Socket_11 is empty or not provided.")
+
+                                        # Check if name_variable_lg21 is not empty before setting the input
+                                        if name_variable_lg21:
+                                            modifier_1["Socket_12"] = name_variable_lg21
+                                        else:
+                                            print("Name for Socket_12 is empty or not provided.")
+
+                                        # Check if name_variable_lg22 is not empty before setting the input
+                                        if name_variable_lg22:
+                                            modifier_1["Socket_13"] = name_variable_lg22
+                                        else:
+                                            print("Name for Socket_13 is empty or not provided.")
+
+                                        # Check if name_variable_lg23 is not empty before setting the input
+                                        if name_variable_lg23:
+                                            modifier_1["Socket_14"] = name_variable_lg23
+                                        else:
+                                            print("Name for Socket_14 is empty or not provided.")
+
+                                        # Check if name_variable_lg24 is not empty before setting the input
+                                        if name_variable_lg24:
+                                            modifier_1["Socket_15"] = name_variable_lg24
+                                        else:
+                                            print("Name for Socket_15 is empty or not provided.")
+
+                                        # Check if name_variable_lg25 is not empty before setting the input
+                                        if name_variable_lg25:
+                                            modifier_1["Socket_16"] = name_variable_lg25
+                                        else:
+                                            print("Name for Socket_16 is empty or not provided.")
+
+                                        # Check if name_variable_lg26 is not empty before setting the input
+                                        if name_variable_lg26:
+                                            modifier_1["Socket_17"] = name_variable_lg26
+                                        else:
+                                            print("Name for Socket_17 is empty or not provided.")
+
+                                        # Check if name_variable_lg27 is not empty before setting the input
+                                        if name_variable_lg27:
+                                            modifier_1["Socket_18"] = name_variable_lg27
+                                        else:
+                                            print("Name for Socket_18 is empty or not provided.")
+
+                                        # Check if name_variable_lg28 is not empty before setting the input
+                                        if name_variable_lg28:
+                                            modifier_1["Socket_19"] = name_variable_lg28
+                                        else:
+                                            print("Name for Socket_19 is empty or not provided.")
+
+                                        # Check if name_variable_lg29 is not empty before setting the input
+                                        if name_variable_lg29:
+                                            modifier_1["Socket_20"] = name_variable_lg29
+                                        else:
+                                            print("Name for Socket_20 is empty or not provided.")
+
+                                        # Check if name_variable_lg30 is not empty before setting the input
+                                        if name_variable_lg30:
+                                            modifier_1["Socket_21"] = name_variable_lg30
+                                        else:
+                                            print("Name for Socket_21 is empty or not provided.")
+
+
+
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                    else:
+                                        print("Selected object does not have both modifiers.")
+                                    
+                            else:
+                                print(f"Selected object '{mesh_name_lg}' has no modifiers.")
+                    else:
+                        print("Selected object is not a mesh.")
+            else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+
+class MyoperatorLGCgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorlgcgenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fulllgcaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fulllgcaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fulllgcaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fulllgcaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fulllgcaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fulllgcaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fulllgcaiinput1 = bpy.path.abspath(mytool.my_stringline_gengraph_comparison1)
+        filepath_fulllgcaiinput2 = bpy.path.abspath(mytool.my_stringline_gengraph_comparison2)
+        filepath_fulllgcaiinput3 = bpy.path.abspath(mytool.my_stringline_gengraph_comparison3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionlgc = filepath_fulllgcaiinput1
+        main_questionlgc = filepath_fulllgcaiinput2.format(sub_questionlgc)
+
+        questionlgc = f"{main_questionlgc} {sub_questionlgc}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fulllgcaisiteurl
+        YOUR_APP_NAME = filepath_fulllgcaiappname
+        YOUR_API_KEY = filepath_fulllgcaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fulllgcaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionlgc}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonlgca = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonlgca)
+
+        # Extract the answer if available
+        answer_lgc = response_jsonlgca.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_lgc)
+        
+                
+        relevant_infolgc = answer_lgc
+        
+        if relevant_infolgc:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionlgc = f"{filepath_fulllgcaiinput3}. Here's the text: {relevant_infolgc}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fulllgcaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionlgc}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonlgcb = new_response.json()
+            
+            # Extract the answer if available
+            answer_lgc1 = new_response_jsonlgcb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_lgc1)
+
+            # Split the answer into variables based on commas
+            answer_variables_lgc = answer_lgc1.split(';')
+            
+            # Split the answer further
+            float_valuesalgc = [value for value in answer_variables_lgc[2].split('|')]
+            float_valuesblgc = [value for value in answer_variables_lgc[3].split('|')]
+            float_namesalgc = [value for value in answer_variables_lgc[4].split(',')]
+            float_legendlgc = [value for value in answer_variables_lgc[5].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesalgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesalgc]
+
+            lgcfloat_avalues = []
+            for cleaned_value in cleaned_valuesalgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    lgcfloat_avalues.append(float(cleaned_value))
+                else:
+                    lgcfloat_avalues.append(0.0)  # or any default value you prefer
+
+            # Remove letters and symbols except period
+            cleaned_valuesblgc = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesblgc]
+
+            lgcfloat_bvalues = []
+            for cleaned_value in cleaned_valuesblgc:
+                if cleaned_value:  # Check if the cleaned value is not empty
+                    lgcfloat_bvalues.append(float(cleaned_value))
+                else:
+                    lgcfloat_bvalues.append(0.0)  # or any default value you prefer
+            
+
+            # Find the maximum value
+            float_valuesmaxlgc = max(lgcfloat_avalues + lgcfloat_bvalues)
+            print(float_valuesmaxlgc)
+        
+            range_maxlgc = 1.1 * float(float_valuesmaxlgc)
+            print("range_maxlgc:", range_maxlgc)
+
+            # Now you can use the individual variables as needed
+            title_variable_lgc = answer_variables_lgc[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_lgc = answer_variables_lgc[1].replace("Step B:", "").strip()
+            legend_variable_lgc = answer_variables_lgc[5].replace("Step F:", "").strip()
+            value_variable_algc1 = re.sub(r"[^0-9.]", "", float_valuesalgc[0].replace("Step C:", "").strip())
+
+            # Check if float_valueslgc[1] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 1:
+                value_variable_algc2 = re.sub(r"[^0-9.]", "", float_valuesalgc[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[1] is empty or not provided
+                value_variable_algc2 = None  # or any default value you want
+
+            # Check if float_valueslgc[2] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 2:
+                value_variable_algc3 = re.sub(r"[^0-9.]", "", float_valuesalgc[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[2] is empty or not provided
+                value_variable_algc3 = None  # or any default value you want
+
+            # Check if float_valueslgc[3] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 3:
+                value_variable_algc4 = re.sub(r"[^0-9.]", "", float_valuesalgc[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[3] is empty or not provided
+                value_variable_algc4 = None  # or any default value you want
+
+            # Check if float_valueslgc[4] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 4:
+                value_variable_algc5 = re.sub(r"[^0-9.]", "", float_valuesalgc[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[4] is empty or not provided
+                value_variable_algc5 = None  # or any default value you want
+
+            # Check if float_valueslgc[5] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 5:
+                value_variable_algc6 = re.sub(r"[^0-9.]", "", float_valuesalgc[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[5] is empty or not provided
+                value_variable_algc6 = None  # or any default value you want
+
+            # Check if float_valueslgc[6] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 6:
+                value_variable_algc7 = re.sub(r"[^0-9.]", "", float_valuesalgc[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[6] is empty or not provided
+                value_variable_algc7 = None  # or any default value you want
+
+            # Check if float_valuesalgc[7] is not empty
+            if float_valuesalgc and len(float_valuesalgc) > 7:
+                value_variable_algc8 = re.sub(r"[^0-9.]", "", float_valuesalgc[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesalgc[7] is empty or not provided
+                value_variable_algc8 = None  # or any default value you want
+                
+
+
+            # Check if float_valuesblgc[0] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 0:
+                value_variable_blgc1 = re.sub(r"[^0-9.]", "", float_valuesblgc[0].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[0] is empty or not provided
+                value_variable_blgc1= None  # or any default value you want
+
+            # Check if float_valuesblgc[1] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 1:
+                value_variable_blgc2 = re.sub(r"[^0-9.]", "", float_valuesblgc[1].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[1] is empty or not provided
+                value_variable_blgc2= None  # or any default value you want
+
+            # Check if float_valuesblgc[2] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 2:
+                value_variable_blgc3 = re.sub(r"[^0-9.]", "", float_valuesblgc[2].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[2] is empty or not provided
+                value_variable_blgc3= None  # or any default value you want
+
+            # Check if float_valuesblgc[3] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 3:
+                value_variable_blgc4 = re.sub(r"[^0-9.]", "", float_valuesblgc[3].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[3] is empty or not provided
+                value_variable_blgc4= None  # or any default value you want
+
+            # Check if float_valuesblgc[4] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 4:
+                value_variable_blgc5 = re.sub(r"[^0-9.]", "", float_valuesblgc[4].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[4] is empty or not provided
+                value_variable_blgc5= None  # or any default value you want
+
+            # Check if float_valuesblgc[5] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 5:
+                value_variable_blgc6 = re.sub(r"[^0-9.]", "", float_valuesblgc[5].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[5] is empty or not provided
+                value_variable_blgc6= None  # or any default value you want
+
+            # Check if float_valuesblgc[6] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 6:
+                value_variable_blgc7 = re.sub(r"[^0-9.]", "", float_valuesblgc[6].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[6] is empty or not provided
+                value_variable_blgc7= None  # or any default value you want
+
+            # Check if float_valuesblgc[7] is not empty
+            if float_valuesblgc and len(float_valuesblgc) > 7:
+                value_variable_blgc8 = re.sub(r"[^0-9.]", "", float_valuesblgc[7].replace("Step D:", "").strip())
+            else:
+                # Handle the case where float_valuesblgc[7] is empty or not provided
+                value_variable_blgc8= None  # or any default value you want
+                
+
+
+                       
+            
+            name_variable_algc1 = float_namesalgc[0].replace("Step E:", "").strip()
+
+            # Check if float_nameslgc[1] is not empty
+            if float_namesalgc and len(float_namesalgc) > 1:
+                name_variable_algc2 = float_namesalgc[1].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[1] is empty or not provided
+                name_variable_algc2 = None  # or any default name you want
+
+            # Check if float_nameslgc[2] is not empty
+            if float_namesalgc and len(float_namesalgc) > 2:
+                name_variable_algc3 = float_namesalgc[2].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[2] is empty or not provided
+                name_variable_algc3 = None  # or any default name you want
+
+            # Check if float_nameslgc[3] is not empty
+            if float_namesalgc and len(float_namesalgc) > 3:
+                name_variable_algc4 = float_namesalgc[3].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[3] is empty or not provided
+                name_variable_algc4 = None  # or any default name you want
+
+            # Check if float_nameslgc[4] is not empty
+            if float_namesalgc and len(float_namesalgc) > 4:
+                name_variable_algc5 = float_namesalgc[4].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[4] is empty or not provided
+                name_variable_algc5 = None  # or any default name you want
+
+            # Check if float_nameslgc[5] is not empty
+            if float_namesalgc and len(float_namesalgc) > 5:
+                name_variable_algc6 = float_namesalgc[5].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[5] is empty or not provided
+                name_variable_algc6 = None  # or any default name you want
+
+            # Check if float_nameslgc[6] is not empty
+            if float_namesalgc and len(float_namesalgc) > 6:
+                name_variable_algc7 = float_namesalgc[6].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[6] is empty or not provided
+                name_variable_algc7 = None  # or any default name you want
+
+            # Check if float_nameslgc[7] is not empty
+            if float_namesalgc and len(float_namesalgc) > 7:
+                name_variable_algc8 = float_namesalgc[7].replace("Step E:", "").strip()
+            else:
+                # Handle the case where float_namesalgc[7] is empty or not provided
+                name_variable_algc8 = None  # or any default name you want
+                
+
+
+
+
+
+
+            if value_variable_algc1.endswith('.'):
+                value_variable_algc1 = value_variable_algc1[:-1]
+            if value_variable_algc1.startswith('.'):
+                value_variable_algc1 = value_variable_algc1[1:]
+
+            if value_variable_algc2 is not None:
+                if value_variable_algc2.endswith('.'):
+                    value_variable_algc2 = value_variable_algc2[:-1]
+                if value_variable_algc2.startswith('.'):
+                    value_variable_algc2 = value_variable_algc2[1:]
+
+            if value_variable_algc3 is not None:
+                if value_variable_algc3.endswith('.'):
+                    value_variable_algc3 = value_variable_algc3[:-1]
+                if value_variable_algc3.startswith('.'):
+                    value_variable_algc3 = value_variable_algc3[1:]
+
+            if value_variable_algc4 is not None:
+                if value_variable_algc4.endswith('.'):
+                    value_variable_algc4 = value_variable_algc4[:-1]
+                if value_variable_algc4.startswith('.'):
+                    value_variable_algc4 = value_variable_algc4[1:]
+
+            if value_variable_algc5 is not None:
+                if value_variable_algc5.endswith('.'):
+                    value_variable_algc5 = value_variable_algc5[:-1]
+                if value_variable_algc5.startswith('.'):
+                    value_variable_algc5 = value_variable_algc5[1:]
+
+            if value_variable_algc6 is not None:
+                if value_variable_algc6.endswith('.'):
+                    value_variable_algc6 = value_variable_algc6[:-1]
+                if value_variable_algc6.startswith('.'):
+                    value_variable_algc6 = value_variable_algc6[1:]
+
+            if value_variable_algc7 is not None:
+                if value_variable_algc7.endswith('.'):
+                    value_variable_algc7 = value_variable_algc7[:-1]
+                if value_variable_algc7.startswith('.'):
+                    value_variable_algc7 = value_variable_algc7[1:]
+
+            if value_variable_algc8 is not None:
+                if value_variable_algc8.endswith('.'):
+                    value_variable_algc8 = value_variable_algc8[:-1]
+                if value_variable_algc8.startswith('.'):
+                    value_variable_algc8 = value_variable_algc8[1:]
+                    
+
+
+            if value_variable_blgc1.endswith('.'):
+                value_variable_blgc1 = value_variable_blgc1[:-1]
+            if value_variable_blgc1.startswith('.'):
+                value_variable_blgc1 = value_variable_blgc1[1:]
+
+            if value_variable_blgc2 is not None:
+                if value_variable_blgc2.endswith('.'):
+                    value_variable_blgc2 = value_variable_blgc2[:-1]
+                if value_variable_blgc2.startswith('.'):
+                    value_variable_blgc2 = value_variable_blgc2[1:]
+
+            if value_variable_blgc3 is not None:
+                if value_variable_blgc3.endswith('.'):
+                    value_variable_blgc3 = value_variable_blgc3[:-1]
+                if value_variable_blgc3.startswith('.'):
+                    value_variable_blgc3 = value_variable_blgc3[1:]
+
+            if value_variable_blgc4 is not None:
+                if value_variable_blgc4.endswith('.'):
+                    value_variable_blgc4 = value_variable_blgc4[:-1]
+                if value_variable_blgc4.startswith('.'):
+                    value_variable_blgc4 = value_variable_blgc4[1:]
+
+            if value_variable_blgc5 is not None:
+                if value_variable_blgc5.endswith('.'):
+                    value_variable_blgc5 = value_variable_blgc5[:-1]
+                if value_variable_blgc5.startswith('.'):
+                    value_variable_blgc5 = value_variable_blgc5[1:]
+
+            if value_variable_blgc6 is not None:
+                if value_variable_blgc6.endswith('.'):
+                    value_variable_blgc6 = value_variable_blgc6[:-1]
+                if value_variable_blgc6.startswith('.'):
+                    value_variable_blgc6 = value_variable_blgc6[1:]
+
+            if value_variable_blgc7 is not None:
+                if value_variable_blgc7.endswith('.'):
+                    value_variable_blgc7 = value_variable_blgc7[:-1]
+                if value_variable_blgc7.startswith('.'):
+                    value_variable_blgc7 = value_variable_blgc7[1:]
+
+            if value_variable_blgc8 is not None:
+                if value_variable_blgc8.endswith('.'):
+                    value_variable_blgc8 = value_variable_blgc8[:-1]
+                if value_variable_blgc8.startswith('.'):
+                    value_variable_blgc8 = value_variable_blgc8[1:]
+                    
+
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj.type == 'MESH':
+                            mesh_name = selected_obj.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj.modifiers:
+                                    if len(selected_obj.modifiers) >= 2:  # Ensure at least two modifiers exist
+                                            modifier_0 = selected_obj.modifiers.get("GeometryNodes")
+                                            modifier_1 = selected_obj.modifiers.get("GeometryNodes.001")
+
+                                    if modifier_0 and modifier_1:
+                                    
+                                        # Check if float_valueslgc has 1 to 8 elements and assign the length directly
+                                        num_elementslgc = len(float_valueslgc)
+                                        if 1 <= num_elementslgc <= 8:
+                                            modifier_0["Input_2"] = num_elementslgc
+
+
+                                        modifier_1["Input_23"] = title_variable_lgc
+                                        modifier_1["Input_22"] = subtitle_variable_lgc
+                                        modifier_1["Input_29"] = float_legendlgc[0]
+                                        modifier_1["Input_30"] = float_legendlgc[1]
+                                        modifier_0["Input_14"] = float(range_maxlgc)
+                                        modifier_0["Input_4"] = float(value_variable_lgc1)
+
+                                        # Check if value_variable_algc2 is not empty
+                                        if value_variable_algc2:
+                                            modifier_0["Input_5"] = float(value_variable_algc2)
+                                        else:
+                                            print("Value for Input_5 is empty or not provided.")
+
+                                        # Check if value_variable_algc3 is not empty
+                                        if value_variable_algc3:
+                                            modifier_0["Input_6"] = float(value_variable_algc3)
+                                        else:
+                                            print("Value for Input_6 is empty or not provided.")
+
+                                        # Check if value_variable_algc4 is not empty
+                                        if value_variable_algc4:
+                                            modifier_0["Input_7"] = float(value_variable_algc4)
+                                        else:
+                                            print("Value for Input_7 is empty or not provided.")
+
+                                        # Check if value_variable_algc5 is not empty
+                                        if value_variable_algc5:
+                                            modifier_0["Input_8"] = float(value_variable_algc5)
+                                        else:
+                                            print("Value for Input_8 is empty or not provided.")
+
+                                        # Check if value_variable_algc6 is not empty
+                                        if value_variable_algc6:
+                                            modifier_0["Input_9"] = float(value_variable_algc6)
+                                        else:
+                                            print("Value for Input_9 is empty or not provided.")
+
+                                        # Check if value_variable_algc7 is not empty
+                                        if value_variable_algc7:
+                                            modifier_0["Input_10"] = float(value_variable_algc7)
+                                        else:
+                                            print("Value for Input_10 is empty or not provided.")
+
+                                        # Check if value_variable_algc8 is not empty
+                                        if value_variable_algc8:
+                                            modifier_0["Input_11"] = float(value_variable_algc8)
+                                        else:
+                                            print("Value for Input_11 is empty or not provided.")
+
+                                        # Check if value_variable_blgc1 is not empty
+                                        if value_variable_blgc1:
+                                            modifier_0["Input_34"] = float(value_variable_blgc1)
+                                        else:
+                                            print("Value for Input_34 is empty or not provided.")
+
+                                        # Check if value_variable_blgc2 is not empty
+                                        if value_variable_blgc2:
+                                            modifier_0["Input_35"] = float(value_variable_blgc2)
+                                        else:
+                                            print("Value for Input_35 is empty or not provided.")
+
+                                        # Check if value_variable_blgc3 is not empty
+                                        if value_variable_blgc3:
+                                            modifier_0["Input_36"] = float(value_variable_blgc3)
+                                        else:
+                                            print("Value for Input_36 is empty or not provided.")
+
+                                        # Check if value_variable_blgc4 is not empty
+                                        if value_variable_blgc4:
+                                            modifier_0["Input_37"] = float(value_variable_blgc4)
+                                        else:
+                                            print("Value for Input_37 is empty or not provided.")
+
+                                        # Check if value_variable_blgc5 is not empty
+                                        if value_variable_blgc5:
+                                            modifier_0["Input_38"] = float(value_variable_blgc5)
+                                        else:
+                                            print("Value for Input_38 is empty or not provided.")
+
+                                        # Check if value_variable_blgc6 is not empty
+                                        if value_variable_blgc6:
+                                            modifier_0["Input_39"] = float(value_variable_blgc6)
+                                        else:
+                                            print("Value for Input_39 is empty or not provided.")
+
+                                        # Check if value_variable_blgc7 is not empty
+                                        if value_variable_blgc7:
+                                            modifier_0["Input_40"] = float(value_variable_blgc7)
+                                        else:
+                                            print("Value for Input_40 is empty or not provided.")
+
+                                        # Check if value_variable_blgc8 is not empty
+                                        if value_variable_blgc8:
+                                            modifier_0["Input_41"] = float(value_variable_blgc8)
+                                        else:
+                                            print("Value for Input_41 is empty or not provided.")
+
+
+
+
+                                        modifier_1["Input_4"] = name_variable_algc1
+
+                                        # Check if name_variable_algc2 is not empty before setting the input
+                                        if name_variable_algc2:
+                                            modifier_1["Input_5"] = name_variable_algc2
+                                        else:
+                                            print("Name for Input_5 is empty or not provided.")     
+
+                                        # Check if name_variable_algc3 is not empty before setting the input
+                                        if name_variable_algc3:
+                                            modifier_1["Input_6"] = name_variable_algc3
+                                        else:
+                                            print("Name for Input_6 is empty or not provided.")    
+
+                                        # Check if name_variable_algc4 is not empty before setting the input
+                                        if name_variable_algc4:
+                                            modifier_1["Input_7"] = name_variable_algc4
+                                        else:
+                                            print("Name for Input_7 is empty or not provided.")    
+
+                                        # Check if name_variable_algc5 is not empty before setting the input
+                                        if name_variable_algc5:
+                                            modifier_1["Input_8"] = name_variable_algc5
+                                        else:
+                                            print("Name for Input_8 is empty or not provided.")    
+
+                                        # Check if name_variable_algc6 is not empty before setting the input
+                                        if name_variable_algc6:
+                                            modifier_1["Input_9"] = name_variable_algc6
+                                        else:
+                                            print("Name for Input_9 is empty or not provided.")  
+
+                                        # Check if name_variable_algc7 is not empty before setting the input
+                                        if name_variable_algc7:
+                                            modifier_1["Input_10"] = name_variable_algc7
+                                        else:
+                                            print("Name for Input_10 is empty or not provided.")  
+
+                                        # Check if name_variable_algc8 is not empty before setting the input
+                                        if name_variable_algc8:
+                                            modifier_1["Input_11"] = name_variable_algc8
+                                        else:
+                                            print("Name for Input_11 is empty or not provided.")
+
+
+
+
+
+                                        print(f"Set modifier input for object '{mesh_name}'.")
+                                    else:
+                                        print("Selected object does not have both modifiers.")
+                                    
+                            else:
+                                print(f"Selected object '{mesh_name_lgc}' has no modifiers.")
+                    else:
+                        print("Selected object is not a mesh.")
+            else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorUSMAPgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorusmapgenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullusmapaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullusmapaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullusmapaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullusmapaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullusmapaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullusmapaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullusmapaiinput1 = bpy.path.abspath(mytool.my_stringusgenmap1)
+        filepath_fullusmapaiinput2 = bpy.path.abspath(mytool.my_stringusgenmap2)
+        filepath_fullusmapaiinput3 = bpy.path.abspath(mytool.my_stringusgenmap3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionusmap = filepath_fullusmapaiinput1
+        main_questionusmap = filepath_fullusmapaiinput2.format(sub_questionusmap)
+
+        questionusmap = f"{main_questionusmap} {sub_questionusmap}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullusmapaisiteurl
+        YOUR_APP_NAME = filepath_fullusmapaiappname
+        YOUR_API_KEY = filepath_fullusmapaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullusmapaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionusmap}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonusmapa = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonusmapa)
+
+        # Extract the answer if available
+        answer_usmap = response_jsonusmapa.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_usmap)
+        
+                
+        relevant_infousmap = answer_usmap
+        
+        if relevant_infousmap:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionusmap = f"{filepath_fullusmapaiinput3}. Here's the text: {relevant_infousmap}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullusmapaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionusmap}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonusmapb = new_response.json()
+            
+            # Extract the answer if available
+            answer_usmap1 = new_response_jsonusmapb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_usmap1)
+
+            # Split the answer into variables based on commas
+            answer_variables_usmap = answer_usmap1.split(';')
+            
+            # Split the answer further
+            float_valuesusmap = [value for value in answer_variables_usmap[2].split(',')]
+            float_namesusmap = [value for value in answer_variables_usmap[3].split(',')]
+            
+            # Remove letters and symbols except period
+            cleaned_valuesusmap = ["".join(char for char in value if char.isdigit() or char == '.') for value in float_valuesusmap]
+
+            usmapfloat_values = [float(cleaned_value) for cleaned_value in cleaned_valuesusmap]
+
+            # Find the maximum value
+            float_valuesmaxusmap = max(usmapfloat_values)
+            print(float_valuesmaxusmap)
+        
+            range_maxusmap = 0.9 * float(float_valuesmaxusmap)
+            print("range_maxusmap:", range_maxusmap)
+            
+            # Find the minimum value
+            float_valuesminusmap = min(usmapfloat_values)
+            print(float_valuesminusmap)
+        
+            range_minusmap = 1.1 * float(float_valuesminusmap)
+            print("range_minusmap:", range_minusmap)
+
+            # Now you can use the individual variables as needed
+            title_variable_usmap = answer_variables_usmap[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_usmap = answer_variables_usmap[1].replace("Step B:", "").strip()
+            value_variable_usmap1 = re.sub(r"[^0-9.]", "", float_valuesusmap[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesusmap[1] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 1:
+                value_variable_usmap2 = re.sub(r"[^0-9.]", "", float_valuesusmap[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[1] is empty or not provided
+                value_variable_usmap2 = None  # or any default value you want
+
+            # Check if float_valuesusmap[2] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 2:
+                value_variable_usmap3 = re.sub(r"[^0-9.]", "", float_valuesusmap[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[2] is empty or not provided
+                value_variable_usmap3 = None  # or any default value you want
+
+            # Check if float_valuesusmap[3] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 3:
+                value_variable_usmap4 = re.sub(r"[^0-9.]", "", float_valuesusmap[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[3] is empty or not provided
+                value_variable_usmap4 = None  # or any default value you want
+
+            # Check if float_valuesusmap[4] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 4:
+                value_variable_usmap5 = re.sub(r"[^0-9.]", "", float_valuesusmap[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[4] is empty or not provided
+                value_variable_usmap5 = None  # or any default value you want
+
+            # Check if float_valuesusmap[5] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 5:
+                value_variable_usmap6 = re.sub(r"[^0-9.]", "", float_valuesusmap[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[5] is empty or not provided
+                value_variable_usmap6 = None  # or any default value you want
+
+            # Check if float_valuesusmap[6] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 6:
+                value_variable_usmap7 = re.sub(r"[^0-9.]", "", float_valuesusmap[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[6] is empty or not provided
+                value_variable_usmap7 = None  # or any default value you want
+
+            # Check if float_valuesusmap[7] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 7:
+                value_variable_usmap8 = re.sub(r"[^0-9.]", "", float_valuesusmap[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[7] is empty or not provided
+                value_variable_usmap8 = None  # or any default value you want
+
+            # Check if float_valuesusmap[8] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 8:
+                value_variable_usmap9 = re.sub(r"[^0-9.]", "", float_valuesusmap[8].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[8] is empty or not provided
+                value_variable_usmap9 = None  # or any default value you want
+
+            # Check if float_valuesusmap[9] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 9:
+                value_variable_usmap10 = re.sub(r"[^0-9.]", "", float_valuesusmap[9].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[9] is empty or not provided
+                value_variable_usmap10 = None  # or any default value you want
+
+            # Check if float_valuesusmap[10] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 10:
+                value_variable_usmap11 = re.sub(r"[^0-9.]", "", float_valuesusmap[10].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[10] is empty or not provided
+                value_variable_usmap11 = None  # or any default value you want                       
+
+            # Check if float_valuesusmap[11] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 11:
+                value_variable_usmap12 = re.sub(r"[^0-9.]", "", float_valuesusmap[11].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[11] is empty or not provided
+                value_variable_usmap12 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[12] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 12:
+                value_variable_usmap13 = re.sub(r"[^0-9.]", "", float_valuesusmap[12].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[12] is empty or not provided
+                value_variable_usmap13 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[13] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 13:
+                value_variable_usmap14 = re.sub(r"[^0-9.]", "", float_valuesusmap[13].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[13] is empty or not provided
+                value_variable_usmap14 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[14] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 14:
+                value_variable_usmap15 = re.sub(r"[^0-9.]", "", float_valuesusmap[14].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[14] is empty or not provided
+                value_variable_usmap15 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[15] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 15:
+                value_variable_usmap16 = re.sub(r"[^0-9.]", "", float_valuesusmap[15].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[15] is empty or not provided
+                value_variable_usmap16 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[16] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 16:
+                value_variable_usmap17 = re.sub(r"[^0-9.]", "", float_valuesusmap[16].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[16] is empty or not provided
+                value_variable_usmap17 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[17] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 17:
+                value_variable_usmap18 = re.sub(r"[^0-9.]", "", float_valuesusmap[17].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[17] is empty or not provided
+                value_variable_usmap18 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[18] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 18:
+                value_variable_usmap19 = re.sub(r"[^0-9.]", "", float_valuesusmap[18].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[18] is empty or not provided
+                value_variable_usmap19 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[19] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 19:
+                value_variable_usmap20 = re.sub(r"[^0-9.]", "", float_valuesusmap[19].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[19] is empty or not provided
+                value_variable_usmap20 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[20] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 20:
+                value_variable_usmap21 = re.sub(r"[^0-9.]", "", float_valuesusmap[20].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[20] is empty or not provided
+                value_variable_usmap21 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[21] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 21:
+                value_variable_usmap22 = re.sub(r"[^0-9.]", "", float_valuesusmap[21].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[21] is empty or not provided
+                value_variable_usmap22 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[22] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 22:
+                value_variable_usmap23 = re.sub(r"[^0-9.]", "", float_valuesusmap[22].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[22] is empty or not provided
+                value_variable_usmap23 = None  # or any default value you want 
+
+            # Check if float_valuesusmap[23] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 23:
+                value_variable_usmap24 = re.sub(r"[^0-9.]", "", float_valuesusmap[23].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[23] is empty or not provided
+                value_variable_usmap24 = None  # or any default value you want
+
+            # Check if float_valuesusmap[24] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 24:
+                value_variable_usmap25 = re.sub(r"[^0-9.]", "", float_valuesusmap[24].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[24] is empty or not provided
+                value_variable_usmap25 = None  # or any default value you want
+
+            # Check if float_valuesusmap[25] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 25:
+                value_variable_usmap26 = re.sub(r"[^0-9.]", "", float_valuesusmap[25].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[25] is empty or not provided
+                value_variable_usmap26 = None  # or any default value you want
+
+            # Check if float_valuesusmap[26] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 26:
+                value_variable_usmap27 = re.sub(r"[^0-9.]", "", float_valuesusmap[26].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[26] is empty or not provided
+                value_variable_usmap27 = None  # or any default value you want
+
+            # Check if float_valuesusmap[27] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 27:
+                value_variable_usmap28 = re.sub(r"[^0-9.]", "", float_valuesusmap[27].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[27] is empty or not provided
+                value_variable_usmap28 = None  # or any default value you want
+
+            # Check if float_valuesusmap[28] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 28:
+                value_variable_usmap29 = re.sub(r"[^0-9.]", "", float_valuesusmap[28].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[28] is empty or not provided
+                value_variable_usmap29 = None  # or any default value you want
+
+            # Check if float_valuesusmap[29] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 29:
+                value_variable_usmap30 = re.sub(r"[^0-9.]", "", float_valuesusmap[29].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[29] is empty or not provided
+                value_variable_usmap30 = None  # or any default value you want
+
+            # Check if float_valuesusmap[30] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 30:
+                value_variable_usmap31 = re.sub(r"[^0-9.]", "", float_valuesusmap[30].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[30] is empty or not provided
+                value_variable_usmap31 = None  # or any default value you want
+
+            # Check if float_valuesusmap[31] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 31:
+                value_variable_usmap32 = re.sub(r"[^0-9.]", "", float_valuesusmap[31].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[31] is empty or not provided
+                value_variable_usmap32 = None  # or any default value you want
+
+            # Check if float_valuesusmap[32] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 32:
+                value_variable_usmap33 = re.sub(r"[^0-9.]", "", float_valuesusmap[32].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[32] is empty or not provided
+                value_variable_usmap33 = None  # or any default value you want
+
+            # Check if float_valuesusmap[33] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 33:
+                value_variable_usmap34 = re.sub(r"[^0-9.]", "", float_valuesusmap[33].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[33] is empty or not provided
+                value_variable_usmap34 = None  # or any default value you want
+
+            # Check if float_valuesusmap[34] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 34:
+                value_variable_usmap35 = re.sub(r"[^0-9.]", "", float_valuesusmap[34].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[34] is empty or not provided
+                value_variable_usmap35 = None  # or any default value you want
+
+            # Check if float_valuesusmap[35] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 35:
+                value_variable_usmap36 = re.sub(r"[^0-9.]", "", float_valuesusmap[35].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[35] is empty or not provided
+                value_variable_usmap36 = None  # or any default value you want
+
+            # Check if float_valuesusmap[36] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 36:
+                value_variable_usmap37 = re.sub(r"[^0-9.]", "", float_valuesusmap[36].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[36] is empty or not provided
+                value_variable_usmap37 = None  # or any default value you want
+
+            # Check if float_valuesusmap[37] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 37:
+                value_variable_usmap38 = re.sub(r"[^0-9.]", "", float_valuesusmap[37].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[37] is empty or not provided
+                value_variable_usmap38 = None  # or any default value you want
+
+            # Check if float_valuesusmap[38] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 38:
+                value_variable_usmap39 = re.sub(r"[^0-9.]", "", float_valuesusmap[38].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[38] is empty or not provided
+                value_variable_usmap39 = None  # or any default value you want
+
+            # Check if float_valuesusmap[39] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 39:
+                value_variable_usmap40 = re.sub(r"[^0-9.]", "", float_valuesusmap[39].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[39] is empty or not provided
+                value_variable_usmap40 = None  # or any default value you want
+
+            # Check if float_valuesusmap[40] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 40:
+                value_variable_usmap41 = re.sub(r"[^0-9.]", "", float_valuesusmap[40].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[40] is empty or not provided
+                value_variable_usmap41 = None  # or any default value you want
+
+            # Check if float_valuesusmap[41] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 41:
+                value_variable_usmap42 = re.sub(r"[^0-9.]", "", float_valuesusmap[41].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[41] is empty or not provided
+                value_variable_usmap42 = None  # or any default value you want
+
+            # Check if float_valuesusmap[42] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 42:
+                value_variable_usmap43 = re.sub(r"[^0-9.]", "", float_valuesusmap[42].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[42] is empty or not provided
+                value_variable_usmap43 = None  # or any default value you want
+
+            # Check if float_valuesusmap[43] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 43:
+                value_variable_usmap44 = re.sub(r"[^0-9.]", "", float_valuesusmap[43].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[43] is empty or not provided
+                value_variable_usmap44 = None  # or any default value you want
+
+            # Check if float_valuesusmap[44] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 44:
+                value_variable_usmap45 = re.sub(r"[^0-9.]", "", float_valuesusmap[44].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[44] is empty or not provided
+                value_variable_usmap45 = None  # or any default value you want
+
+            # Check if float_valuesusmap[45] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 45:
+                value_variable_usmap46 = re.sub(r"[^0-9.]", "", float_valuesusmap[45].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[45] is empty or not provided
+                value_variable_usmap46 = None  # or any default value you want
+
+            # Check if float_valuesusmap[46] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 46:
+                value_variable_usmap47 = re.sub(r"[^0-9.]", "", float_valuesusmap[46].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[46] is empty or not provided
+                value_variable_usmap47 = None  # or any default value you want
+
+            # Check if float_valuesusmap[47] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 47:
+                value_variable_usmap48 = re.sub(r"[^0-9.]", "", float_valuesusmap[47].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[47] is empty or not provided
+                value_variable_usmap48 = None  # or any default value you want
+
+            # Check if float_valuesusmap[48] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 48:
+                value_variable_usmap49 = re.sub(r"[^0-9.]", "", float_valuesusmap[48].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[48] is empty or not provided
+                value_variable_usmap49 = None  # or any default value you want
+
+            # Check if float_valuesusmap[49] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 49:
+                value_variable_usmap50 = re.sub(r"[^0-9.]", "", float_valuesusmap[49].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[49] is empty or not provided
+                value_variable_usmap50 = None  # or any default value you want
+
+            # Check if float_valuesusmap[50] is not empty
+            if float_valuesusmap and len(float_valuesusmap) > 50:
+                value_variable_usmap51 = re.sub(r"[^0-9.]", "", float_valuesusmap[50].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesusmap[50] is empty or not provided
+                value_variable_usmap51 = None  # or any default value you want
+
+            
+            name_variable_usmap1 = float_namesusmap[0].replace("Step D:", "").strip()
+
+            # Check if float_namesusmap[1] is not empty
+            if float_namesusmap and len(float_namesusmap) > 1:
+                name_variable_usmap2 = float_namesusmap[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[1] is empty or not provided
+                name_variable_usmap2 = None  # or any default name you want
+
+            # Check if float_namesusmap[2] is not empty
+            if float_namesusmap and len(float_namesusmap) > 2:
+                name_variable_usmap3 = float_namesusmap[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[2] is empty or not provided
+                name_variable_usmap3 = None  # or any default name you want
+
+            # Check if float_namesusmap[3] is not empty
+            if float_namesusmap and len(float_namesusmap) > 3:
+                name_variable_usmap4 = float_namesusmap[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[3] is empty or not provided
+                name_variable_usmap4 = None  # or any default name you want
+
+            # Check if float_namesusmap[4] is not empty
+            if float_namesusmap and len(float_namesusmap) > 4:
+                name_variable_usmap5 = float_namesusmap[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[4] is empty or not provided
+                name_variable_usmap5 = None  # or any default name you want
+
+            # Check if float_namesusmap[5] is not empty
+            if float_namesusmap and len(float_namesusmap) > 5:
+                name_variable_usmap6 = float_namesusmap[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[5] is empty or not provided
+                name_variable_usmap6 = None  # or any default name you want
+
+            # Check if float_namesusmap[6] is not empty
+            if float_namesusmap and len(float_namesusmap) > 6:
+                name_variable_usmap7 = float_namesusmap[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[6] is empty or not provided
+                name_variable_usmap7 = None  # or any default name you want
+
+            # Check if float_namesusmap[7] is not empty
+            if float_namesusmap and len(float_namesusmap) > 7:
+                name_variable_usmap8 = float_namesusmap[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[7] is empty or not provided
+                name_variable_usmap8 = None  # or any default name you want
+
+            # Check if float_namesusmap[8] is not empty
+            if float_namesusmap and len(float_namesusmap) > 8:
+                name_variable_usmap9 = float_namesusmap[8].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[8] is empty or not provided
+                name_variable_usmap9 = None  # or any default name you want
+
+            # Check if float_namesusmap[9] is not empty
+            if float_namesusmap and len(float_namesusmap) > 9:
+                name_variable_usmap10 = float_namesusmap[9].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[9] is empty or not provided
+                name_variable_usmap10 = None  # or any default name you want
+
+            # Check if float_namesusmap[10] is not empty
+            if float_namesusmap and len(float_namesusmap) > 10:
+                name_variable_usmap11 = float_namesusmap[10].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[10] is empty or not provided
+                name_variable_usmap11 = None  # or any default name you want
+
+            # Check if float_namesusmap[11] is not empty
+            if float_namesusmap and len(float_namesusmap) > 11:
+                name_variable_usmap12 = float_namesusmap[11].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[11] is empty or not provided
+                name_variable_usmap12 = None  # or any default name you want
+
+            # Check if float_namesusmap[12] is not empty
+            if float_namesusmap and len(float_namesusmap) > 12:
+                name_variable_usmap13 = float_namesusmap[12].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[12] is empty or not provided
+                name_variable_usmap13 = None  # or any default name you want
+
+            # Check if float_namesusmap[13] is not empty
+            if float_namesusmap and len(float_namesusmap) > 13:
+                name_variable_usmap14 = float_namesusmap[13].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[13] is empty or not provided
+                name_variable_usmap14 = None  # or any default name you want
+
+            # Check if float_namesusmap[14] is not empty
+            if float_namesusmap and len(float_namesusmap) > 14:
+                name_variable_usmap15 = float_namesusmap[14].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[14] is empty or not provided
+                name_variable_usmap15 = None  # or any default name you want
+
+            # Check if float_namesusmap[15] is not empty
+            if float_namesusmap and len(float_namesusmap) > 15:
+                name_variable_usmap16 = float_namesusmap[15].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[15] is empty or not provided
+                name_variable_usmap16 = None  # or any default name you want
+
+            # Check if float_namesusmap[16] is not empty
+            if float_namesusmap and len(float_namesusmap) > 16:
+                name_variable_usmap17 = float_namesusmap[16].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[16] is empty or not provided
+                name_variable_usmap17 = None  # or any default name you want
+
+            # Check if float_namesusmap[17] is not empty
+            if float_namesusmap and len(float_namesusmap) > 17:
+                name_variable_usmap18 = float_namesusmap[17].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[17] is empty or not provided
+                name_variable_usmap18 = None  # or any default name you want
+
+            # Check if float_namesusmap[18] is not empty
+            if float_namesusmap and len(float_namesusmap) > 18:
+                name_variable_usmap19 = float_namesusmap[18].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[18] is empty or not provided
+                name_variable_usmap19 = None  # or any default name you want
+
+            # Check if float_namesusmap[19] is not empty
+            if float_namesusmap and len(float_namesusmap) > 19:
+                name_variable_usmap20 = float_namesusmap[19].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[19] is empty or not provided
+                name_variable_usmap20 = None  # or any default name you want
+
+            # Check if float_namesusmap[20] is not empty
+            if float_namesusmap and len(float_namesusmap) > 20:
+                name_variable_usmap21 = float_namesusmap[20].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[20] is empty or not provided
+                name_variable_usmap21 = None  # or any default name you want
+
+            # Check if float_namesusmap[21] is not empty
+            if float_namesusmap and len(float_namesusmap) > 21:
+                name_variable_usmap22 = float_namesusmap[21].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[21] is empty or not provided
+                name_variable_usmap22 = None  # or any default name you want
+
+            # Check if float_namesusmap[22] is not empty
+            if float_namesusmap and len(float_namesusmap) > 22:
+                name_variable_usmap23 = float_namesusmap[22].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[22] is empty or not provided
+                name_variable_usmap23 = None  # or any default name you want
+
+            # Check if float_namesusmap[23] is not empty
+            if float_namesusmap and len(float_namesusmap) > 23:
+                name_variable_usmap24 = float_namesusmap[23].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[23] is empty or not provided
+                name_variable_usmap24 = None  # or any default name you want
+
+            # Check if float_namesusmap[24] is not empty
+            if float_namesusmap and len(float_namesusmap) > 24:
+                name_variable_usmap25 = float_namesusmap[24].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[24] is empty or not provided
+                name_variable_usmap25 = None  # or any default name you want
+
+            # Check if float_namesusmap[25] is not empty
+            if float_namesusmap and len(float_namesusmap) > 25:
+                name_variable_usmap26 = float_namesusmap[25].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[25] is empty or not provided
+                name_variable_usmap26 = None  # or any default name you want
+
+            # Check if float_namesusmap[26] is not empty
+            if float_namesusmap and len(float_namesusmap) > 26:
+                name_variable_usmap27 = float_namesusmap[26].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[26] is empty or not provided
+                name_variable_usmap27 = None  # or any default name you want
+
+            # Check if float_namesusmap[27] is not empty
+            if float_namesusmap and len(float_namesusmap) > 27:
+                name_variable_usmap28 = float_namesusmap[27].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[27] is empty or not provided
+                name_variable_usmap28 = None  # or any default name you want
+
+            # Check if float_namesusmap[28] is not empty
+            if float_namesusmap and len(float_namesusmap) > 28:
+                name_variable_usmap29 = float_namesusmap[28].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[28] is empty or not provided
+                name_variable_usmap29 = None  # or any default name you want
+
+            # Check if float_namesusmap[29] is not empty
+            if float_namesusmap and len(float_namesusmap) > 29:
+                name_variable_usmap30 = float_namesusmap[29].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[29] is empty or not provided
+                name_variable_usmap30 = None  # or any default name you want
+
+            # Check if float_namesusmap[30] is not empty
+            if float_namesusmap and len(float_namesusmap) > 30:
+                name_variable_usmap31 = float_namesusmap[30].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[30] is empty or not provided
+                name_variable_usmap31 = None  # or any default name you want
+
+            # Check if float_namesusmap[31] is not empty
+            if float_namesusmap and len(float_namesusmap) > 31:
+                name_variable_usmap32 = float_namesusmap[31].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[31] is empty or not provided
+                name_variable_usmap32 = None  # or any default name you want
+
+            # Check if float_namesusmap[32] is not empty
+            if float_namesusmap and len(float_namesusmap) > 32:
+                name_variable_usmap33 = float_namesusmap[32].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[32] is empty or not provided
+                name_variable_usmap33 = None  # or any default name you want
+
+            # Check if float_namesusmap[33] is not empty
+            if float_namesusmap and len(float_namesusmap) > 33:
+                name_variable_usmap34 = float_namesusmap[33].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[33] is empty or not provided
+                name_variable_usmap34 = None  # or any default name you want
+
+            # Check if float_namesusmap[34] is not empty
+            if float_namesusmap and len(float_namesusmap) > 34:
+                name_variable_usmap35 = float_namesusmap[34].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[34] is empty or not provided
+                name_variable_usmap35 = None  # or any default name you want
+
+            # Check if float_namesusmap[35] is not empty
+            if float_namesusmap and len(float_namesusmap) > 35:
+                name_variable_usmap36 = float_namesusmap[35].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[35] is empty or not provided
+                name_variable_usmap36 = None  # or any default name you want
+
+            # Check if float_namesusmap[36] is not empty
+            if float_namesusmap and len(float_namesusmap) > 36:
+                name_variable_usmap37 = float_namesusmap[36].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[36] is empty or not provided
+                name_variable_usmap37 = None  # or any default name you want
+
+            # Check if float_namesusmap[37] is not empty
+            if float_namesusmap and len(float_namesusmap) > 37:
+                name_variable_usmap38 = float_namesusmap[37].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[37] is empty or not provided
+                name_variable_usmap38 = None  # or any default name you want
+
+            # Check if float_namesusmap[38] is not empty
+            if float_namesusmap and len(float_namesusmap) > 38:
+                name_variable_usmap39 = float_namesusmap[38].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[38] is empty or not provided
+                name_variable_usmap39 = None  # or any default name you want
+
+            # Check if float_namesusmap[39] is not empty
+            if float_namesusmap and len(float_namesusmap) > 39:
+                name_variable_usmap40 = float_namesusmap[39].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[39] is empty or not provided
+                name_variable_usmap40 = None  # or any default name you want
+
+            # Check if float_namesusmap[40] is not empty
+            if float_namesusmap and len(float_namesusmap) > 40:
+                name_variable_usmap41 = float_namesusmap[40].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[40] is empty or not provided
+                name_variable_usmap41 = None  # or any default name you want
+
+            # Check if float_namesusmap[41] is not empty
+            if float_namesusmap and len(float_namesusmap) > 41:
+                name_variable_usmap42 = float_namesusmap[41].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[41] is empty or not provided
+                name_variable_usmap42 = None  # or any default name you want
+
+            # Check if float_namesusmap[42] is not empty
+            if float_namesusmap and len(float_namesusmap) > 42:
+                name_variable_usmap43 = float_namesusmap[42].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[42] is empty or not provided
+                name_variable_usmap43 = None  # or any default name you want
+
+            # Check if float_namesusmap[43] is not empty
+            if float_namesusmap and len(float_namesusmap) > 43:
+                name_variable_usmap44 = float_namesusmap[43].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[43] is empty or not provided
+                name_variable_usmap44 = None  # or any default name you want
+
+            # Check if float_namesusmap[44] is not empty
+            if float_namesusmap and len(float_namesusmap) > 44:
+                name_variable_usmap45 = float_namesusmap[44].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[44] is empty or not provided
+                name_variable_usmap45 = None  # or any default name you want
+
+            # Check if float_namesusmap[45] is not empty
+            if float_namesusmap and len(float_namesusmap) > 45:
+                name_variable_usmap46 = float_namesusmap[45].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[45] is empty or not provided
+                name_variable_usmap46 = None  # or any default name you want
+
+            # Check if float_namesusmap[46] is not empty
+            if float_namesusmap and len(float_namesusmap) > 46:
+                name_variable_usmap47 = float_namesusmap[46].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[46] is empty or not provided
+                name_variable_usmap47 = None  # or any default name you want
+
+            # Check if float_namesusmap[47] is not empty
+            if float_namesusmap and len(float_namesusmap) > 47:
+                name_variable_usmap48 = float_namesusmap[47].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[47] is empty or not provided
+                name_variable_usmap48 = None  # or any default name you want
+
+            # Check if float_namesusmap[48] is not empty
+            if float_namesusmap and len(float_namesusmap) > 48:
+                name_variable_usmap49 = float_namesusmap[48].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[48] is empty or not provided
+                name_variable_usmap49 = None  # or any default name you want
+
+            # Check if float_namesusmap[49] is not empty
+            if float_namesusmap and len(float_namesusmap) > 49:
+                name_variable_usmap50 = float_namesusmap[49].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[49] is empty or not provided
+                name_variable_usmap50 = None  # or any default name you want
+
+            # Check if float_namesusmap[50] is not empty
+            if float_namesusmap and len(float_namesusmap) > 50:
+                name_variable_usmap51 = float_namesusmap[50].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesusmap[50] is empty or not provided
+                name_variable_usmap51 = None  # or any default name you want
+
+
+            if value_variable_usmap1.endswith('.'):
+                value_variable_usmap1 = value_variable_usmap1[:-1]
+            if value_variable_usmap1.startswith('.'):
+                value_variable_usmap1 = value_variable_usmap1[1:]
+
+            if value_variable_usmap2 is not None:
+                if value_variable_usmap2.endswith('.'):
+                    value_variable_usmap2 = value_variable_usmap2[:-1]
+                if value_variable_usmap2.startswith('.'):
+                    value_variable_usmap2 = value_variable_usmap2[1:]
+
+            if value_variable_usmap3 is not None:
+                if value_variable_usmap3.endswith('.'):
+                    value_variable_usmap3 = value_variable_usmap3[:-1]
+                if value_variable_usmap3.startswith('.'):
+                    value_variable_usmap3 = value_variable_usmap3[1:]
+
+            if value_variable_usmap4 is not None:
+                if value_variable_usmap4.endswith('.'):
+                    value_variable_usmap4 = value_variable_usmap4[:-1]
+                if value_variable_usmap4.startswith('.'):
+                    value_variable_usmap4 = value_variable_usmap4[1:]
+
+            if value_variable_usmap5 is not None:
+                if value_variable_usmap5.endswith('.'):
+                    value_variable_usmap5 = value_variable_usmap5[:-1]
+                if value_variable_usmap5.startswith('.'):
+                    value_variable_usmap5 = value_variable_usmap5[1:]
+
+            if value_variable_usmap6 is not None:
+                if value_variable_usmap6.endswith('.'):
+                    value_variable_usmap6 = value_variable_usmap6[:-1]
+                if value_variable_usmap6.startswith('.'):
+                    value_variable_usmap6 = value_variable_usmap6[1:]
+
+            if value_variable_usmap7 is not None:
+                if value_variable_usmap7.endswith('.'):
+                    value_variable_usmap7 = value_variable_usmap7[:-1]
+                if value_variable_usmap7.startswith('.'):
+                    value_variable_usmap7 = value_variable_usmap7[1:]
+
+            if value_variable_usmap8 is not None:
+                if value_variable_usmap8.endswith('.'):
+                    value_variable_usmap8 = value_variable_usmap8[:-1]
+                if value_variable_usmap8.startswith('.'):
+                    value_variable_usmap8 = value_variable_usmap8[1:]
+
+            if value_variable_usmap9 is not None:
+                if value_variable_usmap9.endswith('.'):
+                    value_variable_usmap9 = value_variable_usmap9[:-1]
+                if value_variable_usmap9.startswith('.'):
+                    value_variable_usmap9 = value_variable_usmap9[1:]
+
+            if value_variable_usmap10 is not None:
+                if value_variable_usmap10.endswith('.'):
+                    value_variable_usmap10 = value_variable_usmap10[:-1]
+                if value_variable_usmap10.startswith('.'):
+                    value_variable_usmap10 = value_variable_usmap10[1:]
+
+            if value_variable_usmap11 is not None:
+                if value_variable_usmap11.endswith('.'):
+                    value_variable_usmap11 = value_variable_usmap11[:-1]
+                if value_variable_usmap11.startswith('.'):
+                    value_variable_usmap11 = value_variable_usmap11[1:]
+
+            if value_variable_usmap12 is not None:
+                if value_variable_usmap12.endswith('.'):
+                    value_variable_usmap12 = value_variable_usmap12[:-1]
+                if value_variable_usmap12.startswith('.'):
+                    value_variable_usmap12 = value_variable_usmap12[1:]
+
+            if value_variable_usmap13 is not None:
+                if value_variable_usmap13.endswith('.'):
+                    value_variable_usmap13 = value_variable_usmap13[:-1]
+                if value_variable_usmap13.startswith('.'):
+                    value_variable_usmap13 = value_variable_usmap13[1:]
+
+            if value_variable_usmap14 is not None:
+                if value_variable_usmap14.endswith('.'):
+                    value_variable_usmap14 = value_variable_usmap14[:-1]
+                if value_variable_usmap14.startswith('.'):
+                    value_variable_usmap14 = value_variable_usmap14[1:]
+
+            if value_variable_usmap15 is not None:
+                if value_variable_usmap15.endswith('.'):
+                    value_variable_usmap15 = value_variable_usmap15[:-1]
+                if value_variable_usmap15.startswith('.'):
+                    value_variable_usmap15 = value_variable_usmap15[1:]
+
+            if value_variable_usmap16 is not None:
+                if value_variable_usmap16.endswith('.'):
+                    value_variable_usmap16 = value_variable_usmap16[:-1]
+                if value_variable_usmap16.startswith('.'):
+                    value_variable_usmap16 = value_variable_usmap16[1:]
+
+            if value_variable_usmap17 is not None:
+                if value_variable_usmap17.endswith('.'):
+                    value_variable_usmap17 = value_variable_usmap17[:-1]
+                if value_variable_usmap17.startswith('.'):
+                    value_variable_usmap17 = value_variable_usmap17[1:]
+
+            if value_variable_usmap18 is not None:
+                if value_variable_usmap18.endswith('.'):
+                    value_variable_usmap18 = value_variable_usmap18[:-1]
+                if value_variable_usmap18.startswith('.'):
+                    value_variable_usmap18 = value_variable_usmap18[1:]
+
+            if value_variable_usmap19 is not None:
+                if value_variable_usmap19.endswith('.'):
+                    value_variable_usmap19 = value_variable_usmap19[:-1]
+                if value_variable_usmap19.startswith('.'):
+                    value_variable_usmap19 = value_variable_usmap19[1:]
+
+            if value_variable_usmap20 is not None:
+                if value_variable_usmap20.endswith('.'):
+                    value_variable_usmap20 = value_variable_usmap20[:-1]
+                if value_variable_usmap20.startswith('.'):
+                    value_variable_usmap20 = value_variable_usmap20[1:]
+
+            if value_variable_usmap21 is not None:
+                if value_variable_usmap21.endswith('.'):
+                    value_variable_usmap21 = value_variable_usmap21[:-1]
+                if value_variable_usmap21.startswith('.'):
+                    value_variable_usmap21 = value_variable_usmap21[1:]
+
+            if value_variable_usmap22 is not None:
+                if value_variable_usmap22.endswith('.'):
+                    value_variable_usmap22 = value_variable_usmap22[:-1]
+                if value_variable_usmap22.startswith('.'):
+                    value_variable_usmap22 = value_variable_usmap22[1:]
+
+            if value_variable_usmap23 is not None:
+                if value_variable_usmap23.endswith('.'):
+                    value_variable_usmap23 = value_variable_usmap23[:-1]
+                if value_variable_usmap23.startswith('.'):
+                    value_variable_usmap23 = value_variable_usmap23[1:]
+
+            if value_variable_usmap24 is not None:
+                if value_variable_usmap24.endswith('.'):
+                    value_variable_usmap24 = value_variable_usmap24[:-1]
+                if value_variable_usmap24.startswith('.'):
+                    value_variable_usmap24 = value_variable_usmap24[1:]
+
+            if value_variable_usmap25 is not None:
+                if value_variable_usmap25.endswith('.'):
+                    value_variable_usmap25 = value_variable_usmap25[:-1]
+                if value_variable_usmap25.startswith('.'):
+                    value_variable_usmap25 = value_variable_usmap25[1:]
+
+            if value_variable_usmap26 is not None:
+                if value_variable_usmap26.endswith('.'):
+                    value_variable_usmap26 = value_variable_usmap26[:-1]
+                if value_variable_usmap26.startswith('.'):
+                    value_variable_usmap26 = value_variable_usmap26[1:]
+
+            if value_variable_usmap27 is not None:
+                if value_variable_usmap27.endswith('.'):
+                    value_variable_usmap27 = value_variable_usmap27[:-1]
+                if value_variable_usmap27.startswith('.'):
+                    value_variable_usmap27 = value_variable_usmap27[1:]
+
+            if value_variable_usmap28 is not None:
+                if value_variable_usmap28.endswith('.'):
+                    value_variable_usmap28 = value_variable_usmap28[:-1]
+                if value_variable_usmap28.startswith('.'):
+                    value_variable_usmap28 = value_variable_usmap28[1:]
+
+            if value_variable_usmap29 is not None:
+                if value_variable_usmap29.endswith('.'):
+                    value_variable_usmap29 = value_variable_usmap29[:-1]
+                if value_variable_usmap29.startswith('.'):
+                    value_variable_usmap29 = value_variable_usmap29[1:]
+
+            if value_variable_usmap30 is not None:
+                if value_variable_usmap30.endswith('.'):
+                    value_variable_usmap30 = value_variable_usmap30[:-1]
+                if value_variable_usmap30.startswith('.'):
+                    value_variable_usmap30 = value_variable_usmap30[1:]
+
+            if value_variable_usmap31 is not None:
+                if value_variable_usmap31.endswith('.'):
+                    value_variable_usmap31 = value_variable_usmap31[:-1]
+                if value_variable_usmap31.startswith('.'):
+                    value_variable_usmap31 = value_variable_usmap31[1:]
+
+            if value_variable_usmap32 is not None:
+                if value_variable_usmap32.endswith('.'):
+                    value_variable_usmap32 = value_variable_usmap32[:-1]
+                if value_variable_usmap32.startswith('.'):
+                    value_variable_usmap32 = value_variable_usmap32[1:]
+
+            if value_variable_usmap33 is not None:
+                if value_variable_usmap33.endswith('.'):
+                    value_variable_usmap33 = value_variable_usmap33[:-1]
+                if value_variable_usmap33.startswith('.'):
+                    value_variable_usmap33 = value_variable_usmap33[1:]
+
+            if value_variable_usmap34 is not None:
+                if value_variable_usmap34.endswith('.'):
+                    value_variable_usmap34 = value_variable_usmap34[:-1]
+                if value_variable_usmap34.startswith('.'):
+                    value_variable_usmap34 = value_variable_usmap34[1:]
+
+            if value_variable_usmap35 is not None:
+                if value_variable_usmap35.endswith('.'):
+                    value_variable_usmap35 = value_variable_usmap35[:-1]
+                if value_variable_usmap35.startswith('.'):
+                    value_variable_usmap35 = value_variable_usmap35[1:]
+
+            if value_variable_usmap36 is not None:
+                if value_variable_usmap36.endswith('.'):
+                    value_variable_usmap36 = value_variable_usmap36[:-1]
+                if value_variable_usmap36.startswith('.'):
+                    value_variable_usmap36 = value_variable_usmap36[1:]
+
+            if value_variable_usmap37 is not None:
+                if value_variable_usmap37.endswith('.'):
+                    value_variable_usmap37 = value_variable_usmap37[:-1]
+                if value_variable_usmap37.startswith('.'):
+                    value_variable_usmap37 = value_variable_usmap37[1:]
+
+            if value_variable_usmap38 is not None:
+                if value_variable_usmap38.endswith('.'):
+                    value_variable_usmap38 = value_variable_usmap38[:-1]
+                if value_variable_usmap38.startswith('.'):
+                    value_variable_usmap38 = value_variable_usmap38[1:]
+
+            if value_variable_usmap39 is not None:
+                if value_variable_usmap39.endswith('.'):
+                    value_variable_usmap39 = value_variable_usmap39[:-1]
+                if value_variable_usmap39.startswith('.'):
+                    value_variable_usmap39 = value_variable_usmap39[1:]
+
+            if value_variable_usmap40 is not None:
+                if value_variable_usmap40.endswith('.'):
+                    value_variable_usmap40 = value_variable_usmap40[:-1]
+                if value_variable_usmap40.startswith('.'):
+                    value_variable_usmap40 = value_variable_usmap40[1:]
+
+            if value_variable_usmap41 is not None:
+                if value_variable_usmap41.endswith('.'):
+                    value_variable_usmap41 = value_variable_usmap41[:-1]
+                if value_variable_usmap41.startswith('.'):
+                    value_variable_usmap41 = value_variable_usmap41[1:]
+
+            if value_variable_usmap42 is not None:
+                if value_variable_usmap42.endswith('.'):
+                    value_variable_usmap42 = value_variable_usmap42[:-1]
+                if value_variable_usmap42.startswith('.'):
+                    value_variable_usmap42 = value_variable_usmap42[1:]
+
+            if value_variable_usmap43 is not None:
+                if value_variable_usmap43.endswith('.'):
+                    value_variable_usmap43 = value_variable_usmap43[:-1]
+                if value_variable_usmap43.startswith('.'):
+                    value_variable_usmap43 = value_variable_usmap43[1:]
+
+            if value_variable_usmap44 is not None:
+                if value_variable_usmap44.endswith('.'):
+                    value_variable_usmap44 = value_variable_usmap44[:-1]
+                if value_variable_usmap44.startswith('.'):
+                    value_variable_usmap44 = value_variable_usmap44[1:]
+
+            if value_variable_usmap45 is not None:
+                if value_variable_usmap45.endswith('.'):
+                    value_variable_usmap45 = value_variable_usmap45[:-1]
+                if value_variable_usmap45.startswith('.'):
+                    value_variable_usmap45 = value_variable_usmap45[1:]
+
+            if value_variable_usmap46 is not None:
+                if value_variable_usmap46.endswith('.'):
+                    value_variable_usmap46 = value_variable_usmap46[:-1]
+                if value_variable_usmap46.startswith('.'):
+                    value_variable_usmap46 = value_variable_usmap46[1:]
+
+            if value_variable_usmap47 is not None:
+                if value_variable_usmap47.endswith('.'):
+                    value_variable_usmap47 = value_variable_usmap47[:-1]
+                if value_variable_usmap47.startswith('.'):
+                    value_variable_usmap47 = value_variable_usmap47[1:]
+
+            if value_variable_usmap48 is not None:
+                if value_variable_usmap48.endswith('.'):
+                    value_variable_usmap48 = value_variable_usmap48[:-1]
+                if value_variable_usmap48.startswith('.'):
+                    value_variable_usmap48 = value_variable_usmap48[1:]
+
+            if value_variable_usmap49 is not None:
+                if value_variable_usmap49.endswith('.'):
+                    value_variable_usmap49 = value_variable_usmap49[:-1]
+                if value_variable_usmap49.startswith('.'):
+                    value_variable_usmap49 = value_variable_usmap49[1:]
+
+            if value_variable_usmap50 is not None:
+                if value_variable_usmap50.endswith('.'):
+                    value_variable_usmap50 = value_variable_usmap50[:-1]
+                if value_variable_usmap50.startswith('.'):
+                    value_variable_usmap50 = value_variable_usmap50[1:]
+
+            if value_variable_usmap51 is not None:
+                if value_variable_usmap51.endswith('.'):
+                    value_variable_usmap51 = value_variable_usmap51[:-1]
+                if value_variable_usmap51.startswith('.'):
+                    value_variable_usmap51 = value_variable_usmap51[1:]
+
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_usmap = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_usmap.type == 'MESH':
+                            mesh_name_usmap = selected_obj_usmap.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_usmap.modifiers:
+                                    modifier_name_usmap = selected_obj_usmap.modifiers.active.name  # Get the name of the active modifier
+                                    
+
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_232"] = title_variable_usmap
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_233"] = subtitle_variable_usmap
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_112"] = range_minusmap
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_113"] = range_maxusmap
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_13"] = float(value_variable_usmap1)
+
+                                    # Check if value_variable_usmap2 is not empty
+                                    if value_variable_usmap2:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_14"] = float(value_variable_usmap2)
+                                    else:
+                                        print("Value for Input_14 is empty or not provided.")
+
+                                    # Check if value_variable_usmap3 is not empty
+                                    if value_variable_usmap3:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_15"] = float(value_variable_usmap3)
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_usmap4 is not empty
+                                    if value_variable_usmap4:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_16"] = float(value_variable_usmap4)
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_usmap5 is not empty
+                                    if value_variable_usmap5:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_17"] = float(value_variable_usmap5)
+                                    else:
+                                        print("Value for Input_17 is empty or not provided.")
+
+                                    # Check if value_variable_usmap6 is not empty
+                                    if value_variable_usmap6:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_18"] = float(value_variable_usmap6)
+                                    else:
+                                        print("Value for Input_18 is empty or not provided.")
+
+                                    # Check if value_variable_usmap7 is not empty
+                                    if value_variable_usmap7:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_19"] = float(value_variable_usmap7)
+                                    else:
+                                        print("Value for Input_19 is empty or not provided.")
+
+                                    # Check if value_variable_usmap8 is not empty
+                                    if value_variable_usmap8:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_20"] = float(value_variable_usmap8)
+                                    else:
+                                        print("Value for Input_20 is empty or not provided.")
+
+                                    # Check if value_variable_usmap9 is not empty
+                                    if value_variable_usmap9:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_62"] = float(value_variable_usmap9)
+                                    else:
+                                        print("Value for Input_62 is empty or not provided.")
+
+                                    # Check if value_variable_usmap10 is not empty
+                                    if value_variable_usmap10:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_21"] = float(value_variable_usmap10)
+                                    else:
+                                        print("Value for Input_21 is empty or not provided.")
+
+                                    # Check if value_variable_usmap11 is not empty
+                                    if value_variable_usmap11:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_22"] = float(value_variable_usmap11)
+                                    else:
+                                        print("Value for Input_22 is empty or not provided.")
+
+                                    # Check if value_variable_usmap12 is not empty
+                                    if value_variable_usmap12:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_23"] = float(value_variable_usmap12)
+                                    else:
+                                        print("Value for Input_23 is empty or not provided.")
+
+                                    # Check if value_variable_usmap13 is not empty
+                                    if value_variable_usmap13:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_24"] = float(value_variable_usmap13)
+                                    else:
+                                        print("Value for Input_24 is empty or not provided.")
+
+                                    # Check if value_variable_usmap14 is not empty
+                                    if value_variable_usmap14:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_25"] = float(value_variable_usmap14)
+                                    else:
+                                        print("Value for Input_25 is empty or not provided.")
+
+                                    # Check if value_variable_usmap15 is not empty
+                                    if value_variable_usmap15:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_26"] = float(value_variable_usmap15)
+                                    else:
+                                        print("Value for Input_26 is empty or not provided.")
+
+                                    # Check if value_variable_usmap16 is not empty
+                                    if value_variable_usmap16:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_27"] = float(value_variable_usmap16)
+                                    else:
+                                        print("Value for Input_27 is empty or not provided.")
+
+                                    # Check if value_variable_usmap17 is not empty
+                                    if value_variable_usmap17:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_12"] = float(value_variable_usmap17)
+                                    else:
+                                        print("Value for Input_12 is empty or not provided.")
+
+                                    # Check if value_variable_usmap18 is not empty
+                                    if value_variable_usmap18:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_28"] = float(value_variable_usmap18)
+                                    else:
+                                        print("Value for Input_28 is empty or not provided.")
+
+                                    # Check if value_variable_usmap19 is not empty
+                                    if value_variable_usmap19:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_29"] = float(value_variable_usmap19)
+                                    else:
+                                        print("Value for Input_29 is empty or not provided.")
+
+                                    # Check if value_variable_usmap20 is not empty
+                                    if value_variable_usmap20:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_30"] = float(value_variable_usmap20)
+                                    else:
+                                        print("Value for Input_30 is empty or not provided.")
+
+                                    # Check if value_variable_usmap21 is not empty
+                                    if value_variable_usmap21:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_31"] = float(value_variable_usmap21)
+                                    else:
+                                        print("Value for Input_31 is empty or not provided.")
+
+                                    # Check if value_variable_usmap22 is not empty
+                                    if value_variable_usmap22:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_32"] = float(value_variable_usmap22)
+                                    else:
+                                        print("Value for Input_32 is empty or not provided.")
+
+                                    # Check if value_variable_usmap23 is not empty
+                                    if value_variable_usmap23:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_33"] = float(value_variable_usmap23)
+                                    else:
+                                        print("Value for Input_33 is empty or not provided.")
+
+                                    # Check if value_variable_usmap24 is not empty
+                                    if value_variable_usmap24:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_34"] = float(value_variable_usmap24)
+                                    else:
+                                        print("Value for Input_34 is empty or not provided.")
+
+                                    # Check if value_variable_usmap25 is not empty
+                                    if value_variable_usmap25:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_166"] = float(value_variable_usmap25)
+                                    else:
+                                        print("Value for Input_166 is empty or not provided.")
+
+                                    # Check if value_variable_usmap26 is not empty
+                                    if value_variable_usmap26:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_35"] = float(value_variable_usmap26)
+                                    else:
+                                        print("Value for Input_35 is empty or not provided.")
+
+                                    # Check if value_variable_usmap27 is not empty
+                                    if value_variable_usmap27:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_36"] = float(value_variable_usmap27)
+                                    else:
+                                        print("Value for Input_36 is empty or not provided.")
+
+                                    # Check if value_variable_usmap28 is not empty
+                                    if value_variable_usmap28:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_37"] = float(value_variable_usmap28)
+                                    else:
+                                        print("Value for Input_37 is empty or not provided.")
+
+                                    # Check if value_variable_usmap29 is not empty
+                                    if value_variable_usmap29:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_38"] = float(value_variable_usmap29)
+                                    else:
+                                        print("Value for Input_38 is empty or not provided.")
+
+                                    # Check if value_variable_usmap30 is not empty
+                                    if value_variable_usmap30:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_39"] = float(value_variable_usmap30)
+                                    else:
+                                        print("Value for Input_39 is empty or not provided.")
+
+                                    # Check if value_variable_usmap31 is not empty
+                                    if value_variable_usmap31:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_40"] = float(value_variable_usmap31)
+                                    else:
+                                        print("Value for Input_40 is empty or not provided.")
+
+                                    # Check if value_variable_usmap32 is not empty
+                                    if value_variable_usmap32:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_41"] = float(value_variable_usmap32)
+                                    else:
+                                        print("Value for Input_41 is empty or not provided.")
+
+                                    # Check if value_variable_usmap33 is not empty
+                                    if value_variable_usmap33:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_42"] = float(value_variable_usmap33)
+                                    else:
+                                        print("Value for Input_42 is empty or not provided.")
+
+                                    # Check if value_variable_usmap34 is not empty
+                                    if value_variable_usmap34:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_43"] = float(value_variable_usmap34)
+                                    else:
+                                        print("Value for Input_43 is empty or not provided.")
+
+                                    # Check if value_variable_usmap35 is not empty
+                                    if value_variable_usmap35:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_44"] = float(value_variable_usmap35)
+                                    else:
+                                        print("Value for Input_44 is empty or not provided.")
+
+                                    # Check if value_variable_usmap36 is not empty
+                                    if value_variable_usmap36:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_45"] = float(value_variable_usmap36)
+                                    else:
+                                        print("Value for Input_45 is empty or not provided.")
+
+                                    # Check if value_variable_usmap37 is not empty
+                                    if value_variable_usmap37:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_46"] = float(value_variable_usmap37)
+                                    else:
+                                        print("Value for Input_46 is empty or not provided.")
+
+                                    # Check if value_variable_usmap38 is not empty
+                                    if value_variable_usmap38:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_47"] = float(value_variable_usmap38)
+                                    else:
+                                        print("Value for Input_47 is empty or not provided.")
+
+                                    # Check if value_variable_usmap39 is not empty
+                                    if value_variable_usmap39:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_48"] = float(value_variable_usmap39)
+                                    else:
+                                        print("Value for Input_48 is empty or not provided.")
+
+                                    # Check if value_variable_usmap40 is not empty
+                                    if value_variable_usmap40:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_49"] = float(value_variable_usmap40)
+                                    else:
+                                        print("Value for Input_49 is empty or not provided.")
+
+                                    # Check if value_variable_usmap41 is not empty
+                                    if value_variable_usmap41:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_50"] = float(value_variable_usmap41)
+                                    else:
+                                        print("Value for Input_50 is empty or not provided.")
+
+                                    # Check if value_variable_usmap42 is not empty
+                                    if value_variable_usmap42:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_51"] = float(value_variable_usmap42)
+                                    else:
+                                        print("Value for Input_51 is empty or not provided.")
+
+                                    # Check if value_variable_usmap43 is not empty
+                                    if value_variable_usmap43:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_52"] = float(value_variable_usmap43)
+                                    else:
+                                        print("Value for Input_52 is empty or not provided.")
+
+                                    # Check if value_variable_usmap44 is not empty
+                                    if value_variable_usmap44:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_53"] = float(value_variable_usmap44)
+                                    else:
+                                        print("Value for Input_53 is empty or not provided.")
+
+                                    # Check if value_variable_usmap45 is not empty
+                                    if value_variable_usmap45:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_54"] = float(value_variable_usmap45)
+                                    else:
+                                        print("Value for Input_54 is empty or not provided.")
+
+                                    # Check if value_variable_usmap46 is not empty
+                                    if value_variable_usmap46:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_55"] = float(value_variable_usmap46)
+                                    else:
+                                        print("Value for Input_55 is empty or not provided.")
+
+                                    # Check if value_variable_usmap47 is not empty
+                                    if value_variable_usmap47:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_56"] = float(value_variable_usmap47)
+                                    else:
+                                        print("Value for Input_56 is empty or not provided.")
+
+                                    # Check if value_variable_usmap48 is not empty
+                                    if value_variable_usmap48:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_57"] = float(value_variable_usmap48)
+                                    else:
+                                        print("Value for Input_57 is empty or not provided.")
+
+                                    # Check if value_variable_usmap49 is not empty
+                                    if value_variable_usmap49:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_58"] = float(value_variable_usmap49)
+                                    else:
+                                        print("Value for Input_58 is empty or not provided.")
+
+                                    # Check if value_variable_usmap50 is not empty
+                                    if value_variable_usmap50:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_59"] = float(value_variable_usmap50)
+                                    else:
+                                        print("Value for Input_59 is empty or not provided.")
+
+                                    # Check if value_variable_usmap51 is not empty
+                                    if value_variable_usmap51:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_60"] = float(value_variable_usmap51)
+                                    else:
+                                        print("Value for Input_60 is empty or not provided.")
+
+
+                                    selected_obj_usmap.modifiers[modifier_name_usmap]["Input_185"] = name_variable_usmap1
+
+                                    # Check if name_variable_usmap2 is not empty before setting the input
+                                    if name_variable_usmap2:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_184"] = name_variable_usmap2
+                                    else:
+                                        print("Name for Input_194 is empty or not provided.")     
+
+                                    # Check if name_variable_usmap3 is not empty before setting the input
+                                    if name_variable_usmap3:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_183"] = name_variable_usmap3
+                                    else:
+                                        print("Name for Input_183 is empty or not provided.")    
+
+                                    # Check if name_variable_usmap4 is not empty before setting the input
+                                    if name_variable_usmap4:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_182"] = name_variable_usmap4
+                                    else:
+                                        print("Name for Input_182 is empty or not provided.")    
+
+                                    # Check if name_variable_usmap5 is not empty before setting the input
+                                    if name_variable_usmap5:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_181"] = name_variable_usmap5
+                                    else:
+                                        print("Name for Input_181 is empty or not provided.")    
+
+                                    # Check if name_variable_usmap6 is not empty before setting the input
+                                    if name_variable_usmap6:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_180"] = name_variable_usmap6
+                                    else:
+                                        print("Name for Input_180 is empty or not provided.")  
+
+                                    # Check if name_variable_usmap7 is not empty before setting the input
+                                    if name_variable_usmap7:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_179"] = name_variable_usmap7
+                                    else:
+                                        print("Name for Input_179 is empty or not provided.")  
+
+                                    # Check if name_variable_usmap8 is not empty before setting the input
+                                    if name_variable_usmap8:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_178"] = name_variable_usmap8
+                                    else:
+                                        print("Name for Input_178 is empty or not provided.")
+
+                                    # Check if name_variable_usmap9 is not empty before setting the input
+                                    if name_variable_usmap9:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_177"] = name_variable_usmap9
+                                    else:
+                                        print("Name for Input_177 is empty or not provided.")
+
+                                    # Check if name_variable_usmap10 is not empty before setting the input
+                                    if name_variable_usmap10:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_176"] = name_variable_usmap10
+                                    else:
+                                        print("Name for Input_176 is empty or not provided.")
+
+                                    # Check if name_variable_usmap11 is not empty before setting the input
+                                    if name_variable_usmap11:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_175"] = name_variable_usmap11
+                                    else:
+                                        print("Name for Input_175 is empty or not provided.")
+
+                                    # Check if name_variable_usmap12 is not empty before setting the input
+                                    if name_variable_usmap12:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_174"] = name_variable_usmap12
+                                    else:
+                                        print("Name for Input_174 is empty or not provided.")
+
+                                    # Check if name_variable_usmap13 is not empty before setting the input
+                                    if name_variable_usmap13:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_173"] = name_variable_usmap13
+                                    else:
+                                        print("Name for Input_173 is empty or not provided.")
+
+                                    # Check if name_variable_usmap14 is not empty before setting the input
+                                    if name_variable_usmap14:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_172"] = name_variable_usmap14
+                                    else:
+                                        print("Name for Input_172 is empty or not provided.")
+
+                                    # Check if name_variable_usmap15 is not empty before setting the input
+                                    if name_variable_usmap15:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_171"] = name_variable_usmap15
+                                    else:
+                                        print("Name for Input_171 is empty or not provided.")
+
+                                    # Check if name_variable_usmap16 is not empty before setting the input
+                                    if name_variable_usmap16:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_170"] = name_variable_usmap16
+                                    else:
+                                        print("Name for Input_170 is empty or not provided.")
+
+                                    # Check if name_variable_usmap17 is not empty before setting the input
+                                    if name_variable_usmap17:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_167"] = name_variable_usmap17
+                                    else:
+                                        print("Name for Input_167 is empty or not provided.")
+
+                                    # Check if name_variable_usmap18 is not empty before setting the input
+                                    if name_variable_usmap18:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_186"] = name_variable_usmap18
+                                    else:
+                                        print("Name for Input_186 is empty or not provided.")
+
+                                    # Check if name_variable_usmap19 is not empty before setting the input
+                                    if name_variable_usmap19:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_187"] = name_variable_usmap19
+                                    else:
+                                        print("Name for Input_187 is empty or not provided.")
+
+                                    # Check if name_variable_usmap20 is not empty before setting the input
+                                    if name_variable_usmap20:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_188"] = name_variable_usmap20
+                                    else:
+                                        print("Name for Input_188 is empty or not provided.")
+
+                                    # Check if name_variable_usmap21 is not empty before setting the input
+                                    if name_variable_usmap21:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_189"] = name_variable_usmap21
+                                    else:
+                                        print("Name for Input_189 is empty or not provided.")
+
+                                    # Check if name_variable_usmap22 is not empty before setting the input
+                                    if name_variable_usmap22:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_190"] = name_variable_usmap22
+                                    else:
+                                        print("Name for Input_190 is empty or not provided.")
+
+                                    # Check if name_variable_usmap23 is not empty before setting the input
+                                    if name_variable_usmap23:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_191"] = name_variable_usmap23
+                                    else:
+                                        print("Name for Input_191 is empty or not provided.")
+
+                                    # Check if name_variable_usmap24 is not empty before setting the input
+                                    if name_variable_usmap24:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_192"] = name_variable_usmap24
+                                    else:
+                                        print("Name for Input_192 is empty or not provided.")
+
+                                    # Check if name_variable_usmap25 is not empty before setting the input
+                                    if name_variable_usmap25:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_193"] = name_variable_usmap25
+                                    else:
+                                        print("Name for Input_193 is empty or not provided.")
+
+                                     # Check if name_variable_usmap26 is not empty before setting the input
+                                    if name_variable_usmap26:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_194"] = name_variable_usmap26
+                                    else:
+                                        print("Name for Input_194 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap27 is not empty before setting the input
+                                    if name_variable_usmap27:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_195"] = name_variable_usmap27
+                                    else:
+                                        print("Name for Input_195 is empty or not provided.")    
+
+                                     # Check if name_variable_usmap28 is not empty before setting the input
+                                    if name_variable_usmap28:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_196"] = name_variable_usmap28
+                                    else:
+                                        print("Name for Input_196 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap29 is not empty before setting the input
+                                    if name_variable_usmap29:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_197"] = name_variable_usmap29
+                                    else:
+                                        print("Name for Input_197 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap30 is not empty before setting the input
+                                    if name_variable_usmap30:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_198"] = name_variable_usmap30
+                                    else:
+                                        print("Name for Input_198 is empty or not provided.")
+
+                                     # Check if name_variable_usmap31 is not empty before setting the input
+                                    if name_variable_usmap31:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_199"] = name_variable_usmap31
+                                    else:
+                                        print("Name for Input_199 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap32 is not empty before setting the input
+                                    if name_variable_usmap32:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_200"] = name_variable_usmap32
+                                    else:
+                                        print("Name for Input_200 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap33 is not empty before setting the input
+                                    if name_variable_usmap33:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_201"] = name_variable_usmap33
+                                    else:
+                                        print("Name for Input_201 is empty or not provided.")
+
+                                     # Check if name_variable_usmap34 is not empty before setting the input
+                                    if name_variable_usmap34:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_202"] = name_variable_usmap34
+                                    else:
+                                        print("Name for Input_202 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap35 is not empty before setting the input
+                                    if name_variable_usmap35:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_203"] = name_variable_usmap35
+                                    else:
+                                        print("Name for Input_203 is empty or not provided.")
+
+                                     # Check if name_variable_usmap36 is not empty before setting the input
+                                    if name_variable_usmap36:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_204"] = name_variable_usmap36
+                                    else:
+                                        print("Name for Input_204 is empty or not provided.")
+
+                                     # Check if name_variable_usmap37 is not empty before setting the input
+                                    if name_variable_usmap37:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_205"] = name_variable_usmap37
+                                    else:
+                                        print("Name for Input_205 is empty or not provided.")
+
+                                     # Check if name_variable_usmap38 is not empty before setting the input
+                                    if name_variable_usmap38:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_206"] = name_variable_usmap38
+                                    else:
+                                        print("Name for Input_206 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap39 is not empty before setting the input
+                                    if name_variable_usmap39:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_207"] = name_variable_usmap39
+                                    else:
+                                        print("Name for Input_207 is empty or not provided.")
+
+                                     # Check if name_variable_usmap40 is not empty before setting the input
+                                    if name_variable_usmap40:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_208"] = name_variable_usmap40
+                                    else:
+                                        print("Name for Input_208 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap41 is not empty before setting the input
+                                    if name_variable_usmap41:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_209"] = name_variable_usmap41
+                                    else:
+                                        print("Name for Input_209 is empty or not provided.")    
+
+                                     # Check if name_variable_usmap42 is not empty before setting the input
+                                    if name_variable_usmap42:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_210"] = name_variable_usmap42
+                                    else:
+                                        print("Name for Input_210 is empty or not provided.")
+
+                                     # Check if name_variable_usmap43 is not empty before setting the input
+                                    if name_variable_usmap43:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_211"] = name_variable_usmap43
+                                    else:
+                                        print("Name for Input_211 is empty or not provided.")
+
+                                     # Check if name_variable_usmap44 is not empty before setting the input
+                                    if name_variable_usmap44:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_212"] = name_variable_usmap44
+                                    else:
+                                        print("Name for Input_212 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap45 is not empty before setting the input
+                                    if name_variable_usmap45:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_213"] = name_variable_usmap45
+                                    else:
+                                        print("Name for Input_213 is empty or not provided.")
+
+                                     # Check if name_variable_usmap46 is not empty before setting the input
+                                    if name_variable_usmap46:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_214"] = name_variable_usmap46
+                                    else:
+                                        print("Name for Input_214 is empty or not provided.") 
+
+                                     # Check if name_variable_usmap47 is not empty before setting the input
+                                    if name_variable_usmap47:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_215"] = name_variable_usmap47
+                                    else:
+                                        print("Name for Input_215 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap48 is not empty before setting the input
+                                    if name_variable_usmap48:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_216"] = name_variable_usmap48
+                                    else:
+                                        print("Name for Input_216 is empty or not provided.")
+
+                                     # Check if name_variable_usmap49 is not empty before setting the input
+                                    if name_variable_usmap49:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_217"] = name_variable_usmap49
+                                    else:
+                                        print("Name for Input_217 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap50 is not empty before setting the input
+                                    if name_variable_usmap50:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_218"] = name_variable_usmap50
+                                    else:
+                                        print("Name for Input_218 is empty or not provided.")  
+
+                                     # Check if name_variable_usmap51 is not empty before setting the input
+                                    if name_variable_usmap51:
+                                        selected_obj_usmap.modifiers[modifier_name_usmap]["Input_219"] = name_variable_usmap51
+                                    else:
+                                        print("Name for Input_219 is empty or not provided.")                                                 
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_usmap}' and modifier '{modifier_name_usmap}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_usmap}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+
+    
+    
+
+
 class MyoperatorLGsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorlgsql"
     bl_label = "Import MySQL Data"
@@ -9358,6 +16498,1432 @@ class MyoperatorPGcsv(bpy.types.Operator):
         else:
                 print("No object selected.")
         bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorCGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorcggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullcircleaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullcircleaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullcircleaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullcircleaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        
+        filepath_fullcircleaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullcircleaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)
+        filepath_fullcircleaiinput1 = bpy.path.abspath(mytool.my_stringcirclegengraph1)
+        filepath_fullcircleaiinput2 = bpy.path.abspath(mytool.my_stringcirclegengraph2)
+        filepath_fullcircleaiinput3 = bpy.path.abspath(mytool.my_stringcirclegengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_question = filepath_fullcircleaiinput1
+        main_question = filepath_fullcircleaiinput2.format(sub_question)
+
+        question = f"{main_question} {sub_question}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullcircleaisiteurl
+        YOUR_APP_NAME = filepath_fullcircleaiappname
+        YOUR_API_KEY = filepath_fullcircleaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullcircleaimodelname1,
+                "messages": [
+                    {"role": "user", "content": question}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_json = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_json)
+
+        # Extract the answer if available
+        answer_circle = response_json.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_circle)
+        
+        relevant_info = answer_circle
+        
+        if relevant_info:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_question = f"{filepath_fullcircleaiinput3}. Here's the text: {relevant_info}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullcircleaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_question}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_json = new_response.json()
+            
+            # Extract the answer if available
+            answer_circle1 = new_response_json.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_circle1)
+
+            # Split the answer into variables based on commas
+            answer_variables_circle = answer_circle1.split(';')
+
+            # Now you can use the individual variables as needed
+            title_variable_circle = answer_variables_circle[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_circle = answer_variables_circle[1].replace("Step B:", "").strip()
+            value_variable_circle = re.sub(r"[^0-9.]", "", answer_variables_circle[2].replace("Step C:", "").strip())
+
+            # Check if the last character is a period
+            if value_variable_circle.endswith('.'):
+                # Remove the last character
+                value_variable_circle = value_variable_circle[:-1]
+
+            # Check if the string starts with a period
+            if value_variable_circle.startswith('.'):
+                # Remove the first character
+                value_variable_circle = value_variable_circle[1:]
+
+            # Print or use the variables as needed
+            print(f"Title: {title_variable_circle}, Subtitle: {subtitle_variable_circle}, Value: {value_variable_circle}")
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_cg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_cg.type == 'MESH':
+                            mesh_name_cg = selected_obj_cg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_cg.modifiers:
+                                    modifier_name_cg = selected_obj_cg.modifiers.active.name  # Get the name of the active modifier
+
+                                    selected_obj_cg.modifiers[modifier_name_cg]["Input_22"] = title_variable_circle
+                                    selected_obj_cg.modifiers[modifier_name_cg]["Input_23"] = subtitle_variable_circle
+                                    maxv_circle = selected_obj_cg.modifiers[modifier_name_cg]["Input_11"] 
+                                    selected_obj_cg.modifiers[modifier_name_cg]["Input_2"] = float(value_variable_circle) / maxv_circle
+
+
+                                    print(f"Set modifier input for object '{mesh_name_cg}' and modifier '{modifier_name_cg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_cg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorPGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorpggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullpieaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullpieaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullpieaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullpieaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullpieaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullpieaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)
+        filepath_fullpieaiinput1 = bpy.path.abspath(mytool.my_stringpiegengraph1)
+        filepath_fullpieaiinput2 = bpy.path.abspath(mytool.my_stringpiegengraph2)
+        filepath_fullpieaiinput3 = bpy.path.abspath(mytool.my_stringpiegengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionpg = filepath_fullpieaiinput1
+        main_questionpg = filepath_fullpieaiinput2.format(sub_questionpg)
+
+        question = f"{main_questionpg} {sub_questionpg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullpieaisiteurl
+        YOUR_APP_NAME = filepath_fullpieaiappname
+        YOUR_API_KEY = filepath_fullpieaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullpieaimodelname1,
+                "messages": [
+                    {"role": "user", "content": question}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_json = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_json)
+
+        # Extract the answer if available
+        answer_pie = response_json.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Pie:", answer_pie)
+        
+        relevant_infopg = answer_pie
+        
+        if relevant_infopg:
+            # Extract necessary details from relevant_infopg
+            # Modify the construction of the new question based on the extracted information
+            new_questionpg = f"{filepath_fullpieaiinput3}. Here's the text: {relevant_infopg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullpieaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionpg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_json = new_response.json()
+            
+            # Extract the answer if available
+            answer_pie1 = new_response_json.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Pie1:", answer_pie1)
+
+            # Split the answer into variables based on commas
+            answer_variables_pie = answer_pie1.split(';')
+
+            # Now you can use the individual variables as needed
+            title_variable_pie = answer_variables_pie[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_pie = answer_variables_pie[1].replace("Step B:", "").strip()
+            value_variable_pie = re.sub(r"[^0-9.]", "", answer_variables_pie[2].replace("Step C:", "").strip())
+
+            # Check if the last character is a period
+            if value_variable_pie.endswith('.'):
+                # Remove the last character
+                value_variable_pie = value_variable_pie[:-1]
+
+            # Check if the string starts with a period
+            if value_variable_pie.startswith('.'):
+                # Remove the first character
+                value_variable_pie = value_variable_pie[1:]
+
+            # Print or use the variables as needed
+            print(f"Title: {title_variable_pie}, Subtitle: {subtitle_variable_pie}, Value: {value_variable_pie}")
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_pg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_pg.type == 'MESH':
+                            mesh_name_pg = selected_obj_pg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_pg.modifiers:
+                                    modifier_name_pg = selected_obj_pg.modifiers.active.name  # Get the name of the active modifier
+
+                                    selected_obj_pg.modifiers[modifier_name_pg]["Input_15"] = title_variable_pie
+                                    selected_obj_pg.modifiers[modifier_name_pg]["Input_17"] = subtitle_variable_pie
+                                    maxv_pie = selected_obj_pg.modifiers[modifier_name_pg]["Input_11"] 
+                                    selected_obj_pg.modifiers[modifier_name_pg]["Input_2"] = float(value_variable_pie) / maxv_pie
+
+
+                                    print(f"Set modifier input for object '{mesh_name_pg}' and modifier '{modifier_name_pg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_pg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class Myoperator23CGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperator23cggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_full23circleaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_full23circleaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_full23circleaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_full23circleaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_full23circleaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_full23circleaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_full23circleaiinput1 = bpy.path.abspath(mytool.my_stringcircle23gen_graph1)
+        filepath_full23circleaiinput2 = bpy.path.abspath(mytool.my_stringcircle23gen_graph2)
+        filepath_full23circleaiinput3 = bpy.path.abspath(mytool.my_stringcircle23gen_graph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_question23cg = filepath_full23circleaiinput1
+        main_question23cg = filepath_full23circleaiinput2.format(sub_question23cg)
+
+        question23cg = f"{main_question23cg} {sub_question23cg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_full23circleaisiteurl
+        YOUR_APP_NAME = filepath_full23circleaiappname
+        YOUR_API_KEY = filepath_full23circleaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_full23circleaimodelname1,
+                "messages": [
+                    {"role": "user", "content": question23cg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_json23cga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_json23cga)
+
+        # Extract the answer if available
+        answer_23circle = response_json23cga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_23circle)
+        
+                
+        relevant_info23cg = answer_23circle
+        
+        if relevant_info23cg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_question23cg = f"{filepath_full23circleaiinput3}. Here's the text: {relevant_info23cg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_full23circleaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_question23cg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_json23cgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_23circle1 = new_response_json23cgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_23circle1)
+
+            # Split the answer into variables based on commas
+            answer_variables_23circle = answer_23circle1.split(';')
+            
+            # Split the answer further
+            float_values23cg = [value for value in answer_variables_23circle[2].split(',')]
+            float_names23cg = [value for value in answer_variables_23circle[3].split(',')]
+
+            # Now you can use the individual variables as needed
+            title_variable_23circle = answer_variables_23circle[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_23circle = answer_variables_23circle[1].replace("Step B:", "").strip()
+            value_variable_23circle1 = re.sub(r"[^0-9.]", "", float_values23cg[0].replace("Step C:", "").strip())
+            value_variable_23circle2 = re.sub(r"[^0-9.]", "", float_values23cg[1].replace("Step C:", "").strip())
+            
+            # Check if float_values23cg[2] is not empty
+            if float_values23cg and len(float_values23cg) > 2:
+                value_variable_23circle3 = re.sub(r"[^0-9.]", "", float_values23cg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_values23cg[2] is empty or not provided
+                value_variable_23circle3 = None  # or any default value you want
+            
+            
+            
+            
+            name_variable_23circle1 = float_names23cg[0].replace("Step D:", "").strip()
+            name_variable_23circle2 = float_names23cg[1].replace("Step D:", "").strip()
+            
+            # Check if float_names23cg[2] is not empty
+            if float_names23cg and len(float_names23cg) > 2:
+                name_variable_23circle3 = float_names23cg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_names23cg[2] is empty or not provided
+                name_variable_23circle3 = None  # or any default name you want
+
+            # Variable 1
+            if value_variable_23circle1.endswith('.'):
+                value_variable_23circle1 = value_variable_23circle1[:-1]
+            if value_variable_23circle1.startswith('.'):
+                value_variable_23circle1 = value_variable_23circle1[1:]
+
+            # Variable 2
+            if value_variable_23circle2.endswith('.'):
+                value_variable_23circle2 = value_variable_23circle2[:-1]
+            if value_variable_23circle2.startswith('.'):
+                value_variable_23circle2 = value_variable_23circle2[1:]
+
+            if value_variable_23circle3 is not None:
+                if value_variable_23circle3.endswith('.'):
+                    value_variable_23circle3 = value_variable_23circle3[:-1]
+                if value_variable_23circle3.startswith('.'):
+                    value_variable_23circle3 = value_variable_23circle3[1:]
+
+            # Print or use the variables as needed
+            print(f"Title: {title_variable_23circle}, Subtitle: {subtitle_variable_23circle}, Value 1: {value_variable_23circle1}, Value 2: {value_variable_23circle2}, Value 3: {value_variable_23circle3}")
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_23cg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_23cg.type == 'MESH':
+                            mesh_name_23cg = selected_obj_23cg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_23cg.modifiers:
+                                    modifier_name_23cg = selected_obj_23cg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_values23cg has exactly 2 elements
+                                    if len(float_values23cg) == 2:
+                                        selected_obj_23cg.modifiers[modifier_name_23cg]["Input_31"] = 2
+                                    else:
+                                        selected_obj_23cg.modifiers[modifier_name_23cg]["Input_31"] = 3
+
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_22"] = title_variable_23circle
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_23"] = subtitle_variable_23circle
+                                    maxv_23circle = selected_obj_23cg.modifiers[modifier_name_23cg]["Input_11"] 
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_2"] = float(value_variable_23circle1) / maxv_23circle
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_41"] = float(value_variable_23circle2) / maxv_23circle
+
+                                    # Check if value_variable_23circle3 is not empty
+                                    if value_variable_23circle3:
+                                        selected_obj_23cg.modifiers[modifier_name_23cg]["Input_42"] = float(value_variable_23circle3) / maxv_23circle
+                                    else:
+                                        print("Value for Input_42 is empty or not provided.")
+
+
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_39"] = name_variable_23circle1
+                                    selected_obj_23cg.modifiers[modifier_name_23cg]["Input_40"] = name_variable_23circle2
+                                    # Check if name_variable_23circle3 is not empty before setting the input
+                                    if name_variable_23circle3:
+                                        selected_obj_23cg.modifiers[modifier_name_23cg]["Input_38"] = name_variable_23circle3
+                                    else:
+                                        print("Name for Input_38 is empty or not provided.")                                    
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_23cg}' and modifier '{modifier_name_23cg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_23cg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class Myoperator23PGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperator23pggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_full23pieaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_full23pieaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_full23pieaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_full23pieaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_full23pieaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_full23pieaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_full23pieaiinput1 = bpy.path.abspath(mytool.my_stringpie23gen_graph1)
+        filepath_full23pieaiinput2 = bpy.path.abspath(mytool.my_stringpie23gen_graph2)
+        filepath_full23pieaiinput3 = bpy.path.abspath(mytool.my_stringpie23gen_graph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_question23pg = filepath_full23pieaiinput1
+        main_question23pg = filepath_full23pieaiinput2.format(sub_question23pg)
+
+        question23pg = f"{main_question23pg} {sub_question23pg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_full23pieaisiteurl
+        YOUR_APP_NAME = filepath_full23pieaiappname
+        YOUR_API_KEY = filepath_full23pieaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_full23pieaimodelname1,
+                "messages": [
+                    {"role": "user", "content": question23pg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_json23pga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_json23pga)
+
+        # Extract the answer if available
+        answer_23pie = response_json23pga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_23pie)
+        
+                
+        relevant_info23pg = answer_23pie
+        
+        if relevant_info23pg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_question23pg = f"{filepath_full23pieaiinput3}. Here's the text: {relevant_info23pg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_full23pieaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_question23pg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_json23pgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_23pie1 = new_response_json23pgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_23pie1)
+
+            # Split the answer into variables based on commas
+            answer_variables_23pie = answer_23pie1.split(';')
+            
+            # Split the answer further
+            float_values23pg = [value for value in answer_variables_23pie[2].split(',')]
+            float_names23pg = [value for value in answer_variables_23pie[3].split(',')]
+
+            # Now you can use the individual variables as needed
+            title_variable_23pie = answer_variables_23pie[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_23pie = answer_variables_23pie[1].replace("Step B:", "").strip()
+            value_variable_23pie1 = re.sub(r"[^0-9.]", "", float_values23pg[0].replace("Step C:", "").strip())
+            value_variable_23pie2 = re.sub(r"[^0-9.]", "", float_values23pg[1].replace("Step C:", "").strip())
+            
+            # Check if float_values23pg[2] is not empty
+            if float_values23pg and len(float_values23pg) > 2:
+                value_variable_23pie3 = re.sub(r"[^0-9.]", "", float_values23pg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_values23pg[2] is empty or not provided
+                value_variable_23pie3 = None  # or any default value you want
+            
+            
+            
+            
+            name_variable_23pie1 = float_names23pg[0].replace("Step D:", "").strip()
+            name_variable_23pie2 = float_names23pg[1].replace("Step D:", "").strip()
+            
+            # Check if float_names23pg[2] is not empty
+            if float_names23pg and len(float_names23pg) > 2:
+                name_variable_23pie3 = float_names23pg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_names23pg[2] is empty or not provided
+                name_variable_23pie3 = None  # or any default name you want
+
+            # Variable 1
+            if value_variable_23pie1.endswith('.'):
+                value_variable_23pie1 = value_variable_23pie1[:-1]
+            if value_variable_23pie1.startswith('.'):
+                value_variable_23pie1 = value_variable_23pie1[1:]
+
+            # Variable 2
+            if value_variable_23pie2.endswith('.'):
+                value_variable_23pie2 = value_variable_23pie2[:-1]
+            if value_variable_23pie2.startswith('.'):
+                value_variable_23pie2 = value_variable_23pie2[1:]
+
+            if value_variable_23pie3 is not None:
+                if value_variable_23pie3.endswith('.'):
+                    value_variable_23pie3 = value_variable_23pie3[:-1]
+                if value_variable_23pie3.startswith('.'):
+                    value_variable_23pie3 = value_variable_23pie3[1:]
+
+            # Print or use the variables as needed
+            print(f"Title: {title_variable_23pie}, Subtitle: {subtitle_variable_23pie}, Value 1: {value_variable_23pie1}, Value 2: {value_variable_23pie2}, Value 3: {value_variable_23pie3}")
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_23pg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_23pg.type == 'MESH':
+                            mesh_name_23pg = selected_obj_23pg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_23pg.modifiers:
+                                    modifier_name_23pg = selected_obj_23pg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_values23pg has exactly 2 elements
+                                    if len(float_values23pg) == 2:
+                                        selected_obj_23pg.modifiers[modifier_name_23pg]["Input_26"] = 2
+                                    else:
+                                        selected_obj_23pg.modifiers[modifier_name_23pg]["Input_26"] = 3
+
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_15"] = title_variable_23pie
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_17"] = subtitle_variable_23pie
+                                    maxv_23pie = selected_obj_23pg.modifiers[modifier_name_23pg]["Input_11"] 
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_2"] = float(value_variable_23pie1) / maxv_23pie
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_27"] = float(value_variable_23pie2) / maxv_23pie
+
+                                    # Check if value_variable_23pie3 is not empty
+                                    if value_variable_23pie3:
+                                        selected_obj_23pg.modifiers[modifier_name_23pg]["Input_28"] = float(value_variable_23pie3) / maxv_23pie
+                                    else:
+                                        print("Value for Input_28 is empty or not provided.")
+
+
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_31"] = name_variable_23pie1
+                                    selected_obj_23pg.modifiers[modifier_name_23pg]["Input_32"] = name_variable_23pie2
+                                    # Check if name_variable_23pie3 is not empty before setting the input
+                                    if name_variable_23pie3:
+                                        selected_obj_23pg.modifiers[modifier_name_23pg]["Input_33"] = name_variable_23pie3
+                                    else:
+                                        print("Name for Input_33 is empty or not provided.")                                    
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_23pg}' and modifier '{modifier_name_23pg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_23pg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+
+    
+class MyoperatorMCGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormcggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullmcgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullmcgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullmcgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullmcgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullmcgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullmcgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullmcgaiinput1 = bpy.path.abspath(mytool.my_stringmultiple_circle_gengraph1)
+        filepath_fullmcgaiinput2 = bpy.path.abspath(mytool.my_stringmultiple_circle_gengraph2)
+        filepath_fullmcgaiinput3 = bpy.path.abspath(mytool.my_stringmultiple_circle_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionmcg = filepath_fullmcgaiinput1
+        main_questionmcg = filepath_fullmcgaiinput2.format(sub_questionmcg)
+
+        questionmcg = f"{main_questionmcg} {sub_questionmcg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullmcgaisiteurl
+        YOUR_APP_NAME = filepath_fullmcgaiappname
+        YOUR_API_KEY = filepath_fullmcgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullmcgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionmcg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonmcga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonmcga)
+
+        # Extract the answer if available
+        answer_mcg = response_jsonmcga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_mcg)
+        
+                
+        relevant_infomcg = answer_mcg
+        
+        if relevant_infomcg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionmcg = f"{filepath_fullmcgaiinput3}. Here's the text: {relevant_infomcg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullmcgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionmcg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonmcgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_mcg1 = new_response_jsonmcgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_mcg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_mcg = answer_mcg1.split(';')
+            
+            # Split the answer further
+            float_valuesmcg = [value for value in answer_variables_mcg[2].split(',')]
+            float_namesmcg = [value for value in answer_variables_mcg[3].split(',')]
+
+            # Now you can use the individual variables as needed
+            title_variable_mcg = answer_variables_mcg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_mcg = answer_variables_mcg[1].replace("Step B:", "").strip()
+            value_variable_mcg1 = re.sub(r"[^0-9.]", "", float_valuesmcg[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesmcg[1] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 1:
+                value_variable_mcg2 = re.sub(r"[^0-9.]", "", float_valuesmcg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[1] is empty or not provided
+                value_variable_mcg2 = None  # or any default value you want
+
+            # Check if float_valuesmcg[2] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 2:
+                value_variable_mcg3 = re.sub(r"[^0-9.]", "", float_valuesmcg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[2] is empty or not provided
+                value_variable_mcg3 = None  # or any default value you want
+
+            # Check if float_valuesmcg[3] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 3:
+                value_variable_mcg4 = re.sub(r"[^0-9.]", "", float_valuesmcg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[3] is empty or not provided
+                value_variable_mcg4 = None  # or any default value you want
+
+            # Check if float_valuesmcg[4] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 4:
+                value_variable_mcg5 = re.sub(r"[^0-9.]", "", float_valuesmcg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[4] is empty or not provided
+                value_variable_mcg5 = None  # or any default value you want
+
+            # Check if float_valuesmcg[5] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 5:
+                value_variable_mcg6 = re.sub(r"[^0-9.]", "", float_valuesmcg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[5] is empty or not provided
+                value_variable_mcg6 = None  # or any default value you want
+
+            # Check if float_valuesmcg[6] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 6:
+                value_variable_mcg7 = re.sub(r"[^0-9.]", "", float_valuesmcg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[6] is empty or not provided
+                value_variable_mcg7 = None  # or any default value you want
+
+            # Check if float_valuesmcg[7] is not empty
+            if float_valuesmcg and len(float_valuesmcg) > 7:
+                value_variable_mcg8 = re.sub(r"[^0-9.]", "", float_valuesmcg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmcg[6] is empty or not provided
+                value_variable_mcg8 = None  # or any default value you want
+
+                       
+            
+            name_variable_mcg1 = float_namesmcg[0].replace("Step D:", "").strip()
+
+            # Check if float_namesmcg[1] is not empty
+            if float_namesmcg and len(float_namesmcg) > 1:
+                name_variable_mcg2 = float_namesmcg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[1] is empty or not provided
+                name_variable_mcg2 = None  # or any default name you want
+
+            # Check if float_namesmcg[2] is not empty
+            if float_namesmcg and len(float_namesmcg) > 2:
+                name_variable_mcg3 = float_namesmcg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[2] is empty or not provided
+                name_variable_mcg3 = None  # or any default name you want
+
+            # Check if float_namesmcg[3] is not empty
+            if float_namesmcg and len(float_namesmcg) > 3:
+                name_variable_mcg4 = float_namesmcg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[3] is empty or not provided
+                name_variable_mcg4 = None  # or any default name you want
+
+            # Check if float_namesmcg[4] is not empty
+            if float_namesmcg and len(float_namesmcg) > 4:
+                name_variable_mcg5 = float_namesmcg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[4] is empty or not provided
+                name_variable_mcg5 = None  # or any default name you want
+
+            # Check if float_namesmcg[5] is not empty
+            if float_namesmcg and len(float_namesmcg) > 5:
+                name_variable_mcg6 = float_namesmcg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[5] is empty or not provided
+                name_variable_mcg6 = None  # or any default name you want
+
+            # Check if float_namesmcg[6] is not empty
+            if float_namesmcg and len(float_namesmcg) > 6:
+                name_variable_mcg7 = float_namesmcg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[6] is empty or not provided
+                name_variable_mcg7 = None  # or any default name you want
+
+            # Check if float_namesmcg[7] is not empty
+            if float_namesmcg and len(float_namesmcg) > 7:
+                name_variable_mcg8 = float_namesmcg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmcg[7] is empty or not provided
+                name_variable_mcg8 = None  # or any default name you want
+
+
+
+            if value_variable_mcg1.endswith('.'):
+                value_variable_mcg1 = value_variable_mcg1[:-1]
+            if value_variable_mcg1.startswith('.'):
+                value_variable_mcg1 = value_variable_mcg1[1:]
+
+            if value_variable_mcg2 is not None:
+                if value_variable_mcg2.endswith('.'):
+                    value_variable_mcg2 = value_variable_mcg2[:-1]
+                if value_variable_mcg2.startswith('.'):
+                    value_variable_mcg2 = value_variable_mcg2[1:]
+
+            if value_variable_mcg3 is not None:
+                if value_variable_mcg3.endswith('.'):
+                    value_variable_mcg3 = value_variable_mcg3[:-1]
+                if value_variable_mcg3.startswith('.'):
+                    value_variable_mcg3 = value_variable_mcg3[1:]
+
+            if value_variable_mcg4 is not None:
+                if value_variable_mcg4.endswith('.'):
+                    value_variable_mcg4 = value_variable_mcg4[:-1]
+                if value_variable_mcg4.startswith('.'):
+                    value_variable_mcg4 = value_variable_mcg4[1:]
+
+            if value_variable_mcg5 is not None:
+                if value_variable_mcg5.endswith('.'):
+                    value_variable_mcg5 = value_variable_mcg5[:-1]
+                if value_variable_mcg5.startswith('.'):
+                    value_variable_mcg5 = value_variable_mcg5[1:]
+
+            if value_variable_mcg6 is not None:
+                if value_variable_mcg6.endswith('.'):
+                    value_variable_mcg6 = value_variable_mcg6[:-1]
+                if value_variable_mcg6.startswith('.'):
+                    value_variable_mcg6 = value_variable_mcg6[1:]
+
+            if value_variable_mcg7 is not None:
+                if value_variable_mcg7.endswith('.'):
+                    value_variable_mcg7 = value_variable_mcg7[:-1]
+                if value_variable_mcg7.startswith('.'):
+                    value_variable_mcg7 = value_variable_mcg7[1:]
+
+            if value_variable_mcg8 is not None:
+                if value_variable_mcg8.endswith('.'):
+                    value_variable_mcg8 = value_variable_mcg8[:-1]
+                if value_variable_mcg8.startswith('.'):
+                    value_variable_mcg8 = value_variable_mcg8[1:]
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_mcg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_mcg.type == 'MESH':
+                            mesh_name_mcg = selected_obj_mcg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_mcg.modifiers:
+                                    modifier_name_mcg = selected_obj_mcg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesmcg has 1 to 8 elements and assign the length directly
+                                    num_elements = len(float_valuesmcg)
+                                    if 1 <= num_elements <= 8:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_55"] = num_elements
+
+
+                                    selected_obj_mcg.modifiers[modifier_name_mcg]["Input_40"] = title_variable_mcg
+                                    selected_obj_mcg.modifiers[modifier_name_mcg]["Input_41"] = subtitle_variable_mcg
+                                    maxv_mcg = selected_obj_mcg.modifiers[modifier_name_mcg]["Input_11"] 
+                                    selected_obj_mcg.modifiers[modifier_name_mcg]["Input_2"] = float(value_variable_mcg1) / maxv_mcg
+
+                                    # Check if value_variable_mcg2 is not empty
+                                    if value_variable_mcg2:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_12"] = float(value_variable_mcg2) / maxv_mcg
+                                    else:
+                                        print("Value for Input_12 is empty or not provided.")
+
+                                    # Check if value_variable_mcg3 is not empty
+                                    if value_variable_mcg3:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_14"] = float(value_variable_mcg3) / maxv_mcg
+                                    else:
+                                        print("Value for Input_14 is empty or not provided.")
+
+                                    # Check if value_variable_mcg4 is not empty
+                                    if value_variable_mcg4:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_15"] = float(value_variable_mcg4) / maxv_mcg
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_mcg5 is not empty
+                                    if value_variable_mcg5:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_16"] = float(value_variable_mcg5) / maxv_mcg
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_mcg6 is not empty
+                                    if value_variable_mcg6:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_7"] = float(value_variable_mcg6) / maxv_mcg
+                                    else:
+                                        print("Value for Socket_7 is empty or not provided.")
+
+                                    # Check if value_variable_mcg7 is not empty
+                                    if value_variable_mcg7:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_8"] = float(value_variable_mcg7) / maxv_mcg
+                                    else:
+                                        print("Value for Socket_8 is empty or not provided.")
+
+                                    # Check if value_variable_mcg8 is not empty
+                                    if value_variable_mcg8:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_9"] = float(value_variable_mcg8) / maxv_mcg
+                                    else:
+                                        print("Value for Socket_9 is empty or not provided.")
+
+
+                                    selected_obj_mcg.modifiers[modifier_name_mcg]["Input_42"] = name_variable_mcg1
+
+                                    # Check if name_variable_mcg2 is not empty before setting the input
+                                    if name_variable_mcg2:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_43"] = name_variable_mcg2
+                                    else:
+                                        print("Name for Input_43 is empty or not provided.")     
+
+                                    # Check if name_variable_mcg3 is not empty before setting the input
+                                    if name_variable_mcg3:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = name_variable_mcg3
+                                    else:
+                                        print("Name for Input_44 is empty or not provided.")    
+
+                                    # Check if name_variable_mcg4 is not empty before setting the input
+                                    if name_variable_mcg4:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = name_variable_mcg4
+                                    else:
+                                        print("Name for Input_46 is empty or not provided.")    
+
+                                    # Check if name_variable_mcg5 is not empty before setting the input
+                                    if name_variable_mcg5:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = name_variable_mcg5
+                                    else:
+                                        print("Name for Input_45 is empty or not provided.")    
+
+                                    # Check if name_variable_mcg6 is not empty before setting the input
+                                    if name_variable_mcg6:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_13"] = name_variable_mcg6
+                                    else:
+                                        print("Name for Socket_13 is empty or not provided.")  
+
+                                    # Check if name_variable_mcg7 is not empty before setting the input
+                                    if name_variable_mcg7:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_18"] = name_variable_mcg7
+                                    else:
+                                        print("Name for Socket_18 is empty or not provided.")  
+
+                                    # Check if name_variable_mcg8 is not empty before setting the input
+                                    if name_variable_mcg8:
+                                        selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_23"] = name_variable_mcg8
+                                    else:
+                                        print("Name for Socket_23 is empty or not provided.")                                   
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_mcg}' and modifier '{modifier_name_mcg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_mcg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorMPGgenai(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatormpggenai"
+    bl_label = "Import Gen AI Data"
+
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        api_key_file_path = bpy.path.abspath(mytool.my_pathapi_key)
+        filepath_fullmpgaisiteurl = bpy.path.abspath(mytool.my_stringsiteurl)
+        filepath_fullmpgaiappname = bpy.path.abspath(mytool.my_stringappname)
+        filepath_fullmpgaiapikey = read_api_key(api_key_file_path)
+        
+        if not filepath_fullmpgaiapikey:
+            print("Failed to read API key. Aborting operation.")
+            return {'CANCELLED'}
+        filepath_fullmpgaimodelname1 = bpy.path.abspath(mytool.my_stringmodelname1)
+        filepath_fullmpgaimodelname2 = bpy.path.abspath(mytool.my_stringmodelname2)        
+        filepath_fullmpgaiinput1 = bpy.path.abspath(mytool.my_stringmultiple_pie_gengraph1)
+        filepath_fullmpgaiinput2 = bpy.path.abspath(mytool.my_stringmultiple_pie_gengraph2)
+        filepath_fullmpgaiinput3 = bpy.path.abspath(mytool.my_stringmultiple_pie_gengraph3)
+        filepath_fullurl = bpy.path.abspath(mytool.my_stringresponseurl)
+
+        sub_questionmpg = filepath_fullmpgaiinput1
+        main_questionmpg = filepath_fullmpgaiinput2.format(sub_questionmpg)
+
+        questionmpg = f"{main_questionmpg} {sub_questionmpg}"
+
+        # Replace with your actual values
+        YOUR_SITE_URL = filepath_fullmpgaisiteurl
+        YOUR_APP_NAME = filepath_fullmpgaiappname
+        YOUR_API_KEY = filepath_fullmpgaiapikey
+
+        response = requests.post(
+            url=filepath_fullurl,
+            headers={
+                "HTTP-Referer": YOUR_SITE_URL,
+                "X-Title": YOUR_APP_NAME,
+                "Authorization": f"Bearer {YOUR_API_KEY}",  # Include your API key in the Authorization header
+            },
+            data=json.dumps({
+                "model": filepath_fullmpgaimodelname1,
+                "messages": [
+                    {"role": "user", "content": questionmpg}
+                ]
+            })
+        )
+
+        # Parse the JSON response
+        response_jsonmpga = response.json()
+        
+        # Print the response for debugging
+        print("Response JSON:", response_jsonmpga)
+
+        # Extract the answer if available
+        answer_mpg = response_jsonmpga.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+        # Print the answer for debugging
+        print("Answer Circle:", answer_mpg)
+        
+                
+        relevant_infompg = answer_mpg
+        
+        if relevant_infompg:
+            # Extract necessary details from relevant_info
+            # Modify the construction of the new question based on the extracted information
+            new_questionmpg = f"{filepath_fullmpgaiinput3}. Here's the text: {relevant_infompg}"
+
+            # Make another API request with the new question
+            new_response = requests.post(
+                url=filepath_fullurl,
+                headers={
+                    "HTTP-Referer": YOUR_SITE_URL,
+                    "X-Title": YOUR_APP_NAME,
+                    "Authorization": f"Bearer {YOUR_API_KEY}",
+                },
+                data=json.dumps({
+                    "model": filepath_fullmpgaimodelname2,
+                    "messages": [
+                        {"role": "user", "content": new_questionmpg}
+                    ]
+                })
+            )
+
+            # Parse the JSON response for the new question
+            new_response_jsonmpgb = new_response.json()
+            
+            # Extract the answer if available
+            answer_mpg1 = new_response_jsonmpgb.get("choices", [{}])[0].get("message", {}).get("content", "No answer found")
+
+            # Print the answer for debugging
+            print("Answer Circle1:", answer_mpg1)
+
+            # Split the answer into variables based on commas
+            answer_variables_mpg = answer_mpg1.split(';')
+            
+            # Split the answer further
+            float_valuesmpg = [value for value in answer_variables_mpg[2].split(',')]
+            float_namesmpg = [value for value in answer_variables_mpg[3].split(',')]
+
+            # Now you can use the individual variables as needed
+            title_variable_mpg = answer_variables_mpg[0].replace("Step A:", "").strip().upper()
+            subtitle_variable_mpg = answer_variables_mpg[1].replace("Step B:", "").strip()
+            value_variable_mpg1 = re.sub(r"[^0-9.]", "", float_valuesmpg[0].replace("Step C:", "").strip())
+
+            # Check if float_valuesmpg[1] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 1:
+                value_variable_mpg2 = re.sub(r"[^0-9.]", "", float_valuesmpg[1].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[1] is empty or not provided
+                value_variable_mpg2 = None  # or any default value you want
+
+            # Check if float_valuesmpg[2] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 2:
+                value_variable_mpg3 = re.sub(r"[^0-9.]", "", float_valuesmpg[2].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[2] is empty or not provided
+                value_variable_mpg3 = None  # or any default value you want
+
+            # Check if float_valuesmpg[3] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 3:
+                value_variable_mpg4 = re.sub(r"[^0-9.]", "", float_valuesmpg[3].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[3] is empty or not provided
+                value_variable_mpg4 = None  # or any default value you want
+
+            # Check if float_valuesmpg[4] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 4:
+                value_variable_mpg5 = re.sub(r"[^0-9.]", "", float_valuesmpg[4].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[4] is empty or not provided
+                value_variable_mpg5 = None  # or any default value you want
+
+            # Check if float_valuesmpg[5] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 5:
+                value_variable_mpg6 = re.sub(r"[^0-9.]", "", float_valuesmpg[5].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[5] is empty or not provided
+                value_variable_mpg6 = None  # or any default value you want
+
+            # Check if float_valuesmpg[6] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 6:
+                value_variable_mpg7 = re.sub(r"[^0-9.]", "", float_valuesmpg[6].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[6] is empty or not provided
+                value_variable_mpg7 = None  # or any default value you want
+
+            # Check if float_valuesmpg[7] is not empty
+            if float_valuesmpg and len(float_valuesmpg) > 7:
+                value_variable_mpg8 = re.sub(r"[^0-9.]", "", float_valuesmpg[7].replace("Step C:", "").strip())
+            else:
+                # Handle the case where float_valuesmpg[6] is empty or not provided
+                value_variable_mpg8 = None  # or any default value you want
+
+                       
+            
+            name_variable_mpg1 = float_namesmpg[0].replace("Step D:", "").strip()
+
+            # Check if float_namesmpg[1] is not empty
+            if float_namesmpg and len(float_namesmpg) > 1:
+                name_variable_mpg2 = float_namesmpg[1].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[1] is empty or not provided
+                name_variable_mpg2 = None  # or any default name you want
+
+            # Check if float_namesmpg[2] is not empty
+            if float_namesmpg and len(float_namesmpg) > 2:
+                name_variable_mpg3 = float_namesmpg[2].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[2] is empty or not provided
+                name_variable_mpg3 = None  # or any default name you want
+
+            # Check if float_namesmpg[3] is not empty
+            if float_namesmpg and len(float_namesmpg) > 3:
+                name_variable_mpg4 = float_namesmpg[3].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[3] is empty or not provided
+                name_variable_mpg4 = None  # or any default name you want
+
+            # Check if float_namesmpg[4] is not empty
+            if float_namesmpg and len(float_namesmpg) > 4:
+                name_variable_mpg5 = float_namesmpg[4].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[4] is empty or not provided
+                name_variable_mpg5 = None  # or any default name you want
+
+            # Check if float_namesmpg[5] is not empty
+            if float_namesmpg and len(float_namesmpg) > 5:
+                name_variable_mpg6 = float_namesmpg[5].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[5] is empty or not provided
+                name_variable_mpg6 = None  # or any default name you want
+
+            # Check if float_namesmpg[6] is not empty
+            if float_namesmpg and len(float_namesmpg) > 6:
+                name_variable_mpg7 = float_namesmpg[6].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[6] is empty or not provided
+                name_variable_mpg7 = None  # or any default name you want
+
+            # Check if float_namesmpg[7] is not empty
+            if float_namesmpg and len(float_namesmpg) > 7:
+                name_variable_mpg8 = float_namesmpg[7].replace("Step D:", "").strip()
+            else:
+                # Handle the case where float_namesmpg[7] is empty or not provided
+                name_variable_mpg8 = None  # or any default name you want
+
+
+
+            if value_variable_mpg1.endswith('.'):
+                value_variable_mpg1 = value_variable_mpg1[:-1]
+            if value_variable_mpg1.startswith('.'):
+                value_variable_mpg1 = value_variable_mpg1[1:]
+
+            if value_variable_mpg2 is not None:
+                if value_variable_mpg2.endswith('.'):
+                    value_variable_mpg2 = value_variable_mpg2[:-1]
+                if value_variable_mpg2.startswith('.'):
+                    value_variable_mpg2 = value_variable_mpg2[1:]
+
+            if value_variable_mpg3 is not None:
+                if value_variable_mpg3.endswith('.'):
+                    value_variable_mpg3 = value_variable_mpg3[:-1]
+                if value_variable_mpg3.startswith('.'):
+                    value_variable_mpg3 = value_variable_mpg3[1:]
+
+            if value_variable_mpg4 is not None:
+                if value_variable_mpg4.endswith('.'):
+                    value_variable_mpg4 = value_variable_mpg4[:-1]
+                if value_variable_mpg4.startswith('.'):
+                    value_variable_mpg4 = value_variable_mpg4[1:]
+
+            if value_variable_mpg5 is not None:
+                if value_variable_mpg5.endswith('.'):
+                    value_variable_mpg5 = value_variable_mpg5[:-1]
+                if value_variable_mpg5.startswith('.'):
+                    value_variable_mpg5 = value_variable_mpg5[1:]
+
+            if value_variable_mpg6 is not None:
+                if value_variable_mpg6.endswith('.'):
+                    value_variable_mpg6 = value_variable_mpg6[:-1]
+                if value_variable_mpg6.startswith('.'):
+                    value_variable_mpg6 = value_variable_mpg6[1:]
+
+            if value_variable_mpg7 is not None:
+                if value_variable_mpg7.endswith('.'):
+                    value_variable_mpg7 = value_variable_mpg7[:-1]
+                if value_variable_mpg7.startswith('.'):
+                    value_variable_mpg7 = value_variable_mpg7[1:]
+
+            if value_variable_mpg8 is not None:
+                if value_variable_mpg8.endswith('.'):
+                    value_variable_mpg8 = value_variable_mpg8[:-1]
+                if value_variable_mpg8.startswith('.'):
+                    value_variable_mpg8 = value_variable_mpg8[1:]
+
+
+            # Ensure an object is selected
+            if bpy.context.selected_objects:
+                    selected_obj_mpg = bpy.context.active_object  # Get the active (selected) object
+
+                    if selected_obj_mpg.type == 'MESH':
+                            mesh_name_mpg = selected_obj_mpg.name
+
+                            # Check if the selected object has modifiers
+                            if selected_obj_mpg.modifiers:
+                                    modifier_name_mpg = selected_obj_mpg.modifiers.active.name  # Get the name of the active modifier
+                                    
+                                    # Check if float_valuesmpg has 1 to 8 elements and assign the length directly
+                                    num_elementsmpg = len(float_valuesmpg)
+                                    if 1 <= num_elementsmpg <= 8:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_54"] = num_elementsmpg
+
+
+                                    selected_obj_mpg.modifiers[modifier_name_mpg]["Input_40"] = title_variable_mpg
+                                    selected_obj_mpg.modifiers[modifier_name_mpg]["Input_41"] = subtitle_variable_mpg
+                                    maxv_mpg = selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] 
+                                    selected_obj_mpg.modifiers[modifier_name_mpg]["Input_2"] = float(value_variable_mpg1) / maxv_mpg
+
+                                    # Check if value_variable_mpg2 is not empty
+                                    if value_variable_mpg2:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_12"] = float(value_variable_mpg2) / maxv_mpg
+                                    else:
+                                        print("Value for Input_12 is empty or not provided.")
+
+                                    # Check if value_variable_mpg3 is not empty
+                                    if value_variable_mpg3:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = float(value_variable_mpg3) / maxv_mpg
+                                    else:
+                                        print("Value for Input_14 is empty or not provided.")
+
+                                    # Check if value_variable_mpg4 is not empty
+                                    if value_variable_mpg4:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_15"] = float(value_variable_mpg4) / maxv_mpg
+                                    else:
+                                        print("Value for Input_15 is empty or not provided.")
+
+                                    # Check if value_variable_mpg5 is not empty
+                                    if value_variable_mpg5:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_16"] = float(value_variable_mpg5) / maxv_mpg
+                                    else:
+                                        print("Value for Input_16 is empty or not provided.")
+
+                                    # Check if value_variable_mpg6 is not empty
+                                    if value_variable_mpg6:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_93"] = float(value_variable_mpg6) / maxv_mpg
+                                    else:
+                                        print("Value for Input_93 is empty or not provided.")
+
+                                    # Check if value_variable_mpg7 is not empty
+                                    if value_variable_mpg7:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_0"] = float(value_variable_mpg7) / maxv_mpg
+                                    else:
+                                        print("Value for Socket_0 is empty or not provided.")
+
+                                    # Check if value_variable_mpg8 is not empty
+                                    if value_variable_mpg8:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_1"] = float(value_variable_mpg8) / maxv_mpg
+                                    else:
+                                        print("Value for Socket_1 is empty or not provided.")
+
+
+                                    selected_obj_mpg.modifiers[modifier_name_mpg]["Input_42"] = name_variable_mpg1
+
+                                    # Check if name_variable_mpg2 is not empty before setting the input
+                                    if name_variable_mpg2:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_43"] = name_variable_mpg2
+                                    else:
+                                        print("Name for Input_43 is empty or not provided.")     
+
+                                    # Check if name_variable_mpg3 is not empty before setting the input
+                                    if name_variable_mpg3:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = name_variable_mpg3
+                                    else:
+                                        print("Name for Input_44 is empty or not provided.")    
+
+                                    # Check if name_variable_mpg4 is not empty before setting the input
+                                    if name_variable_mpg4:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = name_variable_mpg4
+                                    else:
+                                        print("Name for Input_46 is empty or not provided.")    
+
+                                    # Check if name_variable_mpg5 is not empty before setting the input
+                                    if name_variable_mpg5:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = name_variable_mpg5
+                                    else:
+                                        print("Name for Input_45 is empty or not provided.")    
+
+                                    # Check if name_variable_mpg6 is not empty before setting the input
+                                    if name_variable_mpg6:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Input_88"] = name_variable_mpg6
+                                    else:
+                                        print("Name for Input_88 is empty or not provided.")  
+
+                                    # Check if name_variable_mpg7 is not empty before setting the input
+                                    if name_variable_mpg7:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_4"] = name_variable_mpg7
+                                    else:
+                                        print("Name for Socket_4 is empty or not provided.")  
+
+                                    # Check if name_variable_mpg8 is not empty before setting the input
+                                    if name_variable_mpg8:
+                                        selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_9"] = name_variable_mpg8
+                                    else:
+                                        print("Name for Socket_9 is empty or not provided.")                                   
+
+
+
+                                    print(f"Set modifier input for object '{mesh_name_mpg}' and modifier '{modifier_name_mpg}'.")
+                            else:
+                                    print(f"Selected object '{mesh_name_mpg}' has no modifiers.")
+                    else:
+                            print("Selected object is not a mesh.")
+            else:
+                    print("No object selected.")
+            bpy.context.object.data.update()
         return {'FINISHED'}
     
 class MyoperatorLGcsv(bpy.types.Operator):
@@ -20698,7 +29264,7 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorLGcsv, MyoperatorLGCcsv, 
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
 MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, 
 MyoperatorVBCcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
@@ -20707,10 +29273,10 @@ ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDON
 ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_opmcpie, 
 ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
-NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_23_PT_panel_1, 
-PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, 
-COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5,
-COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
+NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, CANDLESTICK_GRAPH_PT_panel_6, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
+PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6,
+COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, US_MAP_PT_panel_6, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
 ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
