@@ -227,6 +227,16 @@ class MyProperties(bpy.types.PropertyGroup):
         ],
         update=lambda self, context: bpy.ops.addonname.myop_operatorvbc()
     )
+    
+
+    my_enumVBM : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPVBM7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPVBM8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorvbm()
+    )
 
     
     my_enum3 : bpy.props.EnumProperty(
@@ -354,6 +364,10 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringvertical_bar_graph_comparison : bpy.props.StringProperty(
     name= "",
     default="vertical_bar_graph_comparison",)
+    
+    my_stringvertical_bar_graph_multiple : bpy.props.StringProperty(
+    name= "",
+    default="vertical_bar_graph_multiple",)
     
     my_stringline_graph : bpy.props.StringProperty(
     name= "",
@@ -3548,7 +3562,581 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonbbarvh()
     )
 
+    my_floatMULTIPLEABARVA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarva()
+    )
 
+    my_floatMULTIPLEABARVLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarva()
+    )
+
+    my_floatMULTIPLEABARVB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvb()
+    )
+
+    my_floatMULTIPLEABARVLB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvb()
+    )
+
+    my_floatMULTIPLEABARVC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvc()
+    )
+
+    my_floatMULTIPLEABARVLC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvc()
+    )
+
+    my_floatMULTIPLEABARVD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvd()
+    )
+
+    my_floatMULTIPLEABARVLD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvd()
+    )
+
+    my_floatMULTIPLEABARVE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarve()
+    )
+
+    my_floatMULTIPLEABARVLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarve()
+    )
+
+    my_floatMULTIPLEABARVF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvf()
+    )
+
+    my_floatMULTIPLEABARVLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvf()
+    )
+
+    my_floatMULTIPLEABARVG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvg()
+    )
+
+    my_floatMULTIPLEABARVLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvg()
+    )
+
+    my_floatMULTIPLEABARVH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvh()
+    )
+
+    my_floatMULTIPLEABARVLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipleabarvh()
+    )
+
+    my_floatMULTIPLEBBARVA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarva()
+    )
+
+    my_floatMULTIPLEBBARVLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarva()
+    )
+
+    my_floatMULTIPLEBBARVB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvb()
+    )
+
+    my_floatMULTIPLEBBARVLB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvb()
+    )
+
+    my_floatMULTIPLEBBARVC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvc()
+    )
+
+    my_floatMULTIPLEBBARVLC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvc()
+    )
+
+    my_floatMULTIPLEBBARVD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvd()
+    )
+
+    my_floatMULTIPLEBBARVLD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvd()
+    )
+
+    my_floatMULTIPLEBBARVE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarve()
+    )
+
+    my_floatMULTIPLEBBARVLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarve()
+    )
+
+    my_floatMULTIPLEBBARVF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvf()
+    )
+
+    my_floatMULTIPLEBBARVLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvf()
+    )
+
+    my_floatMULTIPLEBBARVG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvg()
+    )
+
+    my_floatMULTIPLEBBARVLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvg()
+    )
+
+    my_floatMULTIPLEBBARVH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvh()
+    )
+
+    my_floatMULTIPLEBBARVLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplebbarvh()
+    )
+
+    my_floatMULTIPLECBARVA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarva()
+    )
+
+    my_floatMULTIPLECBARVLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarva()
+    )
+
+    my_floatMULTIPLECBARVB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvb()
+    )
+
+    my_floatMULTIPLECBARVLB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvb()
+    )
+
+    my_floatMULTIPLECBARVC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvc()
+    )
+
+    my_floatMULTIPLECBARVLC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvc()
+    )
+
+    my_floatMULTIPLECBARVD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvd()
+    )
+
+    my_floatMULTIPLECBARVLD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvd()
+    )
+
+    my_floatMULTIPLECBARVE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarve()
+    )
+
+    my_floatMULTIPLECBARVLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarve()
+    )
+
+    my_floatMULTIPLECBARVF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvf()
+    )
+
+    my_floatMULTIPLECBARVLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvf()
+    )
+
+    my_floatMULTIPLECBARVG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvg()
+    )
+
+    my_floatMULTIPLECBARVLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvg()
+    )
+
+    my_floatMULTIPLECBARVH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvh()
+    )
+
+    my_floatMULTIPLECBARVLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultiplecbarvh()
+    )
+
+    my_floatMULTIPLEDBARVA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarva()
+    )
+
+    my_floatMULTIPLEDBARVLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarva()
+    )
+
+    my_floatMULTIPLEDBARVB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvb()
+    )
+
+    my_floatMULTIPLEDBARVLB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvb()
+    )
+
+    my_floatMULTIPLEDBARVC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvc()
+    )
+
+    my_floatMULTIPLEDBARVLC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvc()
+    )
+
+    my_floatMULTIPLEDBARVD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvd()
+    )
+
+    my_floatMULTIPLEDBARVLD: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvd()
+    )
+
+    my_floatMULTIPLEDBARVE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarve()
+    )
+
+    my_floatMULTIPLEDBARVLE: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarve()
+    )
+
+    my_floatMULTIPLEDBARVF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvf()
+    )
+
+    my_floatMULTIPLEDBARVLF: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvf()
+    )
+
+    my_floatMULTIPLEDBARVG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvg()
+    )
+
+    my_floatMULTIPLEDBARVLG: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvg()
+    )
+
+    my_floatMULTIPLEDBARVH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvh()
+    )
+
+    my_floatMULTIPLEDBARVLH: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=4,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatormultipledbarvh()
+    )
     
         
     my_floatVBGA: bpy.props.FloatProperty(
@@ -4123,6 +4711,14 @@ class MyProperties(bpy.types.PropertyGroup):
         name = "",
         description="link to csv file:",
         default="//csv/vertical_bar_graph_comparison.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathvbm: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/vertical_bar_graph_multiple.csv",
         maxlen=1024,
         subtype='FILE_PATH',
         )
@@ -4929,6 +5525,78 @@ class MyProperties(bpy.types.PropertyGroup):
         )
 
     my_pathfontvbgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH', 
+        )
+        
+    my_pathfontvbgm_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbgm_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbgm_barvaluea: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgm_barvalueb: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontvbgm_barvaluec: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgm_barvalued: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+             
+    my_pathfontvbgm_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgm_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontvbgm_legend: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
         default="//Fonts/Open sans/OpenSans-Regular.ttf",
@@ -8594,7 +9262,405 @@ class STACKED_VERTICAL_BAR_GRAPH_PT_panel_5(STACKED_VERTICAL_BAR_GRAPH_panel, bp
         rowresetsvbg = layout.row()
         rowresetsvbg.label(text= "Reset all Fonts:")
         layout.operator("addonname.myop_operatorsvbgresfont")
+        
 
+class MULTIPLE_VERTICAL_BAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1(MULTIPLE_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Vertical Bar Graph Multiple"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowVBMFPS = layout.row()
+        rowVBMFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enumVBM") 
+
+class MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2(MULTIPLE_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowVBMcsv = layout.row()
+        rowVBMcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathvbm")
+        layout.operator("mesh.mycubeoperatorvbmcsv")
+        
+class MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3(MULTIPLE_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringvertical_bar_graph_multiple")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorvbgmsql")
+
+class MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4(MULTIPLE_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Duration Control"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowMULTIPLEABARVA = layout.row()
+        rowMULTIPLEABARVA.label(text= "Start A1:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVA")
+
+        rowMULTIPLEABARVLA = layout.row()
+        rowMULTIPLEABARVLA.label(text= "Length of Animation A1:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLA")
+
+        rowMULTIPLEBBARVB = layout.row()
+        rowMULTIPLEBBARVB.label(text= "Start B1:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVA")
+
+        rowMULTIPLEBBARVLB = layout.row()
+        rowMULTIPLEBBARVLB.label(text= "Length of Animation B1:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLA")
+
+        rowMULTIPLECBARVA = layout.row()
+        rowMULTIPLECBARVA.label(text= "Start C1:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVA")
+
+        rowMULTIPLECBARVLA = layout.row()
+        rowMULTIPLECBARVLA.label(text= "Length of Animation C1:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLA")
+
+        rowMULTIPLEDBARVB = layout.row()
+        rowMULTIPLEDBARVB.label(text= "Start D1:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVA")
+
+        rowMULTIPLEDBARVLB = layout.row()
+        rowMULTIPLEDBARVLB.label(text= "Length of Animation D1:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLA")
+
+
+
+
+        rowMULTIPLEABARVB = layout.row()
+        rowMULTIPLEABARVB.label(text= "Start A2:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVB")
+
+        rowMULTIPLEABARVLB = layout.row()
+        rowMULTIPLEABARVLB.label(text= "Length of Animation A2:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLB")
+
+        rowMULTIPLEBBARVB = layout.row()
+        rowMULTIPLEBBARVB.label(text= "Start B2:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVB")
+
+        rowMULTIPLEBBARVLB = layout.row()
+        rowMULTIPLEBBARVLB.label(text= "Length of Animation B2:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLB")
+
+        rowMULTIPLECBARVB = layout.row()
+        rowMULTIPLECBARVB.label(text= "Start C2:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVB")
+
+        rowMULTIPLECBARVLB = layout.row()
+        rowMULTIPLECBARVLB.label(text= "Length of Animation C2:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLB")
+
+        rowMULTIPLEDBARVB = layout.row()
+        rowMULTIPLEDBARVB.label(text= "Start D2:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVB")
+
+        rowMULTIPLEDBARVLB = layout.row()
+        rowMULTIPLEDBARVLB.label(text= "Length of Animation D2:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLB")
+
+
+
+        rowMULTIPLEABARVC = layout.row()
+        rowMULTIPLEABARVC.label(text= "Start A3:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVC")
+
+        rowMULTIPLEABARVLC = layout.row()
+        rowMULTIPLEABARVLC.label(text= "Length of Animation A3:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLC")
+
+        rowMULTIPLEBBARVC = layout.row()
+        rowMULTIPLEBBARVC.label(text= "Start B3:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVC")
+
+        rowMULTIPLEBBARVLC = layout.row()
+        rowMULTIPLEBBARVLC.label(text= "Length of Animation B3:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLC")
+
+        rowMULTIPLECBARVC = layout.row()
+        rowMULTIPLECBARVC.label(text= "Start C3:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVC")
+
+        rowMULTIPLECBARVLC = layout.row()
+        rowMULTIPLECBARVLC.label(text= "Length of Animation C3:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLC")
+
+        rowMULTIPLEDBARVC = layout.row()
+        rowMULTIPLEDBARVC.label(text= "Start D3:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVC")
+
+        rowMULTIPLEDBARVLC = layout.row()
+        rowMULTIPLEDBARVLC.label(text= "Length of Animation D3:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLC")
+
+
+
+
+
+        rowMULTIPLEABARVD = layout.row()
+        rowMULTIPLEABARVD.label(text= "Start A4:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVD")
+
+        rowMULTIPLEABARVLD = layout.row()
+        rowMULTIPLEABARVLD.label(text= "Length of Animation A4:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLD")
+
+        rowMULTIPLEBBARVD = layout.row()
+        rowMULTIPLEBBARVD.label(text= "Start B4:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVD")
+
+        rowMULTIPLEBBARVLD = layout.row()
+        rowMULTIPLEBBARVLD.label(text= "Length of Animation B4:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLD")
+
+        rowMULTIPLECBARVD = layout.row()
+        rowMULTIPLECBARVD.label(text= "Start C4:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVD")
+
+        rowMULTIPLECBARVLD = layout.row()
+        rowMULTIPLECBARVLD.label(text= "Length of Animation C4:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLD")
+
+        rowMULTIPLEDBARVD = layout.row()
+        rowMULTIPLEDBARVD.label(text= "Start D4:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVD")
+
+        rowMULTIPLEDBARVLD = layout.row()
+        rowMULTIPLEDBARVLD.label(text= "Length of Animation D4:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLD")
+
+
+
+
+
+        rowMULTIPLEABARVE = layout.row()
+        rowMULTIPLEABARVE.label(text= "Start A5:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVE")
+
+        rowMULTIPLEABARVLE = layout.row()
+        rowMULTIPLEABARVLE.label(text= "Length of Animation A5:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLE")
+
+        rowMULTIPLEBBARVE = layout.row()
+        rowMULTIPLEBBARVE.label(text= "Start B5:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVE")
+
+        rowMULTIPLEBBARVLE = layout.row()
+        rowMULTIPLEBBARVLE.label(text= "Length of Animation B5:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLE")
+
+        rowMULTIPLECBARVE = layout.row()
+        rowMULTIPLECBARVE.label(text= "Start C5:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVE")
+
+        rowMULTIPLECBARVLE = layout.row()
+        rowMULTIPLECBARVLE.label(text= "Length of Animation C5:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLE")
+
+        rowMULTIPLEDBARVE = layout.row()
+        rowMULTIPLEDBARVE.label(text= "Start D5:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVE")
+
+        rowMULTIPLEDBARVLE = layout.row()
+        rowMULTIPLEDBARVLE.label(text= "Length of Animation D5:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLE")
+
+
+
+
+
+        rowMULTIPLEABARVF = layout.row()
+        rowMULTIPLEABARVF.label(text= "Start A6:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVF")
+
+        rowMULTIPLEABARVLF = layout.row()
+        rowMULTIPLEABARVLF.label(text= "Length of Animation A6:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLF")
+
+        rowMULTIPLEBBARVF = layout.row()
+        rowMULTIPLEBBARVF.label(text= "Start B6:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVF")
+
+        rowMULTIPLEBBARVLF = layout.row()
+        rowMULTIPLEBBARVLF.label(text= "Length of Animation B6:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLF")
+
+        rowMULTIPLECBARVF = layout.row()
+        rowMULTIPLECBARVF.label(text= "Start C6:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVF")
+
+        rowMULTIPLECBARVLF = layout.row()
+        rowMULTIPLECBARVLF.label(text= "Length of Animation C6:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLF")
+
+        rowMULTIPLEDBARVF = layout.row()
+        rowMULTIPLEDBARVF.label(text= "Start D6:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVF")
+
+        rowMULTIPLEDBARVLF = layout.row()
+        rowMULTIPLEDBARVLF.label(text= "Length of Animation D6:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLF")
+
+
+
+
+
+        rowMULTIPLEABARVG = layout.row()
+        rowMULTIPLEABARVG.label(text= "Start A7:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVG")
+
+        rowMULTIPLEABARVLG = layout.row()
+        rowMULTIPLEABARVLG.label(text= "Length of Animation A7:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLG")
+
+        rowMULTIPLEBBARVG = layout.row()
+        rowMULTIPLEBBARVG.label(text= "Start B7:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVG")
+
+        rowMULTIPLEBBARVLG = layout.row()
+        rowMULTIPLEBBARVLG.label(text= "Length of Animation B7:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLG")
+
+        rowMULTIPLECBARVG = layout.row()
+        rowMULTIPLECBARVG.label(text= "Start C7:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVG")
+
+        rowMULTIPLECBARVLG = layout.row()
+        rowMULTIPLECBARVLG.label(text= "Length of Animation C7:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLG")
+
+        rowMULTIPLEDBARVG = layout.row()
+        rowMULTIPLEDBARVG.label(text= "Start D7:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVG")
+
+        rowMULTIPLEDBARVLG = layout.row()
+        rowMULTIPLEDBARVLG.label(text= "Length of Animation D7:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLG")
+
+
+
+
+
+
+        rowMULTIPLEABARVH = layout.row()
+        rowMULTIPLEABARVH.label(text= "Start A8:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVH")
+
+        rowMULTIPLEABARVLH = layout.row()
+        rowMULTIPLEABARVLH.label(text= "Length of Animation A8:")
+        layout.prop(mytool, "my_floatMULTIPLEABARVLH")
+
+        rowMULTIPLEBBARVH = layout.row()
+        rowMULTIPLEBBARVH.label(text= "Start B8:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVH")
+
+        rowMULTIPLEBBARVLH = layout.row()
+        rowMULTIPLEBBARVLH.label(text= "Length of Animation B8:")
+        layout.prop(mytool, "my_floatMULTIPLEBBARVLH")
+
+        rowMULTIPLECBARVH = layout.row()
+        rowMULTIPLECBARVH.label(text= "Start C8:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVH")
+
+        rowMULTIPLECBARVLH = layout.row()
+        rowMULTIPLECBARVLH.label(text= "Length of Animation C8:")
+        layout.prop(mytool, "my_floatMULTIPLECBARVLH")
+
+        rowMULTIPLEDBARVH = layout.row()
+        rowMULTIPLEDBARVH.label(text= "Start D8:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVH")
+
+        rowMULTIPLEDBARVLH = layout.row()
+        rowMULTIPLEDBARVLH.label(text= "Length of Animation D8:")
+        layout.prop(mytool, "my_floatMULTIPLEDBARVLH")
+
+
+
+
+        
+class MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5(MULTIPLE_VERTICAL_BAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlevbgm = layout.row()
+        rowtitlevbgm.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontvbgm_title")
+
+        rowsubtitlevbgm = layout.row()
+        rowsubtitlevbgm.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontvbgm_subtitle")
+        
+        rowvalueavbgm = layout.row()
+        rowvalueavbgm.label(text= "Bar Value A Font:")
+        layout.prop(mytool, "my_pathfontvbgm_barvaluea")
+        
+        rowvaluebvbgm = layout.row()
+        rowvaluebvbgm.label(text= "Bar Value B Font:")
+        layout.prop(mytool, "my_pathfontvbgm_barvalueb")
+        
+        rowvalueavbgm = layout.row()
+        rowvalueavbgm.label(text= "Bar Value C Font:")
+        layout.prop(mytool, "my_pathfontvbgm_barvaluec")
+        
+        rowvaluebvbgm = layout.row()
+        rowvaluebvbgm.label(text= "Bar Value D Font:")
+        layout.prop(mytool, "my_pathfontvbgm_barvalued")
+
+        rowvaluevbgm = layout.row()
+        rowvaluevbgm.label(text= "Bar Text Font:")
+        layout.prop(mytool, "my_pathfontvbgm_bartext")
+        
+        rowlegendvbgm = layout.row()
+        rowlegendvbgm.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontvbgm_rangenumbers")
+        
+        rowlegendvbgm = layout.row()
+        rowlegendvbgm.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontvbgm_legend")                 
+        layout.operator("addonname.myop_operatorvbgmfont")
+        
+        rowresetvbgm = layout.row()
+        rowresetvbgm.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorvbgmresfont")
         
 class MyoperatorCGsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorcgsql"
@@ -18377,7 +19443,7 @@ class MyoperatorVBGCsql(bpy.types.Operator):
 
         mycursor.execute("SELECT `Decimals` FROM vertical_bar_comparison_gtable")
         decvalue = mycursor.fetchone()
-        my_floatvbgc_decvalue = float(decvalue[0])
+        my_floatvbgc_decvalue = int(decvalue[0])
 
         mycursor.execute("SELECT `TITLE (in caps)` FROM vertical_bar_comparison_gtable")
         my_stringvbgc_title = mycursor.fetchone()
@@ -18444,6 +19510,275 @@ class MyoperatorVBGCsql(bpy.types.Operator):
                                 print(f"Set modifier input for object '{mesh_name_vbgc}' and modifier '{modifier_name_vbgc}'.")
                         else:
                                 print(f"Selected object '{mesh_name_vbgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorVBGMsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbgmsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringvertical_bar_graph_multiple
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of bars (1-8)` FROM vertical_bar_multiple_gtable")
+        numberofbarsvbgm = mycursor.fetchone()
+        my_floatvbgm_numberofbars = int(numberofbarsvbgm[0])
+
+        mycursor.execute("SELECT `Number of vertical bars (3-4)` FROM vertical_bar_multiple_gtable")
+        numberofverticalbarsvbgm = mycursor.fetchone()
+        my_floatvbgm_numberofverticalbars = int(numberofverticalbarsvbgm[0])
+        
+        mycursor.execute("SELECT `Bar Text` FROM vertical_bar_multiple_gtable")
+        my_stringvbgm_bartext = mycursor.fetchall()
+        my_stringvbgm_bartext1 = str(my_stringvbgm_bartext[0])
+        my_stringvbgm_bartext2 = str(my_stringvbgm_bartext[1])
+        my_stringvbgm_bartext3 = str(my_stringvbgm_bartext[2])
+        my_stringvbgm_bartext4 = str(my_stringvbgm_bartext[3])
+        my_stringvbgm_bartext5 = str(my_stringvbgm_bartext[4])
+        my_stringvbgm_bartext6 = str(my_stringvbgm_bartext[5])
+        my_stringvbgm_bartext7 = str(my_stringvbgm_bartext[6])
+        my_stringvbgm_bartext8 = str(my_stringvbgm_bartext[7])
+        my_stringvbgm_bartext1 = my_stringvbgm_bartext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext2 = my_stringvbgm_bartext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext3 = my_stringvbgm_bartext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext4 = my_stringvbgm_bartext4.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext5 = my_stringvbgm_bartext5.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext6 = my_stringvbgm_bartext6.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext7 = my_stringvbgm_bartext7.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_bartext8 = my_stringvbgm_bartext8.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Max Value` FROM vertical_bar_multiple_gtable")
+        maxvalue = mycursor.fetchone()
+        my_floatvbgm_maxvalue = float(maxvalue[0])
+
+        mycursor.execute("SELECT `Bar Value A` FROM vertical_bar_multiple_gtable")
+        valueavbgm = mycursor.fetchall()
+        valueavbgm1, valueavbgm2, valueavbgm3, valueavbgm4, valueavbgm5, valueavbgm6, valueavbgm7, valueavbgm8 = valueavbgm
+        valueavbgm1 = str(valueavbgm1)
+        valueavbgm2 = str(valueavbgm2)
+        valueavbgm3 = str(valueavbgm3)
+        valueavbgm4 = str(valueavbgm4)  
+        valueavbgm5 = str(valueavbgm5)
+        valueavbgm6 = str(valueavbgm6)
+        valueavbgm7 = str(valueavbgm7)
+        valueavbgm8 = str(valueavbgm8)        
+        valueavbgm1 = valueavbgm1.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm1 = float(valueavbgm1)
+        valueavbgm2 = valueavbgm2.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm2 = float(valueavbgm2)
+        valueavbgm3 = valueavbgm3.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm3 = float(valueavbgm3)
+        valueavbgm4 = valueavbgm4.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm4 = float(valueavbgm4)
+        valueavbgm5 = valueavbgm5.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm5 = float(valueavbgm5)
+        valueavbgm6 = valueavbgm6.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm6 = float(valueavbgm6)
+        valueavbgm7 = valueavbgm7.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm7 = float(valueavbgm7)
+        valueavbgm8 = valueavbgm8.strip("(").strip(")").strip(",").strip("'")
+        valueavbgm8 = float(valueavbgm8)
+
+        mycursor.execute("SELECT `Bar Value B` FROM vertical_bar_multiple_gtable")
+        valuebvbgm = mycursor.fetchall()
+        valuebvbgm1, valuebvbgm2, valuebvbgm3, valuebvbgm4, valuebvbgm5, valuebvbgm6, valuebvbgm7, valuebvbgm8 = valuebvbgm
+        valuebvbgm1 = str(valuebvbgm1)
+        valuebvbgm2 = str(valuebvbgm2)
+        valuebvbgm3 = str(valuebvbgm3)
+        valuebvbgm4 = str(valuebvbgm4)  
+        valuebvbgm5 = str(valuebvbgm5)
+        valuebvbgm6 = str(valuebvbgm6)
+        valuebvbgm7 = str(valuebvbgm7)
+        valuebvbgm8 = str(valuebvbgm8)        
+        valuebvbgm1 = valuebvbgm1.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm1 = float(valuebvbgm1)
+        valuebvbgm2 = valuebvbgm2.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm2 = float(valuebvbgm2)
+        valuebvbgm3 = valuebvbgm3.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm3 = float(valuebvbgm3)
+        valuebvbgm4 = valuebvbgm4.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm4 = float(valuebvbgm4)
+        valuebvbgm5 = valuebvbgm5.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm5 = float(valuebvbgm5)
+        valuebvbgm6 = valuebvbgm6.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm6 = float(valuebvbgm6)
+        valuebvbgm7 = valuebvbgm7.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm7 = float(valuebvbgm7)
+        valuebvbgm8 = valuebvbgm8.strip("(").strip(")").strip(",").strip("'")
+        valuebvbgm8 = float(valuebvbgm8)
+
+        mycursor.execute("SELECT `Bar Value C` FROM vertical_bar_multiple_gtable")
+        valuecvbgm = mycursor.fetchall()
+        valuecvbgm1, valuecvbgm2, valuecvbgm3, valuecvbgm4, valuecvbgm5, valuecvbgm6, valuecvbgm7, valuecvbgm8 = valuecvbgm
+        valuecvbgm1 = str(valuecvbgm1)
+        valuecvbgm2 = str(valuecvbgm2)
+        valuecvbgm3 = str(valuecvbgm3)
+        valuecvbgm4 = str(valuecvbgm4)  
+        valuecvbgm5 = str(valuecvbgm5)
+        valuecvbgm6 = str(valuecvbgm6)
+        valuecvbgm7 = str(valuecvbgm7)
+        valuecvbgm8 = str(valuecvbgm8)        
+        valuecvbgm1 = valuecvbgm1.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm1 = float(valuecvbgm1)
+        valuecvbgm2 = valuecvbgm2.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm2 = float(valuecvbgm2)
+        valuecvbgm3 = valuecvbgm3.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm3 = float(valuecvbgm3)
+        valuecvbgm4 = valuecvbgm4.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm4 = float(valuecvbgm4)
+        valuecvbgm5 = valuecvbgm5.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm5 = float(valuecvbgm5)
+        valuecvbgm6 = valuecvbgm6.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm6 = float(valuecvbgm6)
+        valuecvbgm7 = valuecvbgm7.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm7 = float(valuecvbgm7)
+        valuecvbgm8 = valuecvbgm8.strip("(").strip(")").strip(",").strip("'")
+        valuecvbgm8 = float(valuecvbgm8)
+
+        mycursor.execute("SELECT `Bar Value D` FROM vertical_bar_multiple_gtable")
+        valuedvbgm = mycursor.fetchall()
+        valuedvbgm1, valuedvbgm2, valuedvbgm3, valuedvbgm4, valuedvbgm5, valuedvbgm6, valuedvbgm7, valuedvbgm8 = valuedvbgm
+        valuedvbgm1 = str(valuedvbgm1)
+        valuedvbgm2 = str(valuedvbgm2)
+        valuedvbgm3 = str(valuedvbgm3)
+        valuedvbgm4 = str(valuedvbgm4)  
+        valuedvbgm5 = str(valuedvbgm5)
+        valuedvbgm6 = str(valuedvbgm6)
+        valuedvbgm7 = str(valuedvbgm7)
+        valuedvbgm8 = str(valuedvbgm8)        
+        valuedvbgm1 = valuedvbgm1.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm1 = float(valuedvbgm1)
+        valuedvbgm2 = valuedvbgm2.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm2 = float(valuedvbgm2)
+        valuedvbgm3 = valuedvbgm3.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm3 = float(valuedvbgm3)
+        valuedvbgm4 = valuedvbgm4.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm4 = float(valuedvbgm4)
+        valuedvbgm5 = valuedvbgm5.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm5 = float(valuedvbgm5)
+        valuedvbgm6 = valuedvbgm6.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm6 = float(valuedvbgm6)
+        valuedvbgm7 = valuedvbgm7.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm7 = float(valuedvbgm7)
+        valuedvbgm8 = valuedvbgm8.strip("(").strip(")").strip(",").strip("'")
+        valuedvbgm8 = float(valuedvbgm8)
+
+        mycursor.execute("SELECT `Min Value` FROM vertical_bar_multiple_gtable")
+        minvalue = mycursor.fetchone()
+        my_floatvbgm_minvalue = float(minvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM vertical_bar_multiple_gtable")
+        decvalue = mycursor.fetchone()
+        my_floatvbgm_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM vertical_bar_multiple_gtable")
+        my_stringvbgm_title = mycursor.fetchone()
+        my_stringvbgm_title = str(my_stringvbgm_title)
+        my_stringvbgm_title = my_stringvbgm_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM vertical_bar_multiple_gtable")
+        my_stringvbgm_subtitle = mycursor.fetchone()
+        my_stringvbgm_subtitle = str(my_stringvbgm_subtitle)
+        my_stringvbgm_subtitle = my_stringvbgm_subtitle.strip("(").strip(")").strip(",").strip("'")
+        
+        mycursor.execute("SELECT `Legend Text` FROM vertical_bar_multiple_gtable")
+        my_stringvbgm_legendtext = mycursor.fetchall()
+        my_stringvbgm_legendtext1 = str(my_stringvbgm_legendtext[0])
+        my_stringvbgm_legendtext2 = str(my_stringvbgm_legendtext[1])
+        my_stringvbgm_legendtext3 = str(my_stringvbgm_legendtext[2])
+        my_stringvbgm_legendtext4 = str(my_stringvbgm_legendtext[3])
+        my_stringvbgm_legendtext1 = my_stringvbgm_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_legendtext2 = my_stringvbgm_legendtext2.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_legendtext3 = my_stringvbgm_legendtext3.strip("(").strip(")").strip(",").strip("'")
+        my_stringvbgm_legendtext4 = my_stringvbgm_legendtext4.strip("(").strip(")").strip(",").strip("'")
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbgm = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_vbgm.type == 'MESH':
+                        mesh_name_vbgm = selected_obj_vbgm.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbgm.modifiers:
+                                modifier_name_vbgm = selected_obj_vbgm.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_71"] = my_floatvbgm_numberofbars
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_2"] = my_stringvbgm_bartext1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_42"] = my_stringvbgm_bartext2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_3"] = my_stringvbgm_bartext3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_45"] = my_stringvbgm_bartext4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_4"] = my_stringvbgm_bartext5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_47"] = my_stringvbgm_bartext6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_5"] = my_stringvbgm_bartext7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_49"] = my_stringvbgm_bartext8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_10"] = my_floatvbgm_minvalue
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_11"] = my_floatvbgm_maxvalue
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_12"] = my_floatvbgm_decvalue
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_14"] = valueavbgm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_41"] = valueavbgm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_15"] = valueavbgm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_44"] = valueavbgm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_16"] = valueavbgm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_48"] = valueavbgm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_17"] = valueavbgm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_50"] = valueavbgm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_57"] = valuebvbgm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_58"] = valuebvbgm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_59"] = valuebvbgm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_64"] = valuebvbgm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_60"] = valuebvbgm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_61"] = valuebvbgm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_62"] = valuebvbgm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_63"] = valuebvbgm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_0"] = valuecvbgm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_2"] = valuecvbgm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_4"] = valuecvbgm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_6"] = valuecvbgm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_8"] = valuecvbgm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_10"] = valuecvbgm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_12"] = valuecvbgm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_14"] = valuecvbgm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_1"] = valuedvbgm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_3"] = valuedvbgm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_5"] = valuedvbgm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_7"] = valuedvbgm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_9"] = valuedvbgm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_11"] = valuedvbgm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_13"] = valuedvbgm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_15"] = valuedvbgm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_7"] = my_stringvbgm_title
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_8"] = my_stringvbgm_subtitle
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_70"] = my_stringvbgm_legendtext1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_69"] = my_stringvbgm_legendtext2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_43"] = my_stringvbgm_legendtext3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_44"] = my_stringvbgm_legendtext4
+
+
+                                print(f"Set modifier input for object '{mesh_name_vbgm}' and modifier '{modifier_name_vbgm}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbgm}' has no modifiers.")
                 else:
                         print("Selected object is not a mesh.")
         else:
@@ -21826,7 +23161,160 @@ class MyoperatorVBCcsv(bpy.types.Operator):
         else:
                 print("No object selected.")
         bpy.context.object.data.update()
-        return {'FINISHED'}   
+        return {'FINISHED'}
+    
+class MyoperatorVBMcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorvbmcsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_full4vbm = bpy.path.abspath(mytool.my_pathvbm)
+        with open(filepath_full4vbm) as f:
+            readout = list(csv.reader(f))
+            nbvbm = int(readout[1][0])
+            nvbvbm = int(readout[1][12])
+            btvbm1 = str(readout[1][1])
+            btvbm2 = str(readout[2][1])
+            btvbm3 = str(readout[3][1])
+            btvbm4 = str(readout[4][1])
+            btvbm5 = str(readout[5][1])
+            btvbm6 = str(readout[6][1])
+            btvbm7 = str(readout[7][1])
+            btvbm8 = str(readout[8][1])
+
+            minvvbm1 = float(readout[1][6])
+            maxvvbm2 = float(readout[1][7])
+            decimalvbm1 = int(readout[1][8])
+
+            bvavbm1 = float(readout[1][2])
+            bvavbm2 = float(readout[2][2])
+            bvavbm3 = float(readout[3][2])
+            bvavbm4 = float(readout[4][2])
+            bvavbm5 = float(readout[5][2])
+            bvavbm6 = float(readout[6][2])
+            bvavbm7 = float(readout[7][2])
+            bvavbm8 = float(readout[8][2])
+
+            bvbvbm1 = float(readout[1][3])
+            bvbvbm2 = float(readout[2][3])
+            bvbvbm3 = float(readout[3][3])
+            bvbvbm4 = float(readout[4][3])
+            bvbvbm5 = float(readout[5][3])
+            bvbvbm6 = float(readout[6][3])
+            bvbvbm7 = float(readout[7][3])
+            bvbvbm8 = float(readout[8][3])
+
+            bvcvbm1 = float(readout[1][4])
+            bvcvbm2 = float(readout[2][4])
+            bvcvbm3 = float(readout[3][4])
+            bvcvbm4 = float(readout[4][4])
+            bvcvbm5 = float(readout[5][4])
+            bvcvbm6 = float(readout[6][4])
+            bvcvbm7 = float(readout[7][4])
+            bvcvbm8 = float(readout[8][4])
+
+            bvdvbm1 = float(readout[1][5])
+            bvdvbm2 = float(readout[2][5])
+            bvdvbm3 = float(readout[3][5])
+            bvdvbm4 = float(readout[4][5])
+            bvdvbm5 = float(readout[5][5])
+            bvdvbm6 = float(readout[6][5])
+            bvdvbm7 = float(readout[7][5])
+            bvdvbm8 = float(readout[8][5])
+
+
+            titlevbm1 = str(readout[1][9])
+            subtitlevbm1 = str(readout[1][10])
+
+            legendvbm1 = str(readout[1][11])
+            legendvbm2 = str(readout[2][11])
+            legendvbm3 = str(readout[3][11])
+            legendvbm4 = str(readout[4][11])
+
+
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_vbgm = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_vbgm.type == 'MESH':
+                        mesh_name_vbgm = selected_obj_vbgm.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_vbgm.modifiers:
+                                modifier_name_vbgm = selected_obj_vbgm.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_71"] = nbvbm
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_36"] = nvbvbm
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_2"] = btvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_42"] = btvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_3"] = btvbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_45"] = btvbm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_4"] = btvbm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_47"] = btvbm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_5"] = btvbm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_49"] = btvbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_10"] = minvvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_11"] = maxvvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_12"] = decimalvbm1
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_14"] = bvavbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_41"] = bvavbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_15"] = bvavbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_44"] = bvavbm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_16"] = bvavbm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_48"] = bvavbm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_17"] = bvavbm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_50"] = bvavbm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_57"] = bvbvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_58"] = bvbvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_59"] = bvbvbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_64"] = bvbvbm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_60"] = bvbvbm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_61"] = bvbvbm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_62"] = bvbvbm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_63"] = bvbvbm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_0"] = bvcvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_2"] = bvcvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_4"] = bvcvbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_6"] = bvcvbm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_8"] = bvcvbm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_10"] = bvcvbm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_12"] = bvcvbm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_14"] = bvcvbm8
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_1"] = bvdvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_3"] = bvdvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_5"] = bvdvbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_7"] = bvdvbm4
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_9"] = bvdvbm5
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_11"] = bvdvbm6
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_13"] = bvdvbm7
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_15"] = bvdvbm8
+
+
+
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_7"] = titlevbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_8"] = subtitlevbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_70"] = legendvbm1
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_69"] = legendvbm2
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_43"] = legendvbm3
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_44"] = legendvbm4
+
+
+                                print(f"Set modifier input for object '{mesh_name_vbgm}' and modifier '{modifier_name_vbgm}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_vbgm}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}     
         
 class ADDONNAME_OT_my_opc(bpy.types.Operator):
     bl_label = "Add Objecggggggt"
@@ -25814,6 +27302,7 @@ class ADDONNAME_OT_my_ophbo(bpy.types.Operator):
                     fcurve = action.fcurves.find(data_path=data_path, index=index)
                     if fcurve:
                         fcurve.keyframe_points[0].co.x = 24
+                        fcurve.keyframe_points[0].handle_right[0] = 24
                         fcurve.keyframe_points[0].handle_right[1] = 0.573
                         fcurve.keyframe_points[1].co.x = 120
                         fcurve.keyframe_points[1].handle_left[0] = 66.708
@@ -25844,6 +27333,7 @@ class ADDONNAME_OT_my_ophbo(bpy.types.Operator):
                     fcurve = action.fcurves.find(data_path=data_path, index=index)
                     if fcurve:
                         fcurve.keyframe_points[0].co.x = 30
+                        fcurve.keyframe_points[0].handle_right[0] = 30
                         fcurve.keyframe_points[0].handle_right[1] = 0.757
                         fcurve.keyframe_points[1].co.x = 150
                         fcurve.keyframe_points[1].handle_left[0] = 90
@@ -25883,6 +27373,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 24
+                    fcurve.keyframe_points[0].handle_right[0] = 24
                     fcurve.keyframe_points[0].handle_right[1] = 0.721
                     fcurve.keyframe_points[1].co.x = 48
                     fcurve.keyframe_points[1].handle_left[0] = 37.005
@@ -25905,6 +27396,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 60
+                    fcurve.keyframe_points[0].handle_right[0] = 60
                     fcurve.keyframe_points[0].handle_right[1] = 0.812
                     fcurve.keyframe_points[1].co.x = 84
                     fcurve.keyframe_points[1].handle_left[0] = 76
@@ -25927,6 +27419,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 96
+                    fcurve.keyframe_points[0].handle_right[0] = 96
                     fcurve.keyframe_points[0].handle_right[1] = 0.766
                     fcurve.keyframe_points[1].co.x = 120
                     fcurve.keyframe_points[1].handle_left[0] = 109.904
@@ -25958,6 +27451,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 30
+                    fcurve.keyframe_points[0].handle_right[0] = 30
                     fcurve.keyframe_points[0].handle_right[1] = 0.721
                     fcurve.keyframe_points[1].co.x = 60
                     fcurve.keyframe_points[1].handle_left[0] = 49.005
@@ -25980,6 +27474,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 75
+                    fcurve.keyframe_points[0].handle_right[0] = 75
                     fcurve.keyframe_points[0].handle_right[1] = 0.812
                     fcurve.keyframe_points[1].co.x = 105
                     fcurve.keyframe_points[1].handle_left[0] = 97
@@ -26002,6 +27497,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 120
+                    fcurve.keyframe_points[0].handle_right[0] = 120
                     fcurve.keyframe_points[0].handle_right[1] = 0.766
                     fcurve.keyframe_points[1].co.x = 150
                     fcurve.keyframe_points[1].handle_left[0] = 139
@@ -26041,9 +27537,10 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 24
+                    fcurve.keyframe_points[0].handle_right[0] = 24
                     fcurve.keyframe_points[0].handle_right[1] = 0.721
                     fcurve.keyframe_points[1].co.x = 48
-                    fcurve.keyframe_points[1].handle_left[0] = 37.005
+                    fcurve.keyframe_points[1].handle_left[0] = 40
             
                     print("changed")
                 else:
@@ -26063,6 +27560,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 60
+                    fcurve.keyframe_points[0].handle_right[0] = 60
                     fcurve.keyframe_points[0].handle_right[1] = 0.812
                     fcurve.keyframe_points[1].co.x = 84
                     fcurve.keyframe_points[1].handle_left[0] = 76
@@ -26085,6 +27583,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 96
+                    fcurve.keyframe_points[0].handle_right[0] = 96
                     fcurve.keyframe_points[0].handle_right[1] = 0.766
                     fcurve.keyframe_points[1].co.x = 120
                     fcurve.keyframe_points[1].handle_left[0] = 109.904
@@ -26116,6 +27615,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 30
+                    fcurve.keyframe_points[0].handle_right[0] = 30
                     fcurve.keyframe_points[0].handle_right[1] = 0.721
                     fcurve.keyframe_points[1].co.x = 60
                     fcurve.keyframe_points[1].handle_left[0] = 49.005
@@ -26138,6 +27638,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 75
+                    fcurve.keyframe_points[0].handle_right[0] = 75
                     fcurve.keyframe_points[0].handle_right[1] = 0.812
                     fcurve.keyframe_points[1].co.x = 105
                     fcurve.keyframe_points[1].handle_left[0] = 97
@@ -26160,6 +27661,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
                 if fcurve:
 
                     fcurve.keyframe_points[0].co.x = 120
+                    fcurve.keyframe_points[0].handle_right[0] = 120 
                     fcurve.keyframe_points[0].handle_right[1] = 0.766
                     fcurve.keyframe_points[1].co.x = 150
                     fcurve.keyframe_points[1].handle_left[0] = 139
@@ -31373,6 +32875,1450 @@ class ADDONNAME_OT_my_opCOMPARISONBBARVH(bpy.types.Operator):
 
         return {'FINISHED'}
 
+class ADDONNAME_OT_my_opMULTIPLEABARVA(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormultipleabarva"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_28"]'
+        index = 0
+        stringMULTIPLEABARVA = mytool.my_floatMULTIPLEABARVA
+        frMULTIPLEABARVA = bpy.context.scene.render.fps
+        jeffMULTIPLEABARV = stringMULTIPLEABARVA * frMULTIPLEABARVA
+        onemoreMULTIPLEABARV = (mytool.my_floatMULTIPLEABARVLA * frMULTIPLEABARVA) + jeffMULTIPLEABARV
+        bobMULTIPLEABARV = onemoreMULTIPLEABARV       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARV = int(bobMULTIPLEABARV)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARV
+                kps.handle_left[0] = jeffMULTIPLEABARV - 30
+                kps.handle_right[0] = jeffMULTIPLEABARV
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARV
+                kpz.handle_left[0] = bobMULTIPLEABARV - 30
+                kpz.handle_right[0] = bobMULTIPLEABARV + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARV + frMULTIPLEABARVA
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEABARVB(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvb"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_29"]'
+        index = 0
+        stringMULTIPLEABARV = mytool.my_floatMULTIPLEABARVB
+        frMULTIPLEABARV = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVbl = stringMULTIPLEABARV*frMULTIPLEABARV
+        onemoreMULTIPLEABARVbl =  (mytool.my_floatMULTIPLEABARVLB*frMULTIPLEABARV) + jeffMULTIPLEABARVbl
+        bobMULTIPLEABARVbl = onemoreMULTIPLEABARVbl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVbl = int(bobMULTIPLEABARVbl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVbl
+                kps.handle_left[0] = jeffMULTIPLEABARVbl - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVbl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVbl
+                kpz.handle_left[0] = bobMULTIPLEABARVbl - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVbl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVbl + frMULTIPLEABARV
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEABARVC(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvc"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_30"]'
+        index = 0
+        stringMULTIPLEABARVC = mytool.my_floatMULTIPLEABARVC
+        frMULTIPLEABARVC = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVcl = stringMULTIPLEABARVC * frMULTIPLEABARVC
+        onemoreMULTIPLEABARVcl = (mytool.my_floatMULTIPLEABARVLC * frMULTIPLEABARVC) + jeffMULTIPLEABARVcl
+        bobMULTIPLEABARVcl = onemoreMULTIPLEABARVcl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVcl = int(bobMULTIPLEABARVcl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVcl
+                kps.handle_left[0] = jeffMULTIPLEABARVcl - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVcl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVcl
+                kpz.handle_left[0] = bobMULTIPLEABARVcl - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVcl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVcl + frMULTIPLEABARVC
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEABARVD(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvd"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_31"]'
+        index = 0
+        stringMULTIPLEABARVD = mytool.my_floatMULTIPLEABARVD
+        frMULTIPLEABARVD = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVdl = stringMULTIPLEABARVD * frMULTIPLEABARVD
+        onemoreMULTIPLEABARVdl = (mytool.my_floatMULTIPLEABARVLD * frMULTIPLEABARVD) + jeffMULTIPLEABARVdl
+        bobMULTIPLEABARVdl = onemoreMULTIPLEABARVdl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVdl = int(bobMULTIPLEABARVdl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVdl
+                kps.handle_left[0] = jeffMULTIPLEABARVdl - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVdl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVdl
+                kpz.handle_left[0] = bobMULTIPLEABARVdl - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVdl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVdl + frMULTIPLEABARVD
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEABARVE(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarve"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_53"]'
+        index = 0
+        stringMULTIPLEABARVE = mytool.my_floatMULTIPLEABARVE
+        frMULTIPLEABARVE = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVel = stringMULTIPLEABARVE*frMULTIPLEABARVE
+        onemoreMULTIPLEABARVel =  (mytool.my_floatMULTIPLEABARVLE*frMULTIPLEABARVE) + jeffMULTIPLEABARVel
+        bobMULTIPLEABARVel = onemoreMULTIPLEABARVel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVel = int(bobMULTIPLEABARVel)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVel
+                kps.handle_left[0] = jeffMULTIPLEABARVel - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVel
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVel
+                kpz.handle_left[0] = bobMULTIPLEABARVel - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVel + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVel + frMULTIPLEABARVE
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEABARVF(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_54"]'
+        index = 0
+        stringMULTIPLEAFARVF = mytool.my_floatMULTIPLEABARVF
+        frMULTIPLEAFARVF = bpy.context.scene.render.fps
+        jeffMULTIPLEAFARVfl = stringMULTIPLEAFARVF * frMULTIPLEAFARVF
+        onemoreMULTIPLEAFARVfl = (mytool.my_floatMULTIPLEABARVLF * frMULTIPLEAFARVF) + jeffMULTIPLEAFARVfl
+        bobMULTIPLEAFARVfl = onemoreMULTIPLEAFARVfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEAFARVfl = int(bobMULTIPLEAFARVfl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEAFARVfl
+                kps.handle_left[0] = jeffMULTIPLEAFARVfl - 30
+                kps.handle_right[0] = jeffMULTIPLEAFARVfl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEAFARVfl
+                kpz.handle_left[0] = bobMULTIPLEAFARVfl - 30
+                kpz.handle_right[0] = bobMULTIPLEAFARVfl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEAFARVfl + frMULTIPLEAFARVF
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEABARVG(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_55"]'
+        index = 0
+        stringMULTIPLEABARVG = mytool.my_floatMULTIPLEABARVG
+        frMULTIPLEABARVG = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVgl = stringMULTIPLEABARVG * frMULTIPLEABARVG
+        onemoreMULTIPLEABARVgl = (mytool.my_floatMULTIPLEABARVLG * frMULTIPLEABARVG) + jeffMULTIPLEABARVgl
+        bobMULTIPLEABARVgl = onemoreMULTIPLEABARVgl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVgl = int(bobMULTIPLEABARVgl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVgl
+                kps.handle_left[0] = jeffMULTIPLEABARVgl - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVgl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVgl
+                kpz.handle_left[0] = bobMULTIPLEABARVgl - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVgl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVgl + frMULTIPLEABARVG
+
+        return {'FINISHED'}
+
+
+class ADDONNAME_OT_my_opMULTIPLEABARVH(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipleabarvh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_56"]'
+        index = 0
+        stringMULTIPLEABARVH = mytool.my_floatMULTIPLEABARVH
+        frMULTIPLEABARVH = bpy.context.scene.render.fps
+        jeffMULTIPLEABARVhl = stringMULTIPLEABARVH * frMULTIPLEABARVH
+        onemoreMULTIPLEABARVhl = (mytool.my_floatMULTIPLEABARVLH * frMULTIPLEABARVH) + jeffMULTIPLEABARVhl
+        bobMULTIPLEABARVhl = onemoreMULTIPLEABARVhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEABARVhl = int(bobMULTIPLEABARVhl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEABARVhl
+                kps.handle_left[0] = jeffMULTIPLEABARVhl - 30
+                kps.handle_right[0] = jeffMULTIPLEABARVhl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEABARVhl
+                kpz.handle_left[0] = bobMULTIPLEABARVhl - 30
+                kpz.handle_right[0] = bobMULTIPLEABARVhl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEABARVhl + frMULTIPLEABARVH
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEBBARVA(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormultiplebbarva"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_82"]'
+        index = 0
+        stringMULTIPLEBBARVA = mytool.my_floatMULTIPLEBBARVA
+        frMULTIPLEBBARVA = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARV = stringMULTIPLEBBARVA * frMULTIPLEBBARVA
+        onemoreMULTIPLEBBARV = (mytool.my_floatMULTIPLEBBARVLA * frMULTIPLEBBARVA) + jeffMULTIPLEBBARV
+        bobMULTIPLEBBARV = onemoreMULTIPLEBBARV       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARV = int(bobMULTIPLEBBARV)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARV
+                kps.handle_left[0] = jeffMULTIPLEBBARV - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARV
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARV
+                kpz.handle_left[0] = bobMULTIPLEBBARV - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARV + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARV + frMULTIPLEBBARVA
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEBBARVB(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvb"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_83"]'
+        index = 0
+        stringMULTIPLEBBARV = mytool.my_floatMULTIPLEBBARVB
+        frMULTIPLEBBARV = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVbl = stringMULTIPLEBBARV * frMULTIPLEBBARV
+        onemoreMULTIPLEBBARVbl = (mytool.my_floatMULTIPLEBBARVLB * frMULTIPLEBBARV) + jeffMULTIPLEBBARVbl
+        bobMULTIPLEBBARVbl = onemoreMULTIPLEBBARVbl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVbl = int(bobMULTIPLEBBARVbl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVbl
+                kps.handle_left[0] = jeffMULTIPLEBBARVbl - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVbl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVbl
+                kpz.handle_left[0] = bobMULTIPLEBBARVbl - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVbl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVbl + frMULTIPLEBBARV
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEBBARVC(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvc"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_84"]'
+        index = 0
+        stringMULTIPLEBBARVC = mytool.my_floatMULTIPLEBBARVC
+        frMULTIPLEBBARVC = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVcl = stringMULTIPLEBBARVC * frMULTIPLEBBARVC
+        onemoreMULTIPLEBBARVcl = (mytool.my_floatMULTIPLEBBARVLC * frMULTIPLEBBARVC) + jeffMULTIPLEBBARVcl
+        bobMULTIPLEBBARVcl = onemoreMULTIPLEBBARVcl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVcl = int(bobMULTIPLEBBARVcl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVcl
+                kps.handle_left[0] = jeffMULTIPLEBBARVcl - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVcl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVcl
+                kpz.handle_left[0] = bobMULTIPLEBBARVcl - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVcl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVcl + frMULTIPLEBBARVC
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEBBARVD(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvd"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_85"]'
+        index = 0
+        stringMULTIPLEBBARVD = mytool.my_floatMULTIPLEBBARVD
+        frMULTIPLEBBARVD = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVdl = stringMULTIPLEBBARVD * frMULTIPLEBBARVD
+        onemoreMULTIPLEBBARVdl = (mytool.my_floatMULTIPLEBBARVLD * frMULTIPLEBBARVD) + jeffMULTIPLEBBARVdl
+        bobMULTIPLEBBARVdl = onemoreMULTIPLEBBARVdl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVdl = int(bobMULTIPLEBBARVdl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVdl
+                kps.handle_left[0] = jeffMULTIPLEBBARVdl - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVdl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVdl
+                kpz.handle_left[0] = bobMULTIPLEBBARVdl - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVdl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVdl + frMULTIPLEBBARVD
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEBBARVE(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarve"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_86"]'
+        index = 0
+        stringMULTIPLEBBARVE = mytool.my_floatMULTIPLEBBARVE
+        frMULTIPLEBBARVE = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVel = stringMULTIPLEBBARVE * frMULTIPLEBBARVE
+        onemoreMULTIPLEBBARVel = (mytool.my_floatMULTIPLEBBARVLE * frMULTIPLEBBARVE) + jeffMULTIPLEBBARVel
+        bobMULTIPLEBBARVel = onemoreMULTIPLEBBARVel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVel = int(bobMULTIPLEBBARVel)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVel
+                kps.handle_left[0] = jeffMULTIPLEBBARVel - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVel
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVel
+                kpz.handle_left[0] = bobMULTIPLEBBARVel - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVel + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVel + frMULTIPLEBBARVE
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEBBARVF(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_87"]'
+        index = 0
+        stringMULTIPLEBFARVF = mytool.my_floatMULTIPLEBBARVF
+        frMULTIPLEBFARVF = bpy.context.scene.render.fps
+        jeffMULTIPLEBFARVfl = stringMULTIPLEBFARVF * frMULTIPLEBFARVF
+        onemoreMULTIPLEBFARVfl = (mytool.my_floatMULTIPLEBBARVLF * frMULTIPLEBFARVF) + jeffMULTIPLEBFARVfl
+        bobMULTIPLEBFARVfl = onemoreMULTIPLEBFARVfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBFARVfl = int(bobMULTIPLEBFARVfl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBFARVfl
+                kps.handle_left[0] = jeffMULTIPLEBFARVfl - 30
+                kps.handle_right[0] = jeffMULTIPLEBFARVfl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBFARVfl
+                kpz.handle_left[0] = bobMULTIPLEBFARVfl - 30
+                kpz.handle_right[0] = bobMULTIPLEBFARVfl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBFARVfl + frMULTIPLEBFARVF
+
+        return {'FINISHED'}
+
+    
+class ADDONNAME_OT_my_opMULTIPLEBBARVG(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_88"]'
+        index = 0
+        stringMULTIPLEBBARVG = mytool.my_floatMULTIPLEBBARVG
+        frMULTIPLEBBARVG = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVgl = stringMULTIPLEBBARVG * frMULTIPLEBBARVG
+        onemoreMULTIPLEBBARVgl = (mytool.my_floatMULTIPLEBBARVLG * frMULTIPLEBBARVG) + jeffMULTIPLEBBARVgl
+        bobMULTIPLEBBARVgl = onemoreMULTIPLEBBARVgl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVgl = int(bobMULTIPLEBBARVgl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVgl
+                kps.handle_left[0] = jeffMULTIPLEBBARVgl - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVgl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVgl
+                kpz.handle_left[0] = bobMULTIPLEBBARVgl - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVgl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVgl + frMULTIPLEBBARVG
+
+        return {'FINISHED'}
+
+
+class ADDONNAME_OT_my_opMULTIPLEBBARVH(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplebbarvh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_89"]'
+        index = 0
+        stringMULTIPLEBBARVH = mytool.my_floatMULTIPLEBBARVH
+        frMULTIPLEBBARVH = bpy.context.scene.render.fps
+        jeffMULTIPLEBBARVhl = stringMULTIPLEBBARVH * frMULTIPLEBBARVH
+        onemoreMULTIPLEBBARVhl = (mytool.my_floatMULTIPLEBBARVLH * frMULTIPLEBBARVH) + jeffMULTIPLEBBARVhl
+        bobMULTIPLEBBARVhl = onemoreMULTIPLEBBARVhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEBBARVhl = int(bobMULTIPLEBBARVhl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEBBARVhl
+                kps.handle_left[0] = jeffMULTIPLEBBARVhl - 30
+                kps.handle_right[0] = jeffMULTIPLEBBARVhl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEBBARVhl
+                kpz.handle_left[0] = bobMULTIPLEBBARVhl - 30
+                kpz.handle_right[0] = bobMULTIPLEBBARVhl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEBBARVhl + frMULTIPLEBBARVH
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLECBARVA(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormultiplecbarva"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_20"]'
+        index = 0
+        stringMULTIPLECBARVA = mytool.my_floatMULTIPLECBARVA
+        frMULTIPLECBARVA = bpy.context.scene.render.fps
+        jeffMULTIPLECBARV = stringMULTIPLECBARVA * frMULTIPLECBARVA
+        onemoreMULTIPLECBARV = (mytool.my_floatMULTIPLECBARVLA * frMULTIPLECBARVA) + jeffMULTIPLECBARV
+        bobMULTIPLECBARV = onemoreMULTIPLECBARV       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARV = int(bobMULTIPLECBARV)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARV
+                kps.handle_left[0] = jeffMULTIPLECBARV - 30
+                kps.handle_right[0] = jeffMULTIPLECBARV
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARV
+                kpz.handle_left[0] = bobMULTIPLECBARV - 30
+                kpz.handle_right[0] = bobMULTIPLECBARV + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARV + frMULTIPLECBARVA
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLECBARVB(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvb"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_21"]'
+        index = 0
+        stringMULTIPLECBARV = mytool.my_floatMULTIPLECBARVB
+        frMULTIPLECBARV = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVbl = stringMULTIPLECBARV*frMULTIPLECBARV
+        onemoreMULTIPLECBARVbl =  (mytool.my_floatMULTIPLECBARVLB*frMULTIPLECBARV) + jeffMULTIPLECBARVbl
+        bobMULTIPLECBARVbl = onemoreMULTIPLECBARVbl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVbl = int(bobMULTIPLECBARVbl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVbl
+                kps.handle_left[0] = jeffMULTIPLECBARVbl - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVbl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVbl
+                kpz.handle_left[0] = bobMULTIPLECBARVbl - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVbl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVbl + frMULTIPLECBARV
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLECBARVC(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvc"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_22"]'
+        index = 0
+        stringMULTIPLECBARVC = mytool.my_floatMULTIPLECBARVC
+        frMULTIPLECBARVC = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVcl = stringMULTIPLECBARVC * frMULTIPLECBARVC
+        onemoreMULTIPLECBARVcl = (mytool.my_floatMULTIPLECBARVLC * frMULTIPLECBARVC) + jeffMULTIPLECBARVcl
+        bobMULTIPLECBARVcl = onemoreMULTIPLECBARVcl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVcl = int(bobMULTIPLECBARVcl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVcl
+                kps.handle_left[0] = jeffMULTIPLECBARVcl - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVcl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVcl
+                kpz.handle_left[0] = bobMULTIPLECBARVcl - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVcl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVcl + frMULTIPLECBARVC
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLECBARVD(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvd"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_23"]'
+        index = 0
+        stringMULTIPLECBARVD = mytool.my_floatMULTIPLECBARVD
+        frMULTIPLECBARVD = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVdl = stringMULTIPLECBARVD * frMULTIPLECBARVD
+        onemoreMULTIPLECBARVdl = (mytool.my_floatMULTIPLECBARVLD * frMULTIPLECBARVD) + jeffMULTIPLECBARVdl
+        bobMULTIPLECBARVdl = onemoreMULTIPLECBARVdl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVdl = int(bobMULTIPLECBARVdl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVdl
+                kps.handle_left[0] = jeffMULTIPLECBARVdl - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVdl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVdl
+                kpz.handle_left[0] = bobMULTIPLECBARVdl - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVdl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVdl + frMULTIPLECBARVD
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLECBARVE(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarve"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_24"]'
+        index = 0
+        stringMULTIPLECBARVE = mytool.my_floatMULTIPLECBARVE
+        frMULTIPLECBARVE = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVel = stringMULTIPLECBARVE*frMULTIPLECBARVE
+        onemoreMULTIPLECBARVel =  (mytool.my_floatMULTIPLECBARVLE*frMULTIPLECBARVE) + jeffMULTIPLECBARVel
+        bobMULTIPLECBARVel = onemoreMULTIPLECBARVel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVel = int(bobMULTIPLECBARVel)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVel
+                kps.handle_left[0] = jeffMULTIPLECBARVel - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVel
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVel
+                kpz.handle_left[0] = bobMULTIPLECBARVel - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVel + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVel + frMULTIPLECBARVE
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLECBARVF(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_25"]'
+        index = 0
+        stringMULTIPLECFARVF = mytool.my_floatMULTIPLECBARVF
+        frMULTIPLECFARVF = bpy.context.scene.render.fps
+        jeffMULTIPLECFARVfl = stringMULTIPLECFARVF * frMULTIPLECFARVF
+        onemoreMULTIPLECFARVfl = (mytool.my_floatMULTIPLECBARVLF * frMULTIPLECFARVF) + jeffMULTIPLECFARVfl
+        bobMULTIPLECFARVfl = onemoreMULTIPLECFARVfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECFARVfl = int(bobMULTIPLECFARVfl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECFARVfl
+                kps.handle_left[0] = jeffMULTIPLECFARVfl - 30
+                kps.handle_right[0] = jeffMULTIPLECFARVfl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECFARVfl
+                kpz.handle_left[0] = bobMULTIPLECFARVfl - 30
+                kpz.handle_right[0] = bobMULTIPLECFARVfl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECFARVfl + frMULTIPLECFARVF
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLECBARVG(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_26"]'
+        index = 0
+        stringMULTIPLECBARVG = mytool.my_floatMULTIPLECBARVG
+        frMULTIPLECBARVG = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVgl = stringMULTIPLECBARVG * frMULTIPLECBARVG
+        onemoreMULTIPLECBARVgl = (mytool.my_floatMULTIPLECBARVLG * frMULTIPLECBARVG) + jeffMULTIPLECBARVgl
+        bobMULTIPLECBARVgl = onemoreMULTIPLECBARVgl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVgl = int(bobMULTIPLECBARVgl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVgl
+                kps.handle_left[0] = jeffMULTIPLECBARVgl - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVgl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVgl
+                kpz.handle_left[0] = bobMULTIPLECBARVgl - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVgl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVgl + frMULTIPLECBARVG
+
+        return {'FINISHED'}
+
+
+class ADDONNAME_OT_my_opMULTIPLECBARVH(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultiplecbarvh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_27"]'
+        index = 0
+        stringMULTIPLECBARVH = mytool.my_floatMULTIPLECBARVH
+        frMULTIPLECBARVH = bpy.context.scene.render.fps
+        jeffMULTIPLECBARVhl = stringMULTIPLECBARVH * frMULTIPLECBARVH
+        onemoreMULTIPLECBARVhl = (mytool.my_floatMULTIPLECBARVLH * frMULTIPLECBARVH) + jeffMULTIPLECBARVhl
+        bobMULTIPLECBARVhl = onemoreMULTIPLECBARVhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLECBARVhl = int(bobMULTIPLECBARVhl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLECBARVhl
+                kps.handle_left[0] = jeffMULTIPLECBARVhl - 30
+                kps.handle_right[0] = jeffMULTIPLECBARVhl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLECBARVhl
+                kpz.handle_left[0] = bobMULTIPLECBARVhl - 30
+                kpz.handle_right[0] = bobMULTIPLECBARVhl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLECBARVhl + frMULTIPLECBARVH
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEDBARVA(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatormultipledbarva"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_28"]'
+        index = 0
+        stringMULTIPLEDBARVA = mytool.my_floatMULTIPLEDBARVA
+        frMULTIPLEDBARVA = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARV = stringMULTIPLEDBARVA * frMULTIPLEDBARVA
+        onemoreMULTIPLEDBARV = (mytool.my_floatMULTIPLEDBARVLA * frMULTIPLEDBARVA) + jeffMULTIPLEDBARV
+        bobMULTIPLEDBARV = onemoreMULTIPLEDBARV       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARV = int(bobMULTIPLEDBARV)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARV
+                kps.handle_left[0] = jeffMULTIPLEDBARV - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARV
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARV
+                kpz.handle_left[0] = bobMULTIPLEDBARV - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARV + 30
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARV + frMULTIPLEDBARVA
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEDBARVB(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvb"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_29"]'
+        index = 0
+        stringMULTIPLEDBARV = mytool.my_floatMULTIPLEDBARVB
+        frMULTIPLEDBARV = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVbl = stringMULTIPLEDBARV*frMULTIPLEDBARV
+        onemoreMULTIPLEDBARVbl =  (mytool.my_floatMULTIPLEDBARVLB*frMULTIPLEDBARV) + jeffMULTIPLEDBARVbl
+        bobMULTIPLEDBARVbl = onemoreMULTIPLEDBARVbl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVbl = int(bobMULTIPLEDBARVbl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVbl
+                kps.handle_left[0] = jeffMULTIPLEDBARVbl - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVbl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVbl
+                kpz.handle_left[0] = bobMULTIPLEDBARVbl - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVbl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVbl + frMULTIPLEDBARV
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEDBARVC(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvc"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_30"]'
+        index = 0
+        stringMULTIPLEDBARVC = mytool.my_floatMULTIPLEDBARVC
+        frMULTIPLEDBARVC = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVcl = stringMULTIPLEDBARVC * frMULTIPLEDBARVC
+        onemoreMULTIPLEDBARVcl = (mytool.my_floatMULTIPLEDBARVLC * frMULTIPLEDBARVC) + jeffMULTIPLEDBARVcl
+        bobMULTIPLEDBARVcl = onemoreMULTIPLEDBARVcl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVcl = int(bobMULTIPLEDBARVcl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVcl
+                kps.handle_left[0] = jeffMULTIPLEDBARVcl - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVcl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVcl
+                kpz.handle_left[0] = bobMULTIPLEDBARVcl - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVcl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVcl + frMULTIPLEDBARVC
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEDBARVD(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvd"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_31"]'
+        index = 0
+        stringMULTIPLEDBARVD = mytool.my_floatMULTIPLEDBARVD
+        frMULTIPLEDBARVD = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVdl = stringMULTIPLEDBARVD * frMULTIPLEDBARVD
+        onemoreMULTIPLEDBARVdl = (mytool.my_floatMULTIPLEDBARVLD * frMULTIPLEDBARVD) + jeffMULTIPLEDBARVdl
+        bobMULTIPLEDBARVdl = onemoreMULTIPLEDBARVdl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVdl = int(bobMULTIPLEDBARVdl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVdl
+                kps.handle_left[0] = jeffMULTIPLEDBARVdl - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVdl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVdl
+                kpz.handle_left[0] = bobMULTIPLEDBARVdl - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVdl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVdl + frMULTIPLEDBARVD
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEDBARVE(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarve"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_32"]'
+        index = 0
+        stringMULTIPLEDBARVE = mytool.my_floatMULTIPLEDBARVE
+        frMULTIPLEDBARVE = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVel = stringMULTIPLEDBARVE*frMULTIPLEDBARVE
+        onemoreMULTIPLEDBARVel =  (mytool.my_floatMULTIPLEDBARVLE*frMULTIPLEDBARVE) + jeffMULTIPLEDBARVel
+        bobMULTIPLEDBARVel = onemoreMULTIPLEDBARVel       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVel = int(bobMULTIPLEDBARVel)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVel
+                kps.handle_left[0] = jeffMULTIPLEDBARVel - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVel
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVel
+                kpz.handle_left[0] = bobMULTIPLEDBARVel - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVel + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVel + frMULTIPLEDBARVE
+
+        return {'FINISHED'}
+
+class ADDONNAME_OT_my_opMULTIPLEDBARVF(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvf"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_33"]'
+        index = 0
+        stringMULTIPLEDFARVF = mytool.my_floatMULTIPLEDBARVF
+        frMULTIPLEDFARVF = bpy.context.scene.render.fps
+        jeffMULTIPLEDFARVfl = stringMULTIPLEDFARVF * frMULTIPLEDFARVF
+        onemoreMULTIPLEDFARVfl = (mytool.my_floatMULTIPLEDBARVLF * frMULTIPLEDFARVF) + jeffMULTIPLEDFARVfl
+        bobMULTIPLEDFARVfl = onemoreMULTIPLEDFARVfl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDFARVfl = int(bobMULTIPLEDFARVfl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDFARVfl
+                kps.handle_left[0] = jeffMULTIPLEDFARVfl - 30
+                kps.handle_right[0] = jeffMULTIPLEDFARVfl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDFARVfl
+                kpz.handle_left[0] = bobMULTIPLEDFARVfl - 30
+                kpz.handle_right[0] = bobMULTIPLEDFARVfl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDFARVfl + frMULTIPLEDFARVF
+
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opMULTIPLEDBARVG(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvg"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_34"]'
+        index = 0
+        stringMULTIPLEDBARVG = mytool.my_floatMULTIPLEDBARVG
+        frMULTIPLEDBARVG = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVgl = stringMULTIPLEDBARVG * frMULTIPLEDBARVG
+        onemoreMULTIPLEDBARVgl = (mytool.my_floatMULTIPLEDBARVLG * frMULTIPLEDBARVG) + jeffMULTIPLEDBARVgl
+        bobMULTIPLEDBARVgl = onemoreMULTIPLEDBARVgl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVgl = int(bobMULTIPLEDBARVgl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVgl
+                kps.handle_left[0] = jeffMULTIPLEDBARVgl - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVgl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVgl
+                kpz.handle_left[0] = bobMULTIPLEDBARVgl - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVgl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVgl + frMULTIPLEDBARVG
+
+        return {'FINISHED'}
+
+
+class ADDONNAME_OT_my_opMULTIPLEDBARVH(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatormultipledbarvh"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Socket_35"]'
+        index = 0
+        stringMULTIPLEDBARVH = mytool.my_floatMULTIPLEDBARVH
+        frMULTIPLEDBARVH = bpy.context.scene.render.fps
+        jeffMULTIPLEDBARVhl = stringMULTIPLEDBARVH * frMULTIPLEDBARVH
+        onemoreMULTIPLEDBARVhl = (mytool.my_floatMULTIPLEDBARVLH * frMULTIPLEDBARVH) + jeffMULTIPLEDBARVhl
+        bobMULTIPLEDBARVhl = onemoreMULTIPLEDBARVhl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobMULTIPLEDBARVhl = int(bobMULTIPLEDBARVhl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffMULTIPLEDBARVhl
+                kps.handle_left[0] = jeffMULTIPLEDBARVhl - 30
+                kps.handle_right[0] = jeffMULTIPLEDBARVhl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobMULTIPLEDBARVhl
+                kpz.handle_left[0] = bobMULTIPLEDBARVhl - 30
+                kpz.handle_right[0] = bobMULTIPLEDBARVhl + 30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobMULTIPLEDBARVhl + frMULTIPLEDBARVH
+
+        return {'FINISHED'}
 
 class ADDONNAME_VBC(bpy.types.Operator):
     bl_label = "Add Ob33jectVBC"
@@ -31418,6 +34364,74 @@ class ADDONNAME_VBC(bpy.types.Operator):
             
             action_name = 'Plane.004Action.004'
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 30
+                        fcurve.keyframe_points[0].handle_right[1] = 0.757
+                        fcurve.keyframe_points[1].co.x = 150
+                        fcurve.keyframe_points[1].handle_left[0] = 90
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
+    
+class ADDONNAME_VBM(bpy.types.Operator):
+    bl_label = "Add Ob33jectVBM"
+    bl_idname = "addonname.myop_operatorvbm"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumVBM == 'OPVBM7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 168
+
+            action_name = 'Vertical Bar Graph Comparison.003Action'
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Socket_20"]', 'modifiers["GeometryNodes"]["Socket_21"]', 'modifiers["GeometryNodes"]["Socket_22"]', 'modifiers["GeometryNodes"]["Socket_23"]', 'modifiers["GeometryNodes"]["Socket_24"]', 'modifiers["GeometryNodes"]["Socket_25"]', 'modifiers["GeometryNodes"]["Socket_26"]', 'modifiers["GeometryNodes"]["Socket_27"]', 'modifiers["GeometryNodes"]["Socket_28"]', 'modifiers["GeometryNodes"]["Socket_29"]', 'modifiers["GeometryNodes"]["Socket_30"]', 'modifiers["GeometryNodes"]["Socket_31"]', 'modifiers["GeometryNodes"]["Socket_32"]', 'modifiers["GeometryNodes"]["Socket_33"]', 'modifiers["GeometryNodes"]["Socket_34"]', 'modifiers["GeometryNodes"]["Socket_35"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 24
+                        fcurve.keyframe_points[0].handle_right[1] = 0.573
+                        fcurve.keyframe_points[1].co.x = 120
+                        fcurve.keyframe_points[1].handle_left[0] = 66.708
+
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enumVBM == 'OPVBM8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 210
+            
+            action_name = 'Vertical Bar Graph Comparison.003Action'
+            data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Socket_20"]', 'modifiers["GeometryNodes"]["Socket_21"]', 'modifiers["GeometryNodes"]["Socket_22"]', 'modifiers["GeometryNodes"]["Socket_23"]', 'modifiers["GeometryNodes"]["Socket_24"]', 'modifiers["GeometryNodes"]["Socket_25"]', 'modifiers["GeometryNodes"]["Socket_26"]', 'modifiers["GeometryNodes"]["Socket_27"]', 'modifiers["GeometryNodes"]["Socket_28"]', 'modifiers["GeometryNodes"]["Socket_29"]', 'modifiers["GeometryNodes"]["Socket_30"]', 'modifiers["GeometryNodes"]["Socket_31"]', 'modifiers["GeometryNodes"]["Socket_32"]', 'modifiers["GeometryNodes"]["Socket_33"]', 'modifiers["GeometryNodes"]["Socket_34"]', 'modifiers["GeometryNodes"]["Socket_35"]']
             index = 0               # Z axis
 
             for data_path in data_paths:
@@ -34194,6 +37208,153 @@ class FontrestoreVBGC(bpy.types.Operator):
         
         return {'FINISHED'} 
     
+class FontchangeVBGM(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorvbgmfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        nodevvbgm_group = modifier.node_group
+        
+        nodevvbgmtitle = nodevvbgm_group.nodes['String to Curves.005']
+        datavvbgmtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_title)
+        nodevvbgmtitle.font = datavvbgmtitle_font
+        
+        nodevvbgmsubtitle = nodevvbgm_group.nodes['String to Curves.006']
+        datavvbgmsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_subtitle)
+        nodevvbgmsubtitle.font = datavvbgmsubtitle_font
+
+        nodevvbgmvaluea = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodevvbgmvaluea:
+            nodevvbgmvaluea = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmvaluea:
+                datavvbgmvaluea_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_barvaluea)
+                nodevvbgmvaluea.font = datavvbgmvaluea_font
+
+        nodevvbgmvalueb = ['String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028', 'String to Curves.029', 'String to Curves.030', 'String to Curves.031', 'String to Curves.032']
+        for name in nodevvbgmvalueb:
+            nodevvbgmvalueb = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmvalueb:
+                datavvbgmvalueb_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_barvalueb)
+                nodevvbgmvalueb.font = datavvbgmvalueb_font
+                
+        nodevvbgmvaluec = ['String to Curves.024', 'String to Curves.038', 'String to Curves.040', 'String to Curves.042', 'String to Curves.044', 'String to Curves.046', 'String to Curves.050', 'String to Curves.048']
+        for name in nodevvbgmvaluec:
+            nodevvbgmvaluec = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmvaluec:
+                datavvbgmvaluec_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_barvaluec)
+                nodevvbgmvaluec.font = datavvbgmvaluec_font
+
+        nodevvbgmvalued = ['String to Curves.035', 'String to Curves.039', 'String to Curves.041', 'String to Curves.043', 'String to Curves.045', 'String to Curves.047', 'String to Curves.051', 'String to Curves.049']
+        for name in nodevvbgmvalued:
+            nodevvbgmvalued = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmvalued:
+                datavvbgmvalued_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_barvalued)
+                nodevvbgmvalued.font = datavvbgmvalued_font
+
+        nodevvbgmrangenumbers = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodevvbgmrangenumbers:
+            nodevvbgmrangenumbers = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmrangenumbers:
+                datavvbgmrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_rangenumbers)
+                nodevvbgmrangenumbers.font = datavvbgmrangenumbers_font    
+        
+        nodevvbgmpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgmpointtext:
+            nodevvbgmpointtext = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmpointtext:
+                datavvbgmpointtext_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_bartext)
+                nodevvbgmpointtext.font = datavvbgmpointtext_font
+
+        nodevvbgmlegend = ['String to Curves.033', 'String to Curves.034', 'String to Curves.036', 'String to Curves.037']
+        for name in nodevvbgmlegend:
+            nodevvbgmlegend = nodevvbgm_group.nodes.get(name)
+            if nodevvbgmlegend:
+                datavvbgmlegend_font = bpy.data.fonts.load(mytool.my_pathfontvbgm_legend)
+                nodevvbgmlegend.font = datavvbgmlegend_font     
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreVBGM(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorvbgmresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorevvbgm_group = modifier.node_group
+        
+        noderestorevvbgmtitle = noderestorevvbgm_group.nodes['String to Curves.005']
+        datarestorevvbgmtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorevvbgmtitle.font = datarestorevvbgmtitle_font
+        
+        noderestorevvbgmsubtitle = noderestorevvbgm_group.nodes['String to Curves.006']
+        datarestorevvbgmsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorevvbgmsubtitle.font = datarestorevvbgmsubtitle_font
+
+        nodevvbgmvaluea = ['String to Curves.016', 'String to Curves.017', 'String to Curves.018', 'String to Curves.019', 'String to Curves.020', 'String to Curves.021', 'String to Curves.022', 'String to Curves.023']
+        for name in nodevvbgmvaluea:
+            nodevvbgmvaluea = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmvaluea:
+                datavvbgmvaluea_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgmvaluea.font = datavvbgmvaluea_font   
+
+        nodevvbgmvalueb = ['String to Curves.025', 'String to Curves.026', 'String to Curves.027', 'String to Curves.028', 'String to Curves.029', 'String to Curves.030', 'String to Curves.031', 'String to Curves.032']
+        for name in nodevvbgmvalueb:
+            nodevvbgmvalueb = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmvalueb:
+                datavvbgmvalueb_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgmvalueb.font = datavvbgmvalueb_font  
+                
+        nodevvbgmvaluec = ['String to Curves.024', 'String to Curves.038', 'String to Curves.040', 'String to Curves.042', 'String to Curves.044', 'String to Curves.046', 'String to Curves.050', 'String to Curves.048']
+        for name in nodevvbgmvaluec:
+            nodevvbgmvaluec = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmvaluec:
+                datavvbgmvaluec_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgmvaluec.font = datavvbgmvaluec_font   
+
+        nodevvbgmvalued = ['String to Curves.035', 'String to Curves.039', 'String to Curves.041', 'String to Curves.043', 'String to Curves.045', 'String to Curves.047', 'String to Curves.051', 'String to Curves.049']
+        for name in nodevvbgmvalued:
+            nodevvbgmvalued = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmvalued:
+                datavvbgmvalued_font = bpy.data.fonts["Open Sans Extrabold"]
+                nodevvbgmvalued.font = datavvbgmvalued_font                 
+  
+        
+        nodevvbgmrangenumbers = ['String to Curves.011', 'String to Curves.012', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015']
+        for name in nodevvbgmrangenumbers:
+            nodevvbgmrangenumbers = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmrangenumbers:
+                datavvbgmrangenumbers_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgmrangenumbers.font = datavvbgmrangenumbers_font  
+
+        nodevvbgmpointtext = ['String to Curves', 'String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.007', 'String to Curves.008', 'String to Curves.009', 'String to Curves.010']
+        for name in nodevvbgmpointtext:
+            nodevvbgmpointtext = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmpointtext:
+                datavvbgmpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgmpointtext.font = datavvbgmpointtext_font  
+
+        nodevvbgmlegend = ['String to Curves.033', 'String to Curves.034', 'String to Curves.036', 'String to Curves.037']
+        for name in nodevvbgmlegend:
+            nodevvbgmlegend = noderestorevvbgm_group.nodes.get(name)
+            if nodevvbgmlegend:
+                datavvbgmlegend_font = bpy.data.fonts["Open Sans Regular"]
+                nodevvbgmlegend.font = datavvbgmlegend_font  
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'} 
+    
 class FontchangePLG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorplgfont"
@@ -34346,26 +37507,26 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
 MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
-MyoperatorVBCcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
+MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opOPPOSINGAHBARAL, ADDONNAME_OT_my_opOPPOSINGAHBARBL, ADDONNAME_OT_my_opOPPOSINGAHBARCL, ADDONNAME_OT_my_opOPPOSINGAHBARDL, ADDONNAME_OT_my_opOPPOSINGAHBAREL, ADDONNAME_OT_my_opOPPOSINGAHBARFL, 
 ADDONNAME_OT_my_opOPPOSINGAHBARGL, ADDONNAME_OT_my_opOPPOSINGAHBARHL, ADDONNAME_OT_my_opOPPOSINGAHBARIL,
 ADDONNAME_OT_my_opOPPOSINGAHBARJL , ADDONNAME_OT_my_opSTACKEDAHBARAL, ADDONNAME_OT_my_opSTACKEDAHBARBL, ADDONNAME_OT_my_opSTACKEDAHBARCL, ADDONNAME_OT_my_opSTACKEDAVBARAL, ADDONNAME_OT_my_opSTACKEDAVBARBL, ADDONNAME_OT_my_opSTACKEDAVBARCL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL, ADDONNAME_OT_my_opPLGAL, ADDONNAME_OT_my_opPLGBL, ADDONNAME_OT_my_opPLGCL, ADDONNAME_OT_my_opPLGDL, ADDONNAME_OT_my_opPLGEL, ADDONNAME_OT_my_opPLGFL, ADDONNAME_OT_my_opPLGGL, ADDONNAME_OT_my_opPLGHL, 
-ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_ophbo, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
 PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
-COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, ADDONNAME_OT_my_opLGAL, 
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
 ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
 ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
-ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH]
+ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH, ADDONNAME_OT_my_opMULTIPLEABARVA, ADDONNAME_OT_my_opMULTIPLEABARVB, ADDONNAME_OT_my_opMULTIPLEABARVC, ADDONNAME_OT_my_opMULTIPLEABARVD, ADDONNAME_OT_my_opMULTIPLEABARVE, ADDONNAME_OT_my_opMULTIPLEABARVF, ADDONNAME_OT_my_opMULTIPLEABARVG, ADDONNAME_OT_my_opMULTIPLEABARVH, ADDONNAME_OT_my_opMULTIPLEBBARVA, ADDONNAME_OT_my_opMULTIPLEBBARVB, ADDONNAME_OT_my_opMULTIPLEBBARVC, ADDONNAME_OT_my_opMULTIPLEBBARVD, ADDONNAME_OT_my_opMULTIPLEBBARVE, ADDONNAME_OT_my_opMULTIPLEBBARVF, ADDONNAME_OT_my_opMULTIPLEBBARVG, ADDONNAME_OT_my_opMULTIPLEBBARVH, ADDONNAME_OT_my_opMULTIPLECBARVA, ADDONNAME_OT_my_opMULTIPLECBARVB, ADDONNAME_OT_my_opMULTIPLECBARVC, ADDONNAME_OT_my_opMULTIPLECBARVD, ADDONNAME_OT_my_opMULTIPLECBARVE, ADDONNAME_OT_my_opMULTIPLECBARVF, ADDONNAME_OT_my_opMULTIPLECBARVG, ADDONNAME_OT_my_opMULTIPLECBARVH,ADDONNAME_OT_my_opMULTIPLEDBARVA, ADDONNAME_OT_my_opMULTIPLEDBARVB, ADDONNAME_OT_my_opMULTIPLEDBARVC, ADDONNAME_OT_my_opMULTIPLEDBARVD, ADDONNAME_OT_my_opMULTIPLEDBARVE, ADDONNAME_OT_my_opMULTIPLEDBARVF, ADDONNAME_OT_my_opMULTIPLEDBARVG, ADDONNAME_OT_my_opMULTIPLEDBARVH]
  
  
 def register():
