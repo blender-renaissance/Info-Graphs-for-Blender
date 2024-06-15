@@ -201,6 +201,15 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatormgc()
     )
     
+    my_enumSGC : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPSGC7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPSGC8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorsgc()
+    )
+    
     my_enum_usmap : bpy.props.EnumProperty(
         name= "",
         description= "Change Frame rate of the scene",
@@ -384,6 +393,10 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringmountain_graph_comparison : bpy.props.StringProperty(
     name= "",
     default="mountain_graph_comparison",)
+    
+    my_stringscatter_graph : bpy.props.StringProperty(
+    name= "",
+    default="scatter_graph",)
     
     my_stringmultiple_circle_graph : bpy.props.StringProperty(
     name= "",
@@ -2994,6 +3007,24 @@ class MyProperties(bpy.types.PropertyGroup):
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorcomparisonamounta()
     )
+    
+    my_floatSCATTERA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=0.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorscattera()
+    )
+    
+    my_floatSCATTERLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=3.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorscattera()
+    )
 
     my_floatCOMPARISONAMOUNTLA: bpy.props.FloatProperty(
         name="In seconds",
@@ -4699,6 +4730,14 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         )
         
+    my_pathsgc: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/scatter_graph.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
     my_pathvb: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
@@ -5197,6 +5236,54 @@ class MyProperties(bpy.types.PropertyGroup):
         )
 
     my_pathfontmgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontsgc_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontsgc_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontsgc_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontsgc_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontsgc_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontsgc_legend: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
         default="//Fonts/Open sans/OpenSans-Light.ttf",
@@ -8096,6 +8183,110 @@ class COMPARISON_MOUNTAIN_GRAPH_PT_panel_6(COMPARISON_MOUNTAIN_GRAPH_panel, bpy.
         rowresetmgc = layout.row()
         rowresetmgc.label(text= "Reset all Fonts:")
         layout.operator("addonname.myop_operatormgcresfont")
+        
+class SCATTER_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class SCATTER_GRAPH_PT_panel_1(SCATTER_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "SCATTER_GRAPH_PT_panel_1"
+    bl_label = "Scatter Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowSGCFPS = layout.row()
+        rowSGCFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enumSGC")  
+
+class SCATTER_GRAPH_PT_panel_2(SCATTER_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "SCATTER_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowSGCcsv = layout.row()
+        rowSGCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathsgc")
+        layout.operator("mesh.mycubeoperatorsgccsv")
+        
+class SCATTER_GRAPH_PT_panel_3(SCATTER_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "SCATTER_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringscatter_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorsgcsql")
+
+class SCATTER_GRAPH_PT_panel_4(SCATTER_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "SCATTER_GRAPH_PT_panel_1"
+    bl_label = "Duration Control"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowSCATTERA = layout.row()
+        rowSCATTERA.label(text= "Start Animation:")
+        layout.prop(mytool, "my_floatSCATTERA")
+        
+        rowSCATTERLA = layout.row()
+        rowSCATTERLA.label(text= "Duration:")
+        layout.prop(mytool, "my_floatSCATTERLA")
+        
+class SCATTER_GRAPH_PT_panel_5(SCATTER_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "SCATTER_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlesgc = layout.row()
+        rowtitlesgc.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontsgc_title")
+
+        rowsubtitlesgc = layout.row()
+        rowsubtitlesgc.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontsgc_subtitle")
+
+        rowvaluesgc = layout.row()
+        rowvaluesgc.label(text= "r² Font:")
+        layout.prop(mytool, "my_pathfontsgc_bartext")
+        
+        rowlegendsgc = layout.row()
+        rowlegendsgc.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontsgc_rangenumbers")
+        
+        rowlegendsgc = layout.row()
+        rowlegendsgc.label(text= "X and Y Description Font:")
+        layout.prop(mytool, "my_pathfontsgc_legend")                 
+        layout.operator("addonname.myop_operatorsgcfont")
+        
+        rowresetsgc = layout.row()
+        rowresetsgc.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorsgcresfont")
         
 class US_MAP_panel:
     bl_space_type = "VIEW_3D"
@@ -18861,6 +19052,353 @@ class MyoperatorMGCsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorSGCsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorsgcsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringscatter_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (3-100)` FROM scattergcomparison_table")
+        numberofpointssgc = mycursor.fetchone()
+        my_floatsgc_numberofpoints = int(numberofpointssgc[0])
+
+        mycursor.execute("SELECT `Value X` FROM scattergcomparison_table")
+        valuexsgc = mycursor.fetchall()
+
+
+        point_valuesx = [0.0] * 100  # initialize list with 100 zeros
+        for i, valx in enumerate(valuexsgc):
+            val_strx = valx[0].replace(',', '')  # remove commas from the string
+            if val_strx:  # check if the string is not empty
+                point_valuesx[i] = float(val_strx)  # assign value to corresponding index
+            else:
+                point_valuesx[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value Y` FROM scattergcomparison_table")
+        valueysgc = mycursor.fetchall()
+
+        point_valuesy = [0.0] * 100  # initialize list with 100 zeros
+        for i, valy in enumerate(valueysgc):
+            val_stry = valy[0].replace(',', '')  # remove commas from the string
+            if val_stry:  # check if the string is not empty
+                point_valuesy[i] = float(val_stry)  # assign value to corresponding index
+            else:
+                point_valuesy[i] = 0.0  # assign 0.0 if the string is empty
+
+        mycursor.execute("SELECT `xMin Value` FROM scattergcomparison_table")
+        xminpointvalue = mycursor.fetchone()
+        my_floatsgc_xminpointvalue = float(xminpointvalue[0])
+        
+        mycursor.execute("SELECT `xMax Value` FROM scattergcomparison_table")
+        xmaxpointvalue = mycursor.fetchone()
+        my_floatsgc_xmaxpointvalue = float(xmaxpointvalue[0])
+
+        mycursor.execute("SELECT `yMin Value` FROM scattergcomparison_table")
+        yminpointvalue = mycursor.fetchone()
+        my_floatsgc_yminpointvalue = float(yminpointvalue[0])
+        
+        mycursor.execute("SELECT `yMax Value` FROM scattergcomparison_table")
+        ymaxpointvalue = mycursor.fetchone()
+        my_floatsgc_ymaxpointvalue = float(ymaxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM scattergcomparison_table")
+        decvalue = mycursor.fetchone()
+        my_floatsgc_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM scattergcomparison_table")
+        rangenumber = mycursor.fetchone()
+        my_floatsgc_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM scattergcomparison_table")
+        my_stringsgc_title = mycursor.fetchone()
+        my_stringsgc_title = str(my_stringsgc_title)
+        my_stringsgc_title = my_stringsgc_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM scattergcomparison_table")
+        my_stringsgc_subtitle = mycursor.fetchone()
+        my_stringsgc_subtitle = str(my_stringsgc_subtitle)
+        my_stringsgc_subtitle = my_stringsgc_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Legend` FROM scattergcomparison_table")
+        my_stringsgc_legendtext = mycursor.fetchall()
+        my_stringsgc_legendtext1 = str(my_stringsgc_legendtext[0])
+        my_stringsgc_legendtext2 = str(my_stringsgc_legendtext[1])
+        my_stringsgc_legendtext1 = my_stringsgc_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringsgc_legendtext2 = my_stringsgc_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_sgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_sgc.type == 'MESH':
+                        mesh_name_sgc = selected_obj_sgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_sgc.modifiers:
+                                modifier_name_sgc = selected_obj_sgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_2"] = my_floatsgc_numberofpoints
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_2"] = my_floatsgc_xminpointvalue
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_3"] = my_floatsgc_xmaxpointvalue
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_22"] = my_floatsgc_yminpointvalue
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_24"] = my_floatsgc_ymaxpointvalue
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_23"] = my_floatsgc_decvalue
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_21"] = my_floatsgc_rangenumber
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_92"] = point_valuesx[0]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_93"] = point_valuesx[1]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_94"] = point_valuesx[2]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_95"] = point_valuesx[3]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_96"] = point_valuesx[4]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_97"] = point_valuesx[5]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_98"] = point_valuesx[6]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_99"] = point_valuesx[7]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_100"] = point_valuesx[8]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_101"] = point_valuesx[9]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_102"] = point_valuesx[10]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_103"] = point_valuesx[11]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_104"] = point_valuesx[12]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_105"] = point_valuesx[13]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_106"] = point_valuesx[14]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_107"] = point_valuesx[15]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_108"] = point_valuesx[16]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_109"] = point_valuesx[17]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_110"] = point_valuesx[18]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_111"] = point_valuesx[19]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_112"] = point_valuesx[20]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_113"] = point_valuesx[21]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_114"] = point_valuesx[22]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_115"] = point_valuesx[23]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_116"] = point_valuesx[24]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_117"] = point_valuesx[25]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_118"] = point_valuesx[26]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_119"] = point_valuesx[27]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_191"] = point_valuesx[28]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_120"] = point_valuesx[29]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_121"] = point_valuesx[30]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_122"] = point_valuesx[31]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_123"] = point_valuesx[32]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_124"] = point_valuesx[33]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_125"] = point_valuesx[34]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_126"] = point_valuesx[35]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_127"] = point_valuesx[36]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_128"] = point_valuesx[37]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_129"] = point_valuesx[38]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_130"] = point_valuesx[39]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_131"] = point_valuesx[40]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_132"] = point_valuesx[41]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_133"] = point_valuesx[42]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_134"] = point_valuesx[43]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_135"] = point_valuesx[44]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_136"] = point_valuesx[45]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_137"] = point_valuesx[46]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_138"] = point_valuesx[47]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_139"] = point_valuesx[48]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_140"] = point_valuesx[49]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_141"] = point_valuesx[50]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_142"] = point_valuesx[51]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_143"] = point_valuesx[52]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_144"] = point_valuesx[53]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_145"] = point_valuesx[54]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_146"] = point_valuesx[55]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_147"] = point_valuesx[56]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_148"] = point_valuesx[57]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_149"] = point_valuesx[58]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_150"] = point_valuesx[59]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_151"] = point_valuesx[60]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_152"] = point_valuesx[61]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_153"] = point_valuesx[62]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_154"] = point_valuesx[63]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_155"] = point_valuesx[64]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_156"] = point_valuesx[65]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_157"] = point_valuesx[66]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_158"] = point_valuesx[67]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_159"] = point_valuesx[68]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_160"] = point_valuesx[69]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_161"] = point_valuesx[70]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_162"] = point_valuesx[71]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_163"] = point_valuesx[72]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_164"] = point_valuesx[73]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_165"] = point_valuesx[74]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_166"] = point_valuesx[75]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_167"] = point_valuesx[76]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_168"] = point_valuesx[77]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_169"] = point_valuesx[78]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_170"] = point_valuesx[79]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_171"] = point_valuesx[80]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_172"] = point_valuesx[81]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_173"] = point_valuesx[82]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_174"] = point_valuesx[83]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_175"] = point_valuesx[84]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_176"] = point_valuesx[85]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_177"] = point_valuesx[86]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_178"] = point_valuesx[87]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_179"] = point_valuesx[88]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_180"] = point_valuesx[89]
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_181"] = point_valuesx[90]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_182"] = point_valuesx[91]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_183"] = point_valuesx[92]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_184"] = point_valuesx[93]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_185"] = point_valuesx[94]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_186"] = point_valuesx[95]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_187"] = point_valuesx[96]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_188"] = point_valuesx[97]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_189"] = point_valuesx[98]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_190"] = point_valuesx[99]
+
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_3"] = point_valuesy[0]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_55"] = point_valuesy[1]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_56"] = point_valuesy[2]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_4"] = point_valuesy[3]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_57"] = point_valuesy[4]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_58"] = point_valuesy[5]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_5"] = point_valuesy[6]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_59"] = point_valuesy[7]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_60"] = point_valuesy[8]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_6"] = point_valuesy[9]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_61"] = point_valuesy[10]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_62"] = point_valuesy[11]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_7"] = point_valuesy[12]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_63"] = point_valuesy[13]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_64"] = point_valuesy[14]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_8"] = point_valuesy[15]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_65"] = point_valuesy[16]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_66"] = point_valuesy[17]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_9"] = point_valuesy[18]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_67"] = point_valuesy[19]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_68"] = point_valuesy[20]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_10"] = point_valuesy[21]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_69"] = point_valuesy[22]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_70"] = point_valuesy[23]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_4"] = point_valuesy[24]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_5"] = point_valuesy[25]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_6"] = point_valuesy[26]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_7"] = point_valuesy[27]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_192"] = point_valuesy[28]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_9"] = point_valuesy[29]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_22"] = point_valuesy[30]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_23"] = point_valuesy[31]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_24"] = point_valuesy[32]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_25"] = point_valuesy[33]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_26"] = point_valuesy[34]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_27"] = point_valuesy[35]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_28"] = point_valuesy[36]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_29"] = point_valuesy[37]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_30"] = point_valuesy[38]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_31"] = point_valuesy[39]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_32"] = point_valuesy[40]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_33"] = point_valuesy[41]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_34"] = point_valuesy[42]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_35"] = point_valuesy[43]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_36"] = point_valuesy[44]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_37"] = point_valuesy[45]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_38"] = point_valuesy[46]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_39"] = point_valuesy[47]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_40"] = point_valuesy[48]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_41"] = point_valuesy[49]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_42"] = point_valuesy[50]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_43"] = point_valuesy[51]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_44"] = point_valuesy[52]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_45"] = point_valuesy[53]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_46"] = point_valuesy[54]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_47"] = point_valuesy[55]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_48"] = point_valuesy[56]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_49"] = point_valuesy[57]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_50"] = point_valuesy[58]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_51"] = point_valuesy[59]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_52"] = point_valuesy[60]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_53"] = point_valuesy[61]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_54"] = point_valuesy[62]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_55"] = point_valuesy[63]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_56"] = point_valuesy[64]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_57"] = point_valuesy[65]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_58"] = point_valuesy[66]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_59"] = point_valuesy[67]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_60"] = point_valuesy[68]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_61"] = point_valuesy[69]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_62"] = point_valuesy[70]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_63"] = point_valuesy[71]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_64"] = point_valuesy[72]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_65"] = point_valuesy[73]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_66"] = point_valuesy[74]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_67"] = point_valuesy[75]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_68"] = point_valuesy[76]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_69"] = point_valuesy[77]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_70"] = point_valuesy[78]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_71"] = point_valuesy[79]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_72"] = point_valuesy[80]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_73"] = point_valuesy[81]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_74"] = point_valuesy[82]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_75"] = point_valuesy[83]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_76"] = point_valuesy[84]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_77"] = point_valuesy[85]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_78"] = point_valuesy[86]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_79"] = point_valuesy[87]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_80"] = point_valuesy[88]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_81"] = point_valuesy[89]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_82"] = point_valuesy[90]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_83"] = point_valuesy[91]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_84"] = point_valuesy[92]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_85"] = point_valuesy[93]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_86"] = point_valuesy[94]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_87"] = point_valuesy[95]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_88"] = point_valuesy[96]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_89"] = point_valuesy[97]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_90"] = point_valuesy[98]
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_91"] = point_valuesy[99]
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_38"] = my_stringsgc_title
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_39"] = my_stringsgc_subtitle
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_12"] = my_stringsgc_legendtext1
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_14"] = my_stringsgc_legendtext2
+
+                                print(f"Set modifier input for object '{mesh_name_sgc}' and modifier '{modifier_name_sgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_sgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
 class Myoperatorusmapsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorusmapsql"
     bl_label = "Import MySQL Data"
@@ -19848,18 +20386,27 @@ class MyoperatorCGCcsv(bpy.types.Operator):
             ncg23c = int(readout[1][0])
             wta23c = str(readout[1][1])
             wtb23c = str(readout[2][1])
-            wtc23c = str(readout[3][1])
+            try:
+                wtc23c = str(readout[3][1])
+            except IndexError:
+                wtc23c = "0"  # set default value to 0 if missing
             psa23c = float(readout[1][2])
             psb23c = float(readout[2][2])
-            psc23c = float(readout[3][2])
+            try:
+                psc23c = str(readout[3][2])
+            except IndexError:
+                psc23c = "0"  # set default value to 0 if missing
             minv23c = float(readout[1][3])
             maxv23c = float(readout[1][4])
             title23c = str(readout[1][5])
             subtitle23c = str(readout[1][6])
             desc23c = str(readout[1][7])
-            wtpa23c = float(psa23c/maxv23c)
-            wtpb23c = float(psb23c/maxv23c)
-            wtpc23c = float(psc23c/maxv23c)
+            wtpa23c = float(float(psa23c)/maxv23c)
+            wtpb23c = float(float(psb23c)/maxv23c)
+            if psc23c == 0:
+                wtpc23c = 0.0  # avoid division by zero
+            else:
+                wtpc23c = float(float(psc23c)/maxv23c)
             
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_31"] = ncg23c
         bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_39"] = wta23c
@@ -19929,28 +20476,59 @@ class MyoperatorCANDLEcsv(bpy.types.Operator):
 
             num_elementspointhigh = 32
             pointhigh_candleg = []
-            for i in range(1, num_elementspointhigh + 1):
-                pointhigh_candleg.append(float(readout[i][1]))
+            for i in range(1, num_elementspointhigh+1):
+                if i < len(readout) and 1 < len(readout[i]):
+                    valueph = readout[i][1]
+                else:
+                    valueph = 0.0  # or some other default value
+                if valueph is None or valueph == "":
+                    valueph = 0.0
+                pointhigh_candleg.append(float(valueph))
                 
             num_elementspointopen = 32
             pointopen_candleg = []
-            for i in range(1, num_elementspointopen + 1):
-                pointopen_candleg.append(float(readout[i][2]))
-                
+            for i in range(1, num_elementspointopen+1):
+                if i < len(readout) and 2 < len(readout[i]):
+                    valuepo = readout[i][2]
+                else:
+                    valuepo = 0.0  # or some other default value
+                if valuepo is None or valuepo == "":
+                    valuepo = 0.0
+                pointopen_candleg.append(float(valuepo))
+
             num_elementspointclose = 32
             pointclose_candleg = []
-            for i in range(1, num_elementspointclose + 1):
-                pointclose_candleg.append(float(readout[i][3]))
-                
+            for i in range(1, num_elementspointclose+1):
+                if i < len(readout) and 3 < len(readout[i]):
+                    valuepc = readout[i][3]
+                else:
+                    valuepc = 0.0  # or some other default value
+                if valuepc is None or valuepc == "":
+                    valuepc = 0.0
+                pointclose_candleg.append(float(valuepc))
+
             num_elementspointlow = 32
             pointlow_candleg = []
-            for i in range(1, num_elementspointlow + 1):
-                pointlow_candleg.append(float(readout[i][4]))
-            
+            for i in range(1, num_elementspointlow+1):
+                if i < len(readout) and 4 < len(readout[i]):
+                    valuepl = readout[i][4]
+                else:
+                    valuepl = 0.0  # or some other default value
+                if valuepl is None or valuepl == "":
+                    valuepl = 0.0
+                pointlow_candleg.append(float(valuepl))
+
             num_elementstexts = 32
             texts_candleg = []
-            for i in range(1, num_elementstexts + 1):
-                texts_candleg.append(str(readout[i][5]))
+            for i in range(1, num_elementstexts+1):
+                if i < len(readout) and 5 < len(readout[i]):
+                    valuet = readout[i][5]
+                else:
+                    valuet = ""  # or some other default value
+                if valuet is None:
+                    valuet = ""
+                texts_candleg.append(str(valuet))
+
                 
             titlecandleg = str(readout[1][10])
             subtitlecandleg = str(readout[1][11])
@@ -20039,10 +20617,16 @@ class MyoperatorPGCcsv(bpy.types.Operator):
             ncg23p = int(readout[1][0])
             wta23p = str(readout[1][1])
             wtb23p = str(readout[2][1])
-            wtc23p = str(readout[3][1])
+            try:
+                wtc23p = str(readout[3][1])
+            except IndexError:
+                wtc23p = "0"  # set default value to 0 if missing
             psa23p = float(readout[1][2])
             psb23p = float(readout[2][2])
-            psc23p = float(readout[3][2])
+            try:
+                psc23p = str(readout[3][2])
+            except IndexError:
+                psc23p = "0"  # set default value to 0 if missing
             minv23p = float(readout[1][3])
             maxv23p = float(readout[1][4])
             title23p = str(readout[1][5])
@@ -20050,7 +20634,10 @@ class MyoperatorPGCcsv(bpy.types.Operator):
             desc23p = str(readout[1][7])
             wtpa23p = float(psa23p/maxv23p)
             wtpb23p = float(psb23p/maxv23p)
-            wtpc23p = float(psc23p/maxv23p)
+            if psc23p == 0:
+                wtpc23p = 0.0  # avoid division by zero
+            else:
+                wtpc23p = float(float(psc23p)/maxv23p)
             
         # Ensure an object is selected
         if bpy.context.selected_objects:
@@ -21573,66 +22160,26 @@ class MyoperatorLGcsv(bpy.types.Operator):
             maxvlg = float(readout[1][4])
             decimallg = int(readout[1][5])
             rnlg = int(readout[1][6])
-            value1lg = float(readout[1][1])
-            value2lg = float(readout[2][1])
-            value3lg = float(readout[3][1])
-            value4lg = float(readout[4][1])
-            value5lg = float(readout[5][1])
-            value6lg = float(readout[6][1])
-            value7lg = float(readout[7][1])
-            value8lg = float(readout[8][1])
-            value9lg = float(readout[9][1])
-            value10lg = float(readout[10][1])
-            value11lg = float(readout[11][1])
-            value12lg = float(readout[12][1])
-            value13lg = float(readout[13][1])
-            value14lg = float(readout[14][1])
-            value15lg = float(readout[15][1])
-            value16lg = float(readout[16][1])
-            value17lg = float(readout[17][1])
-            value18lg = float(readout[18][1])
-            value19lg = float(readout[19][1])
-            value20lg = float(readout[20][1])
-            value21lg = float(readout[21][1])
-            value22lg = float(readout[22][1])
-            value23lg = float(readout[23][1])
-            value24lg = float(readout[24][1])
-            value25lg = float(readout[25][1])
-            value26lg = float(readout[26][1])
-            value27lg = float(readout[27][1])
-            value28lg = float(readout[28][1])
-            value29lg = float(readout[29][1])
-            value30lg = float(readout[30][1])
-            text1lg = str(readout[1][2])
-            text2lg = str(readout[2][2])
-            text3lg = str(readout[3][2])
-            text4lg = str(readout[4][2])
-            text5lg = str(readout[5][2])
-            text6lg = str(readout[6][2])
-            text7lg = str(readout[7][2])
-            text8lg = str(readout[8][2])
-            text9lg = str(readout[9][2])
-            text10lg = str(readout[10][2])
-            text11lg = str(readout[11][2])
-            text12lg = str(readout[12][2])
-            text13lg = str(readout[13][2])
-            text14lg = str(readout[14][2])
-            text15lg = str(readout[15][2])
-            text16lg = str(readout[16][2])
-            text17lg = str(readout[17][2])
-            text18lg = str(readout[18][2])
-            text19lg = str(readout[19][2])
-            text20lg = str(readout[20][2])
-            text21lg = str(readout[21][2])
-            text22lg = str(readout[22][2])
-            text23lg = str(readout[23][2])
-            text24lg = str(readout[24][2])
-            text25lg = str(readout[25][2])
-            text26lg = str(readout[26][2])
-            text27lg = str(readout[27][2])
-            text28lg = str(readout[28][2])
-            text29lg = str(readout[29][2])
-            text30lg = str(readout[30][2])
+
+            valuelg = []
+            for i in range(1, 31):
+                try:
+                    valuelgg = readout[i][1]
+                    if valuelgg:  # check if the string is not empty
+                        valuelg.append(float(valuelgg))
+                    else:
+                        valuelg.append(0.0)
+                except IndexError:
+                    valuelg.append(0.0)
+
+            textlg = []
+            for i in range(1, 31):
+                try:
+                    textlg.append(str(readout[i][2]))
+                except IndexError:
+                    textlg.append("")
+
+
             titlelg = str(readout[1][7])
             subtitlelg = str(readout[1][8])
             
@@ -21655,67 +22202,67 @@ class MyoperatorLGcsv(bpy.types.Operator):
                                         modifier_0["Input_14"] = maxvlg
                                         modifier_0["Input_15"] = decimallg
                                         modifier_0["Input_18"] = rnlg
-                                        modifier_0["Input_4"] = value1lg
-                                        modifier_0["Input_5"] = value2lg
-                                        modifier_0["Input_6"] = value3lg
-                                        modifier_0["Input_7"] = value4lg
-                                        modifier_0["Input_8"] = value5lg
-                                        modifier_0["Input_9"] = value6lg
-                                        modifier_0["Input_10"] = value7lg
-                                        modifier_0["Input_11"] = value8lg
-                                        modifier_0["Socket_0"] = value9lg
-                                        modifier_0["Socket_1"] = value10lg
-                                        modifier_0["Socket_2"] = value11lg
-                                        modifier_0["Socket_3"] = value12lg
-                                        modifier_0["Socket_4"] = value13lg
-                                        modifier_0["Socket_5"] = value14lg
-                                        modifier_0["Socket_6"] = value15lg
-                                        modifier_0["Socket_7"] = value16lg
-                                        modifier_0["Socket_8"] = value17lg
-                                        modifier_0["Socket_9"] = value18lg
-                                        modifier_0["Socket_10"] = value19lg
-                                        modifier_0["Socket_11"] = value20lg
-                                        modifier_0["Socket_12"] = value21lg
-                                        modifier_0["Socket_13"] = value22lg
-                                        modifier_0["Socket_14"] = value23lg
-                                        modifier_0["Socket_15"] = value24lg
-                                        modifier_0["Socket_16"] = value25lg
-                                        modifier_0["Socket_17"] = value26lg
-                                        modifier_0["Socket_18"] = value27lg
-                                        modifier_0["Socket_19"] = value28lg
-                                        modifier_0["Socket_20"] = value29lg
-                                        modifier_0["Socket_21"] = value30lg
+                                        modifier_0["Input_4"] = valuelg[0]
+                                        modifier_0["Input_5"] = valuelg[1]
+                                        modifier_0["Input_6"] = valuelg[2]
+                                        modifier_0["Input_7"] = valuelg[3]
+                                        modifier_0["Input_8"] = valuelg[4]
+                                        modifier_0["Input_9"] = valuelg[5]
+                                        modifier_0["Input_10"] = valuelg[6]
+                                        modifier_0["Input_11"] = valuelg[7]
+                                        modifier_0["Socket_0"] = valuelg[8]
+                                        modifier_0["Socket_1"] = valuelg[9]
+                                        modifier_0["Socket_2"] = valuelg[10]
+                                        modifier_0["Socket_3"] = valuelg[11]
+                                        modifier_0["Socket_4"] = valuelg[12]
+                                        modifier_0["Socket_5"] = valuelg[13]
+                                        modifier_0["Socket_6"] = valuelg[14]
+                                        modifier_0["Socket_7"] = valuelg[15]
+                                        modifier_0["Socket_8"] = valuelg[16]
+                                        modifier_0["Socket_9"] = valuelg[17]
+                                        modifier_0["Socket_10"] = valuelg[18]
+                                        modifier_0["Socket_11"] = valuelg[19]
+                                        modifier_0["Socket_12"] = valuelg[20]
+                                        modifier_0["Socket_13"] = valuelg[21]
+                                        modifier_0["Socket_14"] = valuelg[22]
+                                        modifier_0["Socket_15"] = valuelg[23]
+                                        modifier_0["Socket_16"] = valuelg[24]
+                                        modifier_0["Socket_17"] = valuelg[25]
+                                        modifier_0["Socket_18"] = valuelg[26]
+                                        modifier_0["Socket_19"] = valuelg[27]
+                                        modifier_0["Socket_20"] = valuelg[28]
+                                        modifier_0["Socket_21"] = valuelg[29]
 
-                                        modifier_1["Input_4"] = text1lg
-                                        modifier_1["Input_5"] = text2lg
-                                        modifier_1["Input_6"] = text3lg
-                                        modifier_1["Input_7"] = text4lg
-                                        modifier_1["Input_8"] = text5lg
-                                        modifier_1["Input_9"] = text6lg
-                                        modifier_1["Input_10"] = text7lg
-                                        modifier_1["Input_11"] = text8lg
-                                        modifier_1["Socket_0"] = text9lg
-                                        modifier_1["Socket_1"] = text10lg
-                                        modifier_1["Socket_2"] = text11lg
-                                        modifier_1["Socket_3"] = text12lg
-                                        modifier_1["Socket_4"] = text13lg
-                                        modifier_1["Socket_5"] = text14lg
-                                        modifier_1["Socket_6"] = text15lg
-                                        modifier_1["Socket_7"] = text16lg
-                                        modifier_1["Socket_8"] = text17lg
-                                        modifier_1["Socket_9"] = text18lg
-                                        modifier_1["Socket_10"] = text19lg
-                                        modifier_1["Socket_11"] = text20lg
-                                        modifier_1["Socket_12"] = text21lg
-                                        modifier_1["Socket_13"] = text22lg
-                                        modifier_1["Socket_14"] = text23lg
-                                        modifier_1["Socket_15"] = text24lg
-                                        modifier_1["Socket_16"] = text25lg
-                                        modifier_1["Socket_17"] = text26lg
-                                        modifier_1["Socket_18"] = text27lg
-                                        modifier_1["Socket_19"] = text28lg
-                                        modifier_1["Socket_20"] = text29lg
-                                        modifier_1["Socket_21"] = text30lg
+                                        modifier_1["Input_4"] = textlg[0]
+                                        modifier_1["Input_5"] = textlg[1]
+                                        modifier_1["Input_6"] = textlg[2]
+                                        modifier_1["Input_7"] = textlg[3]
+                                        modifier_1["Input_8"] = textlg[4]
+                                        modifier_1["Input_9"] = textlg[5]
+                                        modifier_1["Input_10"] = textlg[6]
+                                        modifier_1["Input_11"] = textlg[7]
+                                        modifier_1["Socket_0"] = textlg[8]
+                                        modifier_1["Socket_1"] = textlg[9]
+                                        modifier_1["Socket_2"] = textlg[10]
+                                        modifier_1["Socket_3"] = textlg[11]
+                                        modifier_1["Socket_4"] = textlg[12]
+                                        modifier_1["Socket_5"] = textlg[13]
+                                        modifier_1["Socket_6"] = textlg[14]
+                                        modifier_1["Socket_7"] = textlg[15]
+                                        modifier_1["Socket_8"] = textlg[16]
+                                        modifier_1["Socket_9"] = textlg[17]
+                                        modifier_1["Socket_10"] = textlg[18]
+                                        modifier_1["Socket_11"] = textlg[19]
+                                        modifier_1["Socket_12"] = textlg[20]
+                                        modifier_1["Socket_13"] = textlg[21]
+                                        modifier_1["Socket_14"] = textlg[22]
+                                        modifier_1["Socket_15"] = textlg[23]
+                                        modifier_1["Socket_16"] = textlg[24]
+                                        modifier_1["Socket_17"] = textlg[25]
+                                        modifier_1["Socket_18"] = textlg[26]
+                                        modifier_1["Socket_19"] = textlg[27]
+                                        modifier_1["Socket_20"] = textlg[28]
+                                        modifier_1["Socket_21"] = textlg[29]
                                         modifier_1["Input_23"] = titlelg
                                         modifier_1["Input_22"] = subtitlelg
 
@@ -21747,30 +22294,36 @@ class MyoperatorLGCcsv(bpy.types.Operator):
             maxvlgc = float(readout[1][5])
             decimallgc = int(readout[1][6])
             rnlgc = int(readout[1][7])
-            valuea1lgc = float(readout[1][2])
-            valuea2lgc = float(readout[2][2])
-            valuea3lgc = float(readout[3][2])
-            valuea4lgc = float(readout[4][2])
-            valuea5lgc = float(readout[5][2])
-            valuea6lgc = float(readout[6][2])
-            valuea7lgc = float(readout[7][2])
-            valuea8lgc = float(readout[8][2])
-            valueb1lgc = float(readout[1][3])
-            valueb2lgc = float(readout[2][3])
-            valueb3lgc = float(readout[3][3])
-            valueb4lgc = float(readout[4][3])
-            valueb5lgc = float(readout[5][3])
-            valueb6lgc = float(readout[6][3])
-            valueb7lgc = float(readout[7][3])
-            valueb8lgc = float(readout[8][3])
-            text1lgc = str(readout[1][1])
-            text2lgc = str(readout[2][1])
-            text3lgc = str(readout[3][1])
-            text4lgc = str(readout[4][1])
-            text5lgc = str(readout[5][1])
-            text6lgc = str(readout[6][1])
-            text7lgc = str(readout[7][1])
-            text8lgc = str(readout[8][1])
+            
+            valuealgc = []
+            for i in range(1, 9):
+                try:
+                    valuealgcg = readout[i][2]
+                    if valuealgcg:  # check if the string is not empty
+                        valuealgc.append(float(valuealgcg))
+                    else:
+                        valuealgc.append(0.0)
+                except IndexError:
+                    valuealgc.append(0.0)
+            
+            valueblgc = []
+            for i in range(1, 9):
+                try:
+                    valueblgcg = readout[i][3]
+                    if valueblgcg:  # check if the string is not empty
+                        valueblgc.append(float(valueblgcg))
+                    else:
+                        valueblgc.append(0.0)
+                except IndexError:
+                    valueblgc.append(0.0)
+            
+            textlgc = []
+            for i in range(1, 9):
+                try:
+                    textlgc.append(str(readout[i][1]))
+                except IndexError:
+                    textlgc.append("")
+            
             titlelgc = str(readout[1][8])
             subtitlelgc = str(readout[1][9])
             legendalgc = str(readout[1][10])
@@ -21795,31 +22348,34 @@ class MyoperatorLGCcsv(bpy.types.Operator):
                                         modifier_0c["Input_14"] = maxvlgc
                                         modifier_0c["Input_15"] = decimallgc
                                         modifier_0c["Input_18"] = rnlgc
-                                        modifier_0c["Input_4"] = valuea1lgc
-                                        modifier_0c["Input_5"] = valuea2lgc
-                                        modifier_0c["Input_6"] = valuea3lgc
-                                        modifier_0c["Input_7"] = valuea4lgc
-                                        modifier_0c["Input_8"] = valuea5lgc
-                                        modifier_0c["Input_9"] = valuea6lgc
-                                        modifier_0c["Input_10"] = valuea7lgc
-                                        modifier_0c["Input_11"] = valuea8lgc
-                                        modifier_0c["Input_34"] = valueb1lgc
-                                        modifier_0c["Input_35"] = valueb2lgc
-                                        modifier_0c["Input_36"] = valueb3lgc
-                                        modifier_0c["Input_37"] = valueb4lgc
-                                        modifier_0c["Input_38"] = valueb5lgc
-                                        modifier_0c["Input_39"] = valueb6lgc
-                                        modifier_0c["Input_40"] = valueb7lgc
-                                        modifier_0c["Input_41"] = valueb8lgc
+                                        
+                                        modifier_0c["Input_4"] = valuealgc[0]
+                                        modifier_0c["Input_5"] = valuealgc[1]
+                                        modifier_0c["Input_6"] = valuealgc[2]
+                                        modifier_0c["Input_7"] = valuealgc[3]
+                                        modifier_0c["Input_8"] = valuealgc[4]
+                                        modifier_0c["Input_9"] = valuealgc[5]
+                                        modifier_0c["Input_10"] = valuealgc[6]
+                                        modifier_0c["Input_11"] = valuealgc[7]
+                                        
+                                        modifier_0c["Input_34"] = valueblgc[0]
+                                        modifier_0c["Input_35"] = valueblgc[1]
+                                        modifier_0c["Input_36"] = valueblgc[2]
+                                        modifier_0c["Input_37"] = valueblgc[3]
+                                        modifier_0c["Input_38"] = valueblgc[4]
+                                        modifier_0c["Input_39"] = valueblgc[5]
+                                        modifier_0c["Input_40"] = valueblgc[6]
+                                        modifier_0c["Input_41"] = valueblgc[7]
 
-                                        modifier_1c["Input_4"] = text1lgc
-                                        modifier_1c["Input_5"] = text2lgc
-                                        modifier_1c["Input_6"] = text3lgc
-                                        modifier_1c["Input_7"] = text4lgc
-                                        modifier_1c["Input_8"] = text5lgc
-                                        modifier_1c["Input_9"] = text6lgc
-                                        modifier_1c["Input_10"] = text7lgc
-                                        modifier_1c["Input_11"] = text8lgc
+                                        modifier_1c["Input_4"] = textlgc[0]
+                                        modifier_1c["Input_5"] = textlgc[1]
+                                        modifier_1c["Input_6"] = textlgc[2]
+                                        modifier_1c["Input_7"] = textlgc[3]
+                                        modifier_1c["Input_8"] = textlgc[4]
+                                        modifier_1c["Input_9"] = textlgc[5]
+                                        modifier_1c["Input_10"] = textlgc[6]
+                                        modifier_1c["Input_11"] = textlgc[7]
+                                        
                                         modifier_1c["Input_23"] = titlelgc
                                         modifier_1c["Input_22"] = subtitlelgc
                                         modifier_1c["Input_29"] = legendalgc
@@ -21851,32 +22407,26 @@ class MyoperatorHBcsv(bpy.types.Operator):
             readout = list(csv.reader(f))
             gregoryhbar = int(readout[1][0])
             
-            malloryhbar1 = float(readout[1][2])
-            malloryhbar2 = float(readout[2][2])
-            malloryhbar3 = float(readout[3][2])
-            malloryhbar4 = float(readout[4][2])
-            malloryhbar5 = float(readout[5][2])
-            malloryhbar6 = float(readout[6][2])
-            malloryhbar7 = float(readout[7][2])
-            malloryhbar8 = float(readout[8][2])
-            malloryhbar9 = float(readout[9][2])
-            malloryhbar10 = float(readout[10][2])
+            malloryhbar = []
+            for i in range(1, 11):
+                try:
+                    malloryhbar.append(float(readout[i][2]))
+                except IndexError:
+                    malloryhbar.append(0.0)
+
             
             olatunjihbar1 = float(readout[1][3])
             olatunjihbar2 = float(readout[1][4])
             
             jeopardyhbar1 = int(readout[1][5])
             
-            hogwashhbar1 = str(readout[1][1])
-            hogwashhbar2 = str(readout[2][1])
-            hogwashhbar3 = str(readout[3][1])
-            hogwashhbar4 = str(readout[4][1])
-            hogwashhbar5 = str(readout[5][1])
-            hogwashhbar6 = str(readout[6][1])
-            hogwashhbar7 = str(readout[7][1])
-            hogwashhbar8 = str(readout[8][1])
-            hogwashhbar9 = str(readout[9][1])
-            hogwashhbar10 = str(readout[10][1])
+            hogwashhbar = []
+            for i in range(1, 11):
+                try:
+                    hogwashhbar.append(str(readout[i][1]))
+                except IndexError:
+                    hogwashhbar.append("")
+
 
             titlehbar1 = str(readout[1][6])
             subtitlehbar1 = str(readout[1][7])
@@ -21894,29 +22444,29 @@ class MyoperatorHBcsv(bpy.types.Operator):
                                 modifier_name_hbg = selected_obj_hbg.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_36"] = gregoryhbar
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = malloryhbar1
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = malloryhbar2
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = malloryhbar3
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = malloryhbar4
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_16"] = malloryhbar5
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_17"] = malloryhbar6
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_18"] = malloryhbar7
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_19"] = malloryhbar8
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_20"] = malloryhbar9
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_21"] = malloryhbar10
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_14"] = malloryhbar[0]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_15"] = malloryhbar[1]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_16"] = malloryhbar[2]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_17"] = malloryhbar[3]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_16"] = malloryhbar[4]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_17"] = malloryhbar[5]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_18"] = malloryhbar[6]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_19"] = malloryhbar[7]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_20"] = malloryhbar[8]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_21"] = malloryhbar[9]
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_10"] = olatunjihbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_11"] = olatunjihbar2
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_12"] = jeopardyhbar1
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_2"] = hogwashhbar1
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = hogwashhbar2
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = hogwashhbar3
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = hogwashhbar4
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_10"] = hogwashhbar5
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_11"] = hogwashhbar6
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_12"] = hogwashhbar7
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_13"] = hogwashhbar8
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_14"] = hogwashhbar9
-                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_15"] = hogwashhbar10
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_2"] = hogwashhbar[0]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_3"] = hogwashhbar[1]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_4"] = hogwashhbar[2]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Input_5"] = hogwashhbar[3]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_10"] = hogwashhbar[4]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_11"] = hogwashhbar[5]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_12"] = hogwashhbar[6]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_13"] = hogwashhbar[7]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_14"] = hogwashhbar[8]
+                                selected_obj_hbg.modifiers[modifier_name_hbg]["Socket_15"] = hogwashhbar[9]
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_7"] = titlehbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_8"] = subtitlehbar1
                                 selected_obj_hbg.modifiers[modifier_name_hbg]["Input_6"] = totalhbar1
@@ -21942,36 +22492,41 @@ class MyoperatorHBCcsv(bpy.types.Operator):
         with open(filepath_full4c) as f:
             readout = list(csv.reader(f))
             nbhbarc = int(readout[1][0])
-            bthbarc1 = str(readout[1][1])
-            bthbarc2 = str(readout[2][1])
-            bthbarc3 = str(readout[3][1])
-            bthbarc4 = str(readout[4][1])
-            bthbarc5 = str(readout[5][1])
-            bthbarc6 = str(readout[6][1])
-            bthbarc7 = str(readout[7][1])
-            bthbarc8 = str(readout[8][1])
-            bthbarc9 = str(readout[9][1])
+            
+            bthbarc = []
+            for i in range(1, 10):
+                try:
+                    bthbarc.append(str(readout[i][1]))
+                except IndexError:
+                    bthbarc.append("")
+                    
             minvhbarc1 = float(readout[1][4])
             maxvhbarc2 = float(readout[1][5])
             decimalhbarc1 = int(readout[1][6])
-            bvahbarc1 = float(readout[1][2])
-            bvahbarc2 = float(readout[2][2])
-            bvahbarc3 = float(readout[3][2])
-            bvahbarc4 = float(readout[4][2])
-            bvahbarc5 = float(readout[5][2])
-            bvahbarc6 = float(readout[6][2])
-            bvahbarc7 = float(readout[7][2])
-            bvahbarc8 = float(readout[8][2])
-            bvahbarc9 = float(readout[9][2])
-            bvbhbarc1 = float(readout[1][3])
-            bvbhbarc2 = float(readout[2][3])
-            bvbhbarc3 = float(readout[3][3])
-            bvbhbarc4 = float(readout[4][3])
-            bvbhbarc5 = float(readout[5][3])
-            bvbhbarc6 = float(readout[6][3])
-            bvbhbarc7 = float(readout[7][3])
-            bvbhbarc8 = float(readout[8][3])
-            bvbhbarc9 = float(readout[9][3])
+            
+            bvahbarc = []
+            for i in range(1, 10):
+                try:
+                    value = readout[i][2]
+                    if value:  # check if the string is not empty
+                        bvahbarc.append(float(value))
+                    else:
+                        bvahbarc.append(0.0)
+                except IndexError:
+                    bvahbarc.append(0.0)
+
+                    
+            bvbhbarc = []
+            for i in range(1, 10):
+                try:
+                    value = readout[i][3]
+                    if value:  # check if the string is not empty
+                        bvbhbarc.append(float(value))
+                    else:
+                        bvbhbarc.append(0.0)
+                except IndexError:
+                    bvbhbarc.append(0.0)
+                    
             titlehbarc1 = str(readout[1][7])
             subtitlehbarc1 = str(readout[1][8])
             legendhbarc1 = str(readout[1][9])
@@ -21989,36 +22544,36 @@ class MyoperatorHBCcsv(bpy.types.Operator):
                                 modifier_name_hbgc = selected_obj_hbgc.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_45"] = nbhbarc
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_2"] = bthbarc1
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = bthbarc2
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = bthbarc3
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = bthbarc4
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_66"] = bthbarc5
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_67"] = bthbarc6
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_68"] = bthbarc7
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_69"] = bthbarc8
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_70"] = bthbarc9
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_2"] = bthbarc[0]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_3"] = bthbarc[1]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_4"] = bthbarc[2]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_5"] = bthbarc[3]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_66"] = bthbarc[4]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_67"] = bthbarc[5]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_68"] = bthbarc[6]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_69"] = bthbarc[7]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_70"] = bthbarc[8]
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_10"] = minvhbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_11"] = maxvhbarc2
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_12"] = decimalhbarc1
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = bvahbarc1
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = bvahbarc2
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = bvahbarc3
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = bvahbarc4
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_71"] = bvahbarc5
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_73"] = bvahbarc6
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_75"] = bvahbarc7
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_77"] = bvahbarc8
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_79"] = bvahbarc9
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = bvbhbarc1
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = bvbhbarc2
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = bvbhbarc3
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = bvbhbarc4
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_72"] = bvbhbarc5
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_74"] = bvbhbarc6
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_76"] = bvbhbarc7
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_78"] = bvbhbarc8
-                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_80"] = bvbhbarc9
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_14"] = bvahbarc[0]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_15"] = bvahbarc[1]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_16"] = bvahbarc[2]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_17"] = bvahbarc[3]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_71"] = bvahbarc[4]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_73"] = bvahbarc[5]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_75"] = bvahbarc[6]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_77"] = bvahbarc[7]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_79"] = bvahbarc[8]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_36"] = bvbhbarc[0]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_37"] = bvbhbarc[1]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_38"] = bvbhbarc[2]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_39"] = bvbhbarc[3]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_72"] = bvbhbarc[4]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_74"] = bvbhbarc[5]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_76"] = bvbhbarc[6]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_78"] = bvbhbarc[7]
+                                selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_80"] = bvbhbarc[8]
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_7"] = titlehbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_8"] = subtitlehbarc1
                                 selected_obj_hbgc.modifiers[modifier_name_hbgc]["Input_6"] = legendhbarc1
@@ -22045,39 +22600,40 @@ class MyoperatorHBOcsv(bpy.types.Operator):
         with open(filepath_full4o) as f:
             readout = list(csv.reader(f))
             nbhbaro = int(readout[1][0])
-            bthbaro1 = str(readout[1][1])
-            bthbaro2 = str(readout[2][1])
-            bthbaro3 = str(readout[3][1])
-            bthbaro4 = str(readout[4][1])
-            bthbaro5 = str(readout[5][1])
-            bthbaro6 = str(readout[6][1])
-            bthbaro7 = str(readout[7][1])
-            bthbaro8 = str(readout[8][1])
-            bthbaro9 = str(readout[9][1])
-            bthbaro10 = str(readout[10][1])
+            
+            bthbaro = []
+            for i in range(1, 11):
+                try:
+                    bthbaro.append(str(readout[i][1]))
+                except IndexError:
+                    bthbaro.append("")
+                    
             minvhbaro1 = float(readout[1][4])
             maxvhbaro2 = float(readout[1][5])
             decimalhbaro1 = int(readout[1][6])
-            bvahbaro1 = float(readout[1][2])
-            bvahbaro2 = float(readout[2][2])
-            bvahbaro3 = float(readout[3][2])
-            bvahbaro4 = float(readout[4][2])
-            bvahbaro5 = float(readout[5][2])
-            bvahbaro6 = float(readout[6][2])
-            bvahbaro7 = float(readout[7][2])
-            bvahbaro8 = float(readout[8][2])
-            bvahbaro9 = float(readout[9][2])
-            bvahbaro10 = float(readout[10][2])
-            bvbhbaro1 = float(readout[1][3])
-            bvbhbaro2 = float(readout[2][3])
-            bvbhbaro3 = float(readout[3][3])
-            bvbhbaro4 = float(readout[4][3])
-            bvbhbaro5 = float(readout[5][3])
-            bvbhbaro6 = float(readout[6][3])
-            bvbhbaro7 = float(readout[7][3])
-            bvbhbaro8 = float(readout[8][3])
-            bvbhbaro9 = float(readout[9][3])
-            bvbhbaro10 = float(readout[10][3])
+            
+            bvahbaro = []
+            for i in range(1, 11):
+                try:
+                    value = readout[i][2]
+                    if value:  # check if the string is not empty
+                        bvahbaro.append(float(value))
+                    else:
+                        bvahbaro.append(0.0)
+                except IndexError:
+                    bvahbaro.append(0.0)
+                    
+            bvbhbaro = []
+            for i in range(1, 11):
+                try:
+                    value = readout[i][3]
+                    if value:  # check if the string is not empty
+                        bvbhbaro.append(float(value))
+                    else:
+                        bvbhbaro.append(0.0)
+                except IndexError:
+                    bvbhbaro.append(0.0)
+                    
             titlehbaro1 = str(readout[1][7])
             subtitlehbaro1 = str(readout[1][8])
             legendhbaro1 = str(readout[1][9])
@@ -22095,39 +22651,39 @@ class MyoperatorHBOcsv(bpy.types.Operator):
                                 modifier_name_hbgo = selected_obj_hbgo.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_36"] = nbhbaro
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_2"] = bthbaro1
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_3"] = bthbaro2
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_4"] = bthbaro3
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_5"] = bthbaro4
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_10"] = bthbaro5
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_11"] = bthbaro6
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_12"] = bthbaro7
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_13"] = bthbaro8
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_14"] = bthbaro9
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_15"] = bthbaro10
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_2"] = bthbaro[0]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_3"] = bthbaro[1]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_4"] = bthbaro[2]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_5"] = bthbaro[3]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_10"] = bthbaro[4]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_11"] = bthbaro[5]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_12"] = bthbaro[6]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_13"] = bthbaro[7]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_14"] = bthbaro[8]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_15"] = bthbaro[9]
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_10"] = minvhbaro1
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_11"] = maxvhbaro2
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_12"] = decimalhbaro1
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_16"] = bvahbaro1
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_17"] = bvahbaro2
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_19"] = bvahbaro3
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_20"] = bvahbaro4
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_21"] = bvahbaro5
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_22"] = bvahbaro6
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_23"] = bvahbaro7
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_24"] = bvahbaro8
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_25"] = bvahbaro9
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_26"] = bvahbaro10
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_14"] = bvbhbaro1
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_15"] = bvbhbaro2
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_16"] = bvbhbaro3
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_17"] = bvbhbaro4
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_28"] = bvbhbaro5
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_29"] = bvbhbaro6
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_18"] = bvbhbaro7
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_30"] = bvbhbaro8
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_31"] = bvbhbaro9
-                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_27"] = bvbhbaro10
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_16"] = bvahbaro[0]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_17"] = bvahbaro[1]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_19"] = bvahbaro[2]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_20"] = bvahbaro[3]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_21"] = bvahbaro[4]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_22"] = bvahbaro[5]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_23"] = bvahbaro[6]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_24"] = bvahbaro[7]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_25"] = bvahbaro[8]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_26"] = bvahbaro[9]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_14"] = bvbhbaro[0]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_15"] = bvbhbaro[1]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_16"] = bvbhbaro[2]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_17"] = bvbhbaro[3]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_28"] = bvbhbaro[4]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_29"] = bvbhbaro[5]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_18"] = bvbhbaro[6]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_30"] = bvbhbaro[7]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_31"] = bvbhbaro[8]
+                                selected_obj_hbgo.modifiers[modifier_name_hbgo]["Socket_27"] = bvbhbaro[9]
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_7"] = titlehbaro1
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_8"] = subtitlehbaro1
                                 selected_obj_hbgo.modifiers[modifier_name_hbgo]["Input_6"] = legendhbaro1
@@ -22155,54 +22711,60 @@ class MyoperatorHBScsv(bpy.types.Operator):
             readout = list(csv.reader(f))
             nbhbars = int(readout[1][0])
             nbsbars = int(readout[1][1])
-            bthbars1 = str(readout[1][2])
-            bthbars2 = str(readout[2][2])
-            bthbars3 = str(readout[3][2])
-            bthbars4 = str(readout[4][2])
-            bthbars5 = str(readout[5][2])
-            bthbars6 = str(readout[6][2])
-            bthbars7 = str(readout[7][2])
-            bthbars8 = str(readout[8][2])
-            bthbars9 = str(readout[9][2])
-            bthbars10 = str(readout[10][2])
+            
+            bthbars = []
+            for i in range(1, 11):
+                try:
+                    bthbars.append(str(readout[i][2]))
+                except IndexError:
+                    bthbars.append("")
+            
             minvhbars1 = float(readout[1][6])
             maxvhbars2 = float(readout[1][7])
             decimalhbars1 = int(readout[1][8])
-            bvahbars1 = float(readout[1][3])
-            bvahbars2 = float(readout[2][3])
-            bvahbars3 = float(readout[3][3])
-            bvahbars4 = float(readout[4][3])
-            bvahbars5 = float(readout[5][3])
-            bvahbars6 = float(readout[6][3])
-            bvahbars7 = float(readout[7][3])
-            bvahbars8 = float(readout[8][3])
-            bvahbars9 = float(readout[9][3])
-            bvahbars10 = float(readout[10][3])
-            bvbhbars1 = float(readout[1][4])
-            bvbhbars2 = float(readout[2][4])
-            bvbhbars3 = float(readout[3][4])
-            bvbhbars4 = float(readout[4][4])
-            bvbhbars5 = float(readout[5][4])
-            bvbhbars6 = float(readout[6][4])
-            bvbhbars7 = float(readout[7][4])
-            bvbhbars8 = float(readout[8][4])
-            bvbhbars9 = float(readout[9][4])
-            bvbhbars10 = float(readout[10][4])
-            bvchbars1 = float(readout[1][5])
-            bvchbars2 = float(readout[2][5])
-            bvchbars3 = float(readout[3][5])
-            bvchbars4 = float(readout[4][5])
-            bvchbars5 = float(readout[5][5])
-            bvchbars6 = float(readout[6][5])
-            bvchbars7 = float(readout[7][5])
-            bvchbars8 = float(readout[8][5])
-            bvchbars9 = float(readout[9][5])
-            bvchbars10 = float(readout[10][5])
+            
+            bvahbars = []
+            for i in range(1, 11):
+                try:
+                    value = readout[i][3]
+                    if value:  # check if the string is not empty
+                        bvahbars.append(float(value))
+                    else:
+                        bvahbars.append(0.0)
+                except IndexError:
+                    bvahbars.append(0.0)
+            
+            bvbhbars = []
+            for i in range(1, 11):
+                try:
+                    value = readout[i][4]
+                    if value:  # check if the string is not empty
+                        bvbhbars.append(float(value))
+                    else:
+                        bvbhbars.append(0.0)
+                except IndexError:
+                    bvbhbars.append(0.0)
+            
+            bvchbars = []
+            for i in range(1, 11):
+                try:
+                    value = readout[i][5]
+                    if value:  # check if the string is not empty
+                        bvchbars.append(float(value))
+                    else:
+                        bvchbars.append(0.0)
+                except IndexError:
+                    bvchbars.append(0.0)
+            
             titlehbars1 = str(readout[1][9])
             subtitlehbars1 = str(readout[1][10])
-            legendhbars1 = str(readout[1][11])
-            legendhbars2 = str(readout[2][11])
-            legendhbars3 = str(readout[3][11])
+            
+            legendhbars = []
+            for i in range(1, 4):
+                try:
+                    legendhbars.append(str(readout[i][11]))
+                except IndexError:
+                    legendhbars.append("")
             
         # Ensure an object is selected
         if bpy.context.selected_objects:
@@ -22217,54 +22779,54 @@ class MyoperatorHBScsv(bpy.types.Operator):
 
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_36"] = nbhbars
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_9"] = nbsbars
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_2"] = bthbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_3"] = bthbars2
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_4"] = bthbars3
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_5"] = bthbars4
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_27"] = bthbars5
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_28"] = bthbars6
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_12"] = bthbars7
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_13"] = bthbars8
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_14"] = bthbars9
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_15"] = bthbars10
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_2"] = bthbars[0]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_3"] = bthbars[1]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_4"] = bthbars[2]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_5"] = bthbars[3]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_27"] = bthbars[4]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_28"] = bthbars[5]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_12"] = bthbars[6]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_13"] = bthbars[7]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_14"] = bthbars[8]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_15"] = bthbars[9]
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_10"] = minvhbars1
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_11"] = maxvhbars2
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_12"] = decimalhbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_14"] = bvahbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_15"] = bvahbars2
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_16"] = bvahbars3
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_17"] = bvahbars4
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_16"] = bvahbars5
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_17"] = bvahbars6
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_18"] = bvahbars7
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_19"] = bvahbars8
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_20"] = bvahbars9
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_21"] = bvahbars10
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_29"] = bvbhbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_31"] = bvbhbars2
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_33"] = bvbhbars3
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_35"] = bvbhbars4
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_37"] = bvbhbars5
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_39"] = bvbhbars6
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_41"] = bvbhbars7
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_43"] = bvbhbars8
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_45"] = bvbhbars9
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_47"] = bvbhbars10
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_30"] = bvchbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_32"] = bvchbars2
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_34"] = bvchbars3
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_36"] = bvchbars4
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_38"] = bvchbars5
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_40"] = bvchbars6
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_42"] = bvchbars7
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_44"] = bvchbars8
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_46"] = bvchbars9
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_48"] = bvchbars10
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_14"] = bvahbars[0]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_15"] = bvahbars[1]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_16"] = bvahbars[2]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_17"] = bvahbars[3]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_16"] = bvahbars[4]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_17"] = bvahbars[5]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_18"] = bvahbars[6]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_19"] = bvahbars[7]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_20"] = bvahbars[8]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_21"] = bvahbars[9]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_29"] = bvbhbars[0]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_31"] = bvbhbars[1]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_33"] = bvbhbars[2]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_35"] = bvbhbars[3]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_37"] = bvbhbars[4]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_39"] = bvbhbars[5]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_41"] = bvbhbars[6]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_43"] = bvbhbars[7]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_45"] = bvbhbars[8]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_47"] = bvbhbars[9]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_30"] = bvchbars[0]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_32"] = bvchbars[1]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_34"] = bvchbars[2]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_36"] = bvchbars[3]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_38"] = bvchbars[4]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_40"] = bvchbars[5]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_42"] = bvchbars[6]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_44"] = bvchbars[7]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_46"] = bvchbars[8]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_48"] = bvchbars[9]
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_7"] = titlehbars1
                                 selected_obj_shbg.modifiers[modifier_name_shbg]["Input_8"] = subtitlehbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_6"] = legendhbars1
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_2"] = legendhbars2
-                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_8"] = legendhbars3
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Input_6"] = legendhbars[0]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_2"] = legendhbars[1]
+                                selected_obj_shbg.modifiers[modifier_name_shbg]["Socket_8"] = legendhbars[2]
 
                                 print(f"Set modifier input for object '{mesh_name_shbg}' and modifier '{modifier_name_shbg}'.")
                         else:
@@ -22288,50 +22850,60 @@ class MyoperatorVBScsv(bpy.types.Operator):
             readout = list(csv.reader(f))
             nbvbars = int(readout[1][0])
             nbsvbars = int(readout[1][1])
-            btvbars1 = str(readout[1][2])
-            btvbars2 = str(readout[2][2])
-            btvbars3 = str(readout[3][2])
-            btvbars4 = str(readout[4][2])
-            btvbars5 = str(readout[5][2])
-            btvbars6 = str(readout[6][2])
-            btvbars7 = str(readout[7][2])
-            btvbars8 = str(readout[8][2])
+            
+            btvbars = []
+            for i in range(1, 9):
+                try:
+                    btvbars.append(str(readout[i][2]))
+                except IndexError:
+                    btvbars.append("")
 
             minvvbars1 = float(readout[1][6])
             maxvvbars2 = float(readout[1][7])
             decimalvbars1 = int(readout[1][8])
-            bvavbars1 = float(readout[1][3])
-            bvavbars2 = float(readout[2][3])
-            bvavbars3 = float(readout[3][3])
-            bvavbars4 = float(readout[4][3])
-            bvavbars5 = float(readout[5][3])
-            bvavbars6 = float(readout[6][3])
-            bvavbars7 = float(readout[7][3])
-            bvavbars8 = float(readout[8][3])
+            
+            bvavbars = []
+            for i in range(1, 9):
+                try:
+                    bvavbarsg = readout[i][3]
+                    if bvavbarsg:  # check if the string is not empty
+                        bvavbars.append(float(bvavbarsg))
+                    else:
+                        bvavbars.append(0.0)
+                except IndexError:
+                    bvavbars.append(0.0)
+            
+            bvbvbars = []
+            for i in range(1, 9):
+                try:
+                    bvbvbarsg = readout[i][4]
+                    if bvbvbarsg:  # check if the string is not empty
+                        bvbvbars.append(float(bvbvbarsg))
+                    else:
+                        bvbvbars.append(0.0)
+                except IndexError:
+                    bvbvbars.append(0.0)
 
-            bvbvbars1 = float(readout[1][4])
-            bvbvbars2 = float(readout[2][4])
-            bvbvbars3 = float(readout[3][4])
-            bvbvbars4 = float(readout[4][4])
-            bvbvbars5 = float(readout[5][4])
-            bvbvbars6 = float(readout[6][4])
-            bvbvbars7 = float(readout[7][4])
-            bvbvbars8 = float(readout[8][4])
-
-            bvcvbars1 = float(readout[1][5])
-            bvcvbars2 = float(readout[2][5])
-            bvcvbars3 = float(readout[3][5])
-            bvcvbars4 = float(readout[4][5])
-            bvcvbars5 = float(readout[5][5])
-            bvcvbars6 = float(readout[6][5])
-            bvcvbars7 = float(readout[7][5])
-            bvcvbars8 = float(readout[8][5])
+            bvcvbars = []
+            for i in range(1, 9):
+                try:
+                    bvcvbarsg = readout[i][5]
+                    if bvcvbarsg:  # check if the string is not empty
+                        bvcvbars.append(float(bvcvbarsg))
+                    else:
+                        bvcvbars.append(0.0)
+                except IndexError:
+                    bvcvbars.append(0.0)
 
             titlevbars1 = str(readout[1][9])
             subtitlevbars1 = str(readout[1][10])
-            legendvbars1 = str(readout[1][11])
-            legendvbars2 = str(readout[2][11])
-            legendvbars3 = str(readout[3][11])
+            
+            legendvbars = []
+            for i in range(1, 4):
+                try:
+                    legendvbars.append(str(readout[i][11]))
+                except IndexError:
+                    legendvbars.append("")
             
         # Ensure an object is selected
         if bpy.context.selected_objects:
@@ -22347,51 +22919,52 @@ class MyoperatorVBScsv(bpy.types.Operator):
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_57"] = nbvbars
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_31"] = nbsvbars
 
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_2"] = btvbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_42"] = btvbars2
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_3"] = btvbars3
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_45"] = btvbars4
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_4"] = btvbars5
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_47"] = btvbars6
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_5"] = btvbars7
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_49"] = btvbars8
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_2"] = btvbars[0]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_42"] = btvbars[1]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_3"] = btvbars[2]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_45"] = btvbars[3]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_4"] = btvbars[4]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_47"] = btvbars[5]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_5"] = btvbars[6]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_49"] = btvbars[7]
 
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_10"] = minvvbars1
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_11"] = maxvvbars2
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_12"] = decimalvbars1
 
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_14"] = bvavbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_41"] = bvavbars2
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_15"] = bvavbars3
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_44"] = bvavbars4
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_16"] = bvavbars5
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_48"] = bvavbars6
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_17"] = bvavbars7
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_50"] = bvavbars8
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_14"] = bvavbars[0]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_41"] = bvavbars[1]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_15"] = bvavbars[2]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_44"] = bvavbars[3]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_16"] = bvavbars[4]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_48"] = bvavbars[5]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_17"] = bvavbars[6]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_50"] = bvavbars[7]
 
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_13"] = bvbvbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_15"] = bvbvbars2
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_17"] = bvbvbars3
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_19"] = bvbvbars4
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_21"] = bvbvbars5
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_23"] = bvbvbars6
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_25"] = bvbvbars7
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_29"] = bvbvbars8
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_13"] = bvbvbars[0]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_15"] = bvbvbars[1]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_17"] = bvbvbars[2]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_19"] = bvbvbars[3]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_21"] = bvbvbars[4]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_23"] = bvbvbars[5]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_25"] = bvbvbars[6]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_29"] = bvbvbars[7]
 
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_14"] = bvcvbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_16"] = bvcvbars2
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_18"] = bvcvbars3
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_20"] = bvcvbars4
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_22"] = bvcvbars5
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_24"] = bvcvbars6
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_26"] = bvcvbars7
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_28"] = bvcvbars8
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_14"] = bvcvbars[0]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_16"] = bvcvbars[1]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_18"] = bvcvbars[2]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_20"] = bvcvbars[3]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_22"] = bvcvbars[4]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_24"] = bvcvbars[5]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_26"] = bvcvbars[6]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_28"] = bvcvbars[7]
 
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_7"] = titlevbars1
                                 selected_obj_svbg.modifiers[modifier_name_svbg]["Input_8"] = subtitlevbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_6"] = legendvbars1
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_34"] = legendvbars2
-                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_35"] = legendvbars3
+                                
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Input_6"] = legendvbars[0]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_34"] = legendvbars[1]
+                                selected_obj_svbg.modifiers[modifier_name_svbg]["Socket_35"] = legendvbars[2]
 
                                 print(f"Set modifier input for object '{mesh_name_svbg}' and modifier '{modifier_name_svbg}'.")
                         else:
@@ -22414,35 +22987,70 @@ class MyoperatorMCcsv(bpy.types.Operator):
         with open(filepath_full5) as f:
             readout = list(csv.reader(f))
             gregorymcircle = int(readout[1][0])
-            mallorymcircle1 = float(readout[1][2])
-            mallorymcircle2 = float(readout[2][2])
-            mallorymcircle3 = float(readout[3][2])
-            mallorymcircle4 = float(readout[4][2])
-            mallorymcircle5 = float(readout[5][2])
-            mallorymcircle6 = float(readout[6][2])
-            mallorymcircle7 = float(readout[7][2])
-            mallorymcircle8 = float(readout[8][2])
-            hogwashmcircle1 = str(readout[1][1])
-            hogwashmcircle2 = str(readout[2][1])
-            hogwashmcircle3 = str(readout[3][1])
-            hogwashmcircle4 = str(readout[4][1])
-            hogwashmcircle5 = str(readout[5][1])
-            hogwashmcircle6 = str(readout[6][1])
-            hogwashmcircle7 = str(readout[7][1])
-            hogwashmcircle8 = str(readout[8][1])
+            
+            mallorymcirclemgc = []
+            for i in range(1, 9):
+                try:
+                    mallorymcirclemgcg = readout[i][2]
+                    if mallorymcirclemgcg:  # check if the string is not empty
+                        mallorymcirclemgc.append(float(mallorymcirclemgcg))
+                    else:
+                        mallorymcirclemgc.append(0.0)
+                except IndexError:
+                    mallorymcirclemgc.append(0.0)
+            
+            hogwashcircle = []
+            for i in range(1, 9):
+                try:
+                    hogwashcircle.append(str(readout[i][1]))
+                except IndexError:
+                    hogwashcircle.append("")
+            
             minvaluemcircle = float(readout[1][3])
             maxvaluemcircle = float(readout[1][4])
             decimalmcircle = int(readout[1][5])
             titlemcircle = str(readout[1][6])
             subtitlemcircle = str(readout[1][7])
-            mallorympercentage1 = float(mallorymcircle1/maxvaluemcircle)
-            mallorympercentage2 = float(mallorymcircle2/maxvaluemcircle)
-            mallorympercentage3 = float(mallorymcircle3/maxvaluemcircle)
-            mallorympercentage4 = float(mallorymcircle4/maxvaluemcircle)
-            mallorympercentage5 = float(mallorymcircle5/maxvaluemcircle)
-            mallorympercentage6 = float(mallorymcircle6/maxvaluemcircle)
-            mallorympercentage7 = float(mallorymcircle7/maxvaluemcircle)
-            mallorympercentage8 = float(mallorymcircle8/maxvaluemcircle)
+            
+            if mallorymcirclemgc[0] == 0:
+                mallorympercentage1 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage1 = float(float(mallorymcirclemgc[0])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[1] == 0:
+                mallorympercentage2 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage2 = float(float(mallorymcirclemgc[1])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[2] == 0:
+                mallorympercentage3 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage3 = float(float(mallorymcirclemgc[2])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[3] == 0:
+                mallorympercentage4 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage4 = float(float(mallorymcirclemgc[3])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[4] == 0:
+                mallorympercentage5 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage5 = float(float(mallorymcirclemgc[4])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[5] == 0:
+                mallorympercentage6 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage6 = float(float(mallorymcirclemgc[5])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[6] == 0:
+                mallorympercentage7 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage7 = float(float(mallorymcirclemgc[6])/maxvaluemcircle)
+                
+            if mallorymcirclemgc[7] == 0:
+                mallorympercentage8 = 0.0  # avoid division by zero
+            else:
+                mallorympercentage8 = float(float(mallorymcirclemgc[7])/maxvaluemcircle)
              
 
             
@@ -22471,14 +23079,14 @@ class MyoperatorMCcsv(bpy.types.Operator):
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_18"] = decimalmcircle
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_40"] = titlemcircle
                                 selected_obj_mcg.modifiers[modifier_name_mcg]["Input_41"] = subtitlemcircle
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_42"] = hogwashmcircle1
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_43"] = hogwashmcircle2
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = hogwashmcircle3
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = hogwashmcircle4
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = hogwashmcircle5
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_13"] = hogwashmcircle6
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_18"] = hogwashmcircle7
-                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_23"] = hogwashmcircle8
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_42"] = hogwashcircle[0]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_43"] = hogwashcircle[1]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_44"] = hogwashcircle[2]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_46"] = hogwashcircle[3]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Input_45"] = hogwashcircle[4]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_13"] = hogwashcircle[5]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_18"] = hogwashcircle[6]
+                                selected_obj_mcg.modifiers[modifier_name_mcg]["Socket_23"] = hogwashcircle[7]
 
                                 print(f"Set modifier input for object '{mesh_name_mcg}' and modifier '{modifier_name_mcg}'.")
                         else:
@@ -22501,35 +23109,70 @@ class MyoperatorMPcsv(bpy.types.Operator):
         with open(filepath_full6) as f:
             readout = list(csv.reader(f))
             gregorympie = int(readout[1][0])
-            mallorympie1 = float(readout[1][2])
-            mallorympie2 = float(readout[2][2])
-            mallorympie3 = float(readout[3][2])
-            mallorympie4 = float(readout[4][2])
-            mallorympie5 = float(readout[5][2])
-            mallorympie6 = float(readout[6][2])
-            mallorympie7 = float(readout[7][2])
-            mallorympie8 = float(readout[8][2])
-            hogwashmpie1 = str(readout[1][1])
-            hogwashmpie2 = str(readout[2][1])
-            hogwashmpie3 = str(readout[3][1])
-            hogwashmpie4 = str(readout[4][1])
-            hogwashmpie5 = str(readout[5][1])
-            hogwashmpie6 = str(readout[6][1])
-            hogwashmpie7 = str(readout[7][1])
-            hogwashmpie8 = str(readout[8][1])
+            
+            mallorympiemgc = []
+            for i in range(1, 9):
+                try:
+                    mallorympiemgcg = readout[i][2]
+                    if mallorympiemgcg:  # check if the string is not empty
+                        mallorympiemgc.append(float(mallorympiemgcg))
+                    else:
+                        mallorympiemgc.append(0.0)
+                except IndexError:
+                    mallorympiemgc.append(0.0)
+            
+            hogwashmpie = []
+            for i in range(1, 9):
+                try:
+                    hogwashmpie.append(str(readout[i][1]))
+                except IndexError:
+                    hogwashmpie.append("")
+            
             minvaluempie = float(readout[1][3])
             maxvaluempie = float(readout[1][4])
             decimalmpie = int(readout[1][5])
             titlempie = str(readout[1][6])
             subtitlempie = str(readout[1][7])
-            mallorympiepercentage1 = float(mallorympie1/maxvaluempie)
-            mallorympiepercentage2 = float(mallorympie2/maxvaluempie)
-            mallorympiepercentage3 = float(mallorympie3/maxvaluempie)
-            mallorympiepercentage4 = float(mallorympie4/maxvaluempie)
-            mallorympiepercentage5 = float(mallorympie5/maxvaluempie)
-            mallorympiepercentage6 = float(mallorympie6/maxvaluempie)
-            mallorympiepercentage7 = float(mallorympie7/maxvaluempie)  
-            mallorympiepercentage8 = float(mallorympie8/maxvaluempie)              
+            
+            if mallorympiemgc[0] == 0:
+                mallorympiepercentage1 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage1 = float(float(mallorympiemgc[0])/maxvaluempie)
+                
+            if mallorympiemgc[1] == 0:
+                mallorympiepercentage2 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage2 = float(float(mallorympiemgc[1])/maxvaluempie)
+                
+            if mallorympiemgc[2] == 0:
+                mallorympiepercentage3 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage3 = float(float(mallorympiemgc[2])/maxvaluempie)
+                
+            if mallorympiemgc[3] == 0:
+                mallorympiepercentage4 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage4 = float(float(mallorympiemgc[3])/maxvaluempie)
+                
+            if mallorympiemgc[4] == 0:
+                mallorympiepercentage5 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage5 = float(float(mallorympiemgc[4])/maxvaluempie)
+                
+            if mallorympiemgc[5] == 0:
+                mallorympiepercentage6 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage6 = float(float(mallorympiemgc[5])/maxvaluempie)
+                
+            if mallorympiemgc[6] == 0:
+                mallorympiepercentage7 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage7 = float(float(mallorympiemgc[6])/maxvaluempie)
+                
+            if mallorympiemgc[7] == 0:
+                mallorympiepercentage8 = 0.0  # avoid division by zero
+            else:
+                mallorympiepercentage8 = float(float(mallorympiemgc[7])/maxvaluempie)         
             
         # Ensure an object is selected
         if bpy.context.selected_objects:
@@ -22543,6 +23186,7 @@ class MyoperatorMPcsv(bpy.types.Operator):
                                 modifier_name_mpg = selected_obj_mpg.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_54"] = gregorympie
+                                
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_2"] = mallorympiepercentage1
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_12"] = mallorympiepercentage2
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_14"] = mallorympiepercentage3
@@ -22551,19 +23195,21 @@ class MyoperatorMPcsv(bpy.types.Operator):
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_93"] = mallorympiepercentage6
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_0"] = mallorympiepercentage7
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_1"] = mallorympiepercentage8
+                                
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_10"] = minvaluempie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_11"] = maxvaluempie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_18"] = decimalmpie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_40"] = titlempie
                                 selected_obj_mpg.modifiers[modifier_name_mpg]["Input_41"] = subtitlempie
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_42"] = hogwashmpie1
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_43"] = hogwashmpie2
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = hogwashmpie3
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = hogwashmpie4
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = hogwashmpie5
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_88"] = hogwashmpie6
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_4"] = hogwashmpie7
-                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_9"] = hogwashmpie8
+                                
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_42"] = hogwashmpie[0]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_43"] = hogwashmpie[1]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_44"] = hogwashmpie[2]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_46"] = hogwashmpie[3]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_45"] = hogwashmpie[4]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Input_88"] = hogwashmpie[5]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_4"] = hogwashmpie[6]
+                                selected_obj_mpg.modifiers[modifier_name_mpg]["Socket_9"] = hogwashmpie[7]
 
                                 print(f"Set modifier input for object '{mesh_name_mpg}' and modifier '{modifier_name_mpg}'.")
                         else:
@@ -22590,22 +23236,25 @@ class MyoperatorMGcsv(bpy.types.Operator):
             maxvmg = float(readout[1][4])
             decimalmg = int(readout[1][5])
             rnmg = int(readout[1][6])
-            value1mg = float(readout[1][1])
-            value2mg = float(readout[2][1])
-            value3mg = float(readout[3][1])
-            value4mg = float(readout[4][1])
-            value5mg = float(readout[5][1])
-            value6mg = float(readout[6][1])
-            value7mg = float(readout[7][1])
-            value8mg = float(readout[8][1])
-            text1mg = str(readout[1][2])
-            text2mg = str(readout[2][2])
-            text3mg = str(readout[3][2])
-            text4mg = str(readout[4][2])
-            text5mg = str(readout[5][2])
-            text6mg = str(readout[6][2])
-            text7mg = str(readout[7][2])
-            text8mg = str(readout[8][2])
+            
+            valuemg = []
+            for i in range(1, 9):
+                try:
+                    valuemgg = readout[i][1]
+                    if valuemgg:  # check if the string is not empty
+                        valuemg.append(float(valuemgg))
+                    else:
+                        valuemg.append(0.0)
+                except IndexError:
+                    valuemg.append(0.0)
+                    
+            textmg = []
+            for i in range(1, 9):
+                try:
+                    textmg.append(str(readout[i][2]))
+                except IndexError:
+                    textmg.append("")
+                    
             titlemg = str(readout[1][7])
             subtitlemg = str(readout[1][8])
             
@@ -22625,22 +23274,25 @@ class MyoperatorMGcsv(bpy.types.Operator):
                                 selected_obj_mg.modifiers[modifier_name_mg]["Input_24"] = maxvmg
                                 selected_obj_mg.modifiers[modifier_name_mg]["Input_23"] = decimalmg
                                 selected_obj_mg.modifiers[modifier_name_mg]["Input_21"] = rnmg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_3"] = value1mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_4"] = value2mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_5"] = value3mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_6"] = value4mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_7"] = value5mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_8"] = value6mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_9"] = value7mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_10"] = value8mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_13"] = text1mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_14"] = text2mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_15"] = text3mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_16"] = text4mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_17"] = text5mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_18"] = text6mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_19"] = text7mg
-                                selected_obj_mg.modifiers[modifier_name_mg]["Input_20"] = text8mg
+                                
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_3"] = valuemg[0]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_4"] = valuemg[1]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_5"] = valuemg[2]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_6"] = valuemg[3]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_7"] = valuemg[4]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_8"] = valuemg[5]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_9"] = valuemg[6]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_10"] = valuemg[7]
+                                
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_13"] = textmg[0]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_14"] = textmg[1]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_15"] = textmg[2]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_16"] = textmg[3]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_17"] = textmg[4]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_18"] = textmg[5]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_19"] = textmg[6]
+                                selected_obj_mg.modifiers[modifier_name_mg]["Input_20"] = textmg[7]
+                                
                                 selected_obj_mg.modifiers[modifier_name_mg]["Input_38"] = titlemg
                                 selected_obj_mg.modifiers[modifier_name_mg]["Input_39"] = subtitlemg
 
@@ -22669,30 +23321,36 @@ class MyoperatorMGCcsv(bpy.types.Operator):
             maxvmgc = float(readout[1][5])
             decimalmgc = int(readout[1][6])
             rnmgc = int(readout[1][7])
-            valuea1mgc = float(readout[1][2])
-            valuea2mgc = float(readout[2][2])
-            valuea3mgc = float(readout[3][2])
-            valuea4mgc = float(readout[4][2])
-            valuea5mgc = float(readout[5][2])
-            valuea6mgc = float(readout[6][2])
-            valuea7mgc = float(readout[7][2])
-            valuea8mgc = float(readout[8][2])
-            valueb1mgc = float(readout[1][3])
-            valueb2mgc = float(readout[2][3])
-            valueb3mgc = float(readout[3][3])
-            valueb4mgc = float(readout[4][3])
-            valueb5mgc = float(readout[5][3])
-            valueb6mgc = float(readout[6][3])
-            valueb7mgc = float(readout[7][3])
-            valueb8mgc = float(readout[8][3])
-            text1mgc = str(readout[1][1])
-            text2mgc = str(readout[2][1])
-            text3mgc = str(readout[3][1])
-            text4mgc = str(readout[4][1])
-            text5mgc = str(readout[5][1])
-            text6mgc = str(readout[6][1])
-            text7mgc = str(readout[7][1])
-            text8mgc = str(readout[8][1])
+            
+            valueamgc = []
+            for i in range(1, 9):
+                try:
+                    valueamgcg = readout[i][2]
+                    if valueamgcg:  # check if the string is not empty
+                        valueamgc.append(float(valueamgcg))
+                    else:
+                        valueamgc.append(0.0)
+                except IndexError:
+                    valueamgc.append(0.0)
+            
+            valuebmgc = []
+            for i in range(1, 9):
+                try:
+                    valuebmgcg = readout[i][3]
+                    if valuebmgcg:  # check if the string is not empty
+                        valuebmgc.append(float(valuebmgcg))
+                    else:
+                        valuebmgc.append(0.0)
+                except IndexError:
+                    valuebmgc.append(0.0)
+            
+            textmgc = []
+            for i in range(1, 9):
+                try:
+                    textmgc.append(str(readout[i][1]))
+                except IndexError:
+                    textmgc.append("")
+            
             titlemgc = str(readout[1][8])
             subtitlemgc = str(readout[1][9])
             legendamgc = str(readout[1][10])
@@ -22714,30 +23372,34 @@ class MyoperatorMGCcsv(bpy.types.Operator):
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_24"] = maxvmgc
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_23"] = decimalmgc
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_21"] = rnmgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_3"] = valuea1mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_4"] = valuea2mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_67"] = valuea3mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_6"] = valuea4mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_7"] = valuea5mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_8"] = valuea6mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_9"] = valuea7mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_10"] = valuea8mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_30"] = valueb1mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_39"] = valueb2mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_40"] = valueb3mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_41"] = valueb4mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_42"] = valueb5mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_43"] = valueb6mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_44"] = valueb7mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_45"] = valueb8mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_13"] = text1mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_14"] = text2mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_15"] = text3mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_16"] = text4mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_17"] = text5mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_18"] = text6mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_19"] = text7mgc
-                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_20"] = text8mgc
+                                
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_3"] = valueamgc[0]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_4"] = valueamgc[1]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_67"] = valueamgc[2]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_6"] = valueamgc[3]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_7"] = valueamgc[4]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_8"] = valueamgc[5]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_9"] = valueamgc[6]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_10"] = valueamgc[7]
+                                
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_30"] = valuebmgc[0]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_39"] = valuebmgc[1]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_40"] = valuebmgc[2]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_41"] = valuebmgc[3]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_42"] = valuebmgc[4]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_43"] = valuebmgc[5]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_44"] = valuebmgc[6]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_45"] = valuebmgc[7]
+                                
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_13"] = textmgc[0]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_14"] = textmgc[1]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_15"] = textmgc[2]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_16"] = textmgc[3]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_17"] = textmgc[4]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_18"] = textmgc[5]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_19"] = textmgc[6]
+                                selected_obj_mgc.modifiers[modifier_name_mgc]["Input_20"] = textmgc[7]
+                                
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_54"] = titlemgc
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_55"] = subtitlemgc
                                 selected_obj_mgc.modifiers[modifier_name_mgc]["Input_57"] = legendamgc
@@ -22746,6 +23408,311 @@ class MyoperatorMGCcsv(bpy.types.Operator):
                                 print(f"Set modifier input for object '{mesh_name_mgc}' and modifier '{modifier_name_mgc}'.")
                         else:
                                 print(f"Selected object '{mesh_name_mgc}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
+class MyoperatorSGCcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorsgccsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_full3sgc = bpy.path.abspath(mytool.my_pathsgc)
+        with open(filepath_full3sgc) as f:
+            readout = list(csv.reader(f))
+
+            npsgc = int(readout[1][0])
+
+            for i in range(1, 101):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuex{i}sgc"] = float(readout[i][1])
+                    except ValueError:
+                        globals()[f"valuex{i}sgc"] = 0.0
+                else:
+                    globals()[f"valuex{i}sgc"] = 0.0
+
+
+            for i in range(1, 101):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuey{i}sgc"] = float(readout[i][2])
+                    except ValueError:
+                        globals()[f"valuey{i}sgc"] = 0.0
+                else:
+                    globals()[f"valuey{i}sgc"] = 0.0
+
+            xminvsgc = float(readout[1][3])
+            xmaxvsgc = float(readout[1][4])
+            yminvsgc = float(readout[1][5])
+            ymaxvsgc = float(readout[1][6])
+
+            decimalsgc = int(readout[1][7])
+            rnsgc = int(readout[1][8])
+            
+            titlesgc = str(readout[1][9])
+            subtitlesgc = str(readout[1][10])
+
+            legendxsgc = str(readout[1][11])
+            legendysgc = str(readout[2][11])
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_sgc = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_sgc.type == 'MESH':
+                        mesh_name_sgc = selected_obj_sgc.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_sgc.modifiers:
+                                modifier_name_sgc = selected_obj_sgc.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_2"] = npsgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_2"] = xminvsgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_3"] = xmaxvsgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_22"] = yminvsgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_24"] = ymaxvsgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_23"] = decimalsgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_21"] = rnsgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_92"] = valuex1sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_93"] = valuex2sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_94"] = valuex3sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_95"] = valuex4sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_96"] = valuex5sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_97"] = valuex6sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_98"] = valuex7sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_99"] = valuex8sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_100"] = valuex9sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_101"] = valuex10sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_102"] = valuex11sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_103"] = valuex12sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_104"] = valuex13sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_105"] = valuex14sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_106"] = valuex15sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_107"] = valuex16sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_108"] = valuex17sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_109"] = valuex18sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_110"] = valuex19sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_111"] = valuex20sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_112"] = valuex21sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_113"] = valuex22sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_114"] = valuex23sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_115"] = valuex24sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_116"] = valuex25sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_117"] = valuex26sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_118"] = valuex27sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_119"] = valuex28sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_191"] = valuex29sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_120"] = valuex30sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_121"] = valuex31sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_122"] = valuex32sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_123"] = valuex33sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_124"] = valuex34sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_125"] = valuex35sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_126"] = valuex36sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_127"] = valuex37sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_128"] = valuex38sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_129"] = valuex39sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_130"] = valuex40sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_131"] = valuex41sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_132"] = valuex42sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_133"] = valuex43sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_134"] = valuex44sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_135"] = valuex45sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_136"] = valuex46sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_137"] = valuex47sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_138"] = valuex48sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_139"] = valuex49sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_140"] = valuex50sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_141"] = valuex51sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_142"] = valuex52sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_143"] = valuex53sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_144"] = valuex54sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_145"] = valuex55sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_146"] = valuex56sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_147"] = valuex57sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_148"] = valuex58sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_149"] = valuex59sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_150"] = valuex60sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_151"] = valuex61sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_152"] = valuex62sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_153"] = valuex63sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_154"] = valuex64sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_155"] = valuex65sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_156"] = valuex66sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_157"] = valuex67sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_158"] = valuex68sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_159"] = valuex69sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_160"] = valuex70sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_161"] = valuex71sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_162"] = valuex72sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_163"] = valuex73sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_164"] = valuex74sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_165"] = valuex75sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_166"] = valuex76sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_167"] = valuex77sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_168"] = valuex78sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_169"] = valuex79sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_170"] = valuex80sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_171"] = valuex81sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_172"] = valuex82sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_173"] = valuex83sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_174"] = valuex84sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_175"] = valuex85sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_176"] = valuex86sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_177"] = valuex87sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_178"] = valuex88sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_179"] = valuex89sgc
+                                
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_180"] = valuex90sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_181"] = valuex91sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_182"] = valuex92sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_183"] = valuex93sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_184"] = valuex94sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_185"] = valuex95sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_186"] = valuex96sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_187"] = valuex97sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_188"] = valuex98sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_189"] = valuex99sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_190"] = valuex100sgc
+
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_3"] = valuey1sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_55"] = valuey2sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_56"] = valuey3sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_4"] = valuey4sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_57"] = valuey5sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_58"] = valuey6sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_5"] = valuey7sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_59"] = valuey8sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_60"] = valuey9sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_6"] = valuey10sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_61"] = valuey11sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_62"] = valuey12sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_7"] = valuey13sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_63"] = valuey14sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_64"] = valuey15sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_8"] = valuey16sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_65"] = valuey17sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_66"] = valuey18sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_9"] = valuey19sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_67"] = valuey20sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_68"] = valuey21sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_10"] = valuey22sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_69"] = valuey23sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_70"] = valuey24sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_4"] = valuey25sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_5"] = valuey26sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_6"] = valuey27sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_7"] = valuey28sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_192"] = valuey29sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_9"] = valuey30sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_22"] = valuey31sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_23"] = valuey32sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_24"] = valuey33sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_25"] = valuey34sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_26"] = valuey35sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_27"] = valuey36sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_28"] = valuey37sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_29"] = valuey38sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_30"] = valuey39sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_31"] = valuey40sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_32"] = valuey41sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_33"] = valuey42sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_34"] = valuey43sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_35"] = valuey44sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_36"] = valuey45sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_37"] = valuey46sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_38"] = valuey47sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_39"] = valuey48sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_40"] = valuey49sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_41"] = valuey50sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_42"] = valuey51sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_43"] = valuey52sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_44"] = valuey53sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_45"] = valuey54sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_46"] = valuey55sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_47"] = valuey56sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_48"] = valuey57sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_49"] = valuey58sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_50"] = valuey59sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_51"] = valuey60sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_52"] = valuey61sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_53"] = valuey62sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_54"] = valuey63sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_55"] = valuey64sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_56"] = valuey65sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_57"] = valuey66sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_58"] = valuey67sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_59"] = valuey68sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_60"] = valuey69sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_61"] = valuey70sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_62"] = valuey71sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_63"] = valuey72sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_64"] = valuey73sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_65"] = valuey74sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_66"] = valuey75sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_67"] = valuey76sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_68"] = valuey77sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_69"] = valuey78sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_70"] = valuey79sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_71"] = valuey80sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_72"] = valuey81sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_73"] = valuey82sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_74"] = valuey83sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_75"] = valuey84sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_76"] = valuey85sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_77"] = valuey86sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_78"] = valuey87sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_79"] = valuey88sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_80"] = valuey89sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_81"] = valuey90sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_82"] = valuey91sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_83"] = valuey92sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_84"] = valuey93sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_85"] = valuey94sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_86"] = valuey95sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_87"] = valuey96sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_88"] = valuey97sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_89"] = valuey98sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_90"] = valuey99sgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_91"] = valuey100sgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_38"] = titlesgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Input_39"] = subtitlesgc
+
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_12"] = legendxsgc
+                                selected_obj_sgc.modifiers[modifier_name_sgc]["Socket_14"] = legendysgc
+
+                                print(f"Set modifier input for object '{mesh_name_sgc}' and modifier '{modifier_name_sgc}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_sgc}' has no modifiers.")
                 else:
                         print("Selected object is not a mesh.")
         else:
@@ -22920,25 +23887,29 @@ class MyoperatorVBcsv(bpy.types.Operator):
         with open(filepath_full4vb) as f:
             readout = list(csv.reader(f))
             gregoryvb = int(readout[1][0])
-            malloryvb1 = float(readout[1][2])
-            malloryvb2 = float(readout[2][2])
-            malloryvb3 = float(readout[3][2])
-            malloryvb4 = float(readout[4][2])
-            malloryvb5 = float(readout[5][2])
-            malloryvb6 = float(readout[6][2])
-            malloryvb7 = float(readout[7][2])
-            malloryvb8 = float(readout[8][2])
+            
+            malloryvb = []
+            for i in range(1, 9):
+                try:
+                    malloryvbg = readout[i][2]
+                    if malloryvbg:  # check if the string is not empty
+                        malloryvb.append(float(malloryvbg))
+                    else:
+                        malloryvb.append(0.0)
+                except IndexError:
+                    malloryvb.append(0.0)
+            
             olatunjivb1 = float(readout[1][3])
             olatunjivb2 = float(readout[1][4])
             jeopardyvb1 = int(readout[1][5])
-            hogwashvb1 = str(readout[1][1])
-            hogwashvb2 = str(readout[2][1])
-            hogwashvb3 = str(readout[3][1])
-            hogwashvb4 = str(readout[4][1])
-            hogwashvb5 = str(readout[5][1])
-            hogwashvb6 = str(readout[6][1])
-            hogwashvb7 = str(readout[7][1])
-            hogwashvb8 = str(readout[8][1])
+            
+            hogwashvb = []
+            for i in range(1, 9):
+                try:
+                    hogwashvb.append(str(readout[i][1]))
+                except IndexError:
+                    hogwashvb.append("")
+            
             titlevb1 = str(readout[1][6])
             subtitlevb1 = str(readout[1][7])
             totalvb1 = str(readout[1][8])
@@ -22955,25 +23926,29 @@ class MyoperatorVBcsv(bpy.types.Operator):
                                 modifier_name_vbg = selected_obj_vbg.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_57"] = gregoryvb
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_14"] = malloryvb1
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_41"] = malloryvb2
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_15"] = malloryvb3
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_44"] = malloryvb4
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_16"] = malloryvb5
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_48"] = malloryvb6
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_17"] = malloryvb7
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_50"] = malloryvb8
+                                
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_14"] = malloryvb[0]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_41"] = malloryvb[1]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_15"] = malloryvb[2]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_44"] = malloryvb[3]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_16"] = malloryvb[4]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_48"] = malloryvb[5]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_17"] = malloryvb[6]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_50"] = malloryvb[7]
+                                
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_10"] = olatunjivb1
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_11"] = olatunjivb2
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_12"] = jeopardyvb1
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_2"] = hogwashvb1
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_42"] = hogwashvb2
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_3"] = hogwashvb3
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_45"] = hogwashvb4
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_4"] = hogwashvb5
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_47"] = hogwashvb6
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_5"] = hogwashvb7
-                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_49"] = hogwashvb8
+                                
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_2"] = hogwashvb[0]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_42"] = hogwashvb[1]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_3"] = hogwashvb[2]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_45"] = hogwashvb[3]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_4"] = hogwashvb[4]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_47"] = hogwashvb[5]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_5"] = hogwashvb[6]
+                                selected_obj_vbg.modifiers[modifier_name_vbg]["Input_49"] = hogwashvb[7]
+                                
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_7"] = titlevb1
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_8"] = subtitlevb1
                                 selected_obj_vbg.modifiers[modifier_name_vbg]["Input_6"] = totalvb1
@@ -22999,25 +23974,29 @@ class MyoperatorPLcsv(bpy.types.Operator):
         with open(filepath_full4pl) as f:
             readout = list(csv.reader(f))
             gregorypl = int(readout[1][0])
-            mallorypl1 = float(readout[1][2])
-            mallorypl2 = float(readout[2][2])
-            mallorypl3 = float(readout[3][2])
-            mallorypl4 = float(readout[4][2])
-            mallorypl5 = float(readout[5][2])
-            mallorypl6 = float(readout[6][2])
-            mallorypl7 = float(readout[7][2])
-            mallorypl8 = float(readout[8][2])
+            
+            mallorypl = []
+            for i in range(1, 9):
+                try:
+                    malloryplg = readout[i][2]
+                    if malloryplg:  # check if the string is not empty
+                        mallorypl.append(float(malloryplg))
+                    else:
+                        mallorypl.append(0.0)
+                except IndexError:
+                    mallorypl.append(0.0)
+            
             olatunjipl1 = float(readout[1][3])
             olatunjipl2 = float(readout[1][4])
             jeopardypl1 = int(readout[1][5])
-            hogwashpl1 = str(readout[1][1])
-            hogwashpl2 = str(readout[2][1])
-            hogwashpl3 = str(readout[3][1])
-            hogwashpl4 = str(readout[4][1])
-            hogwashpl5 = str(readout[5][1])
-            hogwashpl6 = str(readout[6][1])
-            hogwashpl7 = str(readout[7][1])
-            hogwashpl8 = str(readout[8][1])
+            
+            hogwashpl = []
+            for i in range(1, 9):
+                try:
+                    hogwashpl.append(str(readout[i][1]))
+                except IndexError:
+                    hogwashpl.append("")
+            
             titlepl1 = str(readout[1][6])
             subtitlepl1 = str(readout[1][7])
             
@@ -23033,25 +24012,25 @@ class MyoperatorPLcsv(bpy.types.Operator):
                                 modifier_name_plg = selected_obj_plg.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_plg.modifiers[modifier_name_plg]["Input_57"] = gregorypl
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_14"] = mallorypl1
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_41"] = mallorypl2
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_15"] = mallorypl3
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_44"] = mallorypl4
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_16"] = mallorypl5
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_48"] = mallorypl6
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_17"] = mallorypl7
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_50"] = mallorypl8
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_14"] = mallorypl[0]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_41"] = mallorypl[1]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_15"] = mallorypl[2]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_44"] = mallorypl[3]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_16"] = mallorypl[4]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_48"] = mallorypl[5]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_17"] = mallorypl[6]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_50"] = mallorypl[7]
                                 selected_obj_plg.modifiers[modifier_name_plg]["Socket_13"] = olatunjipl1
                                 selected_obj_plg.modifiers[modifier_name_plg]["Input_11"] = olatunjipl2
                                 selected_obj_plg.modifiers[modifier_name_plg]["Input_12"] = jeopardypl1
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_2"] = hogwashpl1
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_42"] = hogwashpl2
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_3"] = hogwashpl3
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_45"] = hogwashpl4
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_4"] = hogwashpl5
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_47"] = hogwashpl6
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_5"] = hogwashpl7
-                                selected_obj_plg.modifiers[modifier_name_plg]["Input_49"] = hogwashpl8
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_2"] = hogwashpl[0]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_42"] = hogwashpl[1]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_3"] = hogwashpl[2]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_45"] = hogwashpl[3]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_4"] = hogwashpl[4]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_47"] = hogwashpl[5]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_5"] = hogwashpl[6]
+                                selected_obj_plg.modifiers[modifier_name_plg]["Input_49"] = hogwashpl[7]
                                 selected_obj_plg.modifiers[modifier_name_plg]["Input_7"] = titlepl1
                                 selected_obj_plg.modifiers[modifier_name_plg]["Input_8"] = subtitlepl1
 
@@ -23076,33 +24055,40 @@ class MyoperatorVBCcsv(bpy.types.Operator):
         with open(filepath_full4vbc) as f:
             readout = list(csv.reader(f))
             nbvbc = int(readout[1][0])
-            btvbc1 = str(readout[1][1])
-            btvbc2 = str(readout[2][1])
-            btvbc3 = str(readout[3][1])
-            btvbc4 = str(readout[4][1])
-            btvbc5 = str(readout[5][1])
-            btvbc6 = str(readout[6][1])
-            btvbc7 = str(readout[7][1])
-            btvbc8 = str(readout[8][1])
+            
+            btvbc = []
+            for i in range(1, 9):
+                try:
+                    btvbc.append(str(readout[i][1]))
+                except IndexError:
+                    btvbc.append("")
+            
             minvvbc1 = float(readout[1][4])
             maxvvbc2 = float(readout[1][5])
             decimalvbc1 = int(readout[1][6])
-            bvavbc1 = float(readout[1][2])
-            bvavbc2 = float(readout[2][2])
-            bvavbc3 = float(readout[3][2])
-            bvavbc4 = float(readout[4][2])
-            bvavbc5 = float(readout[5][2])
-            bvavbc6 = float(readout[6][2])
-            bvavbc7 = float(readout[7][2])
-            bvavbc8 = float(readout[8][2])
-            bvbvbc1 = float(readout[1][3])
-            bvbvbc2 = float(readout[2][3])
-            bvbvbc3 = float(readout[3][3])
-            bvbvbc4 = float(readout[4][3])
-            bvbvbc5 = float(readout[5][3])
-            bvbvbc6 = float(readout[6][3])
-            bvbvbc7 = float(readout[7][3])
-            bvbvbc8 = float(readout[8][3])
+            
+            bvavbc = []
+            for i in range(1, 9):
+                try:
+                    bvavbcg = readout[i][2]
+                    if bvavbcg:  # check if the string is not empty
+                        bvavbc.append(float(bvavbcg))
+                    else:
+                        bvavbc.append(0.0)
+                except IndexError:
+                    bvavbc.append(0.0)
+            
+            bvbvbc = []
+            for i in range(1, 9):
+                try:
+                    bvbvbcg = readout[i][3]
+                    if bvbvbcg:  # check if the string is not empty
+                        bvbvbc.append(float(bvbvbcg))
+                    else:
+                        bvbvbc.append(0.0)
+                except IndexError:
+                    bvbvbc.append(0.0)
+            
             titlevbc1 = str(readout[1][7])
             subtitlevbc1 = str(readout[1][8])
             legendvbc1 = str(readout[1][9])
@@ -23120,33 +24106,38 @@ class MyoperatorVBCcsv(bpy.types.Operator):
                                 modifier_name_vbgc = selected_obj_vbgc.modifiers.active.name  # Get the name of the active modifier
 
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_71"] = nbvbc
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_2"] = btvbc1
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_42"] = btvbc2
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_3"] = btvbc3
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = btvbc4
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_4"] = btvbc5
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_47"] = btvbc6
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_5"] = btvbc7
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_49"] = btvbc8
+                                
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_2"] = btvbc[0]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_42"] = btvbc[1]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_3"] = btvbc[2]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_45"] = btvbc[3]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_4"] = btvbc[4]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_47"] = btvbc[5]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_5"] = btvbc[6]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_49"] = btvbc[7]
+                                
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_10"] = minvvbc1
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_11"] = maxvvbc2
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_12"] = decimalvbc1
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_14"] = bvavbc1
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_41"] = bvavbc2
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_15"] = bvavbc3
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_44"] = bvavbc4
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_16"] = bvavbc5
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_48"] = bvavbc6
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_17"] = bvavbc7
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_50"] = bvavbc8
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_57"] = bvbvbc1
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_58"] = bvbvbc2
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_59"] = bvbvbc3
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_64"] = bvbvbc4
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_60"] = bvbvbc5
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_61"] = bvbvbc6
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_62"] = bvbvbc7
-                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_63"] = bvbvbc8
+                                
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_14"] = bvavbc[0]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_41"] = bvavbc[1]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_15"] = bvavbc[2]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_44"] = bvavbc[3]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_16"] = bvavbc[4]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_48"] = bvavbc[5]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_17"] = bvavbc[6]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_50"] = bvavbc[7]
+                                
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_57"] = bvbvbc[0]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_58"] = bvbvbc[1]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_59"] = bvbvbc[2]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_64"] = bvbvbc[3]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_60"] = bvbvbc[4]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_61"] = bvbvbc[5]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_62"] = bvbvbc[6]
+                                selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_63"] = bvbvbc[7]
+                                
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_7"] = titlevbc1
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_8"] = subtitlevbc1
                                 selected_obj_vbgc.modifiers[modifier_name_vbgc]["Input_70"] = legendvbc1
@@ -23175,64 +24166,72 @@ class MyoperatorVBMcsv(bpy.types.Operator):
             readout = list(csv.reader(f))
             nbvbm = int(readout[1][0])
             nvbvbm = int(readout[1][12])
-            btvbm1 = str(readout[1][1])
-            btvbm2 = str(readout[2][1])
-            btvbm3 = str(readout[3][1])
-            btvbm4 = str(readout[4][1])
-            btvbm5 = str(readout[5][1])
-            btvbm6 = str(readout[6][1])
-            btvbm7 = str(readout[7][1])
-            btvbm8 = str(readout[8][1])
+            
+            btvbm = []
+            for i in range(1, 9):
+                try:
+                    btvbm.append(str(readout[i][1]))
+                except IndexError:
+                    btvbm.append("")
 
             minvvbm1 = float(readout[1][6])
             maxvvbm2 = float(readout[1][7])
             decimalvbm1 = int(readout[1][8])
 
-            bvavbm1 = float(readout[1][2])
-            bvavbm2 = float(readout[2][2])
-            bvavbm3 = float(readout[3][2])
-            bvavbm4 = float(readout[4][2])
-            bvavbm5 = float(readout[5][2])
-            bvavbm6 = float(readout[6][2])
-            bvavbm7 = float(readout[7][2])
-            bvavbm8 = float(readout[8][2])
+            bvavbm = []
+            for i in range(1, 9):
+                try:
+                    bvavbmg = readout[i][2]
+                    if bvavbmg:  # check if the string is not empty
+                        bvavbm.append(float(bvavbmg))
+                    else:
+                        bvavbm.append(0.0)
+                except IndexError:
+                    bvavbm.append(0.0)
+            
+            bvbvbm = []
+            for i in range(1, 9):
+                try:
+                    bvbvbmg = readout[i][3]
+                    if bvbvbmg:  # check if the string is not empty
+                        bvbvbm.append(float(bvbvbmg))
+                    else:
+                        bvbvbm.append(0.0)
+                except IndexError:
+                    bvbvbm.append(0.0)
 
-            bvbvbm1 = float(readout[1][3])
-            bvbvbm2 = float(readout[2][3])
-            bvbvbm3 = float(readout[3][3])
-            bvbvbm4 = float(readout[4][3])
-            bvbvbm5 = float(readout[5][3])
-            bvbvbm6 = float(readout[6][3])
-            bvbvbm7 = float(readout[7][3])
-            bvbvbm8 = float(readout[8][3])
+            bvcvbm = []
+            for i in range(1, 9):
+                try:
+                    bvcvbmg = readout[i][4]
+                    if bvcvbmg:  # check if the string is not empty
+                        bvcvbm.append(float(bvcvbmg))
+                    else:
+                        bvcvbm.append(0.0)
+                except IndexError:
+                    bvcvbm.append(0.0)
 
-            bvcvbm1 = float(readout[1][4])
-            bvcvbm2 = float(readout[2][4])
-            bvcvbm3 = float(readout[3][4])
-            bvcvbm4 = float(readout[4][4])
-            bvcvbm5 = float(readout[5][4])
-            bvcvbm6 = float(readout[6][4])
-            bvcvbm7 = float(readout[7][4])
-            bvcvbm8 = float(readout[8][4])
-
-            bvdvbm1 = float(readout[1][5])
-            bvdvbm2 = float(readout[2][5])
-            bvdvbm3 = float(readout[3][5])
-            bvdvbm4 = float(readout[4][5])
-            bvdvbm5 = float(readout[5][5])
-            bvdvbm6 = float(readout[6][5])
-            bvdvbm7 = float(readout[7][5])
-            bvdvbm8 = float(readout[8][5])
+            bvdvbm = []
+            for i in range(1, 9):
+                try:
+                    bvdvbmg = readout[i][5]
+                    if bvdvbmg:  # check if the string is not empty
+                        bvdvbm.append(float(bvdvbmg))
+                    else:
+                        bvdvbm.append(0.0)
+                except IndexError:
+                    bvdvbm.append(0.0)
 
 
             titlevbm1 = str(readout[1][9])
             subtitlevbm1 = str(readout[1][10])
 
-            legendvbm1 = str(readout[1][11])
-            legendvbm2 = str(readout[2][11])
-            legendvbm3 = str(readout[3][11])
-            legendvbm4 = str(readout[4][11])
-
+            legendvbm = []
+            for i in range(1, 5):
+                try:
+                    legendvbm.append(str(readout[i][11]))
+                except IndexError:
+                    legendvbm.append("")
 
             
         # Ensure an object is selected
@@ -23248,62 +24247,64 @@ class MyoperatorVBMcsv(bpy.types.Operator):
 
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_71"] = nbvbm
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_36"] = nvbvbm
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_2"] = btvbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_42"] = btvbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_3"] = btvbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_45"] = btvbm4
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_4"] = btvbm5
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_47"] = btvbm6
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_5"] = btvbm7
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_49"] = btvbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_2"] = btvbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_42"] = btvbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_3"] = btvbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_45"] = btvbm[3]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_4"] = btvbm[4]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_47"] = btvbm[5]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_5"] = btvbm[6]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_49"] = btvbm[7]
+                                
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_10"] = minvvbm1
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_11"] = maxvvbm2
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_12"] = decimalvbm1
 
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_14"] = bvavbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_41"] = bvavbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_15"] = bvavbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_44"] = bvavbm4
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_16"] = bvavbm5
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_48"] = bvavbm6
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_17"] = bvavbm7
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_50"] = bvavbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_14"] = bvavbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_41"] = bvavbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_15"] = bvavbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_44"] = bvavbm[3]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_16"] = bvavbm[4]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_48"] = bvavbm[5]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_17"] = bvavbm[6]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_50"] = bvavbm[7]
 
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_57"] = bvbvbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_58"] = bvbvbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_59"] = bvbvbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_64"] = bvbvbm4
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_60"] = bvbvbm5
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_61"] = bvbvbm6
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_62"] = bvbvbm7
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_63"] = bvbvbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_57"] = bvbvbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_58"] = bvbvbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_59"] = bvbvbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_64"] = bvbvbm[3]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_60"] = bvbvbm[4]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_61"] = bvbvbm[5]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_62"] = bvbvbm[6]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_63"] = bvbvbm[7]
 
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_0"] = bvcvbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_2"] = bvcvbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_4"] = bvcvbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_6"] = bvcvbm4
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_8"] = bvcvbm5
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_10"] = bvcvbm6
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_12"] = bvcvbm7
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_14"] = bvcvbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_0"] = bvcvbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_2"] = bvcvbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_4"] = bvcvbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_6"] = bvcvbm[3]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_8"] = bvcvbm[4]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_10"] = bvcvbm[5]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_12"] = bvcvbm[6]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_14"] = bvcvbm[7]
 
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_1"] = bvdvbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_3"] = bvdvbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_5"] = bvdvbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_7"] = bvdvbm4
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_9"] = bvdvbm5
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_11"] = bvdvbm6
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_13"] = bvdvbm7
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_15"] = bvdvbm8
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_1"] = bvdvbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_3"] = bvdvbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_5"] = bvdvbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_7"] = bvdvbm[3]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_9"] = bvdvbm[4]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_11"] = bvdvbm[5]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_13"] = bvdvbm[6]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_15"] = bvdvbm[7]
 
 
 
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_7"] = titlevbm1
                                 selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_8"] = subtitlevbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_70"] = legendvbm1
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_69"] = legendvbm2
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_43"] = legendvbm3
-                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_44"] = legendvbm4
+                                
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_70"] = legendvbm[0]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Input_69"] = legendvbm[1]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_43"] = legendvbm[2]
+                                selected_obj_vbgm.modifiers[modifier_name_vbgm]["Socket_44"] = legendvbm[3]
 
 
                                 print(f"Set modifier input for object '{mesh_name_vbgm}' and modifier '{modifier_name_vbgm}'.")
@@ -25175,6 +26176,51 @@ class ADDONNAME_OT_my_opMGHL(bpy.types.Operator):
 
 
              
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_opSCATTERA(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatorscattera"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_30"]'
+        index = 0
+        stringCASCATTERA = mytool.my_floatSCATTERA
+        frCASCATTERA = bpy.context.scene.render.fps
+        jeffCASCATTERa = stringCASCATTERA * frCASCATTERA
+        onemorescattera = (mytool.my_floatSCATTERLA * frCASCATTERA) + jeffCASCATTERa
+        bobCASCATTERa = onemorescattera       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCASCATTERa = int(bobCASCATTERa)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCASCATTERa
+                kps.handle_left[0] = jeffCASCATTERa
+                kps.handle_right[0] = jeffCASCATTERa
+                kps.handle_right[1] = 0.699        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCASCATTERa
+                kpz.handle_left[0] = bobCASCATTERa - 56
+                kpz.handle_right[0] = bobCASCATTERa
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCASCATTERa + frCASCATTERA
+
         return {'FINISHED'}
     
 class ADDONNAME_OT_my_opCOMPARISONAMOUNTA(bpy.types.Operator):
@@ -30480,6 +31526,86 @@ class ADDONNAME_MGC(bpy.types.Operator):
                         fcurve.keyframe_points[1].handle_left[0] = 50
                         fcurve.keyframe_points[1].handle_left[1] = 1
                         fcurve.keyframe_points[1].handle_right[0] = 70
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
+    
+class ADDONNAME_SGC(bpy.types.Operator):
+    bl_label = "Add Ob33jectsgc"
+    bl_idname = "addonname.myop_operatorsgc"  
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumSGC == 'OPSGC7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 144
+
+            action_name = 'Scatter GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 12
+                        fcurve.keyframe_points[0].handle_left[0] = 12
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 12
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 96
+                        fcurve.keyframe_points[1].handle_left[0] = 40
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 96
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enumSGC == 'OPSGC8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 210
+            
+            action_name = 'Scatter GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 15
+                        fcurve.keyframe_points[0].handle_left[0] = 15
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 15
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 120
+                        fcurve.keyframe_points[1].handle_left[0] = 64
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 120
                         fcurve.keyframe_points[1].handle_right[1] = 1
 
                         print("changed")
@@ -36220,6 +37346,96 @@ class FontrestoreMOUNTAINGC(bpy.types.Operator):
         
         return {'FINISHED'}
     
+class FontchangeSCATTERGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorsgcfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        nodescatterc_group = modifier.node_group
+        
+        nodescatterctitle = nodescatterc_group.nodes['String to Curves.029']
+        datascatterctitle_font = bpy.data.fonts.load(mytool.my_pathfontsgc_title)
+        nodescatterctitle.font = datascatterctitle_font
+        
+        nodescattercsubtitle = nodescatterc_group.nodes['String to Curves.028']
+        datascattercsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontsgc_subtitle)
+        nodescattercsubtitle.font = datascattercsubtitle_font
+
+        nodescattercrangenumbers = ['String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005','String to Curves.006','String to Curves.007', 'String to Curves.008', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodescattercrangenumbers:
+            nodescattercrangenumbers = nodescatterc_group.nodes.get(name)
+            if nodescattercrangenumbers:
+                datascattercrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontsgc_rangenumbers)
+                nodescattercrangenumbers.font = datascattercrangenumbers_font    
+        
+        nodescattercpointtext = ['String to Curves.032', 'String to Curves.033']
+        for name in nodescattercpointtext:
+            nodescattercpointtext = nodescatterc_group.nodes.get(name)
+            if nodescattercpointtext:
+                datascattercpointtext_font = bpy.data.fonts.load(mytool.my_pathfontsgc_bartext)
+                nodescattercpointtext.font = datascattercpointtext_font
+
+        nodescatterclegend = ['String to Curves.031', 'String to Curves.030']
+        for name in nodescatterclegend:
+            nodescatterclegend = nodescatterc_group.nodes.get(name)
+            if nodescatterclegend:
+                datascatterclegend_font = bpy.data.fonts.load(mytool.my_pathfontsgc_legend)
+                nodescatterclegend.font = datascatterclegend_font    
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreSCATTERGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorsgcresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorescatterc_group = modifier.node_group
+        
+        noderestorescatterctitle = noderestorescatterc_group.nodes['String to Curves.029']
+        datarestorescatterctitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorescatterctitle.font = datarestorescatterctitle_font
+        
+        noderestorescattercsubtitle = noderestorescatterc_group.nodes['String to Curves.028']
+        datarestorescattercsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorescattercsubtitle.font = datarestorescattercsubtitle_font  
+        
+        nodescattercrangenumbers = ['String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005','String to Curves.006','String to Curves.007', 'String to Curves.008', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodescattercrangenumbers:
+            nodescattercrangenumbers = noderestorescatterc_group.nodes.get(name)
+            if nodescattercrangenumbers:
+                datascattercrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodescattercrangenumbers.font = datascattercrangenumbers_font  
+
+        nodescattercpointtext = ['String to Curves.032', 'String to Curves.033']
+        for name in nodescattercpointtext:
+            nodescattercpointtext = noderestorescatterc_group.nodes.get(name)
+            if nodescattercpointtext:
+                datascattercpointtext_font = bpy.data.fonts["Open Sans Regular"]
+                nodescattercpointtext.font = datascattercpointtext_font  
+
+        nodescatterclegend = ['String to Curves.031', 'String to Curves.030']
+        for name in nodescatterclegend:
+            nodescatterclegend = noderestorescatterc_group.nodes.get(name)
+            if nodescatterclegend:
+                datascatterclegend_font = bpy.data.fonts["Open Sans Light"]
+                nodescatterclegend.font = datascatterclegend_font  
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
 class FontchangeHBG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorbgfont"
@@ -37507,24 +38723,24 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
-MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
+MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
 MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opOPPOSINGAHBARAL, ADDONNAME_OT_my_opOPPOSINGAHBARBL, ADDONNAME_OT_my_opOPPOSINGAHBARCL, ADDONNAME_OT_my_opOPPOSINGAHBARDL, ADDONNAME_OT_my_opOPPOSINGAHBAREL, ADDONNAME_OT_my_opOPPOSINGAHBARFL, 
 ADDONNAME_OT_my_opOPPOSINGAHBARGL, ADDONNAME_OT_my_opOPPOSINGAHBARHL, ADDONNAME_OT_my_opOPPOSINGAHBARIL,
 ADDONNAME_OT_my_opOPPOSINGAHBARJL , ADDONNAME_OT_my_opSTACKEDAHBARAL, ADDONNAME_OT_my_opSTACKEDAHBARBL, ADDONNAME_OT_my_opSTACKEDAHBARCL, ADDONNAME_OT_my_opSTACKEDAVBARAL, ADDONNAME_OT_my_opSTACKEDAVBARBL, ADDONNAME_OT_my_opSTACKEDAVBARCL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL, ADDONNAME_OT_my_opPLGAL, ADDONNAME_OT_my_opPLGBL, ADDONNAME_OT_my_opPLGCL, ADDONNAME_OT_my_opPLGDL, ADDONNAME_OT_my_opPLGEL, ADDONNAME_OT_my_opPLGFL, ADDONNAME_OT_my_opPLGGL, ADDONNAME_OT_my_opPLGHL, 
-ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_ophbo, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
 PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
-COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, SCATTER_GRAPH_PT_panel_1, SCATTER_GRAPH_PT_panel_2, SCATTER_GRAPH_PT_panel_3, SCATTER_GRAPH_PT_panel_4, SCATTER_GRAPH_PT_panel_5, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
-ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
+ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opSCATTERA,  ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
 ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
 ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH, ADDONNAME_OT_my_opMULTIPLEABARVA, ADDONNAME_OT_my_opMULTIPLEABARVB, ADDONNAME_OT_my_opMULTIPLEABARVC, ADDONNAME_OT_my_opMULTIPLEABARVD, ADDONNAME_OT_my_opMULTIPLEABARVE, ADDONNAME_OT_my_opMULTIPLEABARVF, ADDONNAME_OT_my_opMULTIPLEABARVG, ADDONNAME_OT_my_opMULTIPLEABARVH, ADDONNAME_OT_my_opMULTIPLEBBARVA, ADDONNAME_OT_my_opMULTIPLEBBARVB, ADDONNAME_OT_my_opMULTIPLEBBARVC, ADDONNAME_OT_my_opMULTIPLEBBARVD, ADDONNAME_OT_my_opMULTIPLEBBARVE, ADDONNAME_OT_my_opMULTIPLEBBARVF, ADDONNAME_OT_my_opMULTIPLEBBARVG, ADDONNAME_OT_my_opMULTIPLEBBARVH, ADDONNAME_OT_my_opMULTIPLECBARVA, ADDONNAME_OT_my_opMULTIPLECBARVB, ADDONNAME_OT_my_opMULTIPLECBARVC, ADDONNAME_OT_my_opMULTIPLECBARVD, ADDONNAME_OT_my_opMULTIPLECBARVE, ADDONNAME_OT_my_opMULTIPLECBARVF, ADDONNAME_OT_my_opMULTIPLECBARVG, ADDONNAME_OT_my_opMULTIPLECBARVH,ADDONNAME_OT_my_opMULTIPLEDBARVA, ADDONNAME_OT_my_opMULTIPLEDBARVB, ADDONNAME_OT_my_opMULTIPLEDBARVC, ADDONNAME_OT_my_opMULTIPLEDBARVD, ADDONNAME_OT_my_opMULTIPLEDBARVE, ADDONNAME_OT_my_opMULTIPLEDBARVF, ADDONNAME_OT_my_opMULTIPLEDBARVG, ADDONNAME_OT_my_opMULTIPLEDBARVH]
  
