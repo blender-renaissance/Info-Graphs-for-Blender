@@ -210,6 +210,15 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatorsgc()
     )
     
+    my_enumBGS : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPBGS7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPBGS8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorbgs()
+    )
+    
     my_enum_usmap : bpy.props.EnumProperty(
         name= "",
         description= "Change Frame rate of the scene",
@@ -397,6 +406,10 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringscatter_graph : bpy.props.StringProperty(
     name= "",
     default="scatter_graph",)
+    
+    my_stringbubble_graph : bpy.props.StringProperty(
+    name= "",
+    default="bubble_graph",)
     
     my_stringmultiple_circle_graph : bpy.props.StringProperty(
     name= "",
@@ -3025,6 +3038,24 @@ class MyProperties(bpy.types.PropertyGroup):
         max=300.0,
         update=lambda self, context: bpy.ops.addonname.myop_operatorscattera()
     )
+    
+    my_floatBUBBLEA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=0.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorbubblea()
+    )
+    
+    my_floatBUBBLELA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=3.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorbubblea()
+    )
 
     my_floatCOMPARISONAMOUNTLA: bpy.props.FloatProperty(
         name="In seconds",
@@ -4738,6 +4769,14 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         )
         
+    my_pathbgs: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/bubble_graph.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
     my_pathvb: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
@@ -5284,6 +5323,54 @@ class MyProperties(bpy.types.PropertyGroup):
         )
 
     my_pathfontsgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgs_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgs_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgs_description: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontbgs_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbgs_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfontbgs_legend: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
         default="//Fonts/Open sans/OpenSans-Light.ttf",
@@ -8287,6 +8374,111 @@ class SCATTER_GRAPH_PT_panel_5(SCATTER_GRAPH_panel, bpy.types.Panel):
         rowresetsgc = layout.row()
         rowresetsgc.label(text= "Reset all Fonts:")
         layout.operator("addonname.myop_operatorsgcresfont")
+        
+class BUBBLE_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class BUBBLE_GRAPH_PT_panel_1(BUBBLE_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "BUBBLE_GRAPH_PT_panel_1"
+    bl_label = "Bubble Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowBGCFPS = layout.row()
+        rowBGCFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enumBGS")  
+
+class BUBBLE_GRAPH_PT_panel_2(BUBBLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "BUBBLE_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowBGCcsv = layout.row()
+        rowBGCcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathbgs")
+        layout.operator("mesh.mycubeoperatorbgscsv")
+        
+class BUBBLE_GRAPH_PT_panel_3(BUBBLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "BUBBLE_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringbubble_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorbgssql")
+
+class BUBBLE_GRAPH_PT_panel_4(BUBBLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "BUBBLE_GRAPH_PT_panel_1"
+    bl_label = "Duration Control"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowBUBBLEA = layout.row()
+        rowBUBBLEA.label(text= "Start Animation:")
+        layout.prop(mytool, "my_floatBUBBLEA")
+        
+        rowBUBBLELA = layout.row()
+        rowBUBBLELA.label(text= "Duration:")
+        layout.prop(mytool, "my_floatBUBBLELA")
+        
+class BUBBLE_GRAPH_PT_panel_5(BUBBLE_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "BUBBLE_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlebgs = layout.row()
+        rowtitlebgs.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontbgs_title")
+
+        rowsubtitlebgs = layout.row()
+        rowsubtitlebgs.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontbgs_subtitle")
+        
+        rowlegendbgs = layout.row()
+        rowlegendbgs.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfontbgs_rangenumbers")
+        
+        rowlegendbgs = layout.row()
+        rowlegendbgs.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontbgs_legend")
+        
+        rowlegendbgs = layout.row()
+        rowlegendbgs.label(text= "X and Y Description Font:")
+        layout.prop(mytool, "my_pathfontbgs_description")        
+                 
+        layout.operator("addonname.myop_operatorbgsfont")
+        
+        rowresetbgs = layout.row()
+        rowresetbgs.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorbgsresfont")
         
 class US_MAP_panel:
     bl_space_type = "VIEW_3D"
@@ -19399,6 +19591,246 @@ class MyoperatorSGCsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorBGSsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorbgssql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringbubble_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of points (3-25)` FROM bubblegcomparison_table")
+        numberofpointsbgs = mycursor.fetchone()
+        my_floatbgs_numberofpoints = int(numberofpointsbgs[0])
+
+        mycursor.execute("SELECT `Value X` FROM bubblegcomparison_table")
+        valuexbgs = mycursor.fetchall()
+
+
+        point_valuesx = [0.0] * 26  # initialize list with 26 zeros
+        for i, valx in enumerate(valuexbgs):
+            val_strx = valx[0].replace(',', '')  # remove commas from the string
+            if val_strx:  # check if the string is not empty
+                point_valuesx[i] = float(val_strx)  # assign value to corresponding index
+            else:
+                point_valuesx[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value Y` FROM bubblegcomparison_table")
+        valueybgs = mycursor.fetchall()
+
+        point_valuesy = [0.0] * 26  # initialize list with 26 zeros
+        for i, valy in enumerate(valueybgs):
+            val_stry = valy[0].replace(',', '')  # remove commas from the string
+            if val_stry:  # check if the string is not empty
+                point_valuesy[i] = float(val_stry)  # assign value to corresponding index
+            else:
+                point_valuesy[i] = 0.0  # assign 0.0 if the string is empty
+
+        mycursor.execute("SELECT `xMin Value` FROM bubblegcomparison_table")
+        xminpointvalue = mycursor.fetchone()
+        my_floatbgs_xminpointvalue = float(xminpointvalue[0])
+        
+        mycursor.execute("SELECT `xMax Value` FROM bubblegcomparison_table")
+        xmaxpointvalue = mycursor.fetchone()
+        my_floatbgs_xmaxpointvalue = float(xmaxpointvalue[0])
+
+        mycursor.execute("SELECT `yMin Value` FROM bubblegcomparison_table")
+        yminpointvalue = mycursor.fetchone()
+        my_floatbgs_yminpointvalue = float(yminpointvalue[0])
+        
+        mycursor.execute("SELECT `yMax Value` FROM bubblegcomparison_table")
+        ymaxpointvalue = mycursor.fetchone()
+        my_floatbgs_ymaxpointvalue = float(ymaxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM bubblegcomparison_table")
+        decvalue = mycursor.fetchone()
+        my_floatbgs_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `Range Numbers` FROM bubblegcomparison_table")
+        rangenumber = mycursor.fetchone()
+        my_floatbgs_rangenumber = int(rangenumber[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM bubblegcomparison_table")
+        my_stringbgs_title = mycursor.fetchone()
+        my_stringbgs_title = str(my_stringbgs_title)
+        my_stringbgs_title = my_stringbgs_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM bubblegcomparison_table")
+        my_stringbgs_subtitle = mycursor.fetchone()
+        my_stringbgs_subtitle = str(my_stringbgs_subtitle)
+        my_stringbgs_subtitle = my_stringbgs_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Legend` FROM bubblegcomparison_table")
+        my_stringbgs_legendtext = mycursor.fetchall()
+        my_stringbgs_legendtext1 = str(my_stringbgs_legendtext[0])
+        my_stringbgs_legendtext1 = my_stringbgs_legendtext1.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Bubble Value` FROM bubblegcomparison_table")
+        valuebubblebgs = mycursor.fetchall()
+
+        point_valuesbubble = [0.0] * 26  # initialize list with 26 zeros
+        for i, valbubble in enumerate(valuebubblebgs):
+            val_strbubble = valbubble[0].replace(',', '')  # remove commas from the string
+            if val_strbubble:  # check if the string is not empty
+                point_valuesbubble[i] = float(val_strbubble)  # assign value to corresponding index
+            else:
+                point_valuesbubble[i] = 0.0  # assign 0.0 if the string is empty
+
+        mycursor.execute("SELECT `BubbleMin Value` FROM bubblegcomparison_table")
+        bubbleminpointvalue = mycursor.fetchone()
+        my_floatbgs_bubbleminpointvalue = float(bubbleminpointvalue[0])
+        
+        mycursor.execute("SELECT `BubbleMax Value` FROM bubblegcomparison_table")
+        bubblemaxpointvalue = mycursor.fetchone()
+        my_floatbgs_bubblemaxpointvalue = float(bubblemaxpointvalue[0])
+        
+        mycursor.execute("SELECT `Description` FROM bubblegcomparison_table")
+        my_stringbgs_descriptiontext = mycursor.fetchall()
+        my_stringbgs_descriptiontext1 = str(my_stringbgs_descriptiontext[0])
+        my_stringbgs_descriptiontext1 = my_stringbgs_descriptiontext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringbgs_descriptiontext2 = str(my_stringbgs_descriptiontext[1])
+        my_stringbgs_descriptiontext2 = my_stringbgs_descriptiontext2.strip("(").strip(")").strip(",").strip("'")
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_bgs = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_bgs.type == 'MESH':
+                        mesh_name_bgs = selected_obj_bgs.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_bgs.modifiers:
+                                modifier_name_bgs = selected_obj_bgs.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_2"] = my_floatbgs_numberofpoints
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_2"] = my_floatbgs_xminpointvalue
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_3"] = my_floatbgs_xmaxpointvalue
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_22"] = my_floatbgs_yminpointvalue
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_24"] = my_floatbgs_ymaxpointvalue
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_23"] = my_floatbgs_decvalue
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_21"] = my_floatbgs_rangenumber
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_92"] = point_valuesx[0]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_93"] = point_valuesx[1]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_94"] = point_valuesx[2]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_95"] = point_valuesx[3]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_96"] = point_valuesx[4]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_97"] = point_valuesx[5]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_98"] = point_valuesx[6]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_99"] = point_valuesx[7]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_100"] = point_valuesx[8]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_101"] = point_valuesx[9]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_102"] = point_valuesx[10]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_103"] = point_valuesx[11]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_104"] = point_valuesx[12]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_105"] = point_valuesx[13]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_106"] = point_valuesx[14]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_107"] = point_valuesx[15]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_108"] = point_valuesx[16]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_109"] = point_valuesx[17]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_110"] = point_valuesx[18]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_111"] = point_valuesx[19]
+                                
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_112"] = point_valuesx[20]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_113"] = point_valuesx[21]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_114"] = point_valuesx[22]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_115"] = point_valuesx[23]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_116"] = point_valuesx[24]
+
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_3"] = point_valuesy[0]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_55"] = point_valuesy[1]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_56"] = point_valuesy[2]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_4"] = point_valuesy[3]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_57"] = point_valuesy[4]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_58"] = point_valuesy[5]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_5"] = point_valuesy[6]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_59"] = point_valuesy[7]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_60"] = point_valuesy[8]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_6"] = point_valuesy[9]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_61"] = point_valuesy[10]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_62"] = point_valuesy[11]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_7"] = point_valuesy[12]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_63"] = point_valuesy[13]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_64"] = point_valuesy[14]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_8"] = point_valuesy[15]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_65"] = point_valuesy[16]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_66"] = point_valuesy[17]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_9"] = point_valuesy[18]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_67"] = point_valuesy[19]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_68"] = point_valuesy[20]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_10"] = point_valuesy[21]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_69"] = point_valuesy[22]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_70"] = point_valuesy[23]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_4"] = point_valuesy[24]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_38"] = my_stringbgs_title
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_39"] = my_stringbgs_subtitle
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_199"] = my_stringbgs_legendtext1
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_202"] = point_valuesbubble[0]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_203"] = point_valuesbubble[1]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_204"] = point_valuesbubble[2]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_205"] = point_valuesbubble[3]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_206"] = point_valuesbubble[4]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_207"] = point_valuesbubble[5]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_208"] = point_valuesbubble[6]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_209"] = point_valuesbubble[7]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_210"] = point_valuesbubble[8]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_211"] = point_valuesbubble[9]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_212"] = point_valuesbubble[10]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_213"] = point_valuesbubble[11]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_214"] = point_valuesbubble[12]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_215"] = point_valuesbubble[13]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_216"] = point_valuesbubble[14]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_217"] = point_valuesbubble[15]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_218"] = point_valuesbubble[16]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_219"] = point_valuesbubble[17]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_220"] = point_valuesbubble[18]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_221"] = point_valuesbubble[19]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_222"] = point_valuesbubble[20]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_223"] = point_valuesbubble[21]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_224"] = point_valuesbubble[22]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_225"] = point_valuesbubble[23]
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_226"] = point_valuesbubble[24]
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_200"] = my_floatbgs_bubbleminpointvalue
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_201"] = my_floatbgs_bubblemaxpointvalue
+                                
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_12"] = my_stringbgs_descriptiontext1
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_14"] = my_stringbgs_descriptiontext2
+
+                                print(f"Set modifier input for object '{mesh_name_bgs}' and modifier '{modifier_name_bgs}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_bgs}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
 class Myoperatorusmapsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorusmapsql"
     bl_label = "Import MySQL Data"
@@ -23720,6 +24152,196 @@ class MyoperatorSGCcsv(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorBGScsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorbgscsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_full3bgs = bpy.path.abspath(mytool.my_pathbgs)
+        with open(filepath_full3bgs) as f:
+            readout = list(csv.reader(f))
+
+            npbgs = int(readout[1][0])
+
+            for i in range(1, 26):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuex{i}bgs"] = float(readout[i][1])
+                    except ValueError:
+                        globals()[f"valuex{i}bgs"] = 0.0
+                else:
+                    globals()[f"valuex{i}bgs"] = 0.0
+
+
+            for i in range(1, 26):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuey{i}bgs"] = float(readout[i][2])
+                    except ValueError:
+                        globals()[f"valuey{i}bgs"] = 0.0
+                else:
+                    globals()[f"valuey{i}bgs"] = 0.0
+
+            xminvbgs = float(readout[1][3])
+            xmaxvbgs = float(readout[1][4])
+            yminvbgs = float(readout[1][5])
+            ymaxvbgs = float(readout[1][6])
+
+            decimalbgs = int(readout[1][7])
+            rnbgs = int(readout[1][8])
+            
+            titlebgs = str(readout[1][9])
+            subtitlebgs = str(readout[1][10])
+
+            legendbgs = str(readout[1][11])
+
+            for i in range(1, 26):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuebubble{i}bgs"] = float(readout[i][12])
+                    except ValueError:
+                        globals()[f"valuebubble{i}bgs"] = 0.0
+                else:
+                    globals()[f"valuebubble{i}bgs"] = 0.0
+
+            bubbleminbgs = float(readout[1][13])
+            bubblemaxbgs = float(readout[1][14])
+            
+            descriptionxbgs = str(readout[1][15])
+            descriptionybgs = str(readout[2][15])
+ 
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_bgs = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_bgs.type == 'MESH':
+                        mesh_name_bgs = selected_obj_bgs.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_bgs.modifiers:
+                                modifier_name_bgs = selected_obj_bgs.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_2"] = npbgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_2"] = xminvbgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_3"] = xmaxvbgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_22"] = yminvbgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_24"] = ymaxvbgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_23"] = decimalbgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_21"] = rnbgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_92"] = valuex1bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_93"] = valuex2bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_94"] = valuex3bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_95"] = valuex4bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_96"] = valuex5bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_97"] = valuex6bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_98"] = valuex7bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_99"] = valuex8bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_100"] = valuex9bgs
+                                
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_101"] = valuex10bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_102"] = valuex11bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_103"] = valuex12bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_104"] = valuex13bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_105"] = valuex14bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_106"] = valuex15bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_107"] = valuex16bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_108"] = valuex17bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_109"] = valuex18bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_110"] = valuex19bgs
+                                
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_111"] = valuex20bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_112"] = valuex21bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_113"] = valuex22bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_114"] = valuex23bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_115"] = valuex24bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_116"] = valuex25bgs
+
+
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_3"] = valuey1bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_55"] = valuey2bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_56"] = valuey3bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_4"] = valuey4bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_57"] = valuey5bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_58"] = valuey6bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_5"] = valuey7bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_59"] = valuey8bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_60"] = valuey9bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_6"] = valuey10bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_61"] = valuey11bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_62"] = valuey12bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_7"] = valuey13bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_63"] = valuey14bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_64"] = valuey15bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_8"] = valuey16bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_65"] = valuey17bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_66"] = valuey18bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_9"] = valuey19bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_67"] = valuey20bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_68"] = valuey21bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_10"] = valuey22bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_69"] = valuey23bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_70"] = valuey24bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_4"] = valuey25bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_38"] = titlebgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Input_39"] = subtitlebgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_199"] = legendbgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_202"] = valuebubble1bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_203"] = valuebubble2bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_204"] = valuebubble3bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_205"] = valuebubble4bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_206"] = valuebubble5bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_207"] = valuebubble6bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_208"] = valuebubble7bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_209"] = valuebubble8bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_210"] = valuebubble9bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_211"] = valuebubble10bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_212"] = valuebubble11bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_213"] = valuebubble12bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_214"] = valuebubble13bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_215"] = valuebubble14bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_216"] = valuebubble15bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_217"] = valuebubble16bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_218"] = valuebubble17bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_219"] = valuebubble18bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_220"] = valuebubble19bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_221"] = valuebubble20bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_222"] = valuebubble21bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_223"] = valuebubble22bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_224"] = valuebubble23bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_225"] = valuebubble24bgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_226"] = valuebubble25bgs
+
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_200"] = bubbleminbgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_201"] = bubblemaxbgs
+                                
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_12"] = descriptionxbgs
+                                selected_obj_bgs.modifiers[modifier_name_bgs]["Socket_14"] = descriptionybgs
+
+                                print(f"Set modifier input for object '{mesh_name_bgs}' and modifier '{modifier_name_bgs}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_bgs}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
 class MyoperatorUSMcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorusmapcsv"
     bl_label = "Import csv"
@@ -26220,6 +26842,52 @@ class ADDONNAME_OT_my_opSCATTERA(bpy.types.Operator):
                 # fcurve.keyframe_points[1].co.x = bob
                 
                 bpy.context.scene.frame_end = bobCASCATTERa + frCASCATTERA
+
+        return {'FINISHED'}
+    
+    
+class ADDONNAME_OT_my_opBUBBLEA(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatorbubblea"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_30"]'
+        index = 0
+        stringCABUBBLEA = mytool.my_floatBUBBLEA
+        frCABUBBLEA = bpy.context.scene.render.fps
+        jeffCABUBBLEa = stringCABUBBLEA * frCABUBBLEA
+        onemorebubblea = (mytool.my_floatBUBBLELA * frCABUBBLEA) + jeffCABUBBLEa
+        bobCABUBBLEa = onemorebubblea       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCABUBBLEa = int(bobCABUBBLEa)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCABUBBLEa
+                kps.handle_left[0] = jeffCABUBBLEa
+                kps.handle_right[0] = jeffCABUBBLEa
+                kps.handle_right[1] = 0.699        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCABUBBLEa
+                kpz.handle_left[0] = bobCABUBBLEa - 56
+                kpz.handle_right[0] = bobCABUBBLEa
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCABUBBLEa + frCABUBBLEA
 
         return {'FINISHED'}
     
@@ -31587,6 +32255,86 @@ class ADDONNAME_SGC(bpy.types.Operator):
             bpy.context.scene.frame_end = 210
             
             action_name = 'Scatter GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 15
+                        fcurve.keyframe_points[0].handle_left[0] = 15
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 15
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 120
+                        fcurve.keyframe_points[1].handle_left[0] = 64
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 120
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
+    
+class ADDONNAME_BGS(bpy.types.Operator):
+    bl_label = "Add Ob33jectbgs"
+    bl_idname = "addonname.myop_operatorbgs"  
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumBGS == 'OPBGS7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 144
+
+            action_name = 'Bubble GraphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 12
+                        fcurve.keyframe_points[0].handle_left[0] = 12
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 12
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 96
+                        fcurve.keyframe_points[1].handle_left[0] = 40
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 96
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enumBGS == 'OPBGS8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 210
+            
+            action_name = 'Bubble GraphAction'
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -37436,6 +38184,96 @@ class FontrestoreSCATTERGC(bpy.types.Operator):
         
         return {'FINISHED'}
     
+class FontchangeBUBBLEGC(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorbgsfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        nodebubblec_group = modifier.node_group
+        
+        nodebubblectitle = nodebubblec_group.nodes['String to Curves.029']
+        databubblectitle_font = bpy.data.fonts.load(mytool.my_pathfontbgs_title)
+        nodebubblectitle.font = databubblectitle_font
+        
+        nodebubblecsubtitle = nodebubblec_group.nodes['String to Curves.028']
+        databubblecsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontbgs_subtitle)
+        nodebubblecsubtitle.font = databubblecsubtitle_font
+
+        nodebubblecrangenumbers = ['String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005','String to Curves.006','String to Curves.007', 'String to Curves.008', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodebubblecrangenumbers:
+            nodebubblecrangenumbers = nodebubblec_group.nodes.get(name)
+            if nodebubblecrangenumbers:
+                databubblecrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfontbgs_rangenumbers)
+                nodebubblecrangenumbers.font = databubblecrangenumbers_font    
+
+        nodebubblecdescription = ['String to Curves.031', 'String to Curves.030']
+        for name in nodebubblecdescription:
+            nodebubblecdescription = nodebubblec_group.nodes.get(name)
+            if nodebubblecdescription:
+                databubblecdescription_font = bpy.data.fonts.load(mytool.my_pathfontbgs_description)
+                nodebubblecdescription.font = databubblecdescription_font    
+
+        nodebubbleclegend = ['String to Curves.034', 'String to Curves.033', 'String to Curves.032']
+        for name in nodebubbleclegend:
+            nodebubbleclegend = nodebubblec_group.nodes.get(name)
+            if nodebubbleclegend:
+                databubbleclegend_font = bpy.data.fonts.load(mytool.my_pathfontbgs_legend)
+                nodebubbleclegend.font = databubbleclegend_font  
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreBUBBLEGC(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorbgsresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorebubblec_group = modifier.node_group
+        
+        noderestorebubblectitle = noderestorebubblec_group.nodes['String to Curves.029']
+        datarestorebubblectitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorebubblectitle.font = datarestorebubblectitle_font
+        
+        noderestorebubblecsubtitle = noderestorebubblec_group.nodes['String to Curves.028']
+        datarestorebubblecsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorebubblecsubtitle.font = datarestorebubblecsubtitle_font  
+        
+        nodebubblecrangenumbers = ['String to Curves.001', 'String to Curves.002', 'String to Curves.003', 'String to Curves.004', 'String to Curves.005','String to Curves.006','String to Curves.007', 'String to Curves.008', 'String to Curves.013', 'String to Curves.014', 'String to Curves.015', 'String to Curves.016']
+        for name in nodebubblecrangenumbers:
+            nodebubblecrangenumbers = noderestorebubblec_group.nodes.get(name)
+            if nodebubblecrangenumbers:
+                databubblecrangenumbers_font = bpy.data.fonts["Open Sans Semibold"]
+                nodebubblecrangenumbers.font = databubblecrangenumbers_font   
+
+        nodebubblecdescription = ['String to Curves.031', 'String to Curves.030']
+        for name in nodebubblecdescription:
+            nodebubblecdescription = noderestorebubblec_group.nodes.get(name)
+            if nodebubblecdescription:
+                databubblecdescription_font = bpy.data.fonts["Open Sans Light"]
+                nodebubblecdescription.font = databubblecdescription_font  
+
+        nodebubbleclegend = ['String to Curves.034', 'String to Curves.033', 'String to Curves.032']
+        for name in nodebubbleclegend:
+            nodebubbleclegend = noderestorebubblec_group.nodes.get(name)
+            if nodebubbleclegend:
+                databubbleclegend_font = bpy.data.fonts["Open Sans Light"]
+                nodebubbleclegend.font = databubbleclegend_font 
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
 class FontchangeHBG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorbgfont"
@@ -38723,24 +39561,24 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
-MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, MyoperatorBGSsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
+MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorBGScsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
 MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opOPPOSINGAHBARAL, ADDONNAME_OT_my_opOPPOSINGAHBARBL, ADDONNAME_OT_my_opOPPOSINGAHBARCL, ADDONNAME_OT_my_opOPPOSINGAHBARDL, ADDONNAME_OT_my_opOPPOSINGAHBAREL, ADDONNAME_OT_my_opOPPOSINGAHBARFL, 
 ADDONNAME_OT_my_opOPPOSINGAHBARGL, ADDONNAME_OT_my_opOPPOSINGAHBARHL, ADDONNAME_OT_my_opOPPOSINGAHBARIL,
 ADDONNAME_OT_my_opOPPOSINGAHBARJL , ADDONNAME_OT_my_opSTACKEDAHBARAL, ADDONNAME_OT_my_opSTACKEDAHBARBL, ADDONNAME_OT_my_opSTACKEDAHBARCL, ADDONNAME_OT_my_opSTACKEDAVBARAL, ADDONNAME_OT_my_opSTACKEDAVBARBL, ADDONNAME_OT_my_opSTACKEDAVBARCL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL, ADDONNAME_OT_my_opPLGAL, ADDONNAME_OT_my_opPLGBL, ADDONNAME_OT_my_opPLGCL, ADDONNAME_OT_my_opPLGDL, ADDONNAME_OT_my_opPLGEL, ADDONNAME_OT_my_opPLGFL, ADDONNAME_OT_my_opPLGGL, ADDONNAME_OT_my_opPLGHL, 
-ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_BGS, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_ophbo, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeBUBBLEGC, FontrestoreBUBBLEGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
 PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
-COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, SCATTER_GRAPH_PT_panel_1, SCATTER_GRAPH_PT_panel_2, SCATTER_GRAPH_PT_panel_3, SCATTER_GRAPH_PT_panel_4, SCATTER_GRAPH_PT_panel_5, Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
+COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, SCATTER_GRAPH_PT_panel_1, SCATTER_GRAPH_PT_panel_2, SCATTER_GRAPH_PT_panel_3, SCATTER_GRAPH_PT_panel_4, SCATTER_GRAPH_PT_panel_5, BUBBLE_GRAPH_PT_panel_1, BUBBLE_GRAPH_PT_panel_2, BUBBLE_GRAPH_PT_panel_3, BUBBLE_GRAPH_PT_panel_4, BUBBLE_GRAPH_PT_panel_5,  Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
-ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opSCATTERA,  ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
+ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opSCATTERA, ADDONNAME_OT_my_opBUBBLEA,  ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
 ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
 ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH, ADDONNAME_OT_my_opMULTIPLEABARVA, ADDONNAME_OT_my_opMULTIPLEABARVB, ADDONNAME_OT_my_opMULTIPLEABARVC, ADDONNAME_OT_my_opMULTIPLEABARVD, ADDONNAME_OT_my_opMULTIPLEABARVE, ADDONNAME_OT_my_opMULTIPLEABARVF, ADDONNAME_OT_my_opMULTIPLEABARVG, ADDONNAME_OT_my_opMULTIPLEABARVH, ADDONNAME_OT_my_opMULTIPLEBBARVA, ADDONNAME_OT_my_opMULTIPLEBBARVB, ADDONNAME_OT_my_opMULTIPLEBBARVC, ADDONNAME_OT_my_opMULTIPLEBBARVD, ADDONNAME_OT_my_opMULTIPLEBBARVE, ADDONNAME_OT_my_opMULTIPLEBBARVF, ADDONNAME_OT_my_opMULTIPLEBBARVG, ADDONNAME_OT_my_opMULTIPLEBBARVH, ADDONNAME_OT_my_opMULTIPLECBARVA, ADDONNAME_OT_my_opMULTIPLECBARVB, ADDONNAME_OT_my_opMULTIPLECBARVC, ADDONNAME_OT_my_opMULTIPLECBARVD, ADDONNAME_OT_my_opMULTIPLECBARVE, ADDONNAME_OT_my_opMULTIPLECBARVF, ADDONNAME_OT_my_opMULTIPLECBARVG, ADDONNAME_OT_my_opMULTIPLECBARVH,ADDONNAME_OT_my_opMULTIPLEDBARVA, ADDONNAME_OT_my_opMULTIPLEDBARVB, ADDONNAME_OT_my_opMULTIPLEDBARVC, ADDONNAME_OT_my_opMULTIPLEDBARVD, ADDONNAME_OT_my_opMULTIPLEDBARVE, ADDONNAME_OT_my_opMULTIPLEDBARVF, ADDONNAME_OT_my_opMULTIPLEDBARVG, ADDONNAME_OT_my_opMULTIPLEDBARVH]
  
