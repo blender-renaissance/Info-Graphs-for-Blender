@@ -101,6 +101,15 @@ class MyProperties(bpy.types.PropertyGroup):
         ],
         update=lambda self, context: bpy.ops.addonname.myop_operatormppie()
     )
+    
+    my_enumRADAR : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPRADAR7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPRADAR8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorradar()
+    )
 
     my_enum23C : bpy.props.EnumProperty(
         name= "",
@@ -430,6 +439,10 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringmultiple_pie_graph : bpy.props.StringProperty(
     name= "",
     default="multiple_pie_graph",)  
+    
+    my_stringradar_graph : bpy.props.StringProperty(
+    name= "",
+    default="radar_graph",)  
     
     my_stringusmap : bpy.props.StringProperty(
     name= "",
@@ -3010,7 +3023,60 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatormghl()
     )
     
-    
+
+    my_floatRGA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgal()
+    )
+        
+    my_floatRGLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgal()
+    )
+        
+    my_floatRGB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=2,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgbl()
+    )
+        
+    my_floatRGLB: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgbl()
+    )
+        
+    my_floatRGC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=3,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgcl()
+    )
+        
+    my_floatRGLC: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=1,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorrgcl()
+    )    
 
     my_floatCOMPARISONAMOUNTA: bpy.props.FloatProperty(
         name="In seconds",
@@ -4761,6 +4827,14 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         )
         
+    my_pathrg: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/radar_graph.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
     my_pathsgc: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
@@ -5435,6 +5509,38 @@ class MyProperties(bpy.types.PropertyGroup):
         )
         
     my_pathfontmpg_bartext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontrg_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontrg_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontrg_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfontrg_bartext: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
         default="//Fonts/Open sans/OpenSans-Light.ttf",
@@ -7835,6 +7941,123 @@ class MULTIPLE_PIE_GRAPH_PT_panel_6(MULTIPLE_PIE_GRAPH_panel, bpy.types.Panel):
         rowresetmpg = layout.row()
         rowresetmpg.label(text= "Reset all Fonts:")
         layout.operator("addonname.myop_operatormpgresfont")
+
+class RADAR_GRAPH_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class RADAR_GRAPH_PT_panel_1(RADAR_GRAPH_panel, bpy.types.Panel):
+    bl_idname = "RADAR_GRAPH_PT_panel_1"
+    bl_label = "Radar Graph"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowRG = layout.row()
+        rowRG.label(text= "Frames per second:")       
+        layout.prop(mytool, "my_enumRADAR")
+
+class RADAR_GRAPH_PT_panel_2(RADAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "RADAR_GRAPH_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowRGcsv = layout.row()
+        rowRGcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathrg")
+        layout.operator("mesh.mycubeoperatorrgcsv")
+        
+class RADAR_GRAPH_PT_panel_3(RADAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "RADAR_GRAPH_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowRGsql = layout.row()
+        rowRGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringradar_graph")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorrgsql")
+
+class RADAR_GRAPH_PT_panel_4(RADAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "RADAR_GRAPH_PT_panel_1"
+    bl_label = "Duration Control"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowRGA = layout.row()
+        rowRGA.label(text="Start A:")
+        layout.prop(mytool, "my_floatRGA")
+
+        rowRGLA = layout.row()
+        rowRGLA.label(text="Length of Animation A:")
+        layout.prop(mytool, "my_floatRGLA")
+
+        rowRGB = layout.row()
+        rowRGB.label(text="Start B:")
+        layout.prop(mytool, "my_floatRGB")
+
+        rowRGLB = layout.row()
+        rowRGLB.label(text="Length of Animation B:")
+        layout.prop(mytool, "my_floatRGLB")
+
+        rowRGC = layout.row()
+        rowRGC.label(text="Start C:")
+        layout.prop(mytool, "my_floatRGC")
+
+        rowRGLC = layout.row()
+        rowRGLC.label(text="Length of Animation C:")
+        layout.prop(mytool, "my_floatRGLC")
+
+
+class RADAR_GRAPH_PT_panel_5(RADAR_GRAPH_panel, bpy.types.Panel):
+    bl_parent_id = "RADAR_GRAPH_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlerg = layout.row()
+        rowtitlerg.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfontrg_title")
+
+        rowsubtitlerg = layout.row()
+        rowsubtitlerg.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfontrg_subtitle")
+        
+        rowvaluerg = layout.row()
+        rowvaluerg.label(text= "Value Names Font:")
+        layout.prop(mytool, "my_pathfontrg_barvalue")
+
+        rowvaluerg = layout.row()
+        rowvaluerg.label(text= "Legend Font:")
+        layout.prop(mytool, "my_pathfontrg_bartext")
+        layout.operator("addonname.myop_operatorrgfont")
+        
+        rowresetrg = layout.row()
+        rowresetrg.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorrgresfont")
 
         
 class MOUNTAIN_GRAPH_panel:
@@ -19244,6 +19467,193 @@ class MyoperatorMGCsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorRGsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorrgsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringradar_graph
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+        
+        mycursor.execute("SELECT `Number of graphs (1-3)` FROM radarg_table")
+        numberofpointsrg = mycursor.fetchone()
+        nprg = int(numberofpointsrg[0])
+
+        mycursor.execute("SELECT `Number of values (5-18)` FROM radarg_table")
+        numberofpointsrg = mycursor.fetchone()
+        nvrg = int(numberofpointsrg[0])
+
+        mycursor.execute("SELECT `Value Names` FROM radarg_table")
+        textrg_unclean = mycursor.fetchall()
+        # List comprehension to clean and process all fetched values
+        textrg = [str(row[0]).strip("(),'") for row in textrg_unclean[:18]]
+
+        mycursor.execute("SELECT `Value A` FROM radarg_table")
+        valuearg_unclean = mycursor.fetchall()
+        # List comprehension to clean and convert values to float
+        valuearg = [float(str(row[0]).strip("(),'")) for row in valuearg_unclean[:18]]
+
+        mycursor.execute("SELECT `Value B` FROM radarg_table")
+        valuebrg_unclean = mycursor.fetchall()
+        # List comprehension to clean and convert values to float
+        valuebrg = [float(str(row[0]).strip("(),'")) for row in valuebrg_unclean[:18]]
+
+        mycursor.execute("SELECT `Value C` FROM radarg_table")
+        valuecrg_unclean = mycursor.fetchall()
+        # List comprehension to clean and convert values to float
+        valuecrg = [float(str(row[0]).strip("(),'")) for row in valuecrg_unclean[:18]]
+
+
+        mycursor.execute("SELECT `Min Value` FROM radarg_table")
+        minpointvalue = mycursor.fetchone()
+        minvrg = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM radarg_table")
+        maxpointvalue = mycursor.fetchone()
+        maxvrg = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Legend` FROM radarg_table")
+        my_stringrg_legendtext = mycursor.fetchall()
+        my_stringrg_legendtext1 = str(my_stringrg_legendtext[0])
+        my_stringrg_legendtext2 = str(my_stringrg_legendtext[1])
+        my_stringrg_legendtext3 = str(my_stringrg_legendtext[2])
+        legendarg = my_stringrg_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        legendbrg = my_stringrg_legendtext2.strip("(").strip(")").strip(",").strip("'")
+        legendcrg = my_stringrg_legendtext3.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM radarg_table")
+        my_stringrg_title = mycursor.fetchone()
+        my_stringrg_title = str(my_stringrg_title)
+        titlerg = my_stringrg_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM radarg_table")
+        my_stringrg_subtitle = mycursor.fetchone()
+        my_stringrg_subtitle = str(my_stringrg_subtitle)
+        subtitlerg = my_stringrg_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_rg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_rg.type == 'MESH':
+                        mesh_name_rg = selected_obj_rg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_rg.modifiers:
+                                modifier_name_rg = selected_obj_rg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_25"] = nprg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_31"] = nvrg
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_16"] = textrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_17"] = textrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_18"] = textrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_19"] = textrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_20"] = textrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_21"] = textrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_22"] = textrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_23"] = textrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_24"] = textrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_26"] = textrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_27"] = textrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_28"] = textrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_29"] = textrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_30"] = textrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_31"] = textrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_34"] = textrg[15]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_32"] = textrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_33"] = textrg[17]
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_2"] = valuearg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_41"] = valuearg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_42"] = valuearg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_1"] = valuearg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_2"] = valuearg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_3"] = valuearg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_4"] = valuearg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_5"] = valuearg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_6"] = valuearg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_7"] = valuearg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_8"] = valuearg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_9"] = valuearg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_10"] = valuearg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_11"] = valuearg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_12"] = valuearg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_13"] = valuearg[15]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_14"] = valuearg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_15"] = valuearg[17]
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_38"] = valuebrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_40"] = valuebrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_42"] = valuebrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_44"] = valuebrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_46"] = valuebrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_48"] = valuebrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_50"] = valuebrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_52"] = valuebrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_54"] = valuebrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_56"] = valuebrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_58"] = valuebrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_60"] = valuebrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_62"] = valuebrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_64"] = valuebrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_66"] = valuebrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_68"] = valuebrg[15] 
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_70"] = valuebrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_72"] = valuebrg[17]  
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_39"] = valuecrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_41"] = valuecrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_43"] = valuecrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_45"] = valuecrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_47"] = valuecrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_49"] = valuecrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_51"] = valuecrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_53"] = valuecrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_55"] = valuecrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_57"] = valuecrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_59"] = valuecrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_61"] = valuecrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_63"] = valuecrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_65"] = valuecrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_67"] = valuecrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_69"] = valuecrg[15] 
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_71"] = valuecrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_73"] = valuecrg[17]
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_10"] = minvrg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_11"] = maxvrg
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_39"] = legendarg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_40"] = legendbrg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_38"] = legendcrg                           
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_22"] = titlerg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_23"] = subtitlerg
+
+                                print(f"Set modifier input for object '{mesh_name_rg}' and modifier '{modifier_name_rg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_rg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
 class MyoperatorSGCsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorsgcsql"
     bl_label = "Import MySQL Data"
@@ -23738,6 +24148,183 @@ class MyoperatorMGcsv(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorRGcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorrgcsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_full3rg = bpy.path.abspath(mytool.my_pathrg)
+        with open(filepath_full3rg) as f:
+            readout = list(csv.reader(f))
+            nprg = int(readout[1][0])
+            nvrg = int(readout[1][1])
+
+            textrg = []
+            for i in range(1, 19):
+                try:
+                    textrg.append(str(readout[i][2]))
+                except IndexError:
+                    textrg.append("")
+            
+            valuearg = []
+            for i in range(1, 19):
+                try:
+                    valueargg = readout[i][3]
+                    if valueargg:  # check if the string is not empty
+                        valuearg.append(float(valueargg))
+                    else:
+                        valuearg.append(0.0)
+                except IndexError:
+                    valuearg.append(0.0)
+            
+            valuebrg = []
+            for i in range(1, 19):
+                try:
+                    valuebrgg = readout[i][4]
+                    if valuebrgg:  # check if the string is not empty
+                        valuebrg.append(float(valuebrgg))
+                    else:
+                        valuebrg.append(0.0)
+                except IndexError:
+                    valuebrg.append(0.0)
+
+            valuecrg = []
+            for i in range(1, 19):
+                try:
+                    valuecrgg = readout[i][5]
+                    if valuecrgg:  # check if the string is not empty
+                        valuecrg.append(float(valuecrgg))
+                    else:
+                        valuecrg.append(0.0)
+                except IndexError:
+                    valuecrg.append(0.0)
+            
+            minvrg = float(readout[1][6])
+            maxvrg = float(readout[1][7])
+
+            legendarg = str(readout[1][8])
+            legendbrg = str(readout[2][8])
+            legendcrg = str(readout[3][8])  
+          
+            titlerg = str(readout[1][9])
+            subtitlerg = str(readout[1][10])
+
+
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_rg = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_rg.type == 'MESH':
+                        mesh_name_rg = selected_obj_rg.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_rg.modifiers:
+                                modifier_name_rg = selected_obj_rg.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_25"] = nprg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_31"] = nvrg
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_16"] = textrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_17"] = textrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_18"] = textrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_19"] = textrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_20"] = textrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_21"] = textrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_22"] = textrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_23"] = textrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_24"] = textrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_26"] = textrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_27"] = textrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_28"] = textrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_29"] = textrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_30"] = textrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_31"] = textrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_34"] = textrg[15]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_32"] = textrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_33"] = textrg[17]
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_2"] = valuearg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_41"] = valuearg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_42"] = valuearg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_1"] = valuearg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_2"] = valuearg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_3"] = valuearg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_4"] = valuearg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_5"] = valuearg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_6"] = valuearg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_7"] = valuearg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_8"] = valuearg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_9"] = valuearg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_10"] = valuearg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_11"] = valuearg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_12"] = valuearg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_13"] = valuearg[15]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_14"] = valuearg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_15"] = valuearg[17]
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_38"] = valuebrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_40"] = valuebrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_42"] = valuebrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_44"] = valuebrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_46"] = valuebrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_48"] = valuebrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_50"] = valuebrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_52"] = valuebrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_54"] = valuebrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_56"] = valuebrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_58"] = valuebrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_60"] = valuebrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_62"] = valuebrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_64"] = valuebrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_66"] = valuebrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_68"] = valuebrg[15] 
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_70"] = valuebrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_72"] = valuebrg[17]  
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_39"] = valuecrg[0]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_41"] = valuecrg[1]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_43"] = valuecrg[2]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_45"] = valuecrg[3]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_47"] = valuecrg[4]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_49"] = valuecrg[5]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_51"] = valuecrg[6]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_53"] = valuecrg[7]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_55"] = valuecrg[8]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_57"] = valuecrg[9]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_59"] = valuecrg[10]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_61"] = valuecrg[11]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_63"] = valuecrg[12]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_65"] = valuecrg[13]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_67"] = valuecrg[14]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_69"] = valuecrg[15] 
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_71"] = valuecrg[16]
+                                selected_obj_rg.modifiers[modifier_name_rg]["Socket_73"] = valuecrg[17]
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_10"] = minvrg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_11"] = maxvrg
+
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_39"] = legendarg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_40"] = legendbrg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_38"] = legendcrg                           
+                                
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_22"] = titlerg
+                                selected_obj_rg.modifiers[modifier_name_rg]["Input_23"] = subtitlerg
+
+
+                                print(f"Set modifier input for object '{mesh_name_rg}' and modifier '{modifier_name_rg}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_rg}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}    
+
+    
 class MyoperatorMGCcsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatormgccsv"
     bl_label = "Import csv"
@@ -25130,6 +25717,154 @@ class ADDONNAME_OT_my_op23cCL(bpy.types.Operator):
                 
                 
                 bpy.context.scene.frame_end = bob23ccl+fr23CC
+
+
+             
+        return {'FINISHED'}
+    
+    
+class ADDONNAME_OT_my_oprgAL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorrgal"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_30"]'
+        index = 0
+        stringRGA = mytool.my_floatRGA
+        frRGA = bpy.context.scene.render.fps
+        jeffrgal = stringRGA*frRGA
+        onemorecal =  (mytool.my_floatRGLA*frRGA) + jeffrgal
+        bobrgal = onemorecal       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobrgal = int(bobrgal)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffrgal
+                kps.handle_left[0] = jeffrgal-30
+                kps.handle_right[0] = jeffrgal
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobrgal
+                kpz.handle_left[0] = bobrgal-30
+                kpz.handle_right[0] = bobrgal+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobrgal+frRGA
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_oprgBL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorrgbl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_49"]'
+        index = 0
+        stringRGB = mytool.my_floatRGB
+        frRGB = bpy.context.scene.render.fps
+        jeffrgbl = stringRGB*frRGB
+        onemorecbl =  (mytool.my_floatRGLB*frRGB) + jeffrgbl
+        bobrgbl = onemorecbl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobrgbl = int(bobrgbl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffrgbl
+                kps.handle_left[0] = jeffrgbl-30
+                kps.handle_right[0] = jeffrgbl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobrgbl
+                kpz.handle_left[0] = bobrgbl-30
+                kpz.handle_right[0] = bobrgbl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobrgbl+frRGB
+
+
+             
+        return {'FINISHED'}
+    
+class ADDONNAME_OT_my_oprgCL(bpy.types.Operator):
+    bl_label = "Add Objecggggggt"
+    bl_idname = "addonname.myop_operatorrgcl"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_50"]'
+        index = 0
+        stringRGC = mytool.my_floatRGC
+        frRGC = bpy.context.scene.render.fps
+        jeffrgcl = stringRGC*frRGC
+        onemoreccl =  (mytool.my_floatRGLC*frRGC) + jeffrgcl
+        bobrgcl = onemoreccl       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path = data_path, index = index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobrgcl = int(bobrgcl)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffrgcl
+                kps.handle_left[0] = jeffrgcl-30
+                kps.handle_right[0] = jeffrgcl
+                kps.handle_right[1] = 0.6        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobrgcl
+                kpz.handle_left[0] = bobrgcl-30
+                kpz.handle_right[0] = bobrgcl+30
+                                               
+                #fcurve.keyframe_points[0].co.x = 1
+                #fcurve.keyframe_points[1].co.x = bob
+                
+                
+                
+                bpy.context.scene.frame_end = bobrgcl+frRGC
 
 
              
@@ -28645,6 +29380,151 @@ class ADDONNAME_23C(bpy.types.Operator):
         return {'FINISHED'}
     
 
+class ADDONNAME_RADAR(bpy.types.Operator):
+    bl_label = "Add Ob33jectradar"
+    bl_idname = "addonname.myop_operatorradar"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumRADAR == 'OPRADAR7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 144
+            bpy.context.object.data.update()
+            
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 24
+                        fcurve.keyframe_points[1].co.x = 48
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_49"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 48
+                        fcurve.keyframe_points[1].co.x = 72
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_50"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 72
+                        fcurve.keyframe_points[1].co.x = 96
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+
+            
+        if mytool.my_enumRADAR == 'OPRADAR8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 180
+            bpy.context.object.data.update()
+            
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 30
+                        fcurve.keyframe_points[1].co.x = 60
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_49"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 60
+                        fcurve.keyframe_points[1].co.x = 90
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            action_name = 'Radar_graphAction'
+            data_paths = ['modifiers["GeometryNodes"]["Input_50"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 90
+                        fcurve.keyframe_points[1].co.x = 120
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
 
 class ADDONNAME_OT_my_op2pie(bpy.types.Operator):
     bl_label = "Add Ob33ject2"
@@ -37483,6 +38363,103 @@ class Fontrestore23CG(bpy.types.Operator):
         
         return {'FINISHED'}
     
+class FontchangeRG(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorrgfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        node23_group = modifier.node_group
+        
+        nodergtitle = node23_group.nodes['String to Curves.005']
+        datargtitle_font = bpy.data.fonts.load(mytool.my_pathfontrg_title)
+        nodergtitle.font = datargtitle_font
+        
+        nodergsubtitle = node23_group.nodes['String to Curves.006']
+        datargsubtitle_font = bpy.data.fonts.load(mytool.my_pathfontrg_subtitle)
+        nodergsubtitle.font = datargsubtitle_font
+
+        # List of specific node groups to access
+        specific_group_names = ['Group.022', 'Group.023', 'Group.019', 'Group.039', 'Group.040','Group.041','Group.042','Group.043','Group.044','Group.030','Group.031','Group.032','Group.033','Group.034','Group.035','Group.036','Group.038','Group.037']
+        
+        nodergdescription_names = []
+        # Loop through nodes in the main node group
+        for node in node23_group.nodes:
+            if node.type == 'GROUP' and node.name in specific_group_names:
+                sub_group = node.node_tree  # Access the internal node tree of the group
+                for sub_node in sub_group.nodes:
+                    if sub_node.bl_idname == 'GeometryNodeStringToCurves':  # Check if it's a String to Curves node
+                        nodergdescription_names.append(sub_node.name)  # Add the node name to your list
+                        datargdescription_font = bpy.data.fonts.load(mytool.my_pathfontrg_barvalue)
+                        sub_node.font = datargdescription_font  # Apply the font  
+        
+        noderglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in noderglegend_names:
+            noderglegend = node23_group.nodes.get(name)
+            if noderglegend:
+                datarglegend_font = bpy.data.fonts.load(mytool.my_pathfontrg_bartext)
+                noderglegend.font = datarglegend_font
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreRG(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorrgresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        objrg = bpy.context.view_layer.objects.active
+        modifierrg = objrg.modifiers.active 
+        noderestorerg_group = modifierrg.node_group
+        
+        noderestorergtitle = noderestorerg_group.nodes['String to Curves.005']
+        datarestorergtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorergtitle.font = datarestorergtitle_font
+        
+        noderestorergsubtitle = noderestorerg_group.nodes['String to Curves.006']
+        datarestorergsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorergsubtitle.font = datarestorergsubtitle_font 
+        
+        # List of specific node groups to access
+        specific_group_names = ['Group.022', 'Group.023', 'Group.019', 'Group.039', 'Group.040', 'Group.041', 'Group.042', 'Group.043', 'Group.044', 'Group.030', 'Group.031', 'Group.032', 'Group.033', 'Group.034', 'Group.035', 'Group.036', 'Group.038', 'Group.037']
+        
+        # Initialize the nodergdescription_names list to hold the names of the nodes you want to access
+        nodergdescription_names = []
+        
+        # Loop through the main node group and filter for specific groups
+        for node in noderestorerg_group.nodes:  # Corrected from node23_group to noderestorerg_group
+            if node.type == 'GROUP' and node.name in specific_group_names:
+                sub_group = node.node_tree  # Access the internal node tree of the group
+                
+                # Access nodes inside the nested node group and find description nodes
+                for sub_node in sub_group.nodes:
+                    if sub_node.bl_idname == 'GeometryNodeStringToCurves':  # Assuming 'String to Curves' node type
+                        nodergdescription_names.append(sub_node.name)  # Add the node name to the list
+
+                        # Now apply the font to each description node found
+                        datargdescription_font = bpy.data.fonts["Open Sans Regular"]
+                        sub_node.font = datargdescription_font  # Apply the font to the node
+
+        noderglegend_names = ['String to Curves.037', 'String to Curves.036', 'String to Curves.035']
+        for name in noderglegend_names:
+            noderglegend = noderestorerg_group.nodes.get(name)
+            if noderglegend:
+                datarglegend_font = bpy.data.fonts["Open Sans Regular"]
+                noderglegend.font = datarglegend_font  
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+
+    
 class Fontchange23PG(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operator23pgfont"
@@ -39561,20 +40538,20 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, MyoperatorBGSsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorRGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, MyoperatorBGSsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorRGcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
 MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorBGScsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
-MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, 
+MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, ADDONNAME_OT_my_oprgAL, ADDONNAME_OT_my_oprgBL, ADDONNAME_OT_my_oprgCL,
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opOPPOSINGAHBARAL, ADDONNAME_OT_my_opOPPOSINGAHBARBL, ADDONNAME_OT_my_opOPPOSINGAHBARCL, ADDONNAME_OT_my_opOPPOSINGAHBARDL, ADDONNAME_OT_my_opOPPOSINGAHBAREL, ADDONNAME_OT_my_opOPPOSINGAHBARFL, 
 ADDONNAME_OT_my_opOPPOSINGAHBARGL, ADDONNAME_OT_my_opOPPOSINGAHBARHL, ADDONNAME_OT_my_opOPPOSINGAHBARIL,
 ADDONNAME_OT_my_opOPPOSINGAHBARJL , ADDONNAME_OT_my_opSTACKEDAHBARAL, ADDONNAME_OT_my_opSTACKEDAHBARBL, ADDONNAME_OT_my_opSTACKEDAHBARCL, ADDONNAME_OT_my_opSTACKEDAVBARAL, ADDONNAME_OT_my_opSTACKEDAVBARBL, ADDONNAME_OT_my_opSTACKEDAVBARCL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL, ADDONNAME_OT_my_opPLGAL, ADDONNAME_OT_my_opPLGBL, ADDONNAME_OT_my_opPLGCL, ADDONNAME_OT_my_opPLGDL, ADDONNAME_OT_my_opPLGEL, ADDONNAME_OT_my_opPLGFL, ADDONNAME_OT_my_opPLGGL, ADDONNAME_OT_my_opPLGHL, 
-ADDONNAME_23C, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_BGS, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_RADAR, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_BGS, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_ophbo, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeBUBBLEGC, FontrestoreBUBBLEGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeBUBBLEGC, FontrestoreBUBBLEGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontchangeRG, FontrestoreRG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
 PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
-COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
+COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, RADAR_GRAPH_PT_panel_1, RADAR_GRAPH_PT_panel_2, RADAR_GRAPH_PT_panel_3, RADAR_GRAPH_PT_panel_4, RADAR_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
 COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, SCATTER_GRAPH_PT_panel_1, SCATTER_GRAPH_PT_panel_2, SCATTER_GRAPH_PT_panel_3, SCATTER_GRAPH_PT_panel_4, SCATTER_GRAPH_PT_panel_5, BUBBLE_GRAPH_PT_panel_1, BUBBLE_GRAPH_PT_panel_2, BUBBLE_GRAPH_PT_panel_3, BUBBLE_GRAPH_PT_panel_4, BUBBLE_GRAPH_PT_panel_5,  Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
