@@ -44,6 +44,7 @@ class MyProperties(bpy.types.PropertyGroup):
         description= "Change the render engine of the scene",
         items= [('OP1', "Cycles (for CPU rendering)", "f"),
                 ('OP2', "Eevee (Nvidia GPU rendering)", "fg"),
+                ('OPC3', "Cycles (GPU rendering)", "fgh"),
         ],
         update=lambda self, context: bpy.ops.addonname.myop_operator00()
     )
@@ -29187,10 +29188,20 @@ class RenderRender2(bpy.types.Operator):
             print("tried cycles")
                       
         if mytool.my_enum0 == 'OP2':
-            bpy.context.scene.render.engine = 'BLENDER_EEVEE'
+            bpy.context.scene.render.engine = 'BLENDER_EEVEE_NEXT'
             bpy.context.scene.eevee.taa_render_samples = 64
 
             print("tried eevee")
+            
+        if mytool.my_enum0 == 'OPC3':
+            bpy.context.scene.render.engine = 'CYCLES'
+            bpy.context.scene.cycles.device = 'GPU'
+            bpy.context.scene.cycles.preview_samples = 20
+            bpy.context.scene.cycles.samples = 20
+            bpy.context.scene.render.film_transparent = True
+
+            print("tried cycles GPU")
+            
         print("in execute")
 
             
