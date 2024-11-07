@@ -21250,20 +21250,6 @@ class MyoperatorCGCcsv(bpy.types.Operator):
                 wtpc23c = 0.0  # avoid division by zero
             else:
                 wtpc23c = float(float(psc23c)/maxv23c)
-            
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_31"] = ncg23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_39"] = wta23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_40"] = wtb23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_38"] = wtc23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_2"] = wtpa23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_41"] = wtpb23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_42"] = wtpc23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_10"] = minv23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_11"] = maxv23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_22"] = title23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_23"] = subtitle23c
-        bpy.data.objects["Circle_Graph.001"].modifiers["GeometryNodes"]["Input_16"] = desc23c
-
 
         # Ensure an object is selected
         if bpy.context.selected_objects:
