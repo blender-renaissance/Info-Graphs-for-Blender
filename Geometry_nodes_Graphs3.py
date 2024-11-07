@@ -38529,7 +38529,7 @@ class Fontrestore23PG(bpy.types.Operator):
                 data23pgvalue_font = bpy.data.fonts["Open Sans Regular"]
                 node23pgvalue.font = data23pgvalue_font     
         
-        node23pgdescription_names = ['String to Curves.004', 'String to Curves.007', 'String to Curves.008']
+        node23pgdescription_names = ['String to Curves.009', 'String to Curves.007', 'String to Curves.008']
         for name in node23pgdescription_names:
             node23pgdescription = noderestore23pg_group.nodes.get(name)
             if node23pgdescription:
