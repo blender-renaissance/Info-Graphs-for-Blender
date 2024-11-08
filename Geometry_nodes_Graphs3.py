@@ -177,7 +177,7 @@ class MyProperties(bpy.types.PropertyGroup):
     
     my_enumSHBG : bpy.props.EnumProperty(
         name= "",
-        description= "Change Frame rate of the scene",
+        description= "Change Frame VBGrate of the scene",
         items= [('OPSHBG7', "24 FPS (and reset)", "24 Frames per second"),
                 ('OPSHBG8', "30 FPS (and reset)", "30 Frames per second"),
         ],
@@ -29258,7 +29258,7 @@ class ADDONNAME_OT_my_op2(bpy.types.Operator):
             bpy.context.scene.frame_end = 144
             bpy.context.object.data.update()
             
-            action_name = 'Circle_GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -29286,7 +29286,7 @@ class ADDONNAME_OT_my_op2(bpy.types.Operator):
             bpy.context.scene.frame_end = 180
             bpy.context.object.data.update()
             
-            action_name = 'Circle_GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -29323,7 +29323,7 @@ class ADDONNAME_23C(bpy.types.Operator):
             bpy.context.scene.frame_end = 144
             bpy.context.object.data.update()
             
-            action_name = 'Circle_GraphAction.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]']
             index = 0               # Z axis
 
@@ -29352,7 +29352,7 @@ class ADDONNAME_23C(bpy.types.Operator):
             bpy.context.scene.frame_end = 180
             bpy.context.object.data.update()
             
-            action_name = 'Circle_GraphAction.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]']
             index = 0               # Z axis
 
@@ -29390,7 +29390,7 @@ class ADDONNAME_RADAR(bpy.types.Operator):
             bpy.context.scene.frame_end = 144
             bpy.context.object.data.update()
             
-            action_name = 'Radar_graphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -29459,7 +29459,7 @@ class ADDONNAME_RADAR(bpy.types.Operator):
             bpy.context.scene.frame_end = 180
             bpy.context.object.data.update()
             
-            action_name = 'Radar_graphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -29535,7 +29535,7 @@ class ADDONNAME_OT_my_op2pie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 144
             
-            action_name = 'Circle Graph.001Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_25"]'
             index = 0               # Z axis
 
@@ -29562,7 +29562,7 @@ class ADDONNAME_OT_my_op2pie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 180
             
-            action_name = 'Circle Graph.001Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_25"]'
             index = 0               # Z axis
 
@@ -29598,7 +29598,7 @@ class ADDONNAME_23P(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 144
 
-            action_name = 'Circle Graph.001Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_25"]', 'modifiers["GeometryNodes"]["Input_44"]', 'modifiers["GeometryNodes"]["Input_45"]']
             index = 0               # Z axis
 
@@ -29625,7 +29625,7 @@ class ADDONNAME_23P(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 180
             
-            action_name = 'Circle Graph.001Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_25"]', 'modifiers["GeometryNodes"]["Input_44"]', 'modifiers["GeometryNodes"]["Input_45"]']
             index = 0               # Z axis
 
@@ -29661,7 +29661,7 @@ class ADDONNAME_OT_my_oplgpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 96
 
-            action_name = 'Line GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Socket_44"]']
             index = 0              # Z axis
 
@@ -29726,7 +29726,7 @@ class ADDONNAME_OT_my_oplgpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 120
             
-            action_name = 'Line GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Socket_44"]']
             index = 0               # Z axis
 
@@ -29801,7 +29801,7 @@ class ADDONNAME_LGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 96
 
-            action_name = 'CubeAction.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_26"]', 'modifiers["GeometryNodes"]["Input_27"]', 'modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_32"]', 'modifiers["GeometryNodes"]["Input_33"]', 'modifiers["GeometryNodes"]["Input_46"]', 'modifiers["GeometryNodes"]["Input_47"]', 'modifiers["GeometryNodes"]["Input_48"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]', 'modifiers["GeometryNodes"]["Input_51"]', 'modifiers["GeometryNodes"]["Input_52"]', 'modifiers["GeometryNodes"]["Input_53"]']
             index = 0               # Z axis
 
@@ -29837,7 +29837,7 @@ class ADDONNAME_LGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 120
             
-            action_name = 'CubeAction.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_26"]', 'modifiers["GeometryNodes"]["Input_27"]', 'modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_32"]', 'modifiers["GeometryNodes"]["Input_33"]', 'modifiers["GeometryNodes"]["Input_46"]', 'modifiers["GeometryNodes"]["Input_47"]', 'modifiers["GeometryNodes"]["Input_48"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]', 'modifiers["GeometryNodes"]["Input_51"]', 'modifiers["GeometryNodes"]["Input_52"]', 'modifiers["GeometryNodes"]["Input_53"]']
             index = 0               # Z axis
 
@@ -29881,7 +29881,7 @@ class ADDONNAME_OT_my_ophbo(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Plane.004Action.014'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
@@ -29912,7 +29912,7 @@ class ADDONNAME_OT_my_ophbo(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.014'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
@@ -29952,7 +29952,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
             bpy.context.scene.frame_end = 168
             bpy.context.object.data.update()
             
-            action_name = 'Horizontal Bar Graph.004Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -30030,7 +30030,7 @@ class ADDONNAME_SHBG(bpy.types.Operator):
             bpy.context.scene.frame_end = 180
             bpy.context.object.data.update()
             
-            action_name = 'Horizontal Bar Graph.004Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -30116,7 +30116,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             bpy.context.scene.frame_end = 168
             bpy.context.object.data.update()
             
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -30139,7 +30139,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -30162,7 +30162,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -30194,7 +30194,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             bpy.context.scene.frame_end = 180
             bpy.context.object.data.update()
             
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -30217,7 +30217,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -30240,7 +30240,7 @@ class ADDONNAME_SVBG(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Vertical Bar Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -30279,7 +30279,7 @@ class ADDONNAME_OT_my_ophbpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Plane.004Action.005'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
@@ -30309,7 +30309,7 @@ class ADDONNAME_OT_my_ophbpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.005'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Socket_0"]', 'modifiers["GeometryNodes"]["Socket_3"]', 'modifiers["GeometryNodes"]["Socket_4"]', 'modifiers["GeometryNodes"]["Socket_5"]', 'modifiers["GeometryNodes"]["Socket_6"]', 'modifiers["GeometryNodes"]["Socket_7"]']
             index = 0               # Z axis
 
@@ -32437,7 +32437,7 @@ class ADDONNAME_HBC(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Plane.004Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Input_90"]']
             index = 0               # Z axis
 
@@ -32467,7 +32467,7 @@ class ADDONNAME_HBC(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_57"]', 'modifiers["GeometryNodes"]["Input_58"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Input_90"]']
             index = 0               # Z axis
 
@@ -32505,7 +32505,7 @@ class ADDONNAME_MG(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 96
             
-            action_name = 'Cube.003Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0              # Z axis
 
@@ -32751,7 +32751,7 @@ class ADDONNAME_MG(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 120
             
-            action_name = 'Cube.003Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
             
@@ -33015,7 +33015,7 @@ class ADDONNAME_MGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 96
 
-            action_name = 'Cube.004Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_46"]', 'modifiers["GeometryNodes"]["Input_47"]', 'modifiers["GeometryNodes"]["Input_48"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]', 'modifiers["GeometryNodes"]["Input_51"]', 'modifiers["GeometryNodes"]["Input_52"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_77"]', 'modifiers["GeometryNodes"]["Input_78"]', 'modifiers["GeometryNodes"]["Input_79"]', 'modifiers["GeometryNodes"]["Input_80"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]']
             index = 0               # Z axis
 
@@ -33051,7 +33051,7 @@ class ADDONNAME_MGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 120
             
-            action_name = 'Cube.004Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_46"]', 'modifiers["GeometryNodes"]["Input_47"]', 'modifiers["GeometryNodes"]["Input_48"]', 'modifiers["GeometryNodes"]["Input_49"]', 'modifiers["GeometryNodes"]["Input_50"]', 'modifiers["GeometryNodes"]["Input_51"]', 'modifiers["GeometryNodes"]["Input_52"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_77"]', 'modifiers["GeometryNodes"]["Input_78"]', 'modifiers["GeometryNodes"]["Input_79"]', 'modifiers["GeometryNodes"]["Input_80"]', 'modifiers["GeometryNodes"]["Input_81"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]']
             index = 0               # Z axis
 
@@ -33095,7 +33095,7 @@ class ADDONNAME_SGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 144
 
-            action_name = 'Scatter GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -33131,7 +33131,7 @@ class ADDONNAME_SGC(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Scatter GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -33175,7 +33175,7 @@ class ADDONNAME_BGS(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 144
 
-            action_name = 'Bubble GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -33211,7 +33211,7 @@ class ADDONNAME_BGS(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Bubble GraphAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
             index = 0               # Z axis
 
@@ -33255,7 +33255,7 @@ class ADDONNAME_USM(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 120
 
-            action_name = 'KSAction'
+            action_name = bpy.context.active_object.animation_data.action.name
 
             data_paths = []
 
@@ -33314,7 +33314,7 @@ class ADDONNAME_USM(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 143
             
-            action_name = 'KSAction'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = []
 
             # Add paths from 'Input_114' to 'Input_137'
@@ -33379,7 +33379,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
             
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -33401,7 +33401,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -33423,7 +33423,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -33445,7 +33445,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_31"]'
             index = 0               # Z axis
 
@@ -33467,7 +33467,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_53"]'
             index = 0               # Z axis
 
@@ -33489,7 +33489,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_54"]'
             index = 0               # Z axis
 
@@ -33511,7 +33511,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_55"]'
             index = 0               # Z axis
 
@@ -33533,7 +33533,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_56"]'
             index = 0               # Z axis
 
@@ -33562,7 +33562,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -33584,7 +33584,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -33606,7 +33606,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -33628,7 +33628,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_31"]'
             index = 0               # Z axis
 
@@ -33650,7 +33650,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
     
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_53"]'
             index = 0               # Z axis
 
@@ -33672,7 +33672,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
   
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_54"]'
             index = 0               # Z axis
 
@@ -33694,7 +33694,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_55"]'
             index = 0               # Z axis
 
@@ -33716,7 +33716,7 @@ class ADDONNAME_PL(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.015'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_56"]'
             index = 0               # Z axis
 
@@ -33755,7 +33755,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
             
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -33777,7 +33777,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -33799,7 +33799,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -33821,7 +33821,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_31"]'
             index = 0               # Z axis
 
@@ -33843,7 +33843,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_53"]'
             index = 0               # Z axis
 
@@ -33865,7 +33865,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_54"]'
             index = 0               # Z axis
 
@@ -33887,7 +33887,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_55"]'
             index = 0               # Z axis
 
@@ -33909,7 +33909,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
  
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_56"]'
             index = 0               # Z axis
 
@@ -33938,7 +33938,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_28"]'
             index = 0               # Z axis
 
@@ -33960,7 +33960,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_29"]'
             index = 0               # Z axis
 
@@ -33982,7 +33982,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_30"]'
             index = 0               # Z axis
 
@@ -34004,11 +34004,11 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
                 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_31"]'
             index = 0               # Z axis
 
-            # Find the appropriate action
+            # Find the appropriate action 
             action = bpy.data.actions.get(action_name)
             if action:
                 # From this action, retrieve the appropriate F-Curve
@@ -34026,7 +34026,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
     
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_53"]'
             index = 0               # Z axis
 
@@ -34048,7 +34048,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
   
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_54"]'
             index = 0               # Z axis
 
@@ -34070,7 +34070,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_55"]'
             index = 0               # Z axis
 
@@ -34092,7 +34092,7 @@ class ADDONNAME_VB(bpy.types.Operator):
             else:
                 print("no action")
 
-            action_name = 'Plane.004Action.003'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_56"]'
             index = 0               # Z axis
 
@@ -37083,7 +37083,7 @@ class ADDONNAME_VBC(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Plane.004Action.004'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]']
             index = 0               # Z axis
 
@@ -37113,7 +37113,7 @@ class ADDONNAME_VBC(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Plane.004Action.004'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]']
             index = 0               # Z axis
 
@@ -37151,7 +37151,7 @@ class ADDONNAME_VBM(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 168
 
-            action_name = 'Vertical Bar Graph Comparison.003Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Socket_20"]', 'modifiers["GeometryNodes"]["Socket_21"]', 'modifiers["GeometryNodes"]["Socket_22"]', 'modifiers["GeometryNodes"]["Socket_23"]', 'modifiers["GeometryNodes"]["Socket_24"]', 'modifiers["GeometryNodes"]["Socket_25"]', 'modifiers["GeometryNodes"]["Socket_26"]', 'modifiers["GeometryNodes"]["Socket_27"]', 'modifiers["GeometryNodes"]["Socket_28"]', 'modifiers["GeometryNodes"]["Socket_29"]', 'modifiers["GeometryNodes"]["Socket_30"]', 'modifiers["GeometryNodes"]["Socket_31"]', 'modifiers["GeometryNodes"]["Socket_32"]', 'modifiers["GeometryNodes"]["Socket_33"]', 'modifiers["GeometryNodes"]["Socket_34"]', 'modifiers["GeometryNodes"]["Socket_35"]']
             index = 0               # Z axis
 
@@ -37181,7 +37181,7 @@ class ADDONNAME_VBM(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
-            action_name = 'Vertical Bar Graph Comparison.003Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_paths = ['modifiers["GeometryNodes"]["Input_28"]', 'modifiers["GeometryNodes"]["Input_29"]', 'modifiers["GeometryNodes"]["Input_30"]', 'modifiers["GeometryNodes"]["Input_31"]', 'modifiers["GeometryNodes"]["Input_53"]', 'modifiers["GeometryNodes"]["Input_54"]', 'modifiers["GeometryNodes"]["Input_55"]', 'modifiers["GeometryNodes"]["Input_56"]', 'modifiers["GeometryNodes"]["Input_82"]', 'modifiers["GeometryNodes"]["Input_83"]', 'modifiers["GeometryNodes"]["Input_84"]', 'modifiers["GeometryNodes"]["Input_85"]', 'modifiers["GeometryNodes"]["Input_86"]', 'modifiers["GeometryNodes"]["Input_87"]', 'modifiers["GeometryNodes"]["Input_88"]', 'modifiers["GeometryNodes"]["Input_89"]', 'modifiers["GeometryNodes"]["Socket_20"]', 'modifiers["GeometryNodes"]["Socket_21"]', 'modifiers["GeometryNodes"]["Socket_22"]', 'modifiers["GeometryNodes"]["Socket_23"]', 'modifiers["GeometryNodes"]["Socket_24"]', 'modifiers["GeometryNodes"]["Socket_25"]', 'modifiers["GeometryNodes"]["Socket_26"]', 'modifiers["GeometryNodes"]["Socket_27"]', 'modifiers["GeometryNodes"]["Socket_28"]', 'modifiers["GeometryNodes"]["Socket_29"]', 'modifiers["GeometryNodes"]["Socket_30"]', 'modifiers["GeometryNodes"]["Socket_31"]', 'modifiers["GeometryNodes"]["Socket_32"]', 'modifiers["GeometryNodes"]["Socket_33"]', 'modifiers["GeometryNodes"]["Socket_34"]', 'modifiers["GeometryNodes"]["Socket_35"]']
             index = 0               # Z axis
 
@@ -37220,7 +37220,7 @@ class ADDONNAME_OT_my_opmcpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 264
             
-            action_name = 'Circle Graph.002Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_50"]'
             index = 0               # Z axis
 
@@ -37464,7 +37464,7 @@ class ADDONNAME_OT_my_opmcpie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 330
             
-            action_name = 'Circle Graph.002Action.001'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_50"]'
             index = 0               # Z axis
 
@@ -37718,7 +37718,7 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
             bpy.context.scene.render.fps = 24
             bpy.context.scene.frame_end = 264
             
-            action_name = 'Circle Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_49"]'
             index = 0               # Z axis
 
@@ -37963,7 +37963,7 @@ class ADDONNAME_OT_my_opmppie(bpy.types.Operator):
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 300
             
-            action_name = 'Circle Graph.005Action'
+            action_name = bpy.context.active_object.animation_data.action.name
             data_path = 'modifiers["GeometryNodes"]["Input_49"]'
             index = 0               # Z axis
 
