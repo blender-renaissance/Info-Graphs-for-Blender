@@ -12,9 +12,13 @@ bl_info = {
 
 
 import bpy
+import sys
 import os
 import csv
-import mysql.connector
+try:
+    import mysql.connector
+except ImportError as e:
+    print("Error importing MySQL:", e)
 import requests
 import json
 import re
