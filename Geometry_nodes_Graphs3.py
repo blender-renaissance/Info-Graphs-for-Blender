@@ -6,7 +6,7 @@ bl_info = {
     "location": "View3D > Sidebar > Renaissance tab",
     "description": "Quick Render Presets for Blender Renaissance Graphs.",
     "warning": "",
-    "doc_url": "https://twitter.com/b3d_Renaissance",
+    "doc_url": "https://x.com/b3d_Renaissance",
     "category": "3D View",
 }
 
@@ -150,6 +150,15 @@ class MyProperties(bpy.types.PropertyGroup):
                 ('OPLGC8', "30 FPS (and reset)", "30 Frames per second"),
         ],
         update=lambda self, context: bpy.ops.addonname.myop_operatorlgc()
+    )
+    
+    my_enumHM : bpy.props.EnumProperty(
+        name= "",
+        description= "Change Frame rate of the scene",
+        items= [('OPHM7', "24 FPS (and reset)", "24 Frames per second"),
+                ('OPHM8', "30 FPS (and reset)", "30 Frames per second"),
+        ],
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhm()
     )
     
     my_enumHBC : bpy.props.EnumProperty(
@@ -420,6 +429,10 @@ class MyProperties(bpy.types.PropertyGroup):
     my_stringscatter_graph : bpy.props.StringProperty(
     name= "",
     default="scatter_graph",)
+    
+    my_stringheatmap : bpy.props.StringProperty(
+    name= "",
+    default="heatmap_graph",)
     
     my_stringbubble_graph : bpy.props.StringProperty(
     name= "",
@@ -3110,6 +3123,24 @@ class MyProperties(bpy.types.PropertyGroup):
         update=lambda self, context: bpy.ops.addonname.myop_operatorscattera()
     )
     
+    my_floatHMA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=0.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhma()
+    )
+    
+    my_floatHMLA: bpy.props.FloatProperty(
+        name="In seconds",
+        description="A float property",
+        default=3.5,
+        min=0.1,
+        max=300.0,
+        update=lambda self, context: bpy.ops.addonname.myop_operatorhma()
+    )
+    
     my_floatBUBBLEA: bpy.props.FloatProperty(
         name="In seconds",
         description="A float property",
@@ -4728,6 +4759,14 @@ class MyProperties(bpy.types.PropertyGroup):
         subtype='FILE_PATH',
         )
         
+    my_pathhm: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//csv/heatmap.csv",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
     my_pathhbar: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
@@ -5402,6 +5441,54 @@ class MyProperties(bpy.types.PropertyGroup):
         )
 
     my_pathfontsgc_legend: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfonthm_title: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-ExtraBold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfonthm_subtitle: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Light.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfonthm_barvalue: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+        
+    my_pathfonthm_valuetext: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Regular.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfonthm_rangenumbers: bpy.props.StringProperty(
+        name = "",
+        description="link to csv file:",
+        default="//Fonts/Open sans/OpenSans-Semibold.ttf",
+        maxlen=1024,
+        subtype='FILE_PATH',
+        )
+
+    my_pathfonthm_legend: bpy.props.StringProperty(
         name = "",
         description="link to csv file:",
         default="//Fonts/Open sans/OpenSans-Light.ttf",
@@ -7109,8 +7196,111 @@ class COMPARISON_LINE_GRAPH_PT_panel_6(COMPARISON_LINE_GRAPH_panel, bpy.types.Pa
         
         rowresetlgc = layout.row()
         rowresetlgc.label(text= "Reset all Fonts:")
-        layout.operator("addonname.myop_operatorlinegcresfont")
+        layout.operator("addonname.myop_operatorlinegcresfont")        
 
+class HEATMAP_panel:
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = 'Renaissance'
+    bl_options = {"DEFAULT_CLOSED"}
+
+class HEATMAP_PT_panel_1(HEATMAP_panel, bpy.types.Panel):
+    bl_idname = "HEATMAP_PT_panel_1"
+    bl_label = "Heatmap"
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowHMFPS = layout.row()
+        rowHMFPS.label(text= "Frames per second:")
+        layout.prop(mytool, "my_enumHM")  
+
+class HEATMAP_PT_panel_2(HEATMAP_panel, bpy.types.Panel):
+    bl_parent_id = "HEATMAP_PT_panel_1"
+    bl_label = "Import CSV"
+    bl_options = {"DEFAULT_CLOSED"}
+    
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+
+        rowHMcsv = layout.row()
+        rowHMcsv.label(text= "Link to csv file")
+        layout.prop(mytool, "my_pathhm")
+        layout.operator("mesh.mycubeoperatorhmcsv")
+        
+class HEATMAP_PT_panel_3(HEATMAP_panel, bpy.types.Panel):
+    bl_parent_id = "HEATMAP_PT_panel_1"
+    bl_label = "Import MySQL Data"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowCGsql = layout.row()
+        rowCGsql.label(text= "DATABASE name:")
+        layout.prop(mytool, "my_stringheatmap")
+        
+        layout.label(text="Import data from MySQL database:")
+        layout.operator("mesh.mycubeoperatorhmsql")
+
+class HEATMAP_PT_panel_4(HEATMAP_panel, bpy.types.Panel):
+    bl_parent_id = "HEATMAP_PT_panel_1"
+    bl_label = "Duration Control"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowHMA = layout.row()
+        rowHMA.label(text= "Start Animation:")
+        layout.prop(mytool, "my_floatHMA")
+        
+        rowHMLA = layout.row()
+        rowHMLA.label(text= "Duration:")
+        layout.prop(mytool, "my_floatHMLA")
+        
+class HEATMAP_PT_panel_5(HEATMAP_panel, bpy.types.Panel):
+    bl_parent_id = "HEATMAP_PT_panel_1"
+    bl_label = "Font"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        rowtitlehm = layout.row()
+        rowtitlehm.label(text= "Title Font:")
+        layout.prop(mytool, "my_pathfonthm_title")
+
+        rowsubtitlehm = layout.row()
+        rowsubtitlehm.label(text= "Subtitle Font:")
+        layout.prop(mytool, "my_pathfonthm_subtitle")
+        
+        rowlegendhm = layout.row()
+        rowlegendhm.label(text= "Range Numbers Font:")
+        layout.prop(mytool, "my_pathfonthm_rangenumbers")
+        
+        rowvalueshm = layout.row()
+        rowvalueshm.label(text= "Value Text Font:")
+        layout.prop(mytool, "my_pathfonthm_valuetext")
+        
+        rowlegendhm = layout.row()
+        rowlegendhm.label(text= "X and Y Description Font:")
+        layout.prop(mytool, "my_pathfonthm_legend")                 
+        layout.operator("addonname.myop_operatorhmfont")
+        
+        rowresethm = layout.row()
+        rowresethm.label(text= "Reset all Fonts:")
+        layout.operator("addonname.myop_operatorhmresfont")
 
 class HORIZONTAL_BAR_GRAPH_panel:
     bl_space_type = "VIEW_3D"
@@ -20006,6 +20196,392 @@ class MyoperatorSGCsql(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorHMsql(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhmsql"
+    bl_label = "Import MySQL Data"
+    
+    def execute(self, context):
+        layout = self.layout
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        mydb = mysql.connector.connect(
+        host= mytool.my_stringhost,
+        user= mytool.my_stringuser,
+        password= mytool.my_stringpassword,
+        database= mytool.my_stringheatmap
+        )
+            
+        mycursor = mydb.cursor(buffered=True)
+
+
+        mycursor.execute("SELECT `Value A` FROM heatmapg_table")
+        valueahm = mycursor.fetchall()
+
+
+        point_valuesa = [0.0] * 10  # initialize list with 10 zeros
+        for i, vala in enumerate(valueahm):
+            val_stra = vala[0].replace(',', '')  # remove commas from the string
+            if val_stra:  # check if the string is not empty
+                point_valuesa[i] = float(val_stra)  # assign value to corresponding index
+            else:
+                point_valuesa[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value B` FROM heatmapg_table")
+        valuebhm = mycursor.fetchall()
+
+        point_valuesb = [0.0] * 10  # initialize list with 10 zeros
+        for i, valb in enumerate(valuebhm):
+            val_strb = valb[0].replace(',', '')  # remove commas from the string
+            if val_strb:  # check if the string is not empty
+                point_valuesb[i] = float(val_strb)  # assign value to corresponding index
+            else:
+                point_valuesb[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+
+        mycursor.execute("SELECT `Value C` FROM heatmapg_table")
+        valuechm = mycursor.fetchall()
+
+
+        point_valuesc = [0.0] * 10  # initialize list with 10 zeros
+        for i, valc in enumerate(valuechm):
+            val_strc = valc[0].replace(',', '')  # remove commas from the string
+            if val_strc:  # check if the string is not empty
+                point_valuesc[i] = float(val_strc)  # assign value to corresponding index
+            else:
+                point_valuesc[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value D` FROM heatmapg_table")
+        valuedhm = mycursor.fetchall()
+
+        point_valuesd = [0.0] * 10  # initialize list with 10 zeros
+        for i, vald in enumerate(valuedhm):
+            val_strd = vald[0].replace(',', '')  # remove commas from the string
+            if val_strd:  # check if the string is not empty
+                point_valuesd[i] = float(val_strd)  # assign value to corresponding index
+            else:
+                point_valuesd[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+
+        mycursor.execute("SELECT `Value E` FROM heatmapg_table")
+        valueehm = mycursor.fetchall()
+
+
+        point_valuese = [0.0] * 10  # initialize list with 10 zeros
+        for i, vale in enumerate(valueehm):
+            val_stre = vale[0].replace(',', '')  # remove commas from the string
+            if val_stre:  # check if the string is not empty
+                point_valuese[i] = float(val_stre)  # assign value to corresponding index
+            else:
+                point_valuese[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value F` FROM heatmapg_table")
+        valuefhm = mycursor.fetchall()
+
+        point_valuesf = [0.0] * 10  # initialize list with 10 zeros
+        for i, valf in enumerate(valuefhm):
+            val_strf = valf[0].replace(',', '')  # remove commas from the string
+            if val_strf:  # check if the string is not empty
+                point_valuesf[i] = float(val_strf)  # assign value to corresponding index
+            else:
+                point_valuesf[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+
+        mycursor.execute("SELECT `Value G` FROM heatmapg_table")
+        valueghm = mycursor.fetchall()
+
+
+        point_valuesg = [0.0] * 10  # initialize list with 10 zeros
+        for i, valg in enumerate(valueghm):
+            val_strg = valg[0].replace(',', '')  # remove commas from the string
+            if val_strg:  # check if the string is not empty
+                point_valuesg[i] = float(val_strg)  # assign value to corresponding index
+            else:
+                point_valuesg[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value H` FROM heatmapg_table")
+        valuehhm = mycursor.fetchall()
+
+        point_valuesh = [0.0] * 10  # initialize list with 10 zeros
+        for i, valh in enumerate(valuehhm):
+            val_strh = valh[0].replace(',', '')  # remove commas from the string
+            if val_strh:  # check if the string is not empty
+                point_valuesh[i] = float(val_strh)  # assign value to corresponding index
+            else:
+                point_valuesh[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+        mycursor.execute("SELECT `Value I` FROM heatmapg_table")
+        valueihm = mycursor.fetchall()
+
+
+        point_valuesi = [0.0] * 10  # initialize list with 10 zeros
+        for i, vali in enumerate(valueihm):
+            val_stri = vali[0].replace(',', '')  # remove commas from the string
+            if val_stri:  # check if the string is not empty
+                point_valuesi[i] = float(val_stri)  # assign value to corresponding index
+            else:
+                point_valuesi[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Value J` FROM heatmapg_table")
+        valuejhm = mycursor.fetchall()
+
+        point_valuesj = [0.0] * 10  # initialize list with 10 zeros
+        for i, valj in enumerate(valuejhm):
+            val_strj = valj[0].replace(',', '')  # remove commas from the string
+            if val_strj:  # check if the string is not empty
+                point_valuesj[i] = float(val_strj)  # assign value to corresponding index
+            else:
+                point_valuesj[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+
+        mycursor.execute("SELECT `Names X axis` FROM heatmapg_table")
+        names_xhm = mycursor.fetchall()
+
+
+        names_x_axis = [0.0] * 10  # initialize list with 10 zeros
+        for i, valx in enumerate(names_xhm):
+            val_strx = valx[0].replace(',', '')  # remove commas from the string
+            if val_strx:  # check if the string is not empty
+                names_x_axis[i] = str(val_strx)  # assign value to corresponding index
+            else:
+                names_x_axis[i] = 0.0  # assign 0.0 if the string is empty
+            
+
+        mycursor.execute("SELECT `Names Y axis` FROM heatmapg_table")
+        names_yhm = mycursor.fetchall()
+
+        names_y_axis = [0.0] * 10  # initialize list with 10 zeros
+        for i, valy in enumerate(names_yhm):
+            val_stry = valy[0].replace(',', '')  # remove commas from the string
+            if val_stry:  # check if the string is not empty
+                names_y_axis[i] = str(val_stry)  # assign value to corresponding index
+            else:
+                names_y_axis[i] = 0.0  # assign 0.0 if the string is empty
+
+
+
+
+
+        mycursor.execute("SELECT `Divisions` FROM heatmapg_table")
+        numberofpointshm = mycursor.fetchone()
+        my_floathm_numberofpoints = int(numberofpointshm[0])
+
+        mycursor.execute("SELECT `Min Value` FROM heatmapg_table")
+        minpointvalue = mycursor.fetchone()
+        my_floathm_minpointvalue = float(minpointvalue[0])
+        
+        mycursor.execute("SELECT `Max Value` FROM heatmapg_table")
+        maxpointvalue = mycursor.fetchone()
+        my_floathm_maxpointvalue = float(maxpointvalue[0])
+
+        mycursor.execute("SELECT `Decimals` FROM heatmapg_table")
+        decvalue = mycursor.fetchone()
+        my_floathm_decvalue = int(decvalue[0])
+
+        mycursor.execute("SELECT `TITLE (in caps)` FROM heatmapg_table")
+        my_stringhm_title = mycursor.fetchone()
+        my_stringhm_title = str(my_stringhm_title)
+        my_stringhm_title = my_stringhm_title.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Subtitle` FROM heatmapg_table")
+        my_stringhm_subtitle = mycursor.fetchone()
+        my_stringhm_subtitle = str(my_stringhm_subtitle)
+        my_stringhm_subtitle = my_stringhm_subtitle.strip("(").strip(")").strip(",").strip("'")
+
+        mycursor.execute("SELECT `Legend X and Y` FROM heatmapg_table")
+        my_stringhm_legendtext = mycursor.fetchall()
+        my_stringhm_legendtext1 = str(my_stringhm_legendtext[0])
+        my_stringhm_legendtext2 = str(my_stringhm_legendtext[1])
+        my_stringhm_legendtext1 = my_stringhm_legendtext1.strip("(").strip(")").strip(",").strip("'")
+        my_stringhm_legendtext2 = my_stringhm_legendtext2.strip("(").strip(")").strip(",").strip("'")
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hm = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_hm.type == 'MESH':
+                        mesh_name_hm = selected_obj_hm.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hm.modifiers:
+                                modifier_name_hm = selected_obj_hm.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_264"] = names_x_axis[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_265"] = names_x_axis[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_266"] = names_x_axis[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_267"] = names_x_axis[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_268"] = names_x_axis[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_269"] = names_x_axis[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_270"] = names_x_axis[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_271"] = names_x_axis[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_272"] = names_x_axis[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_273"] = names_x_axis[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_274"] = names_y_axis[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_275"] = names_y_axis[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_276"] = names_y_axis[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_277"] = names_y_axis[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_278"] = names_y_axis[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_279"] = names_y_axis[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_280"] = names_y_axis[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_281"] = names_y_axis[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_282"] = names_y_axis[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_283"] = names_y_axis[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_200"] = my_floathm_numberofpoints
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_2"] = my_floathm_minpointvalue
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_3"] = my_floathm_maxpointvalue
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_263"] = my_floathm_decvalue
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_92"] = point_valuesa[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_3"] = point_valuesa[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_93"] = point_valuesa[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_55"] = point_valuesa[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_94"] = point_valuesa[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_56"] = point_valuesa[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_95"] = point_valuesa[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_4"] = point_valuesa[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_96"] = point_valuesa[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_57"] = point_valuesa[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_97"] = point_valuesb[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_58"] = point_valuesb[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_98"] = point_valuesb[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_5"] = point_valuesb[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_99"] = point_valuesb[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_59"] = point_valuesb[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_100"] = point_valuesb[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_60"] = point_valuesb[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_101"] = point_valuesb[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_6"] = point_valuesb[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_102"] = point_valuesc[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_61"] = point_valuesc[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_103"] = point_valuesc[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_62"] = point_valuesc[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_104"] = point_valuesc[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_7"] = point_valuesc[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_105"] = point_valuesc[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_63"] = point_valuesc[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_106"] = point_valuesc[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_64"] = point_valuesc[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_107"] = point_valuesd[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_8"] = point_valuesd[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_108"] = point_valuesd[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_65"] = point_valuesd[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_109"] = point_valuesd[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_66"] = point_valuesd[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_110"] = point_valuesd[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_9"] = point_valuesd[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_111"] = point_valuesd[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_67"] = point_valuesd[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_203"] = point_valuese[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_204"] = point_valuese[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_205"] = point_valuese[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_206"] = point_valuese[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_207"] = point_valuese[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_208"] = point_valuese[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_209"] = point_valuese[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_210"] = point_valuese[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_211"] = point_valuese[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_212"] = point_valuese[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_213"] = point_valuesf[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_214"] = point_valuesf[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_215"] = point_valuesf[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_216"] = point_valuesf[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_217"] = point_valuesf[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_218"] = point_valuesf[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_219"] = point_valuesf[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_220"] = point_valuesf[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_221"] = point_valuesf[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_222"] = point_valuesf[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_223"] = point_valuesg[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_224"] = point_valuesg[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_225"] = point_valuesg[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_226"] = point_valuesg[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_227"] = point_valuesg[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_228"] = point_valuesg[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_229"] = point_valuesg[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_230"] = point_valuesg[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_231"] = point_valuesg[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_232"] = point_valuesg[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_233"] = point_valuesh[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_234"] = point_valuesh[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_235"] = point_valuesh[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_236"] = point_valuesh[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_237"] = point_valuesh[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_238"] = point_valuesh[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_239"] = point_valuesh[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_240"] = point_valuesh[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_241"] = point_valuesh[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_242"] = point_valuesh[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_243"] = point_valuesi[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_244"] = point_valuesi[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_245"] = point_valuesi[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_246"] = point_valuesi[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_247"] = point_valuesi[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_248"] = point_valuesi[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_249"] = point_valuesi[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_250"] = point_valuesi[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_251"] = point_valuesi[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_252"] = point_valuesi[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_253"] = point_valuesj[0]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_254"] = point_valuesj[1]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_255"] = point_valuesj[2]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_256"] = point_valuesj[3]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_257"] = point_valuesj[4]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_258"] = point_valuesj[5]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_259"] = point_valuesj[6]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_260"] = point_valuesj[7]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_261"] = point_valuesj[8]
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_262"] = point_valuesj[9]
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_38"] = my_stringhm_title
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_39"] = my_stringhm_subtitle
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_12"] = my_stringhm_legendtext1
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_14"] = my_stringhm_legendtext2
+
+                                print(f"Set modifier input for object '{mesh_name_hm}' and modifier '{modifier_name_hm}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hm}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+
+    
 class MyoperatorBGSsql(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorbgssql"
     bl_label = "Import MySQL Data"
@@ -24730,6 +25306,311 @@ class MyoperatorSGCcsv(bpy.types.Operator):
         bpy.context.object.data.update()
         return {'FINISHED'}
     
+class MyoperatorHMcsv(bpy.types.Operator):
+    bl_idname = "mesh.mycubeoperatorhmcsv"
+    bl_label = "Import csv"
+    
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        filepath_full3hm = bpy.path.abspath(mytool.my_pathhm)
+        with open(filepath_full3hm) as f:
+            readout = list(csv.reader(f))
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuea{i}hm"] = float(readout[i][0])
+                    except ValueError:
+                        globals()[f"valuea{i}hm"] = 0.0
+                else:
+                    globals()[f"valuea{i}hm"] = 0.0
+
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valueb{i}hm"] = float(readout[i][1])
+                    except ValueError:
+                        globals()[f"valueb{i}hm"] = 0.0
+                else:
+                    globals()[f"valuec{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuec{i}hm"] = float(readout[i][2])
+                    except ValueError:
+                        globals()[f"valuec{i}hm"] = 0.0
+                else:
+                    globals()[f"valuec{i}hm"] = 0.0
+
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valued{i}hm"] = float(readout[i][3])
+                    except ValueError:
+                        globals()[f"valued{i}hm"] = 0.0
+                else:
+                    globals()[f"valued{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuee{i}hm"] = float(readout[i][4])
+                    except ValueError:
+                        globals()[f"valuee{i}hm"] = 0.0
+                else:
+                    globals()[f"valuee{i}hm"] = 0.0
+
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuef{i}hm"] = float(readout[i][5])
+                    except ValueError:
+                        globals()[f"valuef{i}hm"] = 0.0
+                else:
+                    globals()[f"valuef{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valueg{i}hm"] = float(readout[i][6])
+                    except ValueError:
+                        globals()[f"valueg{i}hm"] = 0.0
+                else:
+                    globals()[f"valueg{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valueh{i}hm"] = float(readout[i][7])
+                    except ValueError:
+                        globals()[f"valueh{i}hm"] = 0.0
+                else:
+                    globals()[f"valueh{i}hm"] = 0.0
+
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuei{i}hm"] = float(readout[i][8])
+                    except ValueError:
+                        globals()[f"valuei{i}hm"] = 0.0
+                else:
+                    globals()[f"valuei{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"valuej{i}hm"] = float(readout[i][9])
+                    except ValueError:
+                        globals()[f"valuej{i}hm"] = 0.0
+                else:
+                    globals()[f"valuej{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"namesx{i}hm"] = str(readout[i][10])
+                    except ValueError:
+                        globals()[f"namesx{i}hm"] = 0.0
+                else:
+                    globals()[f"namesx{i}hm"] = 0.0
+
+            for i in range(1, 11):
+                if i < len(readout) and len(readout[i]) > 1:
+                    try:
+                        globals()[f"namesy{i}hm"] = str(readout[i][11])
+                    except ValueError:
+                        globals()[f"namesy{i}hm"] = 0.0
+                else:
+                    globals()[f"namesy{i}hm"] = 0.0
+
+
+
+            nphm = int(readout[1][12])
+
+            minvhm = float(readout[1][13])
+            maxvhm = float(readout[1][14])
+
+            decimalhm = int(readout[1][15])
+            
+            titlehm = str(readout[1][16])
+            subtitlehm = str(readout[1][17])
+
+            legendxhm = str(readout[1][18])
+            legendyhm = str(readout[2][18])
+            
+        # Ensure an object is selected
+        if bpy.context.selected_objects:
+                selected_obj_hm = bpy.context.active_object  # Get the active (selected) object
+
+                if selected_obj_hm.type == 'MESH':
+                        mesh_name_hm = selected_obj_hm.name
+
+                        # Check if the selected object has modifiers
+                        if selected_obj_hm.modifiers:
+                                modifier_name_hm = selected_obj_hm.modifiers.active.name  # Get the name of the active modifier
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_264"] = namesx1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_265"] = namesx2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_266"] = namesx3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_267"] = namesx4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_268"] = namesx5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_269"] = namesx6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_270"] = namesx7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_271"] = namesx8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_272"] = namesx9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_273"] = namesx10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_274"] = namesy1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_275"] = namesy2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_276"] = namesy3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_277"] = namesy4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_278"] = namesy5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_279"] = namesy6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_280"] = namesy7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_281"] = namesy8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_282"] = namesy9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_283"] = namesy10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_200"] = nphm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_2"] = minvhm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_3"] = maxvhm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_263"] = decimalhm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_92"] = valuea1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_3"] = valuea2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_93"] = valuea3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_55"] = valuea4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_94"] = valuea5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_56"] = valuea6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_95"] = valuea7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_4"] = valuea8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_96"] = valuea9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_57"] = valuea10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_97"] = valueb1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_58"] = valueb2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_98"] = valueb3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_5"] = valueb4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_99"] = valueb5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_59"] = valueb6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_100"] = valueb7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_60"] = valueb8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_101"] = valueb9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_6"] = valueb10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_102"] = valuec1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_61"] = valuec2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_103"] = valuec3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_62"] = valuec4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_104"] = valuec5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_7"] = valuec6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_105"] = valuec7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_63"] = valuec8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_106"] = valuec9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_64"] = valuec10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_107"] = valued1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_8"] = valued2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_108"] = valued3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_65"] = valued4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_109"] = valued5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_66"] = valued6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_110"] = valued7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_9"] = valued8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_111"] = valued9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_67"] = valued10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_203"] = valuee1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_204"] = valuee2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_205"] = valuee3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_206"] = valuee4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_207"] = valuee5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_208"] = valuee6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_209"] = valuee7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_210"] = valuee8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_211"] = valuee9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_212"] = valuee10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_213"] = valuef1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_214"] = valuef2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_215"] = valuef3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_216"] = valuef4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_217"] = valuef5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_218"] = valuef6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_219"] = valuef7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_220"] = valuef8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_221"] = valuef9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_222"] = valuef10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_223"] = valueg1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_224"] = valueg2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_225"] = valueg3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_226"] = valueg4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_227"] = valueg5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_228"] = valueg6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_229"] = valueg7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_230"] = valueg8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_231"] = valueg9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_232"] = valueg10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_233"] = valueh1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_234"] = valueh2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_235"] = valueh3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_236"] = valueh4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_237"] = valueh5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_238"] = valueh6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_239"] = valueh7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_240"] = valueh8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_241"] = valueh9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_242"] = valueh10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_243"] = valuei1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_244"] = valuei2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_245"] = valuei3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_246"] = valuei4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_247"] = valuei5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_248"] = valuei6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_249"] = valuei7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_250"] = valuei8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_251"] = valuei9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_252"] = valuei10hm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_253"] = valuej1hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_254"] = valuej2hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_255"] = valuej3hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_256"] = valuej4hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_257"] = valuej5hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_258"] = valuej6hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_259"] = valuej7hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_260"] = valuej8hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_261"] = valuej9hm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_262"] = valuej10hm
+
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_38"] = titlehm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Input_39"] = subtitlehm
+
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_12"] = legendxhm
+                                selected_obj_hm.modifiers[modifier_name_hm]["Socket_14"] = legendyhm
+
+                                print(f"Set modifier input for object '{mesh_name_hm}' and modifier '{modifier_name_hm}'.")
+                        else:
+                                print(f"Selected object '{mesh_name_hm}' has no modifiers.")
+                else:
+                        print("Selected object is not a mesh.")
+        else:
+                print("No object selected.")
+        bpy.context.object.data.update()
+        return {'FINISHED'}
+    
 class MyoperatorBGScsv(bpy.types.Operator):
     bl_idname = "mesh.mycubeoperatorbgscsv"
     bl_label = "Import csv"
@@ -27568,6 +28449,52 @@ class ADDONNAME_OT_my_opSCATTERA(bpy.types.Operator):
                 # fcurve.keyframe_points[1].co.x = bob
                 
                 bpy.context.scene.frame_end = bobCASCATTERa + frCASCATTERA
+
+        return {'FINISHED'}
+    
+
+class ADDONNAME_OT_my_opHMA(bpy.types.Operator):
+    bl_label = "Add Object"
+    bl_idname = "addonname.myop_operatorhma"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        action_name = bpy.context.active_object.animation_data.action.name
+        data_path = 'modifiers["GeometryNodes"]["Input_30"]'
+        index = 0
+        stringCAHMA = mytool.my_floatHMA
+        frCAHMA = bpy.context.scene.render.fps
+        jeffCAHMa = stringCAHMA * frCAHMA
+        onemorehma = (mytool.my_floatHMLA * frCAHMA) + jeffCAHMa
+        bobCAHMa = onemorehma       
+
+        # Find the appropriate action
+        action = bpy.data.actions.get(action_name)
+        if action:
+            # From this action, retrieve the appropriate F-Curve
+            fcurve = action.fcurves.find(data_path=data_path, index=index)
+            if fcurve:
+                # Iterate over all keyframes
+                
+                bobCAHMa = int(bobCAHMa)
+                
+                kps = fcurve.keyframe_points[0]
+                kps.co.x = jeffCAHMa
+                kps.handle_left[0] = jeffCAHMa
+                kps.handle_right[0] = jeffCAHMa
+                kps.handle_right[1] = 0.699        
+                
+                kpz = fcurve.keyframe_points[1]
+                kpz.co.x = bobCAHMa
+                kpz.handle_left[0] = bobCAHMa - 56
+                kpz.handle_right[0] = bobCAHMa
+                                               
+                # fcurve.keyframe_points[0].co.x = 1
+                # fcurve.keyframe_points[1].co.x = bob
+                
+                bpy.context.scene.frame_end = bobCAHMa + frCAHMA
 
         return {'FINISHED'}
     
@@ -33132,6 +34059,86 @@ class ADDONNAME_SGC(bpy.types.Operator):
 
             
         if mytool.my_enumSGC == 'OPSGC8':
+            bpy.context.scene.render.fps = 30
+            bpy.context.scene.frame_end = 210
+            
+            action_name = bpy.context.active_object.animation_data.action.name
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 15
+                        fcurve.keyframe_points[0].handle_left[0] = 15
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 15
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 120
+                        fcurve.keyframe_points[1].handle_left[0] = 64
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 120
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+        return {'FINISHED'}
+    
+class ADDONNAME_HM(bpy.types.Operator):
+    bl_label = "Add Ob33jecthm"
+    bl_idname = "addonname.myop_operatorhm"  
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool       
+    
+        if mytool.my_enumHM == 'OPHM7':
+            bpy.context.scene.render.fps = 24
+            bpy.context.scene.frame_end = 144
+
+            action_name = bpy.context.active_object.animation_data.action.name
+            data_paths = ['modifiers["GeometryNodes"]["Input_30"]']
+            index = 0               # Z axis
+
+            for data_path in data_paths:
+                # Find the appropriate action
+                action = bpy.data.actions.get(action_name)
+                if action:
+                    # From this action, retrieve the appropriate F-Curve
+                    fcurve = action.fcurves.find(data_path=data_path, index=index)
+                    if fcurve:
+                        fcurve.keyframe_points[0].co.x = 12
+                        fcurve.keyframe_points[0].handle_left[0] = 12
+                        fcurve.keyframe_points[0].handle_left[1] = 0
+                        fcurve.keyframe_points[0].handle_right[0] = 12
+                        fcurve.keyframe_points[0].handle_right[1] = 0.699
+                        fcurve.keyframe_points[1].co.x = 96
+                        fcurve.keyframe_points[1].handle_left[0] = 40
+                        fcurve.keyframe_points[1].handle_left[1] = 1
+                        fcurve.keyframe_points[1].handle_right[0] = 96
+                        fcurve.keyframe_points[1].handle_right[1] = 1
+
+
+                        print("changed")
+                    else:
+                        print("no fcurve")
+                else:
+                    print("no action")
+
+            print("end")
+
+            
+        if mytool.my_enumHM == 'OPHM8':
             bpy.context.scene.render.fps = 30
             bpy.context.scene.frame_end = 210
             
@@ -39162,6 +40169,190 @@ class FontrestoreSCATTERGC(bpy.types.Operator):
         
         return {'FINISHED'}
     
+class FontchangeHEATMAP(bpy.types.Operator):
+    bl_label = "Apply All Fonts"
+    bl_idname = "addonname.myop_operatorhmfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        nodehm_group = modifier.node_group
+        
+        nodehmtitle = nodehm_group.nodes['String to Curves.029']
+        datahmtitle_font = bpy.data.fonts.load(mytool.my_pathfonthm_title)
+        nodehmtitle.font = datahmtitle_font
+        
+        nodehmsubtitle = nodehm_group.nodes['String to Curves.028']
+        datahmsubtitle_font = bpy.data.fonts.load(mytool.my_pathfonthm_subtitle)
+        nodehmsubtitle.font = datahmsubtitle_font
+
+        # Find the node group "NodeGroup.203"
+        node_group_203 = None
+        for node in nodehm_group.nodes:
+            if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.203":
+                node_group_203 = node
+                break
+        
+        if node_group_203:
+            # Access the node tree of "NodeGroup.203"
+            node_group_203_tree = node_group_203.node_tree
+            
+            # Find the node group "NodeGroup.204" inside "NodeGroup.203"
+            node_group_204 = None
+            for node in node_group_203_tree.nodes:
+                if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.204":
+                    node_group_204 = node
+                    break
+            
+            if node_group_204:
+                # Access the node tree of "NodeGroup.204"
+                node_group_204_tree = node_group_204.node_tree
+                
+                # Find the "String to Curves" node inside "NodeGroup.204"
+                nodehmrangenumbers = node_group_204_tree.nodes.get("String to Curves")
+                if nodehmrangenumbers:
+                    # Load the font and assign it to the node
+                    datahmrangenumbers_font = bpy.data.fonts.load(mytool.my_pathfonthm_rangenumbers)
+                    nodehmrangenumbers.font = datahmrangenumbers_font  
+        
+        # Find the node group "NodeGroup.201"
+        node_group_201 = None
+        for node in nodehm_group.nodes:
+            if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.201":
+                node_group_201 = node
+                break
+        
+        if node_group_201:
+            # Access the node tree of "NodeGroup.201"
+            node_group_201_tree = node_group_201.node_tree
+            
+            # Find the node group "NodeGroup.202" inside "NodeGroup.201"
+            node_group_202 = None
+            for node in node_group_201_tree.nodes:
+                if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.202":
+                    node_group_202 = node
+                    break
+            
+            if node_group_202:
+                # Access the node tree of "NodeGroup.202"
+                node_group_202_tree = node_group_202.node_tree
+                
+                # Find the "String to Curves" node inside "NodeGroup.202"
+                nodehmvaluetext = node_group_202_tree.nodes.get("String to Curves")
+                if nodehmvaluetext:
+                    # Load the font and assign it to the node
+                    datahmvaluetext_font = bpy.data.fonts.load(mytool.my_pathfonthm_valuetext)
+                    nodehmvaluetext.font = datahmvaluetext_font  
+
+        nodehmlegend = ['String to Curves.031', 'String to Curves.030']
+        for name in nodehmlegend:
+            nodehmlegend = nodehm_group.nodes.get(name)
+            if nodehmlegend:
+                datahmlegend_font = bpy.data.fonts.load(mytool.my_pathfonthm_legend)
+                nodehmlegend.font = datahmlegend_font    
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
+class FontrestoreHEATMAP(bpy.types.Operator):
+    bl_label = "Restore OpenSans"
+    bl_idname = "addonname.myop_operatorhmresfont"
+        
+    def execute(self, context):
+        scene = context.scene
+        mytool = scene.my_tool
+        
+        obj = bpy.context.view_layer.objects.active
+        modifier = obj.modifiers["GeometryNodes"]
+        noderestorehm_group = modifier.node_group
+        
+        noderestorehmtitle = noderestorehm_group.nodes['String to Curves.029']
+        datarestorehmtitle_font = bpy.data.fonts["Open Sans Extrabold"]
+        noderestorehmtitle.font = datarestorehmtitle_font
+        
+        noderestorehmsubtitle = noderestorehm_group.nodes['String to Curves.028']
+        datarestorehmsubtitle_font = bpy.data.fonts["Open Sans Light"]
+        noderestorehmsubtitle.font = datarestorehmsubtitle_font  
+        
+        # Find the node group "NodeGroup.203"
+        node_group_203 = None
+        for node in noderestorehm_group.nodes:
+            if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.203":
+                node_group_203 = node
+                break
+        
+        if node_group_203:
+            # Access the node tree of "NodeGroup.203"
+            node_group_203_tree = node_group_203.node_tree
+            
+            # Find the node group "NodeGroup.204" inside "NodeGroup.203"
+            node_group_204 = None
+            for node in node_group_203_tree.nodes:
+                if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.204":
+                    node_group_204 = node
+                    break
+            
+            if node_group_204:
+                # Access the node tree of "NodeGroup.204"
+                node_group_204_tree = node_group_204.node_tree
+                
+                # Find the "String to Curves" node inside "NodeGroup.204"
+                nodehmrangenumbers = node_group_204_tree.nodes.get("String to Curves")
+                if nodehmrangenumbers:
+                    # Assign the "Open Sans Semibold" font to the node
+                    datahmrangenumbers_font = bpy.data.fonts.get("Open Sans Semibold")
+                    if datahmrangenumbers_font:
+                        nodehmrangenumbers.font = datahmrangenumbers_font
+                    else:
+                        self.report({'WARNING'}, "Font 'Open Sans Semibold' not found in Blender data.")
+
+        # Find the node group "NodeGroup.201"
+        node_group_201 = None
+        for node in noderestorehm_group.nodes:
+            if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.201":
+                node_group_201 = node
+                break
+        
+        if node_group_201:
+            # Access the node tree of "NodeGroup.201"
+            node_group_201_tree = node_group_201.node_tree
+            
+            # Find the node group "NodeGroup.202" inside "NodeGroup.201"
+            node_group_202 = None
+            for node in node_group_201_tree.nodes:
+                if node.type == 'GROUP' and node.node_tree.name == "NodeGroup.202":
+                    node_group_202 = node
+                    break
+            
+            if node_group_202:
+                # Access the node tree of "NodeGroup.202"
+                node_group_202_tree = node_group_202.node_tree
+                
+                # Find the "String to Curves" node inside "NodeGroup.202"
+                nodehmvaluetext = node_group_202_tree.nodes.get("String to Curves")
+                if nodehmvaluetext:
+                    # Assign the "Open Sans Semibold" font to the node
+                    datahmvaluetext_font = bpy.data.fonts.get("Open Sans Bold")
+                    if datahmvaluetext_font:
+                        nodehmvaluetext.font = datahmvaluetext_font
+                    else:
+                        self.report({'WARNING'}, "Font 'Open Sans Semibold' not found in Blender data.")
+
+        nodehmlegend = ['String to Curves.031', 'String to Curves.030']
+        for name in nodehmlegend:
+            nodehmlegend = noderestorehm_group.nodes.get(name)
+            if nodehmlegend:
+                datahmlegend_font = bpy.data.fonts["Open Sans Light"]
+                nodehmlegend.font = datahmlegend_font  
+        
+        bpy.ops.file.pack_all()    
+        
+        return {'FINISHED'}
+    
 class FontchangeBUBBLEGC(bpy.types.Operator):
     bl_label = "Apply All Fonts"
     bl_idname = "addonname.myop_operatorbgsfont"
@@ -40539,24 +41730,24 @@ class Locationchange(bpy.types.Operator):
         
         return {'FINISHED'}    
 
-classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorRGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, MyoperatorBGSsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorRGcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
-MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorBGScsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
+classes = [MyProperties, MyoperatorCGsql, MyoperatorPGsql, Myoperator23CGsql, Myoperatorcandlesql, Myoperator23PGsql, MyoperatorHBGsql, MyoperatorHBGCsql, MyoperatorMCGsql, MyoperatorMPGsql, MyoperatorLGsql, MyoperatorRGsql, MyoperatorMGsql, MyoperatorLGCsql, MyoperatorMGCsql, MyoperatorSGCsql, MyoperatorHMsql, MyoperatorBGSsql, Myoperatorusmapsql, MyoperatorVBGsql, MyoperatorVBGCsql, MyoperatorVBGMsql, MyoperatorPLsql, MyoperatorHBGOsql, MyoperatorHBGSsql, MyoperatorVBGSsql, MyoperatorCGcsv, MyoperatorCGCcsv, MyoperatorCANDLEcsv, MyoperatorRGcsv, MyoperatorPGCcsv, MyoperatorPGcsv, MyoperatorPGgenai, MyoperatorCGgenai, Myoperator23CGgenai, Myoperator23PGgenai, MyoperatorMCGgenai, MyoperatorMPGgenai, MyoperatorHBGgenai, MyoperatorHBGCgenai, MyoperatorVBGgenai, MyoperatorVBGCgenai, MyoperatorLGgenai, MyoperatorLGCgenai, MyoperatorMGgenai, MyoperatorMGCgenai, MyoperatorUSMAPgenai, MyoperatorLGcsv, MyoperatorLGCcsv, 
+MyoperatorHBcsv, MyoperatorHBCcsv, MyoperatorHBOcsv, MyoperatorHBScsv, MyoperatorVBScsv, MyoperatorMCcsv, MyoperatorMPcsv, MyoperatorMGcsv, MyoperatorMGCcsv, MyoperatorSGCcsv, MyoperatorHMcsv, MyoperatorBGScsv, MyoperatorUSMcsv, MyoperatorVBcsv, MyoperatorPLcsv,
 MyoperatorVBCcsv, MyoperatorVBMcsv, RenderRender2, ADDONNAME_OT_my_opc, ADDONNAME_OT_my_op23cAL, ADDONNAME_OT_my_op23cBL, ADDONNAME_OT_my_op23cCL, ADDONNAME_OT_my_oprgAL, ADDONNAME_OT_my_oprgBL, ADDONNAME_OT_my_oprgCL,
 ADDONNAME_OT_my_op23pAL, ADDONNAME_OT_my_op23pBL, ADDONNAME_OT_my_op23pCL, ADDONNAME_OT_my_opHBGAL, ADDONNAME_OT_my_opHBGBL, 
 ADDONNAME_OT_my_opHBGCL, ADDONNAME_OT_my_opHBGDL, ADDONNAME_OT_my_opHBGEL, ADDONNAME_OT_my_opHBGFL, ADDONNAME_OT_my_opHBGGL, ADDONNAME_OT_my_opHBGHL, ADDONNAME_OT_my_opHBGIL, ADDONNAME_OT_my_opHBGJL, ADDONNAME_OT_my_opOPPOSINGAHBARAL, ADDONNAME_OT_my_opOPPOSINGAHBARBL, ADDONNAME_OT_my_opOPPOSINGAHBARCL, ADDONNAME_OT_my_opOPPOSINGAHBARDL, ADDONNAME_OT_my_opOPPOSINGAHBAREL, ADDONNAME_OT_my_opOPPOSINGAHBARFL, 
 ADDONNAME_OT_my_opOPPOSINGAHBARGL, ADDONNAME_OT_my_opOPPOSINGAHBARHL, ADDONNAME_OT_my_opOPPOSINGAHBARIL,
 ADDONNAME_OT_my_opOPPOSINGAHBARJL , ADDONNAME_OT_my_opSTACKEDAHBARAL, ADDONNAME_OT_my_opSTACKEDAHBARBL, ADDONNAME_OT_my_opSTACKEDAHBARCL, ADDONNAME_OT_my_opSTACKEDAVBARAL, ADDONNAME_OT_my_opSTACKEDAVBARBL, ADDONNAME_OT_my_opSTACKEDAVBARCL, ADDONNAME_OT_my_opVBGAL, ADDONNAME_OT_my_opVBGBL, ADDONNAME_OT_my_opVBGCL, 
 ADDONNAME_OT_my_opVBGDL, ADDONNAME_OT_my_opVBGEL, ADDONNAME_OT_my_opVBGFL, ADDONNAME_OT_my_opVBGGL, ADDONNAME_OT_my_opVBGHL, ADDONNAME_OT_my_opPLGAL, ADDONNAME_OT_my_opPLGBL, ADDONNAME_OT_my_opPLGCL, ADDONNAME_OT_my_opPLGDL, ADDONNAME_OT_my_opPLGEL, ADDONNAME_OT_my_opPLGFL, ADDONNAME_OT_my_opPLGGL, ADDONNAME_OT_my_opPLGHL, 
-ADDONNAME_23C, ADDONNAME_RADAR, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_BGS, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
+ADDONNAME_23C, ADDONNAME_RADAR, ADDONNAME_23P, ADDONNAME_LGC, ADDONNAME_HBC, ADDONNAME_SHBG, ADDONNAME_SVBG, ADDONNAME_MG, ADDONNAME_MGC, ADDONNAME_SGC, ADDONNAME_HM, ADDONNAME_BGS, ADDONNAME_USM, ADDONNAME_VB, ADDONNAME_PL, ADDONNAME_VBC, ADDONNAME_VBM, ADDONNAME_OT_my_opggpie, 
 ADDONNAME_OT_my_op, ADDONNAME_OT_my_op2, ADDONNAME_OT_my_op2pie, ADDONNAME_OT_my_oplgpie, ADDONNAME_OT_my_ophbpie, ADDONNAME_OT_my_ophbo, ADDONNAME_OT_my_opmcpie, 
-ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeBUBBLEGC, FontrestoreBUBBLEGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontchangeRG, FontrestoreRG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
+ADDONNAME_OT_my_opmppie, ADDONNAME_OT_my_op3, FontchangeCG, FontchangePG, Fontchange23CG, Fontchange23PG, FontchangeCANDLEG, FontchangeLINEG, FontchangeMOUNTAING, FontchangeLINEGC, FontchangeMOUNTAINGC, FontchangeSCATTERGC, FontrestoreSCATTERGC, FontchangeHEATMAP, FontrestoreHEATMAP, FontchangeBUBBLEGC, FontrestoreBUBBLEGC, FontchangeHBG, FontchangeSHBG, FontchangeSVBG, FontrestoreSVBG, FontrestoreSHBG, FontchangeHBO, FontrestoreHBO, FontchangeMCG, FontchangeMPG, FontchangeUSM, FontrestoreUSM, FontchangeVBG, FontchangeVBGC, FontrestoreVBGC, FontchangeVBGM, FontrestoreVBGM, FontrestoreVBG, FontchangePLG, FontrestorePLG, FontrestoreMPG, FontrestoreMCG, FontrestoreHBG, FontchangeHBGC, FontrestoreHBGC, FontrestoreLINEGC, FontrestoreMOUNTAING, FontrestoreMOUNTAINGC, Fontrestore23CG, FontchangeRG, FontrestoreRG, FontrestoreLINEG, Fontrestore23PG, FontrestoreCG, FontrestorePG, FontrestoreCANDLEG,
 NG_PT_QuickRenderPresets_1, NG_PT_QuickRenderPresets_2, NG_PT_QuickRenderPresets_3, CIRCLE_GRAPH_PT_panel_1, CIRCLE_GRAPH_PT_panel_2, CIRCLE_GRAPH_PT_panel_3, CIRCLE_GRAPH_PT_panel_4, CIRCLE_GRAPH_PT_panel_5, CIRCLE_GRAPH_PT_panel_6, CIRCLE_GRAPH_23_PT_panel_1, CIRCLE_GRAPH_23_PT_panel_2, CIRCLE_GRAPH_23_PT_panel_3, CIRCLE_GRAPH_23_PT_panel_4, CIRCLE_GRAPH_23_PT_panel_5, CIRCLE_GRAPH_23_PT_panel_6, CANDLESTICK_GRAPH_PT_panel_1, CANDLESTICK_GRAPH_PT_panel_2, CANDLESTICK_GRAPH_PT_panel_3, CANDLESTICK_GRAPH_PT_panel_4, CANDLESTICK_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_1, PIE_GRAPH_PT_panel_2, PIE_GRAPH_PT_panel_3, PIE_GRAPH_PT_panel_4, PIE_GRAPH_PT_panel_5, PIE_GRAPH_PT_panel_6, PIE_GRAPH_23_PT_panel_1, 
-PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
+PIE_GRAPH_23_PT_panel_2, PIE_GRAPH_23_PT_panel_3, PIE_GRAPH_23_PT_panel_4, PIE_GRAPH_23_PT_panel_5, PIE_GRAPH_23_PT_panel_6, LINE_GRAPH_PT_panel_1, LINE_GRAPH_PT_panel_2, LINE_GRAPH_PT_panel_3, LINE_GRAPH_PT_panel_4, LINE_GRAPH_PT_panel_5, LINE_GRAPH_PT_panel_6, COMPARISON_LINE_GRAPH_PT_panel_1, COMPARISON_LINE_GRAPH_PT_panel_2, COMPARISON_LINE_GRAPH_PT_panel_3, COMPARISON_LINE_GRAPH_PT_panel_4, COMPARISON_LINE_GRAPH_PT_panel_5, COMPARISON_LINE_GRAPH_PT_panel_6, HEATMAP_PT_panel_1, HEATMAP_PT_panel_2, HEATMAP_PT_panel_3, HEATMAP_PT_panel_4, HEATMAP_PT_panel_5,  HORIZONTAL_BAR_GRAPH_PT_panel_1, HORIZONTAL_BAR_GRAPH_PT_panel_2, HORIZONTAL_BAR_GRAPH_PT_panel_3, HORIZONTAL_BAR_GRAPH_PT_panel_4, HORIZONTAL_BAR_GRAPH_PT_panel_5, HORIZONTAL_BAR_GRAPH_PT_panel_6, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_1, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_2, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_3, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_4, OPPOSING_HORIZONTAL_BAR_GRAPH_PT_panel_5, PROFITLOSS_BAR_GRAPH_PT_panel_1, PROFITLOSS_BAR_GRAPH_PT_panel_2, PROFITLOSS_BAR_GRAPH_PT_panel_3, PROFITLOSS_BAR_GRAPH_PT_panel_4, PROFITLOSS_BAR_GRAPH_PT_panel_5, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_1, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_2, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_3, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_4, STACKED_HORIZONTAL_BAR_GRAPH_PT_panel_5, STACKED_VERTICAL_BAR_GRAPH_PT_panel_1, STACKED_VERTICAL_BAR_GRAPH_PT_panel_2, STACKED_VERTICAL_BAR_GRAPH_PT_panel_3, STACKED_VERTICAL_BAR_GRAPH_PT_panel_4, STACKED_VERTICAL_BAR_GRAPH_PT_panel_5,
 COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_1, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_2, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_3, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_4, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_5, COMPARISON_HORIZONTAL_BAR_GRAPH_PT_panel_6, MULTIPLE_CIRCLE_GRAPH_PT_panel_1, MULTIPLE_CIRCLE_GRAPH_PT_panel_2, MULTIPLE_CIRCLE_GRAPH_PT_panel_3, MULTIPLE_CIRCLE_GRAPH_PT_panel_4, MULTIPLE_CIRCLE_GRAPH_PT_panel_5, MULTIPLE_CIRCLE_GRAPH_PT_panel_6, MULTIPLE_PIE_GRAPH_PT_panel_1, MULTIPLE_PIE_GRAPH_PT_panel_2, MULTIPLE_PIE_GRAPH_PT_panel_3, MULTIPLE_PIE_GRAPH_PT_panel_4, MULTIPLE_PIE_GRAPH_PT_panel_5, MULTIPLE_PIE_GRAPH_PT_panel_6, RADAR_GRAPH_PT_panel_1, RADAR_GRAPH_PT_panel_2, RADAR_GRAPH_PT_panel_3, RADAR_GRAPH_PT_panel_4, RADAR_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_1, MOUNTAIN_GRAPH_PT_panel_2, MOUNTAIN_GRAPH_PT_panel_3, MOUNTAIN_GRAPH_PT_panel_4, MOUNTAIN_GRAPH_PT_panel_5, MOUNTAIN_GRAPH_PT_panel_6,
 COMPARISON_MOUNTAIN_GRAPH_PT_panel_1, COMPARISON_MOUNTAIN_GRAPH_PT_panel_2, COMPARISON_MOUNTAIN_GRAPH_PT_panel_3, COMPARISON_MOUNTAIN_GRAPH_PT_panel_4, COMPARISON_MOUNTAIN_GRAPH_PT_panel_5, COMPARISON_MOUNTAIN_GRAPH_PT_panel_6, SCATTER_GRAPH_PT_panel_1, SCATTER_GRAPH_PT_panel_2, SCATTER_GRAPH_PT_panel_3, SCATTER_GRAPH_PT_panel_4, SCATTER_GRAPH_PT_panel_5, BUBBLE_GRAPH_PT_panel_1, BUBBLE_GRAPH_PT_panel_2, BUBBLE_GRAPH_PT_panel_3, BUBBLE_GRAPH_PT_panel_4, BUBBLE_GRAPH_PT_panel_5,  Locationchange, US_MAP_PT_panel_1, US_MAP_PT_panel_2, US_MAP_PT_panel_3, US_MAP_PT_panel_4, US_MAP_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_1, VERTICAL_BAR_GRAPH_PT_panel_2, VERTICAL_BAR_GRAPH_PT_panel_3, VERTICAL_BAR_GRAPH_PT_panel_4, VERTICAL_BAR_GRAPH_PT_panel_5, VERTICAL_BAR_GRAPH_PT_panel_6, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_1, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_2, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_3, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_4, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_5, COMPARISON_VERTICAL_BAR_GRAPH_PT_panel_6, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_1, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_2, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_3, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_4, MULTIPLE_VERTICAL_BAR_GRAPH_PT_panel_5, ADDONNAME_OT_my_opLGAL, 
 ADDONNAME_OT_my_opLGBL, ADDONNAME_OT_my_opLGCL, ADDONNAME_OT_my_opLGDL, ADDONNAME_OT_my_opLGEL, ADDONNAME_OT_my_opLGFL,ADDONNAME_OT_my_opLGGL, ADDONNAME_OT_my_opLGHL, ADDONNAME_OT_my_opMGAL, ADDONNAME_OT_my_opMGBL, ADDONNAME_OT_my_opMGCL, ADDONNAME_OT_my_opMGDL, ADDONNAME_OT_my_opMGEL, ADDONNAME_OT_my_opMGFL, ADDONNAME_OT_my_opMGGL, ADDONNAME_OT_my_opMGHL, ADDONNAME_OT_my_opMCGAL, ADDONNAME_OT_my_opMCGBL, ADDONNAME_OT_my_opMCGCL, ADDONNAME_OT_my_opMCGDL, ADDONNAME_OT_my_opMCGEL, ADDONNAME_OT_my_opMCGFL, ADDONNAME_OT_my_opMCGGL, ADDONNAME_OT_my_opMCGHL, ADDONNAME_OT_my_opMPGAL, ADDONNAME_OT_my_opMPGBL, ADDONNAME_OT_my_opMPGCL, ADDONNAME_OT_my_opMPGDL, ADDONNAME_OT_my_opMPGEL, ADDONNAME_OT_my_opMPGFL, ADDONNAME_OT_my_opMPGGL, ADDONNAME_OT_my_opMPGHL, 
 ADDONNAME_OT_my_opCOMPARISONAHBARAL, ADDONNAME_OT_my_opCOMPARISONAHBARBL, ADDONNAME_OT_my_opCOMPARISONAHBARCL, ADDONNAME_OT_my_opCOMPARISONAHBARD, ADDONNAME_OT_my_opCOMPARISONAHBARE, ADDONNAME_OT_my_opCOMPARISONAHBARF, ADDONNAME_OT_my_opCOMPARISONAHBARG, ADDONNAME_OT_my_opCOMPARISONAHBARH, ADDONNAME_OT_my_opCOMPARISONAHBARI, ADDONNAME_OT_my_opCOMPARISONBHBARAL, ADDONNAME_OT_my_opCOMPARISONBHBARBL, ADDONNAME_OT_my_opCOMPARISONBHBARCL, ADDONNAME_OT_my_opCOMPARISONBHBARD, ADDONNAME_OT_my_opCOMPARISONBHBARE, ADDONNAME_OT_my_opCOMPARISONBHBARF, ADDONNAME_OT_my_opCOMPARISONBHBARG, ADDONNAME_OT_my_opCOMPARISONBHBARH, ADDONNAME_OT_my_opCOMPARISONBHBARI, ADDONNAME_OT_my_opCOMPARISONALINEAL, ADDONNAME_OT_my_opCOMPARISONALINEB, ADDONNAME_OT_my_opCOMPARISONALINEC, ADDONNAME_OT_my_opCOMPARISONALINED, ADDONNAME_OT_my_opCOMPARISONALINEE, ADDONNAME_OT_my_opCOMPARISONALINEF, ADDONNAME_OT_my_opCOMPARISONALINEH, ADDONNAME_OT_my_opCOMPARISONALINEG, ADDONNAME_OT_my_opCOMPARISONBLINEA, 
-ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opSCATTERA, ADDONNAME_OT_my_opBUBBLEA,  ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
+ADDONNAME_OT_my_opCOMPARISONBLINEB, ADDONNAME_OT_my_opCOMPARISONBLINEC, ADDONNAME_OT_my_opCOMPARISONBLINED, ADDONNAME_OT_my_opCOMPARISONBLINEE, ADDONNAME_OT_my_opCOMPARISONBLINEF, ADDONNAME_OT_my_opCOMPARISONBLINEG, ADDONNAME_OT_my_opCOMPARISONBLINEH, ADDONNAME_OT_my_opCOMPARISONAMOUNTA, ADDONNAME_OT_my_opSCATTERA, ADDONNAME_OT_my_opHMA, ADDONNAME_OT_my_opBUBBLEA,  ADDONNAME_OT_my_opCOMPARISONAMOUNTB, ADDONNAME_OT_my_opCOMPARISONAMOUNTC, ADDONNAME_OT_my_opCOMPARISONAMOUNTD, ADDONNAME_OT_my_opCOMPARISONAMOUNTE, ADDONNAME_OT_my_opCOMPARISONAMOUNTF, ADDONNAME_OT_my_opCOMPARISONAMOUNTG, ADDONNAME_OT_my_opCOMPARISONAMOUNTH, ADDONNAME_OT_my_opCOMPARISONBMOUNTA, ADDONNAME_OT_my_opCOMPARISONBMOUNTB, 
 ADDONNAME_OT_my_opCOMPARISONBMOUNTC, ADDONNAME_OT_my_opCOMPARISONBMOUNTD, ADDONNAME_OT_my_opCOMPARISONBMOUNTE, ADDONNAME_OT_my_opCOMPARISONBMOUNTF, ADDONNAME_OT_my_opCOMPARISONBMOUNTG, ADDONNAME_OT_my_opCOMPARISONBMOUNTH, ADDONNAME_OT_my_opCOMPARISONABARVA, ADDONNAME_OT_my_opCOMPARISONABARVB, ADDONNAME_OT_my_opCOMPARISONABARVC, ADDONNAME_OT_my_opCOMPARISONABARVD, ADDONNAME_OT_my_opCOMPARISONABARVE, ADDONNAME_OT_my_opCOMPARISONABARVF, ADDONNAME_OT_my_opCOMPARISONABARVG, ADDONNAME_OT_my_opCOMPARISONABARVH, ADDONNAME_OT_my_opCOMPARISONBBARVA, ADDONNAME_OT_my_opCOMPARISONBBARVB, ADDONNAME_OT_my_opCOMPARISONBBARVC, 
 ADDONNAME_OT_my_opCOMPARISONBBARVD, ADDONNAME_OT_my_opCOMPARISONBBARVE, ADDONNAME_OT_my_opCOMPARISONBBARVF, ADDONNAME_OT_my_opCOMPARISONBBARVG, ADDONNAME_OT_my_opCOMPARISONBBARVH, ADDONNAME_OT_my_opMULTIPLEABARVA, ADDONNAME_OT_my_opMULTIPLEABARVB, ADDONNAME_OT_my_opMULTIPLEABARVC, ADDONNAME_OT_my_opMULTIPLEABARVD, ADDONNAME_OT_my_opMULTIPLEABARVE, ADDONNAME_OT_my_opMULTIPLEABARVF, ADDONNAME_OT_my_opMULTIPLEABARVG, ADDONNAME_OT_my_opMULTIPLEABARVH, ADDONNAME_OT_my_opMULTIPLEBBARVA, ADDONNAME_OT_my_opMULTIPLEBBARVB, ADDONNAME_OT_my_opMULTIPLEBBARVC, ADDONNAME_OT_my_opMULTIPLEBBARVD, ADDONNAME_OT_my_opMULTIPLEBBARVE, ADDONNAME_OT_my_opMULTIPLEBBARVF, ADDONNAME_OT_my_opMULTIPLEBBARVG, ADDONNAME_OT_my_opMULTIPLEBBARVH, ADDONNAME_OT_my_opMULTIPLECBARVA, ADDONNAME_OT_my_opMULTIPLECBARVB, ADDONNAME_OT_my_opMULTIPLECBARVC, ADDONNAME_OT_my_opMULTIPLECBARVD, ADDONNAME_OT_my_opMULTIPLECBARVE, ADDONNAME_OT_my_opMULTIPLECBARVF, ADDONNAME_OT_my_opMULTIPLECBARVG, ADDONNAME_OT_my_opMULTIPLECBARVH,ADDONNAME_OT_my_opMULTIPLEDBARVA, ADDONNAME_OT_my_opMULTIPLEDBARVB, ADDONNAME_OT_my_opMULTIPLEDBARVC, ADDONNAME_OT_my_opMULTIPLEDBARVD, ADDONNAME_OT_my_opMULTIPLEDBARVE, ADDONNAME_OT_my_opMULTIPLEDBARVF, ADDONNAME_OT_my_opMULTIPLEDBARVG, ADDONNAME_OT_my_opMULTIPLEDBARVH]
  
